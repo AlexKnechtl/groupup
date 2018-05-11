@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_party">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/group_view_headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/profilename_design"
+            android:gravity="center"
+            android:maxLines="2"
+            android:padding="8dp"
+            android:text="Bollwerk @ Graz"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteX="118dp"
+            tools:layout_editor_absoluteY="33dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:backgroundTint="@color/colorAccent"
+            android:enabled="false"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:text="@string/group_description_headline"
+            android:textColor="@color/colorAccent"
+            android:textSize="16dp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/group_description"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:gravity="center"
+            android:paddingLeft="22dp"
+            android:paddingRight="22dp"
+            android:text="Hier sollte Gruppenbeschreibung stehen"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:backgroundTint="@color/colorAccent"
+            android:enabled="false"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:text="@string/members"
+            android:textColor="@color/colorAccent"
+            android:textSize="16dp"
+            android:textStyle="italic" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/member_list_group_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
