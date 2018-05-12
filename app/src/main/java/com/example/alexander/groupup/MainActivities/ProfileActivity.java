@@ -1,15 +1,16 @@
-package com.example.alexander.groupup.Fragments;
-
+package com.example.alexander.groupup.MainActivities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -28,20 +29,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ProfileFragment extends Fragment {
+public class ProfileActivity extends AppCompatActivity {
 
     //XML
     private ImageView mProfileImageView;
@@ -50,48 +45,45 @@ public class ProfileFragment extends Fragment {
 
     //Constants
     private static final int GALLERY_PICK = 1;
+    private static final int ACTIVITY_NUM = 3;
+
 
     //Popup
     private String status;
-    private Context mContext;
     private PopupWindow mPopupWindow;
 
     //Firebase
     private DatabaseReference UserDatabase;
     private FirebaseUser mCurrentUser;
-    private StorageReference ProfileImageStorage;
 
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
-
+    private Context mContext = ProfileActivity.this;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_profile, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_profile);
+
+        setupBottomNavigationView();
 
         //Initialize Firebase
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         final String current_uid = mCurrentUser.getUid();
 
-        ProfileImageStorage = FirebaseStorage.getInstance().getReference();
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
         UserDatabase.keepSynced(true);
 
         // Get the application context
-        mContext = getActivity().getApplicationContext();
+        mContext = getApplicationContext();
 
         //Find IDs
-        mProfileStatus = view.findViewById(R.id.profile_status);
-        mProfileImageView = view.findViewById(R.id.user_image);
-        mProfileName = view.findViewById(R.id.profile_name_textview);
+        mProfileStatus = findViewById(R.id.profile_status);
+        mProfileImageView = findViewById(R.id.user_image);
+        mProfileName = findViewById(R.id.profile_name_textview);
 
-        mProfileLocation = view.findViewById(R.id.profile_location);
-        relativeLayout = view.findViewById(R.id.coordinator_layout_profile);
-        languages = view.findViewById(R.id.aboutme_languages);
-        friendsCounter = view.findViewById(R.id.friends_counter_profile);
+        mProfileLocation = findViewById(R.id.profile_location);
+        relativeLayout = findViewById(R.id.coordinator_layout_profile);
+        languages = findViewById(R.id.aboutme_languages);
+        friendsCounter = findViewById(R.id.friends_counter_profile);
 
         UserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -128,7 +120,7 @@ public class ProfileFragment extends Fragment {
 
                 if (!image.equals("default")) {
 
-                    Picasso.with(getActivity()).load(image).networkPolicy(NetworkPolicy.OFFLINE)
+                    Picasso.with(ProfileActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
                             .placeholder(R.drawable.ic_profile).into(mProfileImageView, new Callback() {
                         @Override
                         public void onSuccess() {
@@ -137,7 +129,7 @@ public class ProfileFragment extends Fragment {
 
                         @Override
                         public void onError() {
-                            Picasso.with(getActivity()).load(image).placeholder(R.drawable.ic_profile).into(mProfileImageView);
+                            Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.ic_profile).into(mProfileImageView);
                         }
                     });
                 }
@@ -162,7 +154,7 @@ public class ProfileFragment extends Fragment {
         friendsCounter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FriendsActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, FriendsActivity.class);
                 intent.putExtra("user_id", current_uid);
                 startActivity(intent);
             }
@@ -190,10 +182,6 @@ public class ProfileFragment extends Fragment {
                         ViewGroup.LayoutParams.MATCH_PARENT
                 );
 
-                if (Build.VERSION.SDK_INT >= 21) {
-                    mPopupWindow.setElevation(5.0f);
-                }
-
                 ImageButton closeButton = customView.findViewById(R.id.close_popup);
 
                 closeButton.setOnClickListener(new View.OnClickListener() {
@@ -210,9 +198,7 @@ public class ProfileFragment extends Fragment {
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                     }
 
-
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        //This sets a textview to the current length
                         countCharactersText.setText(String.valueOf(s.length()) + " / 250");
                     }
 
@@ -226,7 +212,16 @@ public class ProfileFragment extends Fragment {
                 mPopupWindow.showAtLocation(relativeLayout, Gravity.START, 0, 0);
             }
         });
+    }
 
-        return view;
+    public void setupBottomNavigationView() {
+        BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_nav);
+        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
+
+        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+
+        Menu menu = bottomNavigationViewEx.getMenu();
+        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
+        menuItem.setChecked(true);
     }
 }

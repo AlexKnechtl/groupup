@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.example.alexander.groupup.MainActivity;
+import com.example.alexander.groupup.MainActivities.HomeActivity;
 import com.example.alexander.groupup.Models.GroupImagesModel;
 import com.example.alexander.groupup.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,7 +62,7 @@ public class InterviewDescription extends AppCompatActivity {
         backLayoutDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InterviewDescription.this, MainActivity.class);
+                Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -83,7 +83,7 @@ public class InterviewDescription extends AppCompatActivity {
                 mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
                 mGroupDatabase.child("group_image").setValue(getRandomImage(activity, group));
 
-                Intent intent = new Intent(InterviewDescription.this, MainActivity.class);
+                Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -102,7 +102,7 @@ public class InterviewDescription extends AppCompatActivity {
                 mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
                 mGroupDatabase.child("group_image").setValue(getRandomImage(activity, group));
 
-                Intent intent = new Intent(InterviewDescription.this, MainActivity.class);
+                Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
