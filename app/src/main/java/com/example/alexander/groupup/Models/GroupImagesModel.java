@@ -17,7 +17,14 @@ public class GroupImagesModel {
 
     public static String getRandomImageURL(String activity)
     {
-        String[] images = imageUrlMap.get(activity);
+        String[] images;
+        try {
+            images = imageUrlMap.get(activity);
+        }
+        catch (Exception e)
+        {
+            images = new String[]{"https://firebasestorage.googleapis.com/v0/b/groupup-e980d.appspot.com/o/group_images%2Fsport_bike_1.png?alt=media&token=39b0b532-ad2f-4f3e-97ea-b05ad2be54b2"};
+        }
         Random rnd = new Random();
         return images[rnd.nextInt(images.length)];
     }

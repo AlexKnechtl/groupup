@@ -8,7 +8,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import com.example.alexander.groupup.Helpers.TextImageItem;
+import com.example.alexander.groupup.Models.LanguageStringsModel;
 import com.example.alexander.groupup.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -25,22 +32,46 @@ public class InterviewActivitySport extends AppCompatActivity {
     //Variables
     String group;
 
-    private ArrayList<String> sportItems;
-    private ArrayList<Integer> sportImages;
+    private ArrayList<TextImageItem> sportItems;
+    //private ArrayList<Integer> sportImages;
     private CustomSportAdapter adapter;
+
+    private DatabaseReference mLanguageStringsReference = FirebaseDatabase.getInstance().getReference().child("LanguageStrings");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mLanguageStringsReference.keepSynced(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_sports_activity);
-
+        System.out.println("Test");
         //Get Information by Intent
         Bundle bundle = getIntent().getExtras();
         group = bundle.getString("group"); // Gruppen Kategorie
 
-        sportItems = new ArrayList<>();
-        sportImages = new ArrayList<>();
 
+        sportItems = new ArrayList<>();
+        //sportImages = new ArrayList<>();
+
+        // ForEach through Items
+        mLanguageStringsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    System.out.println(snapshot.getKey());
+                    LanguageStringsModel languageStrings = snapshot.getValue(LanguageStringsModel.class);
+                    sportItems.add(new TextImageItem(languageStrings.Deutsch, languageStrings.Image));
+                    adapter.notifyDataSetChanged();
+                    System.out.println(languageStrings.Deutsch);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+/*
         sportItems.add(getString(R.string.running));
         sportItems.add(getString(R.string.basketball));
         sportItems.add(getString(R.string.football));
@@ -60,8 +91,8 @@ public class InterviewActivitySport extends AppCompatActivity {
         sportItems.add(getString(R.string.baseball));
         sportItems.add(getString(R.string.martial_arts));
         sportItems.add(getString(R.string.gym));
-        sportItems.add(getString(R.string.mountainbiken));
-
+        sportItems.add(getString(R.string.mountainbiken));*/
+/*
         sportImages.add(R.drawable.sport_activity_run);
         sportImages.add(R.drawable.sport_activity_run);
         sportImages.add(R.drawable.sport_activity_soccer);
@@ -82,6 +113,8 @@ public class InterviewActivitySport extends AppCompatActivity {
         sportImages.add(R.drawable.sport_activity_run);
         sportImages.add(R.drawable.sport_activity_gym);
         sportImages.add(R.drawable.sport_activity_mountainbiken);
+*/
+
 
         sportsRecyclerView = findViewById(R.id.recycler_view_sport);
         searchEditText = findViewById(R.id.search_sport_activitys);
@@ -89,7 +122,7 @@ public class InterviewActivitySport extends AppCompatActivity {
         sportsRecyclerView.setHasFixedSize(true);
         sportsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new CustomSportAdapter(this, sportItems, sportImages, group);
+        adapter = new CustomSportAdapter(this, sportItems, group);
 
         sportsRecyclerView.setAdapter(adapter);
 
@@ -114,12 +147,12 @@ public class InterviewActivitySport extends AppCompatActivity {
 
     private void filter(String text) {
         //New array list that will hold the filtered data
-        ArrayList<String> filteredNames = new ArrayList<>();
+        ArrayList<TextImageItem> filteredNames = new ArrayList<>();
 
         //Looping through existing elements
-        for (String s : sportItems) {
+        for (TextImageItem s : sportItems) {
             //If the existing elements contains the search input
-            if (s.toLowerCase().contains(text.toLowerCase())) {
+            if (s.getText().toLowerCase().contains(text.toLowerCase())) {
                 //Adding the element to filtered list
                 filteredNames.add(s);
             }
