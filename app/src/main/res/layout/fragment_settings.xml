@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivities.SettingsFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingRight="10dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="56dp"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/settings_bubble"
+                android:elevation="4dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:backgroundTint="@color/textAppColor"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:gravity="center_horizontal"
+                    android:text="@string/premium_coins_headline"
+                    android:textColor="@color/textAppColor" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/dosis_bold"
+                    android:gravity="left|center"
+                    android:paddingLeft="12dp"
+                    android:text="@string/get_premium_now"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkGray"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/dosis_bold"
+                    android:gravity="left|center"
+                    android:paddingLeft="12dp"
+                    android:text="@string/group_coins"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkGray"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/dosis_bold"
+                    android:gravity="left|center"
+                    android:paddingLeft="12dp"
+                    android:text="@string/business_kit"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkGray"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/settings_bubble"
+                android:elevation="4dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:backgroundTint="@color/textAppColor"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:gravity="center_horizontal"
+                    android:text="@string/app_settings"
+                    android:textColor="@color/textAppColor" />
+
+                <Button
+                    android:id="@+id/button_my_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/dosis_bold"
+                    android:gravity="left|center"
+                    android:paddingLeft="12dp"
+                    android:text="@string/my_account_settings"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkGray"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/dosis_bold"
+                    android:gravity="left|center"
+                    android:paddingLeft="12dp"
+                    android:text="@string/group_filter_settings"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkGray"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/dosis_bold"
+                    android:gravity="left|center"
+                    android:paddingLeft="12dp"
+                    android:text="@string/visibility_for_other"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkGray"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/settings_bubble"
+                android:elevation="4dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:backgroundTint="@color/textAppColor"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:gravity="center_horizontal"
+                    android:text="@string/support"
+                    android:textColor="@color/textAppColor" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/dosis_bold"
+                    android:gravity="left|center"
+                    android:paddingLeft="12dp"
+                    android:text="@string/support_requests"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkGray"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/dosis_bold"
+                    android:gravity="left|center"
+                    android:paddingLeft="12dp"
+                    android:text="@string/imprint"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkGray"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/colorAccent"
+                    android:fontFamily="@font/dosis_bold"
+                    android:gravity="left|center"
+                    android:paddingLeft="12dp"
+                    android:text="@string/licenses"
+                    android:textAllCaps="false"
+                    android:textColor="@color/darkGray"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="GroupUp V0.65"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@android:color/white"
+        app:itemIconTint="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation" />
+</android.support.constraint.ConstraintLayout>
