@@ -1,0 +1,55 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@drawable/background</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:colorBackground">@android:color/background_light</item>
+        <item name="android:colorAccent">@android:color/black</item>
+        <item name="android:textColorPrimary">@color/colorBackground</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/dosis_bold</item>
+    </style>
+
+    <style name="RegisterTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/background</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:textColorPrimary">@color/colorBackground</item>
+        <item name="colorAccent">@color/appColor</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/dosis_bold</item>
+        <item name="android:colorControlActivated">@color/appColor</item>
+    </style>
+
+    <style name="TextHeadlines">
+        <item name="android:fontFamily">@font/dosis_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColorPrimary">@color/colorBackground</item>
+        <item name="android:textColor">@color/colorBackground</item>
+    </style>
+
+    <style name="TextStandard">
+        <item name="android:fontFamily">@font/dosis_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/colorBackground</item>
+    </style>
+
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/dosis_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/colorBackground</item>
+    </style>
+
+    <style name="EditTextBlackUnderline" parent="Widget.AppCompat.EditText">
+        <item name="android:textCursorDrawable">@android:color/black</item>
+        <item name="android:colorControlActivated">@android:color/black</item>
+        <item name="android:colorControlNormal">@android:color/black</item>
+        <item name="android:colorControlHighlight">@android:color/black</item>
+    </style>
+</resources>
