@@ -8,13 +8,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import com.example.alexander.groupup.Models.LanguageStringsModel;
+import com.example.alexander.groupup.Models.*;
+import com.example.alexander.groupup.Singletons.*;
 import com.example.alexander.groupup.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -35,11 +31,11 @@ public class InterviewActivitySport extends AppCompatActivity {
     //private ArrayList<Integer> sportImages;
     private CustomSportAdapter adapter;
 
-    private DatabaseReference mLanguageStringsReference = FirebaseDatabase.getInstance().getReference().child("LanguageStrings");
+    //private DatabaseReference mLanguageStringsReference = FirebaseDatabase.getInstance().getReference().child("LanguageStrings");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLanguageStringsReference.keepSynced(true);
+        //mLanguageStringsReference.keepSynced(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_sports_activity);
         System.out.println("Test");
@@ -48,29 +44,29 @@ public class InterviewActivitySport extends AppCompatActivity {
         group = bundle.getString("group"); // Gruppen Kategorie
 
 
-        sportItems = new ArrayList<>();
+        sportItems = LanguageStringsManager.getInstance().getLanguageStrings();
         //sportImages = new ArrayList<>();
 
         // ForEach through Items
-        mLanguageStringsReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren())
-                {
-                    //System.out.println(snapshot.getKey());
-                    LanguageStringsModel languageStrings = snapshot.getValue(LanguageStringsModel.class);
-                    languageStrings.setId(snapshot.getKey());
-                    sportItems.add(languageStrings);
-                    adapter.notifyDataSetChanged();
-                    //System.out.println(languageStrings.Deutsch);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        mLanguageStringsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+//                {
+//                    //System.out.println(snapshot.getKey());
+//                    LanguageStringsModel languageStrings = snapshot.getValue(LanguageStringsModel.class);
+//                    languageStrings.setId(snapshot.getKey());
+//                    sportItems.add(languageStrings);
+//                    adapter.notifyDataSetChanged();
+//                    //System.out.println(languageStrings.Deutsch);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 /*
         sportItems.add(getString(R.string.running));
         sportItems.add(getString(R.string.basketball));

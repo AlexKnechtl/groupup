@@ -16,15 +16,7 @@ public class GroupImagesModel {
 
     public static void getRandomImageURL(String activity, final OnGetResultListener<String> listener) {
         sportImageMapReference.keepSynced(true);
-        DatabaseReference reference;
-        try {
-            reference = sportImageMapReference.child(activity);
-//            System.out.println("\n\n------------------ Out TRY");
-        } catch (Exception e) {
-            reference = sportImageMapReference.child("default");
-//            System.out.println("\n\n------------------ In Catch");
-        }
-//        System.out.println("\n\n------------------ finally");
+        DatabaseReference reference= sportImageMapReference.child(activity);
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

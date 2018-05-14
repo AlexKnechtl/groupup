@@ -3,7 +3,6 @@ package com.example.alexander.groupup.MainActivities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +21,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.CreateGroup.InterviewStart;
 import com.example.alexander.groupup.GroupView;
+import com.example.alexander.groupup.Singletons.LanguageStringsManager;
 import com.example.alexander.groupup.Models.GroupsModel;
 import com.example.alexander.groupup.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -175,7 +175,7 @@ public class HomeActivity extends AppCompatActivity {
 
         public void setTag(String tag) {
             TextView groupTag = mView.findViewById(R.id.group_tag);
-            groupTag.setText(",," + tag + ",,");
+            groupTag.setText(",," + LanguageStringsManager.getInstance().getLanguageStringByStringId(tag).getLocalLanguageString() + ",,");
         }
     }
 

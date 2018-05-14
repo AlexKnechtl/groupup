@@ -30,7 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alexander.groupup.MainActivities.HomeActivity;
-import com.example.alexander.groupup.MainActivities.NotificationActivity;
+import com.example.alexander.groupup.Singletons.LanguageStringsManager;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -88,6 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LanguageStringsManager.initialize();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
