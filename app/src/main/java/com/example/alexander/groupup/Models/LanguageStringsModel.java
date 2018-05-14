@@ -1,7 +1,8 @@
 package com.example.alexander.groupup.Models;
 
-public class LanguageStringsModel {
+import java.util.Locale;
 
+public class LanguageStringsModel {
     public String Deutsch;
     public String English;
     public String Image;
@@ -18,7 +19,11 @@ public class LanguageStringsModel {
 
     public String getLocalLanguageString()
     {
-        return Deutsch;
+        switch (Locale.getDefault().getDisplayLanguage())
+        {
+            case "Deutsch": return Deutsch;
+            default:return English;
+        }
     }
 
     public LanguageStringsModel() {
