@@ -27,7 +27,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".MainActivities.SearchActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".MainActivities.HomeActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".MainActivities.ProfileActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".MainActivities.NotificationActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".MainActivities.SettingsActivity"
             android:screenOrientation="portrait"/>
 
         <activity

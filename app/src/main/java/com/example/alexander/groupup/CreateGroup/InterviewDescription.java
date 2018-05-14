@@ -9,8 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.MainActivities.HomeActivity;
 import com.example.alexander.groupup.Helpers.OnGetResultListener;
-import com.example.alexander.groupup.MainActivity;
 import com.example.alexander.groupup.Models.GroupImagesModel;
 import com.example.alexander.groupup.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,7 +66,7 @@ public class InterviewDescription extends AppCompatActivity {
         backLayoutDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InterviewDescription.this, MainActivity.class);
+                Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -79,7 +79,7 @@ public class InterviewDescription extends AppCompatActivity {
 
                 setDatabaseValues();
 
-                Intent intent = new Intent(InterviewDescription.this, MainActivity.class);
+                Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,9 +90,8 @@ public class InterviewDescription extends AppCompatActivity {
 
                 groupDescription = "Hier sollte eine Beschreibung stehen.";
 
+                Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
                 setDatabaseValues();
-
-                Intent intent = new Intent(InterviewDescription.this, MainActivity.class);
                 startActivity(intent);
             }
         });

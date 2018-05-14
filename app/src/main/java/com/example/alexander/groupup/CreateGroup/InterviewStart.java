@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.alexander.groupup.FriendsActivity;
-import com.example.alexander.groupup.MainActivity;
+import com.example.alexander.groupup.MainActivities.HomeActivity;
 import com.example.alexander.groupup.R;
 
 /**
@@ -31,7 +31,7 @@ public class InterviewStart extends AppCompatActivity {
         backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InterviewStart.this, MainActivity.class);
+                Intent intent = new Intent(InterviewStart.this, HomeActivity.class);
                 startActivity(intent);
             }
         });

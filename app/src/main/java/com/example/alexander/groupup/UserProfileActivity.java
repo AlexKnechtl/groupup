@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.MainActivities.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -340,7 +341,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     public void backHomeClick(View view) {
-        Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
+        Intent intent = new Intent(UserProfileActivity.this, HomeActivity.class);
         startActivity(intent);
     }
 

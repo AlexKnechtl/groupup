@@ -29,6 +29,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.MainActivities.HomeActivity;
+import com.example.alexander.groupup.MainActivities.NotificationActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,7 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import static com.example.alexander.groupup.Fragments.HomeFragment.ANONYMOUS;
+import static com.example.alexander.groupup.MainActivities.HomeActivity.ANONYMOUS;
 
 /**
  * Created by alexk on 20.02.2018.
@@ -318,7 +320,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     Toast.makeText(RegisterActivity.this, getString(R.string.register_succes), Toast.LENGTH_SHORT).show();
 
-                    Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent mainIntent = new Intent(RegisterActivity.this, HomeActivity.class);
                     startActivity(mainIntent);
                     finish();
                 } else {
@@ -372,7 +374,7 @@ public class RegisterActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
                 if (!(mUsername.equals(ANONYMOUS))) {
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
 
@@ -427,7 +429,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.child(uid).child("name").exists()) {
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
             }

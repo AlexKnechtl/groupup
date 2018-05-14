@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.alexander.groupup.MainActivity;
+import com.example.alexander.groupup.MainActivities.HomeActivity;
 import com.example.alexander.groupup.R;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
@@ -56,7 +56,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
         backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InterviewChoosePlace.this, MainActivity.class);
+                Intent intent = new Intent(InterviewChoosePlace.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
