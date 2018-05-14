@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.example.alexander.groupup.Helpers.OnGetResultListener;
 import com.example.alexander.groupup.MainActivity;
 import com.example.alexander.groupup.Models.GroupImagesModel;
 import com.example.alexander.groupup.R;
@@ -28,7 +30,7 @@ public class InterviewDescription extends AppCompatActivity {
     private EditText description;
 
     //Variables
-    String group, activity, memberQuantity, publicStatus, location, state;
+    String group, activity, memberQuantity, publicStatus, location, state,groupDescription, current_uid;
 
     //Firebase
     private DatabaseReference mGroupDatabase;
@@ -43,6 +45,8 @@ public class InterviewDescription extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         group = bundle.getString("group"); // Gruppen Kategorie
         activity = bundle.getString("activity");
+        //TODO Remove
+        System.out.println("---------------"+activity);
         memberQuantity = bundle.getString("memberQuantity");
         publicStatus = bundle.getString("publicStatus");
         location = bundle.getString("location");
@@ -50,7 +54,7 @@ public class InterviewDescription extends AppCompatActivity {
 
         //Initialize Firebase
         mCurrent_user = FirebaseAuth.getInstance().getCurrentUser();
-        final String current_uid = mCurrent_user.getUid();
+        current_uid = mCurrent_user.getUid();
         mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(current_uid);
 
         //Find IDs
@@ -71,17 +75,9 @@ public class InterviewDescription extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String groupDescription = description.getText().toString();
+                groupDescription = description.getText().toString();
 
-                mGroupDatabase.child("category").setValue(group);
-                mGroupDatabase.child("activity").setValue(activity);
-                mGroupDatabase.child("member_quantity").setValue(memberQuantity);
-                mGroupDatabase.child("public_status").setValue(publicStatus);
-                mGroupDatabase.child("location").setValue(location);
-                mGroupDatabase.child("description").setValue(groupDescription);
-                mGroupDatabase.child("tag").setValue(activity);
-                mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
-                mGroupDatabase.child("group_image").setValue(getRandomImage(activity, group));
+                setDatabaseValues();
 
                 Intent intent = new Intent(InterviewDescription.this, MainActivity.class);
                 startActivity(intent);
@@ -92,15 +88,9 @@ public class InterviewDescription extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                mGroupDatabase.child("category").setValue(group);
-                mGroupDatabase.child("activity").setValue(activity);
-                mGroupDatabase.child("member_quantity").setValue(memberQuantity);
-                mGroupDatabase.child("public_status").setValue(publicStatus);
-                mGroupDatabase.child("location").setValue(location);
-                mGroupDatabase.child("description").setValue("Hier sollte eine Beschreibung stehen.");
-                mGroupDatabase.child("tag").setValue(activity);
-                mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
-                mGroupDatabase.child("group_image").setValue(getRandomImage(activity, group));
+                groupDescription = "Hier sollte eine Beschreibung stehen.";
+
+                setDatabaseValues();
 
                 Intent intent = new Intent(InterviewDescription.this, MainActivity.class);
                 startActivity(intent);
@@ -108,12 +98,29 @@ public class InterviewDescription extends AppCompatActivity {
         });
     }
 
-    private String getRandomImage(String activity, String category) {
-        if (category.equals("Sport"))
+    private void setDatabaseValues() {
+        if (group.equals("Sport"))
         {
-            return GroupImagesModel.getRandomImageURL(activity);
+            GroupImagesModel.getRandomImageURL(activity, new OnGetResultListener<String>() {
+                @Override
+                public void OnSuccess(String groupImage) {
+                    mGroupDatabase.child("category").setValue(group);
+                    mGroupDatabase.child("activity").setValue(activity);
+                    mGroupDatabase.child("member_quantity").setValue(memberQuantity);
+                    mGroupDatabase.child("public_status").setValue(publicStatus);
+                    mGroupDatabase.child("location").setValue(location);
+                    mGroupDatabase.child("description").setValue(groupDescription);
+                    mGroupDatabase.child("tag").setValue(activity);
+                    mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
+                    mGroupDatabase.child("group_image").setValue(groupImage);
+                }
+
+                @Override
+                public void OnFail() {
+                    Toast.makeText(getBaseContext(), "Error saving Group", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-        return null;
     }
 
     @Override

@@ -6,6 +6,21 @@ public class LanguageStringsModel {
     public String English;
     public String Image;
 
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLocalLanguageString()
+    {
+        return Deutsch;
+    }
+
     public LanguageStringsModel() {
     }
 

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.example.alexander.groupup.Helpers.TextImageItem;
+import com.example.alexander.groupup.Models.LanguageStringsModel;
 import com.example.alexander.groupup.R;
 
 import java.util.ArrayList;
@@ -22,11 +22,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CustomSportAdapter extends RecyclerView.Adapter<CustomSportAdapter.ViewHolder> {
 
-    private ArrayList<TextImageItem> sportItems;
+    private ArrayList<LanguageStringsModel> sportItems;
     private String category;
     private Context mContext;
 
-    public CustomSportAdapter(Context context, ArrayList<TextImageItem> sportItems, String category) {
+    public CustomSportAdapter(Context context, ArrayList<LanguageStringsModel> sportItems, String category) {
         mContext = context;
         this.category = category;
         this.sportItems = sportItems;
@@ -41,8 +41,8 @@ public class CustomSportAdapter extends RecyclerView.Adapter<CustomSportAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.sportActivity.setText(sportItems.get(position).getText());
-        Glide.with(mContext).load(sportItems.get(position).getImage()).into(new SimpleTarget<Drawable>() {
+        holder.sportActivity.setText(sportItems.get(position).getLocalLanguageString());
+        Glide.with(mContext).load(sportItems.get(position).Image).into(new SimpleTarget<Drawable>() {
             @Override
             public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
                 holder.sportImage.setImageDrawable(resource);
@@ -54,7 +54,7 @@ public class CustomSportAdapter extends RecyclerView.Adapter<CustomSportAdapter.
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, InterviewMembers.class);
                 intent.putExtra("group", category);
-                intent.putExtra("activity", sportItems.get(position).getText());
+                intent.putExtra("activity", sportItems.get(position).getId());
                 intent.putExtra("group_image", new Integer(position).toString());
                 mContext.startActivity(intent);
             }
@@ -81,7 +81,7 @@ public class CustomSportAdapter extends RecyclerView.Adapter<CustomSportAdapter.
         }
     }
 
-    public void filterList(ArrayList<TextImageItem> filteredNames) {
+    public void filterList(ArrayList<LanguageStringsModel> filteredNames) {
         this.sportItems = filteredNames;
         notifyDataSetChanged();
     }
