@@ -1,31 +1,79 @@
 package com.example.alexander.groupup.Models;
 
-import java.util.HashMap;
+import com.example.alexander.groupup.Helpers.OnGetResultListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GroupImagesModel {
 
-    // Hashmap for Images: <Activity, URLs>
-    private static HashMap<String, String[]> imageUrlMap = new HashMap<>();
+    private static DatabaseReference sportImageMapReference = FirebaseDatabase.getInstance().getReference().child("SportImageMap");
 
-    static {
-        imageUrlMap.put("Tennis", new String[]{"https://firebasestorage.googleapis.com/v0/b/groupup-e980d.appspot.com/o/group_images%2Fsport_tennis_1.png?alt=media&token=3d4ecb66-7274-4984-be50-a17b42d0b873"});
-        imageUrlMap.put("Biking", new String[]{"https://firebasestorage.googleapis.com/v0/b/groupup-e980d.appspot.com/o/group_images%2Fsport_bike_1.png?alt=media&token=39b0b532-ad2f-4f3e-97ea-b05ad2be54b2"});
-        imageUrlMap.put("Running", new String[]{"https://firebasestorage.googleapis.com/v0/b/groupup-e980d.appspot.com/o/group_images%2Fsport_bike_1.png?alt=media&token=39b0b532-ad2f-4f3e-97ea-b05ad2be54b2"});
-
-    }
-
-    public static String getRandomImageURL(String activity)
-    {
-        String[] images;
+    public static void getRandomImageURL(String activity, final OnGetResultListener<String> listener) {
+        sportImageMapReference.keepSynced(true);
+        DatabaseReference reference;
         try {
-            images = imageUrlMap.get(activity);
+            reference = sportImageMapReference.child(activity);
+//            System.out.println("\n\n------------------ Out TRY");
+        } catch (Exception e) {
+            reference = sportImageMapReference.child("default");
+//            System.out.println("\n\n------------------ In Catch");
         }
-        catch (Exception e)
-        {
-            images = new String[]{"https://firebasestorage.googleapis.com/v0/b/groupup-e980d.appspot.com/o/group_images%2Fsport_bike_1.png?alt=media&token=39b0b532-ad2f-4f3e-97ea-b05ad2be54b2"};
-        }
-        Random rnd = new Random();
-        return images[rnd.nextInt(images.length)];
+//        System.out.println("\n\n------------------ finally");
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> imageURLs = new ArrayList<>();
+//              System.out.print("-------ParentKey: " + dataSnapshot.getKey());
+//              System.out.println("------Value: " + dataSnapshot.getValue());
+
+                try {
+                    for (DataSnapshot s : dataSnapshot.getChildren()) {
+                        imageURLs.add(s.getValue().toString());
+                        System.out.println("----" + s.getValue());
+                    }
+
+//                  System.out.println("\n------------------ ArraySize: " + imageURLs.size());
+
+                    Random rnd = new Random();
+                    listener.OnSuccess(imageURLs.get(rnd.nextInt(imageURLs.size())));
+                } catch (Exception e) {
+                    sportImageMapReference.child("default").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            ArrayList<String> imageURLs = new ArrayList<>();
+//                          System.out.print("-------ParentKey: " + dataSnapshot.getKey());
+//                          System.out.println("------Value: " + dataSnapshot.getValue());
+                            for (DataSnapshot s : dataSnapshot.getChildren()) {
+                                imageURLs.add(s.getValue().toString());
+                                System.out.println("----" + s.getValue());
+                            }
+
+//                          System.out.println("\n------------------ ArraySize: " + imageURLs.size());
+
+                            Random rnd = new Random();
+                            listener.OnSuccess(imageURLs.get(rnd.nextInt(imageURLs.size())));
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
+

@@ -8,7 +8,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import com.example.alexander.groupup.Helpers.TextImageItem;
 import com.example.alexander.groupup.Models.LanguageStringsModel;
 import com.example.alexander.groupup.R;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +31,7 @@ public class InterviewActivitySport extends AppCompatActivity {
     //Variables
     String group;
 
-    private ArrayList<TextImageItem> sportItems;
+    private ArrayList<LanguageStringsModel> sportItems;
     //private ArrayList<Integer> sportImages;
     private CustomSportAdapter adapter;
 
@@ -58,11 +57,12 @@ public class InterviewActivitySport extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
-                    System.out.println(snapshot.getKey());
+                    //System.out.println(snapshot.getKey());
                     LanguageStringsModel languageStrings = snapshot.getValue(LanguageStringsModel.class);
-                    sportItems.add(new TextImageItem(languageStrings.Deutsch, languageStrings.Image));
+                    languageStrings.setId(snapshot.getKey());
+                    sportItems.add(languageStrings);
                     adapter.notifyDataSetChanged();
-                    System.out.println(languageStrings.Deutsch);
+                    //System.out.println(languageStrings.Deutsch);
                 }
             }
 
@@ -147,12 +147,12 @@ public class InterviewActivitySport extends AppCompatActivity {
 
     private void filter(String text) {
         //New array list that will hold the filtered data
-        ArrayList<TextImageItem> filteredNames = new ArrayList<>();
+        ArrayList<LanguageStringsModel> filteredNames = new ArrayList<>();
 
         //Looping through existing elements
-        for (TextImageItem s : sportItems) {
+        for (LanguageStringsModel s : sportItems) {
             //If the existing elements contains the search input
-            if (s.getText().toLowerCase().contains(text.toLowerCase())) {
+            if (s.getLocalLanguageString().toLowerCase().contains(text.toLowerCase())) {
                 //Adding the element to filtered list
                 filteredNames.add(s);
             }
