@@ -11,16 +11,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.CreateGroup.InterviewStart;
 import com.example.alexander.groupup.GroupView;
+import com.example.alexander.groupup.RegisterActivity;
 import com.example.alexander.groupup.Singletons.LanguageStringsManager;
 import com.example.alexander.groupup.Models.GroupsModel;
 import com.example.alexander.groupup.R;
@@ -52,6 +56,7 @@ public class HomeActivity extends AppCompatActivity {
     public static final String ANONYMOUS = "anonymous";
     private static final String TAG = "MainActivity";
     private static final int LOCATION_REQUEST_CODE = 2;
+    private Context context;
 
     //Firebase
     private DatabaseReference GroupDatabase;
@@ -66,7 +71,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_home);
+        setContentView(R.layout.main_home);
+
+        //Transparent Status Bar
+        Window w = getWindow();
+        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         setupBottomNavigationView();
 
@@ -188,5 +197,23 @@ public class HomeActivity extends AppCompatActivity {
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
+    }
+
+    long lastPress;
+
+    @Override
+    public void onBackPressed() {
+
+        long currentTime = System.currentTimeMillis();
+
+        if (currentTime - lastPress > 5000) {
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_LONG).show();
+            lastPress = currentTime;
+        } else {
+            Intent intent = new Intent(HomeActivity.this, RegisterActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("EXIT", true);
+            startActivity(intent);
+        }
     }
 }

@@ -1,9 +1,11 @@
 package com.example.alexander.groupup.MainActivities;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.transition.Explode;
 import android.view.MenuItem;
 
 import com.example.alexander.groupup.MainActivities.HomeActivity;
@@ -31,23 +33,33 @@ public class BottomNavigationViewHelper {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         Intent intent = new Intent(context, HomeActivity.class);
-                        context.startActivity(intent);
+                        ActivityOptions options =
+                                ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+                        context.startActivity(intent, options.toBundle());
                         break;
                     case R.id.nav_notification:
                         Intent intent2 = new Intent(context, NotificationActivity.class);
-                        context.startActivity(intent2);
+                        ActivityOptions options1 =
+                                ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+                        context.startActivity(intent2, options1.toBundle());
                         break;
                     case R.id.nav_search:
                         Intent intent3 = new Intent(context, SearchActivity.class);
-                        context.startActivity(intent3);
+                        ActivityOptions options2 =
+                                ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+                        context.startActivity(intent3, options2.toBundle());
                         break;
                     case R.id.nav_profile:
                         Intent intent4 = new Intent(context, ProfileActivity.class);
-                        context.startActivity(intent4);
+                        ActivityOptions options3 =
+                                ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+                        context.startActivity(intent4, options3.toBundle());
                         break;
                     case R.id.nav_settings:
                         Intent intent5 = new Intent(context, SettingsActivity.class);
-                        context.startActivity(intent5);
+                        ActivityOptions options4 =
+                                ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
+                        context.startActivity(intent5, options4.toBundle());
                         break;
                 }
 

@@ -24,7 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_settings);
+        setContentView(R.layout.main_settings);
 
         setupBottomNavigationView();
 
@@ -70,4 +70,9 @@ public class SettingsActivity extends AppCompatActivity {
         menuItem.setChecked(true);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SettingsActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
 }

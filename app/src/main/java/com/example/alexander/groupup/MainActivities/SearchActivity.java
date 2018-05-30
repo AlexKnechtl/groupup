@@ -43,7 +43,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_search);
+        setContentView(R.layout.main_search);
 
         setupBottomNavigationView();
 
@@ -144,4 +144,9 @@ public class SearchActivity extends AppCompatActivity {
         menuItem.setChecked(true);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SearchActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
 }

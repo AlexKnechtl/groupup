@@ -115,7 +115,7 @@ public class FriendsActivity extends AppCompatActivity {
 
         public void setDate(String date) {
             TextView friendsDate = mView.findViewById(R.id.user_single_age);
-            friendsDate.setText(date);
+            friendsDate.setText("Friends since " + date);
         }
 
         public void setName(String name) {
