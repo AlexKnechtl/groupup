@@ -190,7 +190,6 @@
                     android:layout_height="80dp"
                     android:fontFamily="@font/dosis_semibold"
                     android:gravity="center"
-                    android:onClick="changeStatusClick"
                     android:paddingLeft="22dp"
                     android:paddingRight="22dp"
                     android:text="Hier kannst du den Leuten etwas über dich erzählen."
@@ -343,6 +342,7 @@
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
                     android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
                     android:background="@drawable/circle_design_interests"
                     android:padding="8dp">
 

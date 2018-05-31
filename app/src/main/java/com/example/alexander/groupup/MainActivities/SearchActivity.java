@@ -118,17 +118,17 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         public void setName(String name) {
-            TextView userNameView = (TextView) mView.findViewById(R.id.user_single_name);
+            TextView userNameView = mView.findViewById(R.id.user_single_name);
             userNameView.setText(name);
         }
 
         public void setAge(String age) {
-            TextView userAgeView = (TextView) mView.findViewById(R.id.user_single_age);
+            TextView userAgeView = mView.findViewById(R.id.user_single_age);
             userAgeView.setText(age);
         }
 
         public void setUserImage(String thumb_image, Context context) {
-            CircleImageView userImageView = (CircleImageView) mView.findViewById(R.id.user_single_image);
+            CircleImageView userImageView = mView.findViewById(R.id.user_single_image);
             Picasso.with(context).load(thumb_image).placeholder(R.drawable.default_user_black).into(userImageView);
         }
     }

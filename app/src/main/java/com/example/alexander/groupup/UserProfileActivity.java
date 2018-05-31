@@ -48,7 +48,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private String mCurrentState;
 
     private String userName, userThumbImage;
-    private String myProfileName, myProfileThumbImage;
+    private String myProfileName, myProfileThumbImage, myProfileAge, myProfileCity;
     private long friendsCountMyAccount, friendsCountUser;
 
     //Animations
@@ -67,33 +67,11 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userprofile);
 
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String current_uid = mCurrentUser.getUid();
-
         //Get Information by Intent
         receiver_user_id = getIntent().getStringExtra("user_id");
 
-        //Firebase
-        UserProfileDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(receiver_user_id);
-        UserProfileDatabase.keepSynced(true);
-
-        MyAccountDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
-        mFriendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_Request");
-        mNotificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
-
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        //Find IDs
-        mDisplayNameAge = findViewById(R.id.user_name_age);
-        mUserProfile = findViewById(R.id.user_image);
-        mStatus = findViewById(R.id.user_status);
-        mDisplayLocation = findViewById(R.id.user_location);
-        friendsCounter = findViewById(R.id.friends_counter_userprofile);
-
-        backExplorerText = findViewById(R.id.back_explorer_textview);
-        backExplorerFab = findViewById(R.id.back_explorer_userprofile);
-        mFabFriendText = findViewById(R.id.friend_fab_bubble);
-        mFriendFab = findViewById(R.id.friend_button);
+        initializeFirebase();
+        findIDs();
 
         //Animations
         FabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
@@ -107,7 +85,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 userName = dataSnapshot.child("name").getValue().toString();
                 String age_day = dataSnapshot.child("age_day").getValue().toString();
                 String age_year = dataSnapshot.child("age_year").getValue().toString();
-                String displayLocation = dataSnapshot.child("city").getValue().toString();
+                String userCity = dataSnapshot.child("city").getValue().toString();
                 String image = dataSnapshot.child("image").getValue().toString();
                 userThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
 
@@ -134,52 +112,12 @@ public class UserProfileActivity extends AppCompatActivity {
                 UserProfileDatabase.child("age").setValue(ageUser);
 
                 mDisplayNameAge.setText(userName + ", " + age);
-                mDisplayLocation.setText(displayLocation);
+                mDisplayLocation.setText(userCity);
                 friendsCounter.setText(friendCount);
 
                 Picasso.with(UserProfileActivity.this).load(image).placeholder(R.drawable.default_user_black).into(mUserProfile);
 
-                //Friends List / Request Feature
-                mFriendRequestDatabase.child(mCurrentUser.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild(receiver_user_id)) {
-                            String req_type = dataSnapshot.child(receiver_user_id).child("request_type").getValue().toString();
-
-                            if (req_type.equals("received")) {
-                                mFabFriendText.setText(getString(R.string.accept_friend));
-                                mCurrentState = "req_received";
-
-                            } else if (req_type.equals("sent")) {
-                                mCurrentState = "req_sent";
-                                mFabFriendText.setText(getString(R.string.cancel_friend_request));
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
-                MyAccountDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        String counter = dataSnapshot.child("friends_count").getValue().toString();
-                        friendsCountMyAccount = Long.parseLong(counter);
-
-                        if (dataSnapshot.child("friends").hasChild(receiver_user_id)) {
-                            mCurrentState = "friends";
-                            mFabFriendText.setText(getString(R.string.unfriend));
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                checkFriendState();
             }
 
             @Override
@@ -191,20 +129,6 @@ public class UserProfileActivity extends AppCompatActivity {
         if (mCurrentState.equals("not_friends")) {
             mFabFriendText.setText(getString(R.string.add_friend));
         }
-
-        MyAccountDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                myProfileName = dataSnapshot.child("name").getValue().toString();
-                myProfileThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
     }
 
     //Friends Button is pressed
@@ -212,43 +136,15 @@ public class UserProfileActivity extends AppCompatActivity {
 
         if (mCurrentState.equals("not_friends")) {
 
-            mFriendRequestDatabase.child(mCurrentUser.getUid()).child(receiver_user_id).child("request_type").setValue("sent")
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                mFriendRequestDatabase.child(receiver_user_id).child(mCurrentUser.getUid()).child("request_type")
-                                        .setValue("received").addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-
-                                        HashMap<String, String> notificationData = new HashMap<>();
-                                        notificationData.put("from", mCurrentUser.getUid());
-                                        notificationData.put("type", "request");
-
-                                        mNotificationDatabase.child(receiver_user_id).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                mFabFriendText.setText(getString(R.string.cancel_friend_request));
-                                                mCurrentState = "req_sent";
-                                                Toast.makeText(UserProfileActivity.this, getString(R.string.sent_successfully), Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                    }
-                                });
-                            } else {
-                                Toast.makeText(UserProfileActivity.this, getString(R.string.failed_sending_request), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+            sendFriendRequest();
         }
 
-        if (mCurrentState.equals("req_sent")) {
+        if (mCurrentState.equals("request_sent")) {
 
-            mFriendRequestDatabase.child(mCurrentUser.getUid()).child(receiver_user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            MyAccountDatabase.child("friend_requests").child("sent").child(receiver_user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    mFriendRequestDatabase.child(receiver_user_id).child(mCurrentUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    UserProfileDatabase.child("friend_requests").child("received").child(mCurrentUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             mFabFriendText.setText(getString(R.string.add_friend));
@@ -260,7 +156,7 @@ public class UserProfileActivity extends AppCompatActivity {
             });
         }
 
-        if (mCurrentState.equals("req_received")) {
+        if (mCurrentState.equals("request_received")) {
             Calendar cal = Calendar.getInstance();
             int year = cal.get(Calendar.YEAR);
             int month = cal.get(Calendar.MONTH);
@@ -268,7 +164,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
             final String friendDate = day + "." + month + "." + year;
 
-            String friendsMyAccount = Objects.toString(friendsCountMyAccount + 1 );
+            String friendsMyAccount = Objects.toString(friendsCountMyAccount + 1);
             final String friendsUser = Objects.toString(friendsCountUser + 1);
 
             MyAccountDatabase.child("friends_count").setValue(friendsMyAccount);
@@ -277,7 +173,6 @@ public class UserProfileActivity extends AppCompatActivity {
             MyAccountDatabase.child("friends").child(receiver_user_id).child("thumb_image").setValue(userThumbImage).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-
                     UserProfileDatabase.child("friends_count").setValue(friendsUser);
                     UserProfileDatabase.child("friends").child(mCurrentUser.getUid()).child("date").setValue(friendDate);
                     UserProfileDatabase.child("friends").child(mCurrentUser.getUid()).child("name").setValue(myProfileName);
@@ -285,14 +180,12 @@ public class UserProfileActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-
-                                    mFriendRequestDatabase.child(mCurrentUser.getUid()).child(receiver_user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    MyAccountDatabase.child("friend_requests").child("received").child(receiver_user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            mFriendRequestDatabase.child(receiver_user_id).child(mCurrentUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            UserProfileDatabase.child("friend_requests").child("sent").child(mCurrentUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-
                                                     mCurrentState = "friends";
                                                     mFabFriendText.setText(getString(R.string.unfriend));
                                                     Toast.makeText(UserProfileActivity.this, getString(R.string.you_are_now_friends), Toast.LENGTH_SHORT).show();
@@ -315,7 +208,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
-                            String friendsMyAccount = Objects.toString(friendsCountMyAccount - 1 );
+                            String friendsMyAccount = Objects.toString(friendsCountMyAccount - 1);
                             final String friendsUser = Objects.toString(friendsCountUser - 1);
 
                             MyAccountDatabase.child("friends_count").setValue(friendsMyAccount);
@@ -370,5 +263,112 @@ public class UserProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(UserProfileActivity.this, FriendsActivity.class);
         intent.putExtra("user_id", receiver_user_id);
         startActivity(intent);
+    }
+
+    private void sendFriendRequest() {
+
+        MyAccountDatabase.child("friend_requests").child("sent").child(receiver_user_id).setValue("sent")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+
+                            HashMap<String, String> userData = new HashMap<>();
+                            userData.put("name", myProfileName + ", " + myProfileAge);
+                            userData.put("thumb_image", myProfileThumbImage);
+                            userData.put("city", myProfileCity);
+
+                            UserProfileDatabase.child("friend_requests").child("received").child(mCurrentUser.getUid()).setValue(userData)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                            HashMap<String, String> notificationData = new HashMap<>();
+                                            notificationData.put("from", mCurrentUser.getUid());
+                                            notificationData.put("type", "request");
+
+                                            mNotificationDatabase.child(receiver_user_id).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    mFabFriendText.setText(getString(R.string.cancel_friend_request));
+                                                    mCurrentState = "req_sent";
+                                                    Toast.makeText(UserProfileActivity.this, getString(R.string.sent_successfully), Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(UserProfileActivity.this, getString(R.string.failed_sending_request), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void checkFriendState() {
+
+        MyAccountDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                myProfileName = dataSnapshot.child("name").getValue().toString();
+                myProfileThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
+                myProfileAge = dataSnapshot.child("age").getValue().toString();
+                myProfileCity = dataSnapshot.child("city").getValue().toString();
+                String counter = dataSnapshot.child("friends_count").getValue().toString();
+                friendsCountMyAccount = Long.parseLong(counter);
+
+                if (dataSnapshot.child("friends").hasChild(receiver_user_id)) {
+                    mCurrentState = "friends";
+                    mFabFriendText.setText(getString(R.string.unfriend));
+                    return;
+                }
+
+                if (dataSnapshot.child("friend_requests").child("sent").hasChild(receiver_user_id)) {
+                    mCurrentState = "request_sent";
+                    mFabFriendText.setText(getString(R.string.cancel_friend_request));
+                    return;
+                }
+
+                if (dataSnapshot.child("friend_requests").child("received").hasChild(receiver_user_id)) {
+                    mCurrentState = "request_received";
+                    mFabFriendText.setText(getString(R.string.accept_friend));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void initializeFirebase() {
+
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String current_uid = mCurrentUser.getUid();
+
+        UserProfileDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(receiver_user_id);
+        UserProfileDatabase.keepSynced(true);
+
+        MyAccountDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+        mFriendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_Request");
+        mNotificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
+
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+    }
+
+
+    private void findIDs() {
+
+        mDisplayNameAge = findViewById(R.id.user_name_age);
+        mUserProfile = findViewById(R.id.user_image);
+        mStatus = findViewById(R.id.user_status);
+        mDisplayLocation = findViewById(R.id.user_location);
+        friendsCounter = findViewById(R.id.friends_counter_userprofile);
+
+        backExplorerText = findViewById(R.id.back_explorer_textview);
+        backExplorerFab = findViewById(R.id.back_explorer_userprofile);
+        mFabFriendText = findViewById(R.id.friend_fab_bubble);
+        mFriendFab = findViewById(R.id.friend_button);
     }
 }

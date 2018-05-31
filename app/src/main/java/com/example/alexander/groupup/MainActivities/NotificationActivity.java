@@ -8,8 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.Fragments.FriendNotifyFragment;
@@ -35,10 +33,6 @@ public class NotificationActivity extends AppCompatActivity {
 
         dateTextView = findViewById(R.id.date_notification);
 
-        //Transparent Status Bar
-        Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
         //Show Date in GroupCalendar
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MMM");
         String currentDate = formatter.format(new Date());
@@ -50,8 +44,8 @@ public class NotificationActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FriendNotifyFragment());
         adapter.addFragment(new GroupNotifiyFragment());
+        adapter.addFragment(new FriendNotifyFragment());
 
         ViewPager viewPager = findViewById(R.id.container_viewpager);
         viewPager.setAdapter(adapter);

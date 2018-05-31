@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GroupUp</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Basic Strings -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="not_possible">Missing information.</string>
     <string name="too_young">We are sorry :( You are too young.</string>
@@ -43,7 +43,7 @@
     <string name="friend_request_canceled">Canceled Friend Request.</string>
     <string name="friends_label">Friends</string>
     <string name="no_friends">Here are no friends yet.</string>
-
+    <string name="accept">Accept</string>
 
     <!-- Interview -->
     <string name="how_many_member">OK, how many members should the group have?</string>
@@ -113,5 +113,4 @@
     <string name="nav_search">Search</string>
     <string name="nav_profile">Profile</string>
     <string name="nav_settings">Settings</string>
-
 </resources>
