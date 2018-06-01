@@ -57,7 +57,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
     //Firebase
     private DatabaseReference UserProfileDatabase;
-    private DatabaseReference mFriendRequestDatabase;
     private DatabaseReference MyAccountDatabase;
     private DatabaseReference mNotificationDatabase;
     private FirebaseUser mCurrentUser;
@@ -115,7 +114,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 mDisplayLocation.setText(userCity);
                 friendsCounter.setText(friendCount);
 
-                Picasso.with(UserProfileActivity.this).load(image).placeholder(R.drawable.default_user_black).into(mUserProfile);
+                Picasso.with(UserProfileActivity.this).load(image).placeholder(R.drawable.profile_white_border).into(mUserProfile);
 
                 checkFriendState();
             }
@@ -314,6 +313,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 myProfileThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
                 myProfileAge = dataSnapshot.child("age").getValue().toString();
                 myProfileCity = dataSnapshot.child("city").getValue().toString();
+
                 String counter = dataSnapshot.child("friends_count").getValue().toString();
                 friendsCountMyAccount = Long.parseLong(counter);
 
@@ -351,7 +351,6 @@ public class UserProfileActivity extends AppCompatActivity {
         UserProfileDatabase.keepSynced(true);
 
         MyAccountDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
-        mFriendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_Request");
         mNotificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();

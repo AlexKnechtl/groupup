@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background"
     tools:context=".MainActivities.ProfileActivity">
 
@@ -31,15 +31,15 @@
                     android:layout_marginStart="17dp"
                     android:layout_marginTop="12dp"
                     android:layout_weight="4"
-                    android:src="@drawable/default_image_profile"
+                    android:src="@drawable/profile_white_border"
                     app:civ_border_color="@color/colorBackground"
                     app:civ_border_width="1dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="16dp"
                     android:layout_marginEnd="12dp"
                     android:src="@drawable/edit_profile"
@@ -141,7 +141,7 @@
                 <RelativeLayout
                     android:id="@+id/relativeLayout2"
                     android:layout_width="374dp"
-                    android:layout_height="76dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="17dp"
                     android:layout_marginStart="17dp"
                     android:layout_marginTop="18dp"
@@ -160,19 +160,30 @@
                         android:textColor="@color/colorAccent"
                         android:textSize="24sp" />
 
+                    <ImageView
+                        android:id="@+id/ic_location"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:layout_alignStart="@+id/profile_name_textview"
+                        android:layout_below="@+id/profile_name_textview"
+                        android:layout_marginStart="-5dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/location_white" />
+
                     <TextView
                         android:id="@+id/profile_location"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/profile_name_textview"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="6dp"
-                        android:drawableStart="@drawable/ic_location"
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/profile_name_textview"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_toEndOf="@id/ic_location"
                         android:fontFamily="@font/dosis_semibold"
                         android:gravity="center"
                         android:text="Hausmannstätten"
                         android:textColor="@color/colorAccent"
-                        android:textSize="18sp" />
+                        android:textSize="22sp" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -235,7 +246,7 @@
                         android:background="@drawable/circle_design_interests"
                         android:padding="8dp">
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/picture_languages"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -250,8 +261,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
+                            android:layout_alignTop="@id/picture_languages"
                             android:layout_marginStart="80dp"
-                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/dosis_semibold"
                             android:text="@string/languages"
                             android:textColor="@color/colorAccent"
@@ -263,7 +274,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/picture_languages"
                             android:layout_alignStart="@+id/languages"
-                            android:layout_marginBottom="5dp"
                             android:text="Hip Hop, Deutschrap"
                             android:textColor="@color/colorAccent" />
                     </RelativeLayout>
@@ -277,7 +287,7 @@
                         android:background="@drawable/circle_design_interests"
                         android:padding="8dp">
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/picture"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -293,7 +303,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_marginStart="80dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_alignTop="@id/picture"
                             android:fontFamily="@font/dosis_semibold"
                             android:text="@string/music"
                             android:textColor="@color/colorAccent"
@@ -305,7 +315,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/picture"
                             android:layout_alignStart="@+id/music"
-                            android:layout_marginBottom="5dp"
                             android:text="Hip Hop, Deutschrap"
                             android:textColor="@color/colorAccent" />
                     </RelativeLayout>
@@ -319,7 +328,7 @@
                         android:background="@drawable/circle_design_interests"
                         android:padding="8dp">
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/picture_sport_kinds"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -335,7 +344,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_marginStart="80dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_alignTop="@id/picture_sport_kinds"
                             android:fontFamily="@font/dosis_semibold"
                             android:text="@string/sport_kinds"
                             android:textColor="@color/colorAccent"
@@ -347,7 +356,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/picture_sport_kinds"
                             android:layout_alignStart="@+id/sport_kinds"
-                            android:layout_marginBottom="5dp"
                             android:text="Hip Hop, Deutschrap"
                             android:textColor="@color/colorAccent" />
                     </RelativeLayout>
@@ -355,14 +363,14 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="75dp"
+                        android:layout_marginBottom="50dp"
                         android:layout_marginLeft="32dp"
                         android:layout_marginRight="32dp"
                         android:layout_marginTop="12dp"
-                        android:layout_marginBottom="50dp"
                         android:background="@drawable/circle_design_interests"
                         android:padding="8dp">
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/picture_favourite_location"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -378,7 +386,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_marginStart="80dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_alignTop="@id/picture_favourite_location"
                             android:fontFamily="@font/dosis_semibold"
                             android:text="@string/favourite_hangouts"
                             android:textColor="@color/colorAccent"
@@ -390,7 +398,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/picture_favourite_location"
                             android:layout_alignStart="@+id/favourite_locations"
-                            android:layout_marginBottom="5dp"
                             android:text="Hip Hop, Deutschrap"
                             android:textColor="@color/colorAccent" />
                     </RelativeLayout>

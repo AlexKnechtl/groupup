@@ -139,7 +139,7 @@ public class ProfileActivity extends AppCompatActivity {
                 if (!image.equals("default")) {
 
                     Picasso.with(ProfileActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.ic_profile).into(mProfileImageView, new Callback() {
+                            .placeholder(R.drawable.profile_white_border).into(mProfileImageView, new Callback() {
                         @Override
                         public void onSuccess() {
 
@@ -147,7 +147,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                         @Override
                         public void onError() {
-                            Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.ic_profile).into(mProfileImageView);
+                            Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.profile_white_border).into(mProfileImageView);
                         }
                     });
                 }

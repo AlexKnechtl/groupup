@@ -15,7 +15,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
-            android:src="@drawable/default_user_black"/>
+            android:src="@drawable/profile_white"/>
 
         <TextView
             android:id="@+id/username_groupview"
@@ -29,14 +29,25 @@
             android:textColor="@color/colorAccent"
             android:textSize="26sp" />
 
-        <TextView
-            android:id="@+id/user_location_groupview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/user_picture"
-            android:layout_alignStart="@id/username_groupview"
-            android:text=""
-            android:drawableStart="@drawable/ic_location"
-            android:fontFamily="@font/dosis_semibold"
-            android:textColor="@color/colorAccent"/>
+    <ImageView
+        android:id="@+id/ic_location"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:layout_alignStart="@+id/username_groupview"
+        android:layout_below="@+id/username_groupview"
+        android:layout_marginStart="-5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/location_white" />
+
+    <TextView
+        android:id="@+id/user_location_groupview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/user_picture"
+        android:layout_toEndOf="@id/ic_location"
+        android:fontFamily="@font/dosis_semibold"
+        android:layout_marginStart="3dp"
+        android:text="City"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
 </RelativeLayout>

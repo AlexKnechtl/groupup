@@ -3,10 +3,13 @@ package com.example.alexander.groupup;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.Models.UserModel;
@@ -25,8 +28,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class GroupView extends AppCompatActivity {
 
     //XML
-    private TextView headline, description;
+    private TextView headline, description, backHomeFabText, joinGroupFabText;
     private RecyclerView membersList;
+    private FloatingActionButton backHomeFab, joinGroupFab;
 
     //Firebase
     private DatabaseReference GroupDatabase;
@@ -36,6 +40,10 @@ public class GroupView extends AppCompatActivity {
 
     //Variables
     private String state, groupId;
+
+    //Animations
+    Animation FabOpen, FabClose;
+    boolean fabIsOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +63,11 @@ public class GroupView extends AppCompatActivity {
         GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(groupId);
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        //Find IDs
-        headline = findViewById(R.id.group_view_headline);
-        description = findViewById(R.id.group_description);
+        //Animations
+        FabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        FabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
 
-        membersList = findViewById(R.id.member_list_group_view);
-        membersList.setHasFixedSize(true);
-        membersList.setLayoutManager(new LinearLayoutManager(this));
+        findIDs();
 
         GroupDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -155,11 +161,47 @@ public class GroupView extends AppCompatActivity {
 
         public static void setThumbImage(String thumb_image, Context context) {
             CircleImageView userImageView = mView.findViewById(R.id.user_picture);
-            Picasso.with(context).load(thumb_image).placeholder(R.drawable.default_user_black).into(userImageView);
+            Picasso.with(context).load(thumb_image).placeholder(R.drawable.profile_white).into(userImageView);
+        }
+    }
+
+    public void assistantGroupViewClick(View view) {
+        if (fabIsOpen) {
+            backHomeFab.startAnimation(FabClose);
+            backHomeFabText.startAnimation(FabClose);
+            joinGroupFab.startAnimation(FabClose);
+            joinGroupFabText.startAnimation(FabClose);
+            backHomeFab.setClickable(false);
+            joinGroupFab.setClickable(false);
+            fabIsOpen = false;
+
+        } else {
+            backHomeFab.startAnimation(FabOpen);
+            backHomeFabText.startAnimation(FabOpen);
+            joinGroupFab.startAnimation(FabOpen);
+            joinGroupFabText.startAnimation(FabOpen);
+            backHomeFab.setClickable(true);
+            joinGroupFab.setClickable(true);
+            fabIsOpen = true;
         }
     }
 
     public void sendGroupRequest(View view) {
 
+    }
+
+    private void findIDs() {
+        //Fabs
+        backHomeFab = findViewById(R.id.back_explorer_groupview);
+        joinGroupFab = findViewById(R.id.join_group_fab);
+        backHomeFabText = findViewById(R.id.back_explorer_text_groupview);
+        joinGroupFabText = findViewById(R.id.join_group_fab_text);
+
+        headline = findViewById(R.id.group_view_headline);
+        description = findViewById(R.id.group_description);
+
+        membersList = findViewById(R.id.member_list_group_view);
+        membersList.setHasFixedSize(true);
+        membersList.setLayoutManager(new LinearLayoutManager(this));
     }
 }
