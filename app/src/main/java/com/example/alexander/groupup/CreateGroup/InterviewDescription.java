@@ -2,6 +2,7 @@ package com.example.alexander.groupup.CreateGroup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,9 @@ import com.example.alexander.groupup.MainActivities.HomeActivity;
 import com.example.alexander.groupup.Helpers.OnGetResultListener;
 import com.example.alexander.groupup.Models.GroupImagesModel;
 import com.example.alexander.groupup.R;
+import com.firebase.ui.auth.data.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -30,10 +34,12 @@ public class InterviewDescription extends AppCompatActivity {
     private EditText description;
 
     //Variables
-    String group, activity, memberQuantity, publicStatus, location, state,groupDescription, current_uid;
+    String group, activity, memberQuantity, publicStatus, location,
+            state, groupDescription, current_uid;
 
     //Firebase
     private DatabaseReference mGroupDatabase;
+    private DatabaseReference UserDatabase;
     private FirebaseUser mCurrent_user;
 
     @Override
@@ -41,27 +47,11 @@ public class InterviewDescription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_description);
 
-        //Get Information by Intent
-        Bundle bundle = getIntent().getExtras();
-        group = bundle.getString("group"); // Gruppen Kategorie
-        activity = bundle.getString("activity");
-        //TODO Remove
-        System.out.println("---------------"+activity);
-        memberQuantity = bundle.getString("memberQuantity");
-        publicStatus = bundle.getString("publicStatus");
-        location = bundle.getString("location");
-        state = bundle.getString("state");
+        getGroupInformation();
 
-        //Initialize Firebase
-        mCurrent_user = FirebaseAuth.getInstance().getCurrentUser();
-        current_uid = mCurrent_user.getUid();
-        mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(current_uid);
+        initialzieFirebase();
 
-        //Find IDs
-        backLayoutDescription = findViewById(R.id.back_description);
-        addDescription = findViewById(R.id.add_description);
-        noDescription = findViewById(R.id.no_description);
-        description = findViewById(R.id.edit_text_description);
+        findIDs();
 
         backLayoutDescription.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,9 +68,6 @@ public class InterviewDescription extends AppCompatActivity {
                 groupDescription = description.getText().toString();
 
                 setDatabaseValues();
-
-                Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -98,8 +85,7 @@ public class InterviewDescription extends AppCompatActivity {
     }
 
     private void setDatabaseValues() {
-        if (group.equals("Sport"))
-        {
+        if (group.equals("Sport")) {
             GroupImagesModel.getRandomImageURL(activity, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String groupImage) {
@@ -112,6 +98,14 @@ public class InterviewDescription extends AppCompatActivity {
                     mGroupDatabase.child("tag").setValue(activity);
                     mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
                     mGroupDatabase.child("group_image").setValue(groupImage);
+
+                    UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                 }
 
                 @Override
@@ -120,6 +114,31 @@ public class InterviewDescription extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void getGroupInformation() {
+        Bundle bundle = getIntent().getExtras();
+        group = bundle.getString("group"); // Gruppen Kategorie
+        activity = bundle.getString("activity");
+        memberQuantity = bundle.getString("memberQuantity");
+        publicStatus = bundle.getString("publicStatus");
+        location = bundle.getString("location");
+        state = bundle.getString("state");
+    }
+
+    private void initialzieFirebase() {
+        mCurrent_user = FirebaseAuth.getInstance().getCurrentUser();
+        current_uid = mCurrent_user.getUid();
+
+        mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(current_uid);
+        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+    }
+
+    private void findIDs() {
+        backLayoutDescription = findViewById(R.id.back_description);
+        addDescription = findViewById(R.id.add_description);
+        noDescription = findViewById(R.id.no_description);
+        description = findViewById(R.id.edit_text_description);
     }
 
     @Override

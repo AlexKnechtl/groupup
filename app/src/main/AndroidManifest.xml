@@ -81,7 +81,7 @@
             android:label="@string/friends_label"/>
 
         <activity
-            android:name=".GroupView"
+            android:name=".GroupActivitys.GroupView"
             android:screenOrientation="portrait" />
 
 

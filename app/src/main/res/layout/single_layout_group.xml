@@ -42,7 +42,7 @@
             android:layout_alignStart="@+id/group_headline"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="29dp"
-            android:background="@drawable/profilename_design"
+            android:background="@drawable/circle_design_interests"
             android:orientation="horizontal">
 
             <TextView

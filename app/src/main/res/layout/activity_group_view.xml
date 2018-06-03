@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_party">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +18,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="22dp"
-            android:background="@drawable/profilename_design"
+            android:background="@drawable/circle_design_interests"
             android:gravity="center"
             android:maxLines="2"
             android:padding="8dp"
@@ -120,6 +119,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="190dp"
+        android:onClick="sendGroupRequest"
         android:layout_marginEnd="18dp"
         android:scaleType="center"
         android:src="@drawable/ic_add_friend"

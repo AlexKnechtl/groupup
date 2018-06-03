@@ -1,8 +1,9 @@
-package com.example.alexander.groupup;
+package com.example.alexander.groupup.GroupActivitys;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +12,16 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.alexander.groupup.MainActivities.HomeActivity;
 import com.example.alexander.groupup.Models.UserModel;
+import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.UserProfileActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,40 +64,18 @@ public class GroupView extends AppCompatActivity {
         state = "Steiermark";
         groupId = getIntent().getStringExtra("group_id");
 
-        //Initialize Firebase
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String current_uid = mCurrentUser.getUid();
-
-        GroupMemberDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(groupId).child("members");
-
-        GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(groupId);
-        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        initializeFirebase();
+        findIDs();
 
         //Animations
         FabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         FabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
 
-        findIDs();
-
-        GroupDatabase.addValueEventListener(new ValueEventListener() {
+        backHomeFab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                String activity = dataSnapshot.child("activity").getValue().toString();
-                String location = dataSnapshot.child("location").getValue().toString();
-
-                headline.setText(activity + " @" + location);
-
-                if (dataSnapshot.child("description").exists()) {
-
-                    String descriptionText = dataSnapshot.child("description").getValue().toString();
-                    description.setText(descriptionText);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onClick(View v) {
+                Intent intent = new Intent(GroupView.this, HomeActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -186,12 +174,45 @@ public class GroupView extends AppCompatActivity {
         }
     }
 
-    public void sendGroupRequest(View view) {
+    /*public void sendGroupRequest(View view) {
+        MyAccountDatabase.child("friend_requests").child("sent").child(receiver_user_id).setValue("sent")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
 
-    }
+                            HashMap<String, String> userData = new HashMap<>();
+                            userData.put("name", myProfileName + ", " + myProfileAge);
+                            userData.put("thumb_image", myProfileThumbImage);
+                            userData.put("city", myProfileCity);
+
+                            UserProfileDatabase.child("friend_requests").child("received").child(mCurrentUser.getUid()).setValue(userData)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                            HashMap<String, String> notificationData = new HashMap<>();
+                                            notificationData.put("from", mCurrentUser.getUid());
+                                            notificationData.put("type", "request");
+
+                                            mNotificationDatabase.child(receiver_user_id).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    mFabFriendText.setText(getString(R.string.cancel_friend_request));
+                                                    mCurrentState = "req_sent";
+                                                    Toast.makeText(GroupView.this, getString(R.string.sent_successfully), Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(GroupView.this, getString(R.string.failed_sending_request), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    } */
 
     private void findIDs() {
-        //Fabs
         backHomeFab = findViewById(R.id.back_explorer_groupview);
         joinGroupFab = findViewById(R.id.join_group_fab);
         backHomeFabText = findViewById(R.id.back_explorer_text_groupview);
@@ -203,5 +224,37 @@ public class GroupView extends AppCompatActivity {
         membersList = findViewById(R.id.member_list_group_view);
         membersList.setHasFixedSize(true);
         membersList.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void initializeFirebase() {
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String current_uid = mCurrentUser.getUid();
+
+        GroupMemberDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(groupId).child("members");
+        GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(groupId);
+        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+
+
+        GroupDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String activity = dataSnapshot.child("activity").getValue().toString();
+                String location = dataSnapshot.child("location").getValue().toString();
+
+                headline.setText(activity + " @" + location);
+
+                if (dataSnapshot.child("description").exists()) {
+
+                    String descriptionText = dataSnapshot.child("description").getValue().toString();
+                    description.setText(descriptionText);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

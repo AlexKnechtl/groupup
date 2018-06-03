@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.CreateGroup.InterviewStart;
-import com.example.alexander.groupup.GroupView;
+import com.example.alexander.groupup.GroupActivitys.GroupView;
 import com.example.alexander.groupup.RegisterActivity;
 import com.example.alexander.groupup.Singletons.LanguageStringsManager;
 import com.example.alexander.groupup.Models.GroupsModel;
@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     //XML
     private RecyclerView recyclerView;
     private TextView location, dateTextView;
-    private Button createGroupButton;
+    private Button groupButton;
 
     //Popup
     private ConstraintLayout coordinatorLayout;
@@ -65,6 +65,7 @@ public class HomeActivity extends AppCompatActivity {
     private String city;
     private Context mContext = HomeActivity.this;
     private static final int ACTIVITY_NUM = 0;
+    private boolean creator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,20 +80,27 @@ public class HomeActivity extends AppCompatActivity {
 
         //Get Current User ID
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String current_uid = mCurrentUser.getUid();
+        final String current_uid = mCurrentUser.getUid();
 
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
 
         //Find Ids
         dateTextView = findViewById(R.id.date_main);
         location = findViewById(R.id.location_main);
-        createGroupButton = findViewById(R.id.create_group_button);
+        groupButton = findViewById(R.id.group_button);
 
         //Get Data from User
         UserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 city = dataSnapshot.child("city").getValue().toString();
+
+                if (dataSnapshot.hasChild("my_group")) {
+                    groupButton.setText(R.string.my_group);
+                    creator = true;
+                } else
+                    creator = false;
+
                 location.setText(city);
             }
 
@@ -113,11 +121,17 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
-        createGroupButton.setOnClickListener(new View.OnClickListener() {
+        groupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, InterviewStart.class);
-                startActivity(intent);
+                if (!creator) {
+                    Intent intent = new Intent(HomeActivity.this, InterviewStart.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(HomeActivity.this, GroupView.class);
+                    intent.putExtra("group_id", current_uid);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -148,6 +162,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent intent = new Intent(HomeActivity.this, GroupView.class);
                         intent.putExtra("group_id", group_id);
+                        intent.putExtra("status", "visitor");
                         startActivity(intent);
                     }
                 });
@@ -170,7 +185,7 @@ public class HomeActivity extends AppCompatActivity {
             Glide.with(mView).load(groupImage).into(new SimpleTarget<Drawable>() {
                 @Override
                 public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                        groupBackground.setBackground(resource);
+                    groupBackground.setBackground(resource);
                 }
             });
         }
