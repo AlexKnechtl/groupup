@@ -7,8 +7,6 @@ import com.example.alexander.groupup.R;
 
 public class AddFriends extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

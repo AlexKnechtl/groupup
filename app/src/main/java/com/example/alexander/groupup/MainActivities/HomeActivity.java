@@ -97,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 if (dataSnapshot.hasChild("my_group")) {
                     groupButton.setText(R.string.my_group);
-                    creator = false; //true;
+                    creator = false;
                 } else
                     creator = false;
 
