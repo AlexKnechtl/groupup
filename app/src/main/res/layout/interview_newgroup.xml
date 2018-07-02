@@ -10,9 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-15dp"
-        android:layout_weight="2"
-        android:clipChildren="false"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -22,11 +19,13 @@
             android:src="@drawable/the_assistant" />
 
         <TextView
+            android:id="@+id/headline_leisure_business"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="4dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             android:background="@drawable/assistant_bubble"
             android:elevation="6dp"
             android:fontFamily="@font/dosis_bold"
@@ -37,195 +36,163 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/sports_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="-8dp"
+        android:layout_weight="7"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:layout_margin="12dp"
-            android:background="@drawable/assistant_circle_design"
-            android:elevation="5dp"
-            android:fontFamily="@font/dosis_bold"
-            android:gravity="center"
-            android:text="1"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="30sp" />
-
-        <TextView
-            android:layout_width="170dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="20dp"
-            android:background="@drawable/assistant_bubble"
-            android:elevation="4dp"
-            android:fontFamily="@font/dosis_bold"
-            android:gravity="center"
-            android:text="@string/sports_group"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/info_button_1"
-            android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:onClick="sportClick">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/sportsballs1" />
+
+                    <TextView
+                        android:id="@+id/option_one"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Sport"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:onClick="leisureClick">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/sportsballs1" />
+
+                    <TextView
+                        android:id="@+id/option_two"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Freizeit"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/info_interview_button" />
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="6dp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:onClick="nightlifeClick">
 
-    <LinearLayout
-        android:id="@+id/leisure_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:layout_margin="12dp"
-            android:background="@drawable/assistant_circle_design"
-            android:elevation="5dp"
-            android:fontFamily="@font/dosis_bold"
-            android:gravity="center"
-            android:text="2"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="30sp" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/sportsballs1" />
 
+                    <TextView
+                        android:id="@+id/optione_three"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Nachtleben"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="20dp"
-            android:background="@drawable/assistant_bubble"
-            android:elevation="4dp"
-            android:fontFamily="@font/dosis_bold"
-            android:gravity="center"
-            android:text="@string/leisure_group"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="6dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:onClick="businessClick">
 
-        <ImageButton
-            android:id="@+id/info_button_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/info_interview_button" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    </LinearLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/sportsballs1" />
 
-    <LinearLayout
-        android:id="@+id/party_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:layout_margin="12dp"
-            android:background="@drawable/assistant_circle_design"
-            android:elevation="5dp"
-            android:fontFamily="@font/dosis_bold"
-            android:gravity="center"
-            android:text="3"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="30sp" />
-
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="20dp"
-            android:background="@drawable/assistant_bubble"
-            android:elevation="4dp"
-            android:fontFamily="@font/dosis_bold"
-            android:gravity="center"
-            android:text="@string/party_group"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
-
-        <ImageButton
-            android:id="@+id/info_button_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/info_interview_button" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/productivity_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:layout_margin="12dp"
-            android:background="@drawable/assistant_circle_design"
-            android:elevation="5dp"
-            android:fontFamily="@font/dosis_bold"
-            android:gravity="center"
-            android:text="4"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="30sp" />
-
-        <TextView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="20dp"
-            android:background="@drawable/assistant_bubble"
-            android:elevation="4dp"
-            android:fontFamily="@font/dosis_bold"
-            android:gravity="center"
-            android:text="@string/productivity_group"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
-
-        <ImageButton
-            android:id="@+id/info_button_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/info_interview_button" />
-
+                    <TextView
+                        android:id="@+id/option_four"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Business"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/back_to_home"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
         android:orientation="horizontal">
 
         <ImageButton

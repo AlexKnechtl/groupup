@@ -104,7 +104,6 @@ public class SearchActivity extends AppCompatActivity {
                 });
             }
         };
-
         mResultList.setAdapter(firebaseRecyclerAdapter);
     }
 

@@ -74,7 +74,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="12dp"
                 android:orientation="horizontal"
                 android:paddingEnd="24dp"
                 android:paddingStart="24dp">
@@ -100,7 +100,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="12dp"
                 android:orientation="horizontal"
                 android:paddingEnd="24dp"
                 android:paddingStart="24dp">
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/dosis_semibold"
-                    android:text="welche"
+                    android:text=" welche"
                     android:textColor="@color/colorAccent"
                     android:textSize="24sp" />
             </LinearLayout>
