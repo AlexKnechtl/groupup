@@ -1,17 +1,17 @@
 package com.example.alexander.groupup.Models;
 
-public class GroupsModel {
+public class GroupModel {
 
     public String category;
     public String location;
     public String tag;
     public String group_image;
 
-    public GroupsModel() {
+    public GroupModel() {
 
     }
 
-    public GroupsModel(String category, String location, String kind) {
+    public GroupModel(String category, String location, String kind) {
         this.category = category;
         this.location = location;
         this.tag = tag;

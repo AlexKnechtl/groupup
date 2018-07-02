@@ -121,30 +121,12 @@
                     android:text="Tennis"
                     android:textColor="@color/colorAccent"
                     android:textSize="24sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:orientation="horizontal"
-                android:paddingEnd="24dp"
-                android:paddingStart="24dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/dosis_semibold"
-                    android:text="Welche "
-                    android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/main_layout_design_textview"
-                    android:fontFamily="@font/dosis_semibold"
-                    android:text="jetzt"
+                    android:text="welche"
                     android:textColor="@color/colorAccent"
                     android:textSize="24sp" />
             </LinearLayout>

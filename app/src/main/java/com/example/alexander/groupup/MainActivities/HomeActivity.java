@@ -24,7 +24,7 @@ import com.example.alexander.groupup.CreateGroup.InterviewStart;
 import com.example.alexander.groupup.GroupActivitys.GroupView;
 import com.example.alexander.groupup.RegisterActivity;
 import com.example.alexander.groupup.Singletons.LanguageStringsManager;
-import com.example.alexander.groupup.Models.GroupsModel;
+import com.example.alexander.groupup.Models.GroupModel;
 import com.example.alexander.groupup.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -142,14 +142,14 @@ public class HomeActivity extends AppCompatActivity {
 
         GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child("Steiermark");
 
-        FirebaseRecyclerAdapter<GroupsModel, GroupsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<GroupsModel, GroupsViewHolder>(
-                GroupsModel.class,
+        FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder>(
+                GroupModel.class,
                 R.layout.single_layout_group,
                 HomeActivity.GroupsViewHolder.class,
                 GroupDatabase
         ) {
             @Override
-            protected void populateViewHolder(HomeActivity.GroupsViewHolder groupsViewHolder, GroupsModel groups, int position) {
+            protected void populateViewHolder(HomeActivity.GroupsViewHolder groupsViewHolder, GroupModel groups, int position) {
 
                 groupsViewHolder.setGroupImage(groups.getGroup_image());
                 groupsViewHolder.setCategoryCity(groups.getCategory(), groups.getLocation());

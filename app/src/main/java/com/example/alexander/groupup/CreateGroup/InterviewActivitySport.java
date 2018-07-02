@@ -28,89 +28,19 @@ public class InterviewActivitySport extends AppCompatActivity {
     String group;
 
     private ArrayList<LanguageStringsModel> sportItems;
-    //private ArrayList<Integer> sportImages;
     private CustomSportAdapter adapter;
-
-    //private DatabaseReference mLanguageStringsReference = FirebaseDatabase.getInstance().getReference().child("LanguageStrings");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //mLanguageStringsReference.keepSynced(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_sports_activity);
-        System.out.println("Test");
+
         //Get Information by Intent
         Bundle bundle = getIntent().getExtras();
         group = bundle.getString("group"); // Gruppen Kategorie
 
-
         sportItems = LanguageStringsManager.getInstance().getLanguageStrings();
-        //sportImages = new ArrayList<>();
-
-        // ForEach through Items
-//        mLanguageStringsReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot snapshot : dataSnapshot.getChildren())
-//                {
-//                    //System.out.println(snapshot.getKey());
-//                    LanguageStringsModel languageStrings = snapshot.getValue(LanguageStringsModel.class);
-//                    languageStrings.setId(snapshot.getKey());
-//                    sportItems.add(languageStrings);
-//                    adapter.notifyDataSetChanged();
-//                    //System.out.println(languageStrings.Deutsch);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-/*
-        sportItems.add(getString(R.string.running));
-        sportItems.add(getString(R.string.basketball));
-        sportItems.add(getString(R.string.football));
-        sportItems.add(getString(R.string.jogging));
-        sportItems.add(getString(R.string.dance));
-        sportItems.add(getString(R.string.biken));
-        sportItems.add(getString(R.string.tennis));
-        sportItems.add(getString(R.string.table_tennis));
-        sportItems.add(getString(R.string.skateboarden));
-        sportItems.add(getString(R.string.swimming));
-        sportItems.add(getString(R.string.ice_skating));
-        sportItems.add(getString(R.string.ice_hockey));
-        sportItems.add(getString(R.string.fishing));
-        sportItems.add(getString(R.string.volleyball));
-        sportItems.add(getString(R.string.climbing));
-        sportItems.add(getString(R.string.chess));
-        sportItems.add(getString(R.string.baseball));
-        sportItems.add(getString(R.string.martial_arts));
-        sportItems.add(getString(R.string.gym));
-        sportItems.add(getString(R.string.mountainbiken));*/
-/*
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_soccer);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_biking);
-        sportImages.add(R.drawable.sport_activity_tennis);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_skateboarden);
-        sportImages.add(R.drawable.sport_activity_swimming);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_climbing);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_run);
-        sportImages.add(R.drawable.sport_activity_gym);
-        sportImages.add(R.drawable.sport_activity_mountainbiken);
-*/
-
 
         sportsRecyclerView = findViewById(R.id.recycler_view_sport);
         searchEditText = findViewById(R.id.search_sport_activitys);

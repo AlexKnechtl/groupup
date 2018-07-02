@@ -236,6 +236,12 @@ public class GroupView extends AppCompatActivity {
         membersList.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    public void sendGroupRequest (View view) {
+        Intent intent = new Intent(GroupView.this, AddFriends.class);
+        intent.putExtra("group_id", groupId);
+        startActivity(intent);
+    }
+
     private void initializeFirebase() {
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = mCurrentUser.getUid();
