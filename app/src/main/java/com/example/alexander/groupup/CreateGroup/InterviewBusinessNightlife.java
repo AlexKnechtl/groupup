@@ -33,11 +33,14 @@ public class InterviewBusinessNightlife extends AppCompatActivity {
         headline.setText("Was möchtest du mit deiner Gruppe machen?");
 
         if (group.equals("business")) {
+
             option1.setText("Veranstaltung");
             option2.setText("Seminar");
             option3.setText("Motivation");
             option4.setText("Connection Group");
+
         } else if(group.equals("nightlife")) {
+
             option1.setText("Disco");
             option2.setText("Pub / Bar");
             option3.setText("Shisha");

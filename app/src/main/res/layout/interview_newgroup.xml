@@ -38,8 +38,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="-8dp"
+        android:paddingBottom="8dp"
         android:layout_weight="7"
         android:orientation="vertical">
 
@@ -55,7 +54,8 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/fui_transparent"
+                app:cardElevation="3dp"
                 android:onClick="sportClick">
 
                 <RelativeLayout
@@ -66,7 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/sportsballs1" />
+                        android:src="@drawable/rechteck_group_icon_sport" />
 
                     <TextView
                         android:id="@+id/option_one"
@@ -86,7 +86,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
+                app:cardElevation="3dp"
                 android:onClick="leisureClick">
 
                 <RelativeLayout
@@ -97,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/sportsballs1" />
+                        android:src="@drawable/rechteck_group_icon_leisure" />
 
                     <TextView
                         android:id="@+id/option_two"
@@ -125,10 +125,10 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="6dp"
-                android:layout_margin="4dp"
+                android:paddingBottom="4dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
+                app:cardElevation="3dp"
                 android:onClick="nightlifeClick">
 
                 <RelativeLayout
@@ -139,7 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/sportsballs1" />
+                        android:src="@drawable/rechteck_group_icon_party" />
 
                     <TextView
                         android:id="@+id/optione_three"
@@ -162,7 +162,7 @@
                 android:layout_marginBottom="6dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
+                app:cardElevation="3dp"
                 android:onClick="businessClick">
 
                 <RelativeLayout
@@ -173,7 +173,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/sportsballs1" />
+                        android:src="@drawable/rechteck_group_icon_business" />
 
                     <TextView
                         android:id="@+id/option_four"
