@@ -15,10 +15,9 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".RegisterActivity"
-            android:label="@string/app_name"
+            android:name=".StartActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/RegisterTheme">
+            android:theme="@style/AppTheme">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,60 +26,68 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivities.SearchActivity"
+        <activity android:name=".registration.RegisterUsername"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
 
-        <activity android:name=".MainActivities.HomeActivity"
+        <activity android:name=".registration.RegisterAgeCity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <activity android:name=".main.SearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <activity android:name=".main.HomeActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".MainActivities.ProfileActivity"
+        <activity android:name=".main.ProfileActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".MainActivities.NotificationActivity"
+        <activity android:name=".main.NotificationActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".MainActivities.SettingsActivity"
+        <activity android:name=".main.SettingsActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".CreateGroup.InterviewStart"
+            android:name=".interviews.InterviewStart"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".CreateGroup.InterviewChoosePlace"
+            android:name=".interviews.InterviewChoosePlace"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".CreateGroup.InterviewActivitySport"
+            android:name=".interviews.InterviewActivitySport"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".CreateGroup.InterviewLeisure"
+        <activity android:name=".interviews.InterviewLeisure"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
 
         <activity
-            android:name=".CreateGroup.InterviewNewGroup"
+            android:name=".interviews.InterviewNewGroup"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".CreateGroup.InterviewMembers"
+            android:name=".interviews.InterviewMembers"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".CreateGroup.InterviewPublic"
+            android:name=".interviews.InterviewPublic"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".CreateGroup.InterviewDescription"
+            android:name=".interviews.InterviewDescription"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".CreateGroup.InterviewBusinessNightlife"
+            android:name=".interviews.InterviewBusinessNightlife"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Settings.MyAccountActivity"
+            android:name=".settings.MyAccountActivity"
             android:label="@string/my_account"
             android:screenOrientation="portrait"/>
 
@@ -90,7 +97,7 @@
             android:label="@string/friends_label"/>
 
         <activity
-            android:name=".GroupActivitys.GroupView"
+            android:name=".group.GroupView"
             android:screenOrientation="portrait" />
 
 

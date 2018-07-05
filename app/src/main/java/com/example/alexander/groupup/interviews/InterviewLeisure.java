@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.alexander.groupup.FriendsActivity;
 import com.example.alexander.groupup.MainActivities.HomeActivity;
+import com.example.alexander.groupup.Models.TagModel;
 import com.example.alexander.groupup.Models.UserModel;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.UserProfileActivity;
@@ -88,35 +89,6 @@ public class InterviewLeisure extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-//        FirebaseRecyclerAdapter<UserModel, TagViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserModel, TagViewHolder>(
-//                UserModel.class,
-//                R.layout.single_layout_tag,
-//                TagViewHolder.class,
-//                TagDatabase
-//        ) {
-//            @Override
-//            protected void populateViewHolder(final TagViewHolder viewHolder, UserModel user, int position) {
-//                viewHolder.setName(user.getName());
-//
-//                final String tag = getRef(position).getKey();
-//
-//                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent = new Intent(InterviewLeisure.this, UserProfileActivity.class);
-//                        intent.putExtra("tag", tag);
-//                        startActivity(intent);
-//                    }
-//                });
-//            }
-//        };
-//        tagRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
     public class TagAdapter extends RecyclerView.Adapter<TagViewHolder>{
 
         ArrayList<String> tags;
@@ -128,15 +100,33 @@ public class InterviewLeisure extends AppCompatActivity {
             this.c = c;
         }
 
+
+        /*@Override
+        protected void populateViewHolder(TagViewHolder viewHolder, UserModel user, int position) {
+
+            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final String tag = tags.get(tagRecyclerView.getChildLayoutPosition(v));
+                    Intent intent = new Intent(InterviewLeisure.this, InterviewMembers.class);
+                    intent.putExtra("tag", tag);
+                    startActivity(intent);
+                }
+            });
+        }*/
+
         @NonNull
         @Override
         public TagViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+            View mView;
+
             View v = LayoutInflater.from(c).inflate(R.layout.single_layout_tag, parent, false);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(InterviewLeisure.this, UserProfileActivity.class);
+                    Intent intent = new Intent(InterviewLeisure.this, InterviewMembers.class);
                     intent.putExtra("tag", tags.get(tagRecyclerView.getChildLayoutPosition(v)));
                     startActivity(intent);
                 }

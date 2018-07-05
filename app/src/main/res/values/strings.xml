@@ -2,7 +2,6 @@
     <string name="app_name">GroupUp</string>
 
     <!-- Basic Strings -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="not_possible">Missing information.</string>
     <string name="too_young">We are sorry :( You are too young.</string>
     <string name="activate_gps_manually">Sorry, that shouldn´t happen. Please activate GPS manually.</string>
@@ -48,10 +47,10 @@
     <!-- Interview -->
     <string name="how_many_member">OK, how many members should the group have?</string>
     <string name="new_group_title">Ok, something new.  How about one of these suggestions?</string>
-    <string name="sports_group">A sports group.</string>
-    <string name="leisure_group">A leisure group.</string>
-    <string name="party_group">Party Group.</string>
-    <string name="productivity_group">Productivity Group.</string>
+    <string name="sports_group">A sports group</string>
+    <string name="leisure_group">A leisure group</string>
+    <string name="party_group">Party Group</string>
+    <string name="productivity_group">Business Group</string>
     <string name="choose_a_place">Do you wanna choose a place?</string>
     <string name="yes">Yes</string>
     <string name="no">No.</string>
@@ -114,4 +113,16 @@
     <string name="nav_profile">Profile</string>
     <string name="nav_settings">Settings</string>
     <string name="my_group">My Group</string>
+    <string name="whats_your_name">Whats your name?</string>
+    <string name="age_city_registration">Your Age and City</string>
+    <string name="choose_username_wisely">Choose your username wisely. It can be seen by everybody, so dont use vulgar words.</string>
+    <string name="choose_age_city">Its important for us to connect you with the right people, events and groups close to you. Thats why we need that information.</string>
+    <string name="first_name">First Name</string>
+    <string name="surname">Surname</string>
+    <string name="username">Username</string>
+    <string name="welcome_to">Welcome to</string>
+
+    <!-- Registration -->
+
+
 </resources>

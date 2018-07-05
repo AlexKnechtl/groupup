@@ -22,7 +22,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.CreateGroup.InterviewStart;
 import com.example.alexander.groupup.GroupActivitys.GroupView;
-import com.example.alexander.groupup.RegisterActivity;
+import com.example.alexander.groupup.Registration.RegisterActivity;
 import com.example.alexander.groupup.Singletons.LanguageStringsManager;
 import com.example.alexander.groupup.Models.GroupModel;
 import com.example.alexander.groupup.R;

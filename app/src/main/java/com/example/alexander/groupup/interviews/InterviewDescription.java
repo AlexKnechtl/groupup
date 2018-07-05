@@ -85,7 +85,7 @@ public class InterviewDescription extends AppCompatActivity {
     }
 
     private void setDatabaseValues() {
-        if (group.equals("Sport")) {
+        if (group.equals("sport")) {
             GroupImagesModel.getRandomImageURL(activity, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String groupImage) {

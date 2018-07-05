@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.RegisterActivity;
+import com.example.alexander.groupup.Registration.RegisterActivity;
 import com.example.alexander.groupup.Settings.MyAccountActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
