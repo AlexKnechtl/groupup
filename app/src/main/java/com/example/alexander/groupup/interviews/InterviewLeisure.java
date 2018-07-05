@@ -1,9 +1,8 @@
-package com.example.alexander.groupup.CreateGroup;
+package com.example.alexander.groupup.interviews;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,24 +13,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.alexander.groupup.FriendsActivity;
-import com.example.alexander.groupup.MainActivities.HomeActivity;
-import com.example.alexander.groupup.Models.TagModel;
-import com.example.alexander.groupup.Models.UserModel;
+import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.UserProfileActivity;
-import com.firebase.ui.auth.data.model.User;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class InterviewLeisure extends AppCompatActivity {
 

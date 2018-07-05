@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.CreateGroup;
+package com.example.alexander.groupup.interviews;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +8,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import com.example.alexander.groupup.Models.*;
-import com.example.alexander.groupup.Singletons.*;
+import com.example.alexander.groupup.models.*;
+import com.example.alexander.groupup.singletons.*;
 import com.example.alexander.groupup.R;
 
 import java.util.ArrayList;

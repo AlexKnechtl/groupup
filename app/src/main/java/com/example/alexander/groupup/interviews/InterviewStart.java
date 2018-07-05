@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.CreateGroup;
+package com.example.alexander.groupup.interviews;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.alexander.groupup.FriendsActivity;
-import com.example.alexander.groupup.MainActivities.HomeActivity;
+import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
 
 /**

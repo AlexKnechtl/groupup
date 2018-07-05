@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.GroupActivitys;
+package com.example.alexander.groupup.group;
 
 public class MyGroupView {
 }

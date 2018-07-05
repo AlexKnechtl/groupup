@@ -1,6 +1,6 @@
-package com.example.alexander.groupup.Models;
+package com.example.alexander.groupup.models;
 
-import com.example.alexander.groupup.Helpers.OnGetResultListener;
+import com.example.alexander.groupup.helpers.OnGetResultListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.MainActivities;
+package com.example.alexander.groupup.main;
 
 import android.content.Context;
 import android.content.Intent;

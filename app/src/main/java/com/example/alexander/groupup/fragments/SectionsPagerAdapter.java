@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.Fragments;
+package com.example.alexander.groupup.fragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

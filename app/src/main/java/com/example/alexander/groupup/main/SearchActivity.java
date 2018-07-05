@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.MainActivities;
+package com.example.alexander.groupup.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.alexander.groupup.Models.UserModel;
+import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.UserProfileActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;

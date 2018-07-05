@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.MainActivities;
+package com.example.alexander.groupup.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.alexander.groupup.Fragments.FriendNotifyFragment;
-import com.example.alexander.groupup.Fragments.GroupNotifiyFragment;
-import com.example.alexander.groupup.Fragments.SectionsPagerAdapter;
+import com.example.alexander.groupup.fragments.FriendNotifyFragment;
+import com.example.alexander.groupup.fragments.GroupNotifiyFragment;
+import com.example.alexander.groupup.fragments.SectionsPagerAdapter;
 import com.example.alexander.groupup.R;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 

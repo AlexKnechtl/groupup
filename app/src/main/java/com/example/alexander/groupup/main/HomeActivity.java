@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.MainActivities;
+package com.example.alexander.groupup.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,11 +20,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.example.alexander.groupup.CreateGroup.InterviewStart;
-import com.example.alexander.groupup.GroupActivitys.GroupView;
-import com.example.alexander.groupup.Registration.RegisterActivity;
-import com.example.alexander.groupup.Singletons.LanguageStringsManager;
-import com.example.alexander.groupup.Models.GroupModel;
+import com.example.alexander.groupup.StartActivity;
+import com.example.alexander.groupup.interviews.InterviewStart;
+import com.example.alexander.groupup.group.GroupView;
+import com.example.alexander.groupup.singletons.LanguageStringsManager;
+import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -223,7 +223,7 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_LONG).show();
             lastPress = currentTime;
         } else {
-            Intent intent = new Intent(HomeActivity.this, RegisterActivity.class);
+            Intent intent = new Intent(HomeActivity.this, StartActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("EXIT", true);
             startActivity(intent);

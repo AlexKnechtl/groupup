@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.Fragments;
+package com.example.alexander.groupup.fragments;
 
 
 import android.content.Context;
@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alexander.groupup.Models.UserModel;
+import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.UserProfileActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;

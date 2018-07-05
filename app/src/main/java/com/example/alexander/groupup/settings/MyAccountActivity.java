@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.Settings;
+package com.example.alexander.groupup.settings;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;

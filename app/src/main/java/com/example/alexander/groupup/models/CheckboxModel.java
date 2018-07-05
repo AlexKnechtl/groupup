@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.Models;
+package com.example.alexander.groupup.models;
 
 public class CheckboxModel {
 

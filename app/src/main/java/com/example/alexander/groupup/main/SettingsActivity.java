@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.MainActivities;
+package com.example.alexander.groupup.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.Registration.RegisterActivity;
-import com.example.alexander.groupup.Settings.MyAccountActivity;
+import com.example.alexander.groupup.StartActivity;
+import com.example.alexander.groupup.settings.MyAccountActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -47,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_logout_item:
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(SettingsActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(SettingsActivity.this, StartActivity.class);
                 startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);

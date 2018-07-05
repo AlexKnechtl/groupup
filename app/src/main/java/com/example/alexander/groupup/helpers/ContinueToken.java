@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.Helpers;
+package com.example.alexander.groupup.helpers;
 
 public class ContinueToken
 {

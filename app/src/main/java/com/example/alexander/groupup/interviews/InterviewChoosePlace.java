@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.CreateGroup;
+package com.example.alexander.groupup.interviews;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.alexander.groupup.MainActivities.HomeActivity;
+import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;

@@ -1,6 +1,6 @@
-package com.example.alexander.groupup.Singletons;
+package com.example.alexander.groupup.singletons;
 
-import com.example.alexander.groupup.Models.LanguageStringsModel;
+import com.example.alexander.groupup.models.LanguageStringsModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

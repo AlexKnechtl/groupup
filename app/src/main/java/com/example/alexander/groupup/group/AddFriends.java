@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.GroupActivitys;
+package com.example.alexander.groupup.group;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

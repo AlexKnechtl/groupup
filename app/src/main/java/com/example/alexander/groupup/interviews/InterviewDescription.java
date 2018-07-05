@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.CreateGroup;
+package com.example.alexander.groupup.interviews;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.alexander.groupup.MainActivities.HomeActivity;
-import com.example.alexander.groupup.Helpers.OnGetResultListener;
-import com.example.alexander.groupup.Models.GroupImagesModel;
+import com.example.alexander.groupup.main.HomeActivity;
+import com.example.alexander.groupup.helpers.OnGetResultListener;
+import com.example.alexander.groupup.models.GroupImagesModel;
 import com.example.alexander.groupup.R;
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -142,6 +141,5 @@ public class InterviewDescription extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed() { }
 }

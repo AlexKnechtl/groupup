@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.Models;
+package com.example.alexander.groupup.models;
 
 /**
  * Created by alexk on 26.02.2018.

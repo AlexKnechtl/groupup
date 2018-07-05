@@ -1,18 +1,12 @@
-package com.example.alexander.groupup.MainActivities;
+package com.example.alexander.groupup.main;
 
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.transition.Explode;
 import android.view.MenuItem;
 
-import com.example.alexander.groupup.MainActivities.HomeActivity;
-import com.example.alexander.groupup.MainActivities.NotificationActivity;
-import com.example.alexander.groupup.MainActivities.ProfileActivity;
-import com.example.alexander.groupup.MainActivities.SearchActivity;
-import com.example.alexander.groupup.MainActivities.SettingsActivity;
 import com.example.alexander.groupup.R;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
