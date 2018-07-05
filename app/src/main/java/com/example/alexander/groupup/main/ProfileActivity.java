@@ -49,12 +49,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 public class ProfileActivity extends AppCompatActivity {
 
     //XML
-    private ImageView mProfileImageView;
+    private CircleImageView mProfileImageView;
     private TextView mProfileName, mProfileLocation, mProfileStatus, friendsCounter;
     private RelativeLayout relativeLayout, languages;
 
@@ -93,15 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Get the application context
         mContext = getApplicationContext();
 
-        //Find IDs
-        mProfileStatus = findViewById(R.id.profile_status);
-        mProfileImageView = findViewById(R.id.user_image);
-        mProfileName = findViewById(R.id.profile_name_textview);
-
-        mProfileLocation = findViewById(R.id.profile_location);
-        relativeLayout = findViewById(R.id.coordinator_layout_profile);
-        languages = findViewById(R.id.aboutme_languages);
-        friendsCounter = findViewById(R.id.friends_counter_profile);
+        initializeXML();
 
         UserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -312,14 +305,17 @@ public class ProfileActivity extends AppCompatActivity {
                 Exception error = result.getError();
             }
         }
+    }
 
-        friendsCounter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, FriendsActivity.class);
-                startActivity(intent);
-            }
-        });
+    private void initializeXML() {
+        mProfileStatus = findViewById(R.id.profile_status);
+        mProfileImageView = findViewById(R.id.user_image);
+        mProfileName = findViewById(R.id.profile_name_textview);
+
+        mProfileLocation = findViewById(R.id.profile_location);
+        relativeLayout = findViewById(R.id.coordinator_layout_profile);
+        languages = findViewById(R.id.aboutme_languages);
+        friendsCounter = findViewById(R.id.friends_counter_profile);
     }
 
     public void setupBottomNavigationView() {

@@ -7,7 +7,10 @@
         <item name="android:colorAccent">@android:color/white</item>
         <item name="android:colorBackground">@android:color/background_light</item>
 
-        <!-- Text Colors -->
+        <!-- Text -->
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+
         <item name="android:windowBackground">@drawable/background</item>
         <item name="android:fontFamily">@font/dosis_bold</item>
     </style>

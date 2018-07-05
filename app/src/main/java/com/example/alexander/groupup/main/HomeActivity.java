@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,15 +44,9 @@ public class HomeActivity extends AppCompatActivity {
     private TextView location, dateTextView;
     private Button groupButton;
 
-    //Popup
-    private ConstraintLayout coordinatorLayout;
-    private PopupWindow mPopupWindow;
-
     //Constants
     public static final String ANONYMOUS = "anonymous";
     private static final String TAG = "MainActivity";
-    private static final int LOCATION_REQUEST_CODE = 2;
-    private Context context;
 
     //Firebase
     private DatabaseReference GroupDatabase;
@@ -72,9 +64,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_home);
 
-        //Transparent Status Bar
-        //Window w = getWindow();
-        //w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        mContext = getApplicationContext();
 
         setupBottomNavigationView();
 
@@ -88,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         dateTextView = findViewById(R.id.date_main);
         location = findViewById(R.id.location_main);
         groupButton = findViewById(R.id.group_button);
+        recyclerView = findViewById(R.id.main_recycler_view);
 
         //Get Data from User
         UserDatabase.addValueEventListener(new ValueEventListener() {
@@ -109,16 +100,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        mContext = getApplicationContext();
-
         //Show Date in GroupCalendar
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MMM");
         String currentDate = formatter.format(new Date());
         dateTextView.setText(currentDate);
 
         //Recycler View
-        recyclerView = findViewById(R.id.main_recycler_view);
-        recyclerView.setHasFixedSize(false);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
         groupButton.setOnClickListener(new View.OnClickListener() {

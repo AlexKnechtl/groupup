@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backround_register">
@@ -50,7 +49,7 @@
             android:layout_margin="12dp"
             android:fontFamily="@font/dosis_bold"
             android:text="@string/age_city_registration"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimary"
             android:textSize="26sp" />
 
         <TextView
@@ -61,7 +60,7 @@
             android:layout_marginStart="12dp"
             android:fontFamily="@font/dosis_bold"
             android:text="@string/choose_age_city"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -84,7 +83,8 @@
             android:layout_height="60dp"
             android:backgroundTint="@color/fui_transparent"
             android:gravity="center"
-            android:hint="Dein Alter"
+            android:hint="@string/your_age"
+            android:textColor="@color/colorPrimary"
             android:textSize="26sp" />
     </RelativeLayout>
 
@@ -105,28 +105,13 @@
             android:id="@+id/city_tv"
             android:layout_width="320dp"
             android:layout_height="60dp"
-            android:backgroundTint="@color/fui_transparent"
             android:gravity="center"
-            android:hint="Deine Stadt"
+            android:hint="@string/your_city"
+            android:textColor="@color/colorPrimary"
             android:textSize="26sp" />
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_bar_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
-        android:layout_marginEnd="180dp"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="16dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/location_main"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout5" />
-
     <TextView
-        android:onClick="continueRegister2"
         android:id="@+id/location_main"
         android:layout_width="200dp"
         android:layout_height="55dp"
@@ -138,8 +123,9 @@
         android:fontFamily="@font/dosis_semibold"
         android:gravity="center"
         android:maxLines="2"
+        android:onClick="continueRegister2"
         android:text="Continue"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

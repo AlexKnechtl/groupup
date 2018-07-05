@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backround_register">
@@ -48,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:fontFamily="@font/dosis_bold"
-            android:text="@string/whats_your_name"
+            android:text="@string/your_image"
             android:textColor="@color/colorPrimary"
             android:textSize="26sp" />
 
@@ -59,84 +60,42 @@
             android:layout_marginEnd="12dp"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/dosis_bold"
-            android:text="@string/choose_username_wisely"
+            android:text="@string/choose_image"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/main_layout_register"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/registration_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="34dp"
+        android:layout_marginEnd="128dp"
+        android:onClick="chooseImageClick"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="34dp"
+        android:src="@drawable/profile_white_border"
+        app:civ_border_color="@color/colorBackground"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/location_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
 
-        <EditText
-            android:id="@+id/first_name_edit"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/fui_transparent"
-            android:inputType="textCapSentences"
-            android:gravity="center"
-            android:hint="@string/first_name"
-            android:singleLine="true"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout4"
+    <ProgressBar
+        android:id="@+id/progress_bar_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/main_layout_register"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="100dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="144dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/registration_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3">
-
-        <EditText
-            android:id="@+id/surname_edit"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/fui_transparent"
-            android:gravity="center"
-            android:inputType="textCapSentences"
-            android:hint="@string/surname"
-            android:singleLine="true"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/main_layout_register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout4">
-
-        <EditText
-            android:id="@+id/username_edit"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/fui_transparent"
-            android:gravity="center"
-            android:hint="@string/username"
-            android:singleLine="true"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp" />
-    </RelativeLayout>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
 
     <TextView
         android:id="@+id/location_main"
@@ -150,7 +109,7 @@
         android:fontFamily="@font/dosis_semibold"
         android:gravity="center"
         android:maxLines="2"
-        android:onClick="continueRegister1"
+        android:onClick="continueRegister2"
         android:text="Continue"
         android:textColor="@color/colorPrimary"
         android:textSize="32sp"
