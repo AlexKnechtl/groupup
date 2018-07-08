@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.SettingsFragment">
+    tools:context=".main.SettingsActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -216,9 +216,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="GroupUp V0.65"
-                android:textSize="20sp" />
-
+                android:textColor="@color/darkGray"
+                android:text="GroupUp V0.8.5"
+                android:textSize="24sp" />
         </LinearLayout>
     </ScrollView>
 
