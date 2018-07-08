@@ -2,6 +2,7 @@ package com.example.alexander.groupup.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,11 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -171,9 +174,25 @@ public class ProfileActivity extends AppCompatActivity {
                 final EditText editStatus = customView.findViewById(R.id.edit_text_popup);
                 final TextView countCharactersText = customView.findViewById(R.id.count_characters);
 
+                editStatus.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            status = editStatus.getText().toString();
+                            mProfileStatus.setText(status);
+                            UserDatabase.child("status").setValue(status);
+                            mPopupWindow.dismiss();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
                 if (status != null) {
                     editStatus.setText(status);
-                    countCharactersText.setText(status.length() + " / 250");
+                    editStatus.setHorizontallyScrolling(false);
+                    editStatus.setLines(6);
+                    countCharactersText.setText(status.length() + " / 220");
                 }
 
                 mPopupWindow = new PopupWindow(
@@ -187,9 +206,6 @@ public class ProfileActivity extends AppCompatActivity {
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        status = editStatus.getText().toString();
-                        mProfileStatus.setText(status);
-                        UserDatabase.child("status").setValue(status);
                         mPopupWindow.dismiss();
                     }
                 });
@@ -199,7 +215,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }
 
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        countCharactersText.setText(String.valueOf(s.length()) + " / 250");
+                        countCharactersText.setText(String.valueOf(s.length()) + " / 220");
                     }
 
                     public void afterTextChanged(Editable s) {

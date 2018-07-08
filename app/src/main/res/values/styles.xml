@@ -30,7 +30,7 @@
         <item name="colorControlActivated">@color/softGreyBackground</item>
 
         <item name="android:buttonStyle">@style/ButtonStyle</item>
-        <item name="android:windowBackground">@drawable/backround_register</item>
+        <item name="android:windowBackground">@drawable/background_register</item>
         <item name="android:fontFamily">@font/dosis_bold</item>
     </style>
 
