@@ -155,7 +155,7 @@ public class HomeActivity extends AppCompatActivity {
                 });
             }
         };
-        //recyclerView.setAdapter(firebaseRecyclerAdapter);
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
     public static class GroupsViewHolder extends RecyclerView.ViewHolder {
@@ -184,7 +184,7 @@ public class HomeActivity extends AppCompatActivity {
 
         public void setTag(String tag) {
             TextView groupTag = mView.findViewById(R.id.group_tag);
-            groupTag.setText(",," + LanguageStringsManager.getInstance().getLanguageStringByStringId(tag).getLocalLanguageString() + ",,");
+            groupTag.setText(",," + tag /*LanguageStringsManager.getInstance().getLanguageStringByStringId(tag).getLocalLanguageString()*/ + ",,");
         }
     }
 
