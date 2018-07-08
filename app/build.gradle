@@ -23,7 +23,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //App Compat and Design
-
     implementation 'com.android.support:exifinterface:27.1.1'
     implementation 'com.android.support:animated-vector-drawable:27.1.1'
     implementation 'com.android.support:customtabs:27.1.1'

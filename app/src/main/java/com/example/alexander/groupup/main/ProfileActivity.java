@@ -102,10 +102,25 @@ public class ProfileActivity extends AppCompatActivity {
 
                 String name = dataSnapshot.child("name").getValue().toString();
                 String location = dataSnapshot.child("city").getValue().toString();
-                final String image = dataSnapshot.child("image").getValue().toString();
                 String age_day = dataSnapshot.child("age_day").getValue().toString();
                 String age_year = dataSnapshot.child("age_year").getValue().toString();
                 String friends_count = dataSnapshot.child("friends_count").getValue().toString();
+
+                if (dataSnapshot.child("image").exists()) {
+                    final String image = dataSnapshot.child("image").getValue().toString();
+                    Picasso.with(ProfileActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder(R.drawable.profile_white_border).into(mProfileImageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.profile_white_border).into(mProfileImageView);
+                        }
+                    });
+                }
+
                 if (dataSnapshot.child("status").exists()) {
                     status = dataSnapshot.child("status").getValue().toString();
                     mProfileStatus.setText(status);
@@ -128,22 +143,6 @@ public class ProfileActivity extends AppCompatActivity {
                 mProfileName.setText(name + ", " + age);
                 mProfileLocation.setText(location);
                 friendsCounter.setText(friends_count);
-
-                if (!image.equals("default")) {
-
-                    Picasso.with(ProfileActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.profile_white_border).into(mProfileImageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError() {
-                            Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.profile_white_border).into(mProfileImageView);
-                        }
-                    });
-                }
             }
 
             @Override

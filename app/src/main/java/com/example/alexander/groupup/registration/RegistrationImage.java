@@ -12,16 +12,23 @@ import android.widget.Toast;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.main.HomeActivity;
+import com.example.alexander.groupup.main.ProfileActivity;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
@@ -67,6 +74,31 @@ public class RegistrationImage extends AppCompatActivity {
 
         profilePicture = findViewById(R.id.registration_image);
         progressBar = findViewById(R.id.progress_bar_register);
+
+        UserDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("image").exists()) {
+                    final String image = dataSnapshot.child("image").getValue().toString();
+                    Picasso.with(RegistrationImage.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder(R.drawable.profile_white_border).into(profilePicture, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(RegistrationImage.this).load(image).placeholder(R.drawable.profile_white_border).into(profilePicture);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -84,6 +116,10 @@ public class RegistrationImage extends AppCompatActivity {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
+
+                Toast.makeText(this, "Bitte warten.", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.VISIBLE);
+
                 Uri resultUri = result.getUri();
                 String current_user_id = mCurrentUser.getUid();
 
@@ -124,18 +160,21 @@ public class RegistrationImage extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
+                                                    progressBar.setVisibility(View.INVISIBLE);
                                                     Toast.makeText(RegistrationImage.this, "Profile picture updated.", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
 
                                     } else {
+                                        progressBar.setVisibility(View.INVISIBLE);
                                         Toast.makeText(RegistrationImage.this, "Sorry, that shouldn´t happen", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
 
                         } else {
+                            progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(RegistrationImage.this, "Sorry, that shouldn´t happen", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -164,15 +203,13 @@ public class RegistrationImage extends AppCompatActivity {
     }
 
     public void continueRegister2(View view) {
+        progressBar.setVisibility(View.VISIBLE);
         register_user();
         Intent intent = new Intent(RegistrationImage.this, HomeActivity.class);
         startActivity(intent);
     }
 
     private void register_user() {
-        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = current_user.getUid();
-
         Map userMap = new HashMap<>();
         userMap.put("username", username);
         userMap.put("name", name);

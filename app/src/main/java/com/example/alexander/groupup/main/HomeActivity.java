@@ -41,12 +41,11 @@ public class HomeActivity extends AppCompatActivity {
 
     //XML
     private RecyclerView recyclerView;
-    private TextView location, dateTextView;
+    private TextView location;
     private Button groupButton;
 
     //Constants
     public static final String ANONYMOUS = "anonymous";
-    private static final String TAG = "MainActivity";
 
     //Firebase
     private DatabaseReference GroupDatabase;
@@ -75,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
 
         //Find Ids
+        TextView dateTextView;
         dateTextView = findViewById(R.id.date_main);
         location = findViewById(R.id.location_main);
         groupButton = findViewById(R.id.group_button);
@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
         dateTextView.setText(currentDate);
 
         //Recycler View
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
         groupButton.setOnClickListener(new View.OnClickListener() {
@@ -133,11 +133,11 @@ public class HomeActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder>(
                 GroupModel.class,
                 R.layout.single_layout_group,
-                HomeActivity.GroupsViewHolder.class,
+                GroupsViewHolder.class,
                 GroupDatabase
         ) {
             @Override
-            protected void populateViewHolder(HomeActivity.GroupsViewHolder groupsViewHolder, GroupModel groups, int position) {
+            protected void populateViewHolder(GroupsViewHolder groupsViewHolder, GroupModel groups, int position) {
 
                 groupsViewHolder.setGroupImage(groups.getGroup_image());
                 groupsViewHolder.setCategoryCity(groups.getCategory(), groups.getLocation());
@@ -150,13 +150,12 @@ public class HomeActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent intent = new Intent(HomeActivity.this, GroupView.class);
                         intent.putExtra("group_id", group_id);
-                        intent.putExtra("status", "visitor");
                         startActivity(intent);
                     }
                 });
             }
         };
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
+        //recyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
     public static class GroupsViewHolder extends RecyclerView.ViewHolder {
@@ -204,7 +203,6 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         long currentTime = System.currentTimeMillis();
 
         if (currentTime - lastPress > 5000) {
