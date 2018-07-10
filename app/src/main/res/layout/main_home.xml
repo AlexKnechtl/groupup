@@ -54,7 +54,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/group_calendar" />
+                    android:src="@drawable/group_calendar"
+                    android:onClick="testClick"/>
 
                 <TextView
                     android:id="@+id/date_main"

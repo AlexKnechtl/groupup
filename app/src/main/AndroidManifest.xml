@@ -28,6 +28,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".group.AddFriends"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".registration.RegisterUsername"
             android:screenOrientation="portrait"/>
 
@@ -102,7 +105,6 @@
         <activity
             android:name=".group.GroupView"
             android:screenOrientation="portrait" />
-
 
         <activity
             android:name=".UserProfileActivity"

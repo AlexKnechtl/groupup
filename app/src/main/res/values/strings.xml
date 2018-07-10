@@ -126,6 +126,12 @@
     <string name="your_city">Your City</string>
     <string name="your_image">Your Image</string>
     <string name="choose_image">With a photo, people can roughly judge who you are. That\'s important because you want to get to know the right people. You can also upload a photo later.</string>
+    <string name="suggested">Suggested</string>
+    <string name="search_headline">You can search someone by his username or his first and surname.</string>
+    <string name="no_new_friend_requests">You dont have any new friend requests.</string>
+    <string name="no_new_group_invites">You dont have any new group invites.</string>
+    <string name="invited_friends">Invited Friends</string>
+    <string name="your_friends">Your Friends</string>
 
     <!-- Registration -->
 

@@ -132,14 +132,11 @@ public class UserProfileActivity extends AppCompatActivity {
 
     //Friends Button is pressed
     public void addFriendClick(View view) {
-
         if (mCurrentState.equals("not_friends")) {
-
             sendFriendRequest();
         }
 
         if (mCurrentState.equals("request_sent")) {
-
             MyAccountDatabase.child("friend_requests").child("sent").child(receiver_user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -271,7 +268,6 @@ public class UserProfileActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-
                             HashMap<String, String> userData = new HashMap<>();
                             userData.put("name", myProfileName + ", " + myProfileAge);
                             userData.put("thumb_image", myProfileThumbImage);
@@ -308,7 +304,6 @@ public class UserProfileActivity extends AppCompatActivity {
         MyAccountDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 myProfileName = dataSnapshot.child("name").getValue().toString();
                 myProfileThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
                 myProfileAge = dataSnapshot.child("age").getValue().toString();
@@ -343,7 +338,6 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void initializeFirebase() {
-
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = mCurrentUser.getUid();
 
@@ -356,9 +350,7 @@ public class UserProfileActivity extends AppCompatActivity {
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-
     private void findIDs() {
-
         mDisplayNameAge = findViewById(R.id.user_name_age);
         mUserProfile = findViewById(R.id.user_image);
         mStatus = findViewById(R.id.user_status);

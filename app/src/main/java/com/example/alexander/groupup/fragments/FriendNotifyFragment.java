@@ -46,6 +46,7 @@ public class FriendNotifyFragment extends Fragment {
 
     //XML
     private RecyclerView requestedFriendsList;
+    private TextView noRequests;
 
     //Variables
     private long friendsCountMyAccount, friendsCountUser;
@@ -60,7 +61,9 @@ public class FriendNotifyFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_friend_notify, container, false);
 
+        noRequests = view.findViewById(R.id.no_requests_friends);
         requestedFriendsList = view.findViewById(R.id.friend_requests_list);
+
         requestedFriendsList.setHasFixedSize(true);
         requestedFriendsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -73,6 +76,19 @@ public class FriendNotifyFragment extends Fragment {
         FriendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid)
                 .child("friend_requests").child("received");
 
+        FriendRequestDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    noRequests.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         return view;
     }
 
@@ -89,7 +105,6 @@ public class FriendNotifyFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(FriendRequestViewHolder viewHolder, UserModel user, int position) {
-
                 viewHolder.setName(user.getName());
                 viewHolder.setCity(user.getCity());
                 viewHolder.setThumbImage(user.getThumb_image(), getActivity().getApplicationContext());
@@ -144,13 +159,11 @@ public class FriendNotifyFragment extends Fragment {
     }
 
     private void acceptRequest(final String receiver_user_id) {
-
         UserProfileDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(receiver_user_id);
 
         UserProfileDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 userName = dataSnapshot.child("name").getValue().toString();
                 userThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
 

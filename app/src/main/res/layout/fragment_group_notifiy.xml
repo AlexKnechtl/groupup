@@ -5,10 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".fragments.GroupNotifiyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/no_requests_friends"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Group Notifiy Fragment" />
-
+        android:layout_marginBottom="50dp"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:text="@string/no_new_group_invites"/>
 </FrameLayout>

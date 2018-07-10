@@ -5,8 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".fragments.FriendNotifyFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <TextView
+        android:id="@+id/no_requests_friends"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/friend_requests_list"/>
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:text="@string/no_new_friend_requests"
+        android:textSize="20sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/friend_requests_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>

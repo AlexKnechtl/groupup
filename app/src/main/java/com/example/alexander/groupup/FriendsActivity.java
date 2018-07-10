@@ -58,7 +58,6 @@ public class FriendsActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     noFriends.setVisibility(View.INVISIBLE);
-                } else {
                 }
             }
 
@@ -68,7 +67,6 @@ public class FriendsActivity extends AppCompatActivity {
             }
         });
 
-        //Set Toolbar
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
     }
@@ -114,7 +112,7 @@ public class FriendsActivity extends AppCompatActivity {
         }
 
         public void setDate(String date) {
-            TextView friendsDate = mView.findViewById(R.id.user_single_age);
+            TextView friendsDate = mView.findViewById(R.id.user_single_city);
             friendsDate.setText("Friends since " + date);
         }
 

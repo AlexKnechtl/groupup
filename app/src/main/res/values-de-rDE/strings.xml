@@ -117,4 +117,10 @@
     <string name="your_city">Deine Stadt</string>
     <string name="your_image">Dein Foto</string>
     <string name="choose_image">Mit einem Foto können Menschen grob einschätzen wer du bist. Das ist wichtig, denn man möchte ja die richtigen Menschen kennenlernen. Du kannst aber auch später ein Foto hochladen.</string>
+    <string name="suggested">Vorschläge</string>
+    <string name="search_headline">Du kannst andere Menschen mit dem Nutzernamen, als auch mit dem echten Namen suchen.</string>
+    <string name="no_new_friend_requests">Du hast keine neuen Freundschaftsanfragen.</string>
+    <string name="no_new_group_invites">Du hast keine neuen Gruppen Einladungen.</string>
+    <string name="invited_friends">Eingeladene Freunde</string>
+    <string name="your_friends">Deine Freunde</string>
 </resources>

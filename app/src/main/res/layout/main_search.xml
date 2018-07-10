@@ -7,18 +7,22 @@
     android:background="@color/colorAccent"
     tools:context=".main.SearchActivity">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_search">
+        android:background="@drawable/background_search"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
 
         <RelativeLayout
             android:id="@+id/relativeLayout6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/main_layout_design"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,25 +36,52 @@
                 android:layout_margin="6dp"
                 android:backgroundTint="@color/fui_transparent"
                 android:ems="10"
-                android:textSize="24sp"
                 android:hint="Search:"
                 android:inputType="textCapSentences"
                 android:maxLines="1"
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/colorAccent"
-                android:textCursorDrawable="@drawable/cursor_color" />
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:textSize="24sp" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/search_headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/main_layout_design"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="@string/search_headline"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="6dp"
+            android:backgroundTint="@color/colorAccent"
+            android:enabled="false"
+            android:focusable="false"
+            android:fontFamily="@font/dosis_semibold"
+            android:gravity="center_horizontal"
+            android:text="@string/suggested"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/result_list"
             android:layout_width="match_parent"
             android:layout_height="554dp"
-            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/relativeLayout6" />
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/bottom_nav"

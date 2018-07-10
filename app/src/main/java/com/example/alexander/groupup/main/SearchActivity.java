@@ -31,6 +31,7 @@ public class SearchActivity extends AppCompatActivity {
     //XML
     private EditText mSearchField;
     private RecyclerView mResultList;
+    private TextView searchHeadline;
 
     //Firebase
     private DatabaseReference mUserDatabase;
@@ -53,6 +54,7 @@ public class SearchActivity extends AppCompatActivity {
         //Find IDs
         mSearchField = findViewById(R.id.search_users);
         mResultList = findViewById(R.id.result_list);
+        searchHeadline = findViewById(R.id.search_headline);
 
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(this));
@@ -65,6 +67,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchHeadline.setVisibility(View.GONE);
                 String search = mSearchField.getText().toString();
                 userSearch(search);
             }
@@ -82,14 +85,14 @@ public class SearchActivity extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<UserModel, UsersViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserModel, UsersViewHolder>(
                 UserModel.class,
-                R.layout.single_layout_user,
+                R.layout.single_layout_searchuser,
                 UsersViewHolder.class,
                 firebaseSearchQuery
         ) {
             @Override
             protected void populateViewHolder(UsersViewHolder usersViewHolder, UserModel users, int position) {
-                usersViewHolder.setName(users.getName());
-                usersViewHolder.setAge(users.getAge());
+                usersViewHolder.setNameAge(users.getName(), users.getAge());
+                usersViewHolder.setCity(users.getCity());
                 usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
 
                 final String user_id = getRef(position).getKey();
@@ -116,14 +119,14 @@ public class SearchActivity extends AppCompatActivity {
             mView = itemView;
         }
 
-        public void setName(String name) {
+        public void setNameAge(String name, String age) {
             TextView userNameView = mView.findViewById(R.id.user_single_name);
-            userNameView.setText(name);
+            userNameView.setText(name + ", " + age);
         }
 
-        public void setAge(String age) {
-            TextView userAgeView = mView.findViewById(R.id.user_single_age);
-            userAgeView.setText(age);
+        public void setCity(String city) {
+            TextView userNameView = mView.findViewById(R.id.user_single_city);
+            userNameView.setText(city);
         }
 
         public void setUserImage(String thumb_image, Context context) {

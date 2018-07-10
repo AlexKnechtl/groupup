@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.StartActivity;
+import com.example.alexander.groupup.group.AddFriends;
 import com.example.alexander.groupup.interviews.InterviewStart;
 import com.example.alexander.groupup.group.GroupView;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
@@ -186,6 +187,11 @@ public class HomeActivity extends AppCompatActivity {
             TextView groupTag = mView.findViewById(R.id.group_tag);
             groupTag.setText(",," + tag /*LanguageStringsManager.getInstance().getLanguageStringByStringId(tag).getLocalLanguageString()*/ + ",,");
         }
+    }
+
+    public void testClick(View view) {
+        Intent intent = new Intent(HomeActivity.this, AddFriends.class);
+        startActivity(intent);
     }
 
     public void setupBottomNavigationView() {
