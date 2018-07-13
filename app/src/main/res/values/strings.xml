@@ -132,6 +132,8 @@
     <string name="no_new_group_invites">You dont have any new group invites.</string>
     <string name="invited_friends">Invited Friends</string>
     <string name="your_friends">Your Friends</string>
+    <string name="no_chats_yet">No Chats here yet.</string>
+    <string name="no_group_chats">No Group Chats here yet.</string>
 
     <!-- Registration -->
 

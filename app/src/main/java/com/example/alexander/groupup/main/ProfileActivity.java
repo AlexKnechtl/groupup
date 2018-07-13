@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -61,11 +62,11 @@ public class ProfileActivity extends AppCompatActivity {
     private CircleImageView mProfileImageView;
     private TextView mProfileName, mProfileLocation, mProfileStatus, friendsCounter;
     private RelativeLayout relativeLayout, languages;
+    private FloatingActionButton fabSettings;
 
     //Constants
     private static final int GALLERY_PICK = 1;
     private static final int ACTIVITY_NUM = 3;
-
 
     //Popup
     private String status;
@@ -320,6 +321,11 @@ public class ProfileActivity extends AppCompatActivity {
                 Exception error = result.getError();
             }
         }
+    }
+
+    public void showSettings(View view) {
+        Intent intent = new Intent(ProfileActivity.this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     private void initializeXML() {

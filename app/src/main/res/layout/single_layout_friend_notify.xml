@@ -22,12 +22,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="0dp"
         android:fontFamily="@font/dosis_semibold"
         android:text="King"
         android:textColor="@color/colorAccent"
-        android:textSize="22sp" />
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/ic_location"
@@ -57,11 +57,11 @@
         android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="2dp"
         android:paddingBottom="2dp"
         android:fontFamily="@font/dosis_semibold"
         android:background="@drawable/transparent_button"
         android:text="@string/accept"
         android:textAllCaps="false"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 </RelativeLayout>

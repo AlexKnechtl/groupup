@@ -39,7 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     //Variables
     private Context mContext = SearchActivity.this;
     private static final int ACTIVITY_NUM = 2;
-
+    private Query firebaseSearchQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +81,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void userSearch(String searchText) {
 
-        Query firebaseSearchQuery = mUserDatabase.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
+        firebaseSearchQuery = mUserDatabase.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
 
         FirebaseRecyclerAdapter<UserModel, UsersViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserModel, UsersViewHolder>(
                 UserModel.class,

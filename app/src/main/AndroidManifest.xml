@@ -31,6 +31,9 @@
         <activity android:name=".group.AddFriends"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".chat.MessagesActivity"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".registration.RegisterUsername"
             android:screenOrientation="portrait"/>
 

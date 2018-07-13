@@ -8,6 +8,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.chat.MessagesActivity;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class BottomNavigationViewHelper {
@@ -53,7 +54,7 @@ public class BottomNavigationViewHelper {
                         context.startActivity(intent4, options3.toBundle());
                         break;
                     case R.id.nav_settings:
-                        Intent intent5 = new Intent(context, SettingsActivity.class);
+                        Intent intent5 = new Intent(context, MessagesActivity.class);
                         ActivityOptions options4 =
                                 ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out);
                         intent5.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

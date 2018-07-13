@@ -26,10 +26,8 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_settings);
 
-        setupBottomNavigationView();
-
         //Add the Toolbar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
     }
 
@@ -56,23 +54,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void myAccountClick(View view) {
         Intent intent = new Intent(SettingsActivity.this, MyAccountActivity.class);
-        startActivity(intent);
-    }
-
-    public void setupBottomNavigationView() {
-        BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_nav);
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
-
-        Menu menu = bottomNavigationViewEx.getMenu();
-        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-        menuItem.setChecked(true);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(SettingsActivity.this, HomeActivity.class);
         startActivity(intent);
     }
 }

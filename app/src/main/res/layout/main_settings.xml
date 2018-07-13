@@ -16,7 +16,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="40dp"
         android:layout_marginTop="56dp"
         android:background="@color/colorAccent"
         android:orientation="vertical"
@@ -216,20 +215,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/darkGray"
                 android:text="GroupUp V0.8.5"
+                android:textColor="@color/darkGray"
                 android:textSize="24sp" />
         </LinearLayout>
     </ScrollView>
-
-    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@android:color/white"
-        app:itemIconTint="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation" />
 </android.support.constraint.ConstraintLayout>

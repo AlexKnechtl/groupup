@@ -43,7 +43,7 @@
                     android:layout_toEndOf="@+id/image_location"
                     android:fontFamily="@font/dosis_semibold"
                     android:maxLines="2"
-                    android:text="Graz"
+                    android:text="text"
                     android:textColor="@color/colorAccent"
                     android:textSize="36sp" />
 

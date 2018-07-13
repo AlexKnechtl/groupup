@@ -123,4 +123,6 @@
     <string name="no_new_group_invites">Du hast keine neuen Gruppen Einladungen.</string>
     <string name="invited_friends">Eingeladene Freunde</string>
     <string name="your_friends">Deine Freunde</string>
+    <string name="no_chats_yet">Keine Chats hier bis jetzt.</string>
+    <string name="no_group_chats">Keine Gruppen Chats hier bis jetzt.</string>
 </resources>

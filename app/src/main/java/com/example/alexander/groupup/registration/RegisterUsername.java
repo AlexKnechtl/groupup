@@ -34,8 +34,8 @@ public class RegisterUsername extends AppCompatActivity {
 
         if (TextUtils.isEmpty(firstName) || TextUtils.isEmpty(surname) || TextUtils.isEmpty(username)) {
             Toast.makeText(this, R.string.information_missing, Toast.LENGTH_SHORT).show();
-        } else {
 
+        } else {
             Intent intent = new Intent(RegisterUsername.this, RegisterAgeCity.class);
             intent.putExtra("username", username);
             intent.putExtra("name", firstName + " " + surname);
