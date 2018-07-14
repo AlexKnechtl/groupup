@@ -73,7 +73,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String city = dataSnapshot.child("city").getValue().toString();
-                String state = dataSnapshot.child("state").getValue().toString();
+                //String state = dataSnapshot.child("state").getValue().toString(); //TODO correct
 
                 Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
                 intent.putExtra("group", group);
@@ -81,7 +81,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
                 intent.putExtra("memberQuantity", memberQuantity);
                 intent.putExtra("publicStatus", "justfriends");
                 intent.putExtra("location", city);
-                intent.putExtra("state", state);
+                intent.putExtra("state", "Steiermark");//state); //TODO Something is definitely wrong here, not used anymore
                 startActivity(intent);
             }
 
@@ -119,7 +119,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String state = dataSnapshot.child("state").getValue().toString();
+                // String state = dataSnapshot.child("state").getValue().toString(); //Todo Something is wrong here
 
                 Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
                 intent.putExtra("group", group);
@@ -127,7 +127,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
                 intent.putExtra("memberQuantity", memberQuantity);
                 intent.putExtra("publicStatus", publicStatus);
                 intent.putExtra("location", placeName);
-                intent.putExtra("state", state);
+                intent.putExtra("state", "Steiermark"); //state); //todo correct this, not used anymore
                 startActivity(intent);
             }
 

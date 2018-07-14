@@ -10,7 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class LanguageStringsManager {
-    private static final LanguageStringsManager ourInstance = new LanguageStringsManager();
+    private static LanguageStringsManager ourInstance = null;
     private DatabaseReference languageStringsReference = FirebaseDatabase.getInstance().getReference().child("LanguageStrings");
     private ArrayList<LanguageStringsModel> languageStrings;
     private static boolean initialized = false;
@@ -45,7 +45,8 @@ public class LanguageStringsManager {
 
     public static void initialize()
     {
-        //ourInstance = new LanguageStringsManager();
+        if(ourInstance == null)
+            ourInstance = new LanguageStringsManager();
     }
 
     public LanguageStringsModel getLanguageStringByStringId(String id) {

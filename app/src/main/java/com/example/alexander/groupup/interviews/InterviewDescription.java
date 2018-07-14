@@ -76,15 +76,15 @@ public class InterviewDescription extends AppCompatActivity {
 
                 groupDescription = "Hier sollte eine Beschreibung stehen.";
 
-                Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
+                //Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
                 setDatabaseValues();
-                startActivity(intent);
+                //startActivity(intent);
             }
         });
     }
 
     private void setDatabaseValues() {
-        if (group.equals("sport")) {
+        if (group.equals("sport")) { //todo implement for all categories
             GroupImagesModel.getRandomImageURL(activity, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String groupImage) {
@@ -112,6 +112,25 @@ public class InterviewDescription extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Error saving Group", Toast.LENGTH_SHORT).show();
                 }
             });
+        }else
+        { // Todo Freizeit: category = null, activity = null, memberquantity = null? ERROR!!!
+            mGroupDatabase.child("category").setValue(group);
+            mGroupDatabase.child("activity").setValue(activity);
+            mGroupDatabase.child("member_quantity").setValue(memberQuantity);
+            mGroupDatabase.child("public_status").setValue(publicStatus);
+            mGroupDatabase.child("location").setValue(location);
+            mGroupDatabase.child("description").setValue(groupDescription);
+            mGroupDatabase.child("tag").setValue(activity);
+            mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
+            mGroupDatabase.child("group_image").setValue("https://firebasestorage.googleapis.com/v0/b/groupup-4c43f.appspot.com/o/Backgrounds%2FSport%2FLaufen-0.png?alt=media&token=2ebf9b5d-0931-4871-aa39-ef36ae5cac42");
+
+            UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -122,7 +141,7 @@ public class InterviewDescription extends AppCompatActivity {
         memberQuantity = bundle.getString("memberQuantity");
         publicStatus = bundle.getString("publicStatus");
         location = bundle.getString("location");
-        state = bundle.getString("state");
+        state = bundle.getString("state"); // todo not used anymore
     }
 
     private void initialzieFirebase() {

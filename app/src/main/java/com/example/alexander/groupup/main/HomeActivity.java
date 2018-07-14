@@ -142,7 +142,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 groupsViewHolder.setGroupImage(groups.getGroup_image());
                 groupsViewHolder.setCategoryCity(groups.getCategory(), groups.getLocation());
-                groupsViewHolder.setTag(groups.getTag());
+                groupsViewHolder.setTag(groups.getTag(), groups.category.toLowerCase().equals("sport"));
 
                 final String group_id = getRef(position).getKey();
 
@@ -183,9 +183,12 @@ public class HomeActivity extends AppCompatActivity {
             groupHeadline.setText(category + " @" + city);
         }
 
-        public void setTag(String tag) {
+        public void setTag(String tag, boolean groupisSport) {
             TextView groupTag = mView.findViewById(R.id.group_tag);
-            groupTag.setText(",," + tag /*LanguageStringsManager.getInstance().getLanguageStringByStringId(tag).getLocalLanguageString()*/ + ",,");
+            if(groupisSport)
+                groupTag.setText(",," + LanguageStringsManager.getInstance().getLanguageStringByStringId(tag).getLocalLanguageString() + ",,");
+            else
+                groupTag.setText(",," + tag + ",,");
         }
     }
 

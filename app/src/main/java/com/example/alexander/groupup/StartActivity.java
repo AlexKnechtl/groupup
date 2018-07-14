@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.registration.RegisterUsername;
+import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +48,7 @@ public class StartActivity extends AppCompatActivity {
         }
 
         initializeFirebase();
+        LanguageStringsManager.initialize();
 
         //Registration Process
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
