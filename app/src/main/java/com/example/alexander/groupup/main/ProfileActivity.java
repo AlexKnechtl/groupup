@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.alexander.groupup.FriendsActivity;
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.profile.SelectLanguageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     //XML
     private CircleImageView mProfileImageView;
-    private TextView mProfileName, mProfileLocation, mProfileStatus, friendsCounter;
+    private TextView mProfileName, mProfileLocation, mProfileStatus, friendsCounter, languagesTextView;
     private RelativeLayout relativeLayout, languages;
     private FloatingActionButton fabSettings;
 
@@ -89,6 +90,27 @@ public class ProfileActivity extends AppCompatActivity {
         //Initialize Firebase
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         final String current_uid = mCurrentUser.getUid();
+
+        languagesTextView = findViewById(R.id.languages_interest_text_view);
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    languagesTextView.setText(dataSnapshot.getValue().toString());
+                    if(languagesTextView.getText().equals(""))
+                        languagesTextView.setText("Keine Sprachen");
+                }
+                catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         ProfileImageStorage = FirebaseStorage.getInstance().getReference();
 
@@ -239,6 +261,14 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
             }
         });
+
+        languages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent selectLanguages = new Intent(ProfileActivity.this, SelectLanguageActivity.class);
+                startActivity(selectLanguages);
+            }
+        });
     }
 
     @Override
@@ -252,9 +282,7 @@ public class ProfileActivity extends AppCompatActivity {
             CropImage.activity(imageUri)
                     .setAspectRatio(1, 1)
                     .start(this);
-        }
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 

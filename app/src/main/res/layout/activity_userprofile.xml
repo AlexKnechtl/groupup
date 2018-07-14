@@ -264,7 +264,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/picture_languages"
                         android:layout_alignStart="@+id/languages"
-                        android:text="Hip Hop, Deutschrap"
+                        android:text="Keine"
                         android:textColor="@color/colorAccent" />
                 </RelativeLayout>
 
