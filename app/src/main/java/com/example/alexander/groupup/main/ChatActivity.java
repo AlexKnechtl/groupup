@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.fragments.ChatsFragment;
@@ -16,6 +17,8 @@ import com.example.alexander.groupup.fragments.GroupChatsFragment;
 import com.example.alexander.groupup.fragments.SectionsPagerAdapter;
 import com.example.alexander.groupup.main.BottomNavigationViewHelper;
 import com.example.alexander.groupup.main.HomeActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -27,15 +30,20 @@ public class MessagesActivity extends AppCompatActivity {
     //XML
     private MaterialSearchView searchView;
 
-
     //Variables
+    private String currentUID;
+
 
     //Firebase
+    private FirebaseUser mCurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_chat);
+
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUID = mCurrentUser.getUid();
 
         Toolbar myToolbar = findViewById(R.id.toolbar_chat);
         setSupportActionBar(myToolbar);
@@ -72,6 +80,12 @@ public class MessagesActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setText("Group Chats");
     }
 
+    public void newMessageClick(View view) {
+        Intent intent = new Intent(MessagesActivity.this, NewMessage.class);
+        intent.putExtra("user_id", currentUID);
+        startActivity(intent);
+    }
+
     //Add Search Menu Icon
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,5 +102,4 @@ public class MessagesActivity extends AppCompatActivity {
         Intent intent = new Intent(MessagesActivity.this, HomeActivity.class);
         startActivity(intent);
     }
-
 }
