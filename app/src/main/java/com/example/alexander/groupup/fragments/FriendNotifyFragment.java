@@ -39,7 +39,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FriendNotifyFragment extends Fragment {
 
     //Firebase
-    private FirebaseUser mCurrentUser;
     private DatabaseReference FriendRequestDatabase;
     private DatabaseReference UserProfileDatabase;
     private DatabaseReference MyAccountDatabase;
@@ -51,6 +50,7 @@ public class FriendNotifyFragment extends Fragment {
     //Variables
     private long friendsCountMyAccount, friendsCountUser;
     private String myProfileName, myProfileThumbImage, userName, userThumbImage;
+    private String user_id;
 
     public FriendNotifyFragment() {
         // Required empty public constructor
@@ -67,13 +67,11 @@ public class FriendNotifyFragment extends Fragment {
         requestedFriendsList.setHasFixedSize(true);
         requestedFriendsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //Initialize Firebase
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String current_uid = mCurrentUser.getUid();
+        user_id = getActivity().getIntent().getExtras().getString("user_id");
 
-        MyAccountDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+        MyAccountDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
-        FriendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid)
+        FriendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id)
                 .child("friend_requests").child("received");
 
         FriendRequestDatabase.addValueEventListener(new ValueEventListener() {
@@ -196,16 +194,16 @@ public class FriendNotifyFragment extends Fragment {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 UserProfileDatabase.child("friends_count").setValue(friendsUser);
-                                UserProfileDatabase.child("friends").child(mCurrentUser.getUid()).child("date").setValue(friendDate);
-                                UserProfileDatabase.child("friends").child(mCurrentUser.getUid()).child("name").setValue(myProfileName);
-                                UserProfileDatabase.child("friends").child(mCurrentUser.getUid()).child("thumb_image").setValue(myProfileThumbImage)
+                                UserProfileDatabase.child("friends").child(user_id).child("date").setValue(friendDate);
+                                UserProfileDatabase.child("friends").child(user_id).child("name").setValue(myProfileName);
+                                UserProfileDatabase.child("friends").child(user_id).child("thumb_image").setValue(myProfileThumbImage)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 MyAccountDatabase.child("friend_requests").child("received").child(receiver_user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        UserProfileDatabase.child("friend_requests").child("sent").child(mCurrentUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        UserProfileDatabase.child("friend_requests").child("sent").child(user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
                                                                 Toast.makeText(getActivity(), getString(R.string.you_are_now_friends), Toast.LENGTH_SHORT).show();

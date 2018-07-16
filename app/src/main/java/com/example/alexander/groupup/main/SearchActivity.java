@@ -40,11 +40,15 @@ public class SearchActivity extends AppCompatActivity {
     private Context mContext = SearchActivity.this;
     private static final int ACTIVITY_NUM = 2;
     private Query firebaseSearchQuery;
+    private String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_search);
+
+        Bundle bundle = getIntent().getExtras();
+        user_id = bundle.getString("user_id");
 
         setupBottomNavigationView();
 
@@ -139,7 +143,7 @@ public class SearchActivity extends AppCompatActivity {
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_nav);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
 
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, user_id, bottomNavigationViewEx);
 
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);

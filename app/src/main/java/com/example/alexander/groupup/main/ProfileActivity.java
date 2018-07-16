@@ -75,21 +75,22 @@ public class ProfileActivity extends AppCompatActivity {
 
     //Firebase
     private DatabaseReference UserDatabase;
-    private FirebaseUser mCurrentUser;
     private StorageReference ProfileImageStorage;
 
+    //Variables
     private Context mContext = ProfileActivity.this;
+    private String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_profile);
 
-        setupBottomNavigationView();
-
         //Initialize Firebase
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String current_uid = mCurrentUser.getUid();
+        Bundle bundle = getIntent().getExtras();
+        user_id = bundle.getString("user_id");
+
+        setupBottomNavigationView();
 
         languagesTextView = findViewById(R.id.languages_interest_text_view);
 
@@ -114,7 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         ProfileImageStorage = FirebaseStorage.getInstance().getReference();
 
-        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
         UserDatabase.keepSynced(true);
 
         // Get the application context
@@ -181,7 +182,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, FriendsActivity.class);
-                intent.putExtra("user_id", current_uid);
+                intent.putExtra("user_id", user_id);
                 startActivity(intent);
             }
         });
@@ -287,7 +288,6 @@ public class ProfileActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
                 Uri resultUri = result.getUri();
-                String current_user_id = mCurrentUser.getUid();
 
                 final File thumb_filePath = new File(resultUri.getPath());
 
@@ -301,8 +301,8 @@ public class ProfileActivity extends AppCompatActivity {
                 thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
                 final byte[] thumb_byte = baos.toByteArray();
 
-                StorageReference filepath = ProfileImageStorage.child("profile_images").child(current_user_id + ".jpg");
-                final StorageReference thumb_filepath = ProfileImageStorage.child("profile_images").child("thumbs").child(current_user_id + ".jpg");
+                StorageReference filepath = ProfileImageStorage.child("profile_images").child(user_id + ".jpg");
+                final StorageReference thumb_filepath = ProfileImageStorage.child("profile_images").child("thumbs").child(user_id + ".jpg");
 
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -371,7 +371,7 @@ public class ProfileActivity extends AppCompatActivity {
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_nav);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
 
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, user_id,bottomNavigationViewEx);
 
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);

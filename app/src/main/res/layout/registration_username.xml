@@ -81,11 +81,12 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/fui_transparent"
-            android:inputType="textCapSentences"
             android:gravity="center"
             android:hint="@string/first_name"
+            android:inputType="textCapSentences"
             android:singleLine="true"
             android:textColor="@color/colorPrimary"
+            android:textCursorDrawable="@drawable/cursor_color"
             android:textSize="24sp" />
     </RelativeLayout>
 
@@ -107,10 +108,11 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/fui_transparent"
             android:gravity="center"
-            android:inputType="textCapSentences"
             android:hint="@string/surname"
+            android:inputType="textCapSentences"
             android:singleLine="true"
             android:textColor="@color/colorPrimary"
+            android:textCursorDrawable="@drawable/cursor_color"
             android:textSize="24sp" />
     </RelativeLayout>
 
@@ -135,6 +137,7 @@
             android:hint="@string/username"
             android:singleLine="true"
             android:textColor="@color/colorPrimary"
+            android:textCursorDrawable="@drawable/cursor_color"
             android:textSize="24sp" />
     </RelativeLayout>
 

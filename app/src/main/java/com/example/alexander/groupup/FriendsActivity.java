@@ -12,11 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.alexander.groupup.chat.ChatActivity;
-import com.example.alexander.groupup.main.SearchActivity;
 import com.example.alexander.groupup.models.UserModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +40,7 @@ public class FriendsActivity extends AppCompatActivity {
     private DatabaseReference FriendsDatabase;
 
     //Variables
-    private String user_id, message;
+    private String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +49,6 @@ public class FriendsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         user_id = bundle.getString("user_id");
-        message = bundle.getString("message");
 
         initializeXML();
 
@@ -153,10 +149,6 @@ public class FriendsActivity extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (message.equals("true")) {
-                            Intent intent = new Intent(FriendsActivity.this, ChatActivity.class);
-                        }
-
                         Intent intent = new Intent(FriendsActivity.this, UserProfileActivity.class);
                         intent.putExtra("user_id", list_user_id);
                         startActivity(intent);

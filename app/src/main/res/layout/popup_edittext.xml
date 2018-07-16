@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/textAppColor"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:fontFamily="@font/dosis_bold"
                 android:gravity="center"
                 android:text="0 / 250"

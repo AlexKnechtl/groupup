@@ -47,6 +47,16 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:onClick="newMessageClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="51dp"
+        android:layout_marginEnd="12dp"
+        app:fabSize="normal" />
+
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"

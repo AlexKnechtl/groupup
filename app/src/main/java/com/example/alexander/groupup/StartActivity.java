@@ -139,6 +139,7 @@ public class StartActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(uid).child("name").exists()) {
                     Intent intent = new Intent(StartActivity.this, HomeActivity.class);
+                    intent.putExtra("user_id", uid);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(StartActivity.this, RegisterUsername.class);

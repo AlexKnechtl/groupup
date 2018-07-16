@@ -24,12 +24,19 @@ public class NotificationActivity extends AppCompatActivity {
     private Context mContext = NotificationActivity.this;
     private static final int ACTIVITY_NUM = 1;
 
+    //XML
     private TextView dateTextView;
+
+    //Firebase
+    private String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_notification);
+
+        Bundle bundle = getIntent().getExtras();
+        user_id = bundle.getString("user_id");
 
         dateTextView = findViewById(R.id.date_notification);
 
@@ -61,7 +68,7 @@ public class NotificationActivity extends AppCompatActivity {
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_nav);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
 
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, user_id, bottomNavigationViewEx);
 
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);

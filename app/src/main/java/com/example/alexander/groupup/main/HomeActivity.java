@@ -51,13 +51,13 @@ public class HomeActivity extends AppCompatActivity {
     //Firebase
     private DatabaseReference GroupDatabase;
     private DatabaseReference UserDatabase;
-    private FirebaseUser mCurrentUser;
 
     //Variables
     private String city;
     private Context mContext = HomeActivity.this;
     private static final int ACTIVITY_NUM = 0;
     private boolean creator;
+    private  String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +66,13 @@ public class HomeActivity extends AppCompatActivity {
 
         mContext = getApplicationContext();
 
+        //Get Current User ID
+        Bundle bundle = getIntent().getExtras();
+        user_id = bundle.getString("user_id");
+
         setupBottomNavigationView();
 
-        //Get Current User ID
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String current_uid = mCurrentUser.getUid();
-
-        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
         //Find Ids
         TextView dateTextView;
@@ -118,7 +118,7 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(HomeActivity.this, GroupView.class);
-                    intent.putExtra("group_id", current_uid);
+                    intent.putExtra("group_id", user_id);
                     startActivity(intent);
                 }
             }
@@ -201,7 +201,7 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_nav);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
 
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, user_id, bottomNavigationViewEx);
 
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);

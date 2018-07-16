@@ -26,10 +26,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".chat.NewMessage"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".group.AddFriends"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".chat.MessagesActivity"
+            android:name=".main.ChatActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".registration.RegisterUsername"

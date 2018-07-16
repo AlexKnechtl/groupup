@@ -11,16 +11,18 @@ public class UserModel {
     public String thumb_image;
     public String city;
     public String date;
+    public String message;
 
     public UserModel() {
     }
 
-    public UserModel(String name, String age, String thumbmail, String city, String date) {
+    public UserModel(String name, String age, String thumbmail, String city, String date, String message) {
         this.name = name;
         this.age = age;
         this.thumb_image = thumbmail;
         this.city = city;
         this.date = date;
+        this.message = message;
     }
 
     public String getDate() {
@@ -62,6 +64,10 @@ public class UserModel {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public String getMessage() { return message; }
+
+    public void setMessage(String message) { this.message = message; }
 
     public void setNameAge(String name, String age) {
         this.name = name;

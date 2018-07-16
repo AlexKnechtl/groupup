@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.chat;
+package com.example.alexander.groupup.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,38 +12,35 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.chat.NewMessage;
 import com.example.alexander.groupup.fragments.ChatsFragment;
 import com.example.alexander.groupup.fragments.GroupChatsFragment;
 import com.example.alexander.groupup.fragments.SectionsPagerAdapter;
-import com.example.alexander.groupup.main.BottomNavigationViewHelper;
-import com.example.alexander.groupup.main.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-public class MessagesActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
-    private Context mContext = MessagesActivity.this;
+    private Context mContext = ChatActivity.this;
     private static final int ACTIVITY_NUM = 4;
 
     //XML
     private MaterialSearchView searchView;
 
     //Variables
-    private String currentUID;
-
+    private String user_id;
 
     //Firebase
-    private FirebaseUser mCurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_chat);
 
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        currentUID = mCurrentUser.getUid();
+        Bundle bundle = getIntent().getExtras();
+        user_id = bundle.getString("user_id");
 
         Toolbar myToolbar = findViewById(R.id.toolbar_chat);
         setSupportActionBar(myToolbar);
@@ -58,7 +55,7 @@ public class MessagesActivity extends AppCompatActivity {
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_nav);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
 
-        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, user_id, bottomNavigationViewEx);
 
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
@@ -81,8 +78,8 @@ public class MessagesActivity extends AppCompatActivity {
     }
 
     public void newMessageClick(View view) {
-        Intent intent = new Intent(MessagesActivity.this, NewMessage.class);
-        intent.putExtra("user_id", currentUID);
+        Intent intent = new Intent(ChatActivity.this, NewMessage.class);
+        intent.putExtra("user_id", user_id);
         startActivity(intent);
     }
 
@@ -99,7 +96,7 @@ public class MessagesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(MessagesActivity.this, HomeActivity.class);
+        Intent intent = new Intent(ChatActivity.this, HomeActivity.class);
         startActivity(intent);
     }
 }
