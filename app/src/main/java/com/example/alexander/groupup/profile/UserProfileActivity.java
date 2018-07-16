@@ -40,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserProfileActivity extends AppCompatActivity {
 
     //XML
-    private TextView mDisplayNameAge, mDisplayLocation, mFabFriendText, mStatus, backExplorerText, friendsCounter;
+    private TextView mDisplayNameAge, mDisplayLocation, mFabFriendText, mStatus, backExplorerText, friendsCounter, languages;
     private CircleImageView mUserProfile;
     private FloatingActionButton mFriendFab, backExplorerFab;
 
@@ -122,6 +122,24 @@ public class UserProfileActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(receiver_user_id).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    languages.setText(dataSnapshot.getValue().toString());
+                    if (languages.getText().equals(""))
+                        languages.setText("Keine Sprachen");
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
@@ -362,5 +380,7 @@ public class UserProfileActivity extends AppCompatActivity {
         backExplorerFab = findViewById(R.id.back_explorer_userprofile);
         mFabFriendText = findViewById(R.id.friend_fab_bubble);
         mFriendFab = findViewById(R.id.friend_button);
+
+        languages = findViewById(R.id.languages_interest_text_view);
     }
 }
