@@ -112,7 +112,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC-n1wL3rDOPglQ3Is2RD2z4k2i_mrmX50" />
 
-        <activity android:name=".profile.SelectLanguageActivity"></activity>
+        <activity android:name=".profile.SelectLanguageActivity" />
+        <activity android:name=".group.AddGroupMembersActivity" />
+        <activity android:name=".group.AddGroupMemberActivity"></activity>
     </application>
 
 </manifest>
