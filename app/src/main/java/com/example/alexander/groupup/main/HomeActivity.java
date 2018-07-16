@@ -67,8 +67,8 @@ public class HomeActivity extends AppCompatActivity {
         mContext = getApplicationContext();
 
         //Get Current User ID
-        Bundle bundle = getIntent().getExtras();
-        user_id = bundle.getString("user_id");
+        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+        user_id = current_user.getUid();
 
         setupBottomNavigationView();
 

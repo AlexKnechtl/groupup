@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.interviews;
+package com.example.alexander.groupup.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.alexander.groupup.interviews.InterviewMembers;
 import com.example.alexander.groupup.models.LanguageStringsModel;
 import com.example.alexander.groupup.R;
 

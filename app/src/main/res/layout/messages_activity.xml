@@ -14,7 +14,8 @@
             android:id="@+id/chat_user_image"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_margin="6dp"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
             android:src="@drawable/default_user_black"
             app:civ_border_color="@color/colorAccent"
             app:civ_border_width="1dp" />
@@ -23,12 +24,14 @@
             android:id="@+id/chat_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="4dp"
             android:text="UserName"
             android:textSize="22sp" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/messages_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/message_bar"
@@ -44,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -53,7 +56,7 @@
             android:layout_alignParentStart="true"
             android:layout_margin="4dp"
             android:layout_toStartOf="@id/fab_message"
-            android:background="@drawable/circle_design_interests"
+            android:background="@drawable/assistant_circle_design"
             android:orientation="horizontal">
 
             <ImageButton
@@ -62,11 +65,14 @@
                 android:layout_gravity="center" />
 
             <EditText
+                android:id="@+id/message_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
                 android:backgroundTint="@color/fui_transparent"
+                android:hint="@string/write_message"
+                android:textColor="@android:color/black"
                 android:textCursorDrawable="@drawable/cursor_color" />
-
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
@@ -76,8 +82,11 @@
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:layout_marginEnd="4dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:onClick="sendMessageClick"
             android:scaleType="fitCenter"
             android:src="@drawable/action_send"
+            app:borderWidth="0dp"
             app:fabSize="mini" />
     </RelativeLayout>
 </RelativeLayout>

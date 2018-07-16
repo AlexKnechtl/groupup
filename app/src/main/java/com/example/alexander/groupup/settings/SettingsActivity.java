@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.main;
+package com.example.alexander.groupup.settings;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +12,7 @@ import android.view.View;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.StartActivity;
-import com.example.alexander.groupup.settings.MyAccountActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class SettingsActivity extends AppCompatActivity {
 

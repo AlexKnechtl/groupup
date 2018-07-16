@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.UserProfileActivity;
+import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

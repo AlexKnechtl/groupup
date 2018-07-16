@@ -2,7 +2,6 @@ package com.example.alexander.groupup.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,19 +20,18 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alexander.groupup.FriendsActivity;
+import com.example.alexander.groupup.profile.FriendsActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.profile.SelectLanguageActivity;
+import com.example.alexander.groupup.settings.SettingsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -99,10 +97,9 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
                     languagesTextView.setText(dataSnapshot.getValue().toString());
-                    if(languagesTextView.getText().equals(""))
+                    if (languagesTextView.getText().equals(""))
                         languagesTextView.setText("Keine Sprachen");
-                }
-                catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -133,20 +130,18 @@ public class ProfileActivity extends AppCompatActivity {
                 String age_year = dataSnapshot.child("age_year").getValue().toString();
                 String friends_count = dataSnapshot.child("friends_count").getValue().toString();
 
-                if (dataSnapshot.child("image").exists()) {
-                    final String image = dataSnapshot.child("image").getValue().toString();
-                    Picasso.with(ProfileActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.profile_white_border).into(mProfileImageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                        }
+                final String image = dataSnapshot.child("image").getValue().toString();
+                Picasso.with(ProfileActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
+                        .placeholder(R.drawable.profile_white_border).into(mProfileImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                    }
 
-                        @Override
-                        public void onError() {
-                            Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.profile_white_border).into(mProfileImageView);
-                        }
-                    });
-                }
+                    @Override
+                    public void onError() {
+                        Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.profile_white_border).into(mProfileImageView);
+                    }
+                });
 
                 if (dataSnapshot.child("status").exists()) {
                     status = dataSnapshot.child("status").getValue().toString();
@@ -160,12 +155,16 @@ public class ProfileActivity extends AppCompatActivity {
 
                 int age = today.get(Calendar.YEAR) - age_year_value;
 
-                if (today.get(Calendar.DAY_OF_YEAR) < age_day_value) {
+                if (today.get(Calendar.DAY_OF_YEAR) < age_day_value)
+
+                {
                     age--;
                 }
 
                 String ageUser = Integer.toString(age);
-                UserDatabase.child("age").setValue(ageUser);
+                UserDatabase.child("age").
+
+                        setValue(ageUser);
 
                 mProfileName.setText(name + ", " + age);
                 mProfileLocation.setText(location);
@@ -178,7 +177,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        friendsCounter.setOnClickListener(new View.OnClickListener() {
+        friendsCounter.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, FriendsActivity.class);
@@ -187,7 +188,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        mProfileStatus.setOnClickListener(new View.OnClickListener() {
+        mProfileStatus.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 // Initialize a new instance of LayoutInflater service
@@ -253,7 +256,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        mProfileImageView.setOnClickListener(new View.OnClickListener() {
+        mProfileImageView.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View view) {
                 Intent galleryIntent = new Intent();
@@ -263,7 +268,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        languages.setOnClickListener(new View.OnClickListener() {
+        languages.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 Intent selectLanguages = new Intent(ProfileActivity.this, SelectLanguageActivity.class);
@@ -371,7 +378,7 @@ public class ProfileActivity extends AppCompatActivity {
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_nav);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
 
-        BottomNavigationViewHelper.enableNavigation(mContext, user_id,bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, user_id, bottomNavigationViewEx);
 
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);

@@ -16,8 +16,6 @@ import com.example.alexander.groupup.chat.NewMessage;
 import com.example.alexander.groupup.fragments.ChatsFragment;
 import com.example.alexander.groupup.fragments.GroupChatsFragment;
 import com.example.alexander.groupup.fragments.SectionsPagerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 

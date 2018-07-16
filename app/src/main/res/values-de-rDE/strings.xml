@@ -126,4 +126,5 @@
     <string name="no_chats_yet">Keine Chats hier bis jetzt.</string>
     <string name="no_group_chats">Keine Gruppen Chats hier bis jetzt.</string>
     <string name="select_language">Sprache auswählen</string>
+    <string name="write_message">Nachricht schreiben</string>
 </resources>
