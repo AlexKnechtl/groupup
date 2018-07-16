@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.UserProfileActivity;
+import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -129,7 +129,7 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         public void setCity(String city) {
-            TextView userNameView = mView.findViewById(R.id.user_single_city);
+            TextView userNameView = mView.findViewById(R.id.user_single_information);
             userNameView.setText(city);
         }
 

@@ -26,6 +26,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".chat.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".chat.NewMessage"
             android:screenOrientation="portrait" />
         <activity
@@ -57,7 +60,7 @@
             android:name=".main.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".interviews.InterviewStart"
@@ -92,14 +95,14 @@
             android:label="@string/my_account"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FriendsActivity"
+            android:name=".profile.FriendsActivity"
             android:label="@string/friends_label"
             android:screenOrientation="portrait" />
         <activity
             android:name=".group.GroupView"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".profile.UserProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

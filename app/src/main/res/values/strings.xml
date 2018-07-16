@@ -135,6 +135,7 @@
     <string name="no_chats_yet">No Chats here yet.</string>
     <string name="no_group_chats">No Group Chats here yet.</string>
     <string name="select_language">Sprache auswählen</string>
+    <string name="write_message">Write message</string>
 
     <!-- Registration -->
 

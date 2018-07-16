@@ -16,11 +16,9 @@ import android.widget.Toast;
 
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.UserProfileActivity;
+import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -78,7 +76,7 @@ public class FriendNotifyFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    noRequests.setVisibility(View.INVISIBLE);
+                    noRequests.setVisibility(View.GONE);
                 }
             }
 

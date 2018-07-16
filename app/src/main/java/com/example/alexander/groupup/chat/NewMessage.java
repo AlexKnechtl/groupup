@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.UserProfileActivity;
 import com.example.alexander.groupup.models.UserModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -90,7 +89,7 @@ public class NewMessage extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    noFriends.setVisibility(View.INVISIBLE);
+                    noFriends.setVisibility(View.GONE);
                 }
             }
 
@@ -112,7 +111,7 @@ public class NewMessage extends AppCompatActivity {
                 firebaseSearchQuery
         ) {
             @Override
-            protected void populateViewHolder(FriendsMessageViewholder viewHolder, final UserModel user, int position) {
+            protected void populateViewHolder(FriendsMessageViewholder viewHolder, final UserModel user, final int position) {
                 viewHolder.setName(user.getName());
                 viewHolder.setThumbImage(user.getThumb_image(), getApplicationContext());
 
@@ -121,15 +120,16 @@ public class NewMessage extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(NewMessage.this, UserProfileActivity.class);
-                        intent.putExtra("user_id", list_user_id);
+                        Intent intent = new Intent(NewMessage.this, MessageActivity.class);
+                        intent.putExtra("user_id", user_id);
+                        intent.putExtra("receiver_user_id", list_user_id);
 
                         Map userMap = new HashMap<>();
                         userMap.put("thumb_image", user.getThumb_image());
                         userMap.put("name", user.getName());
                         userMap.put("message", "Schreib eine Nachricht! :)");
 
-                        ChatUsersDatabase.updateChildren(userMap);
+                        ChatUsersDatabase.child(list_user_id).updateChildren(userMap);
 
                         startActivity(intent);
                     }
@@ -159,15 +159,16 @@ public class NewMessage extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(NewMessage.this, UserProfileActivity.class);
-                        intent.putExtra("user_id", list_user_id);
+                        Intent intent = new Intent(NewMessage.this, MessageActivity.class);
+                        intent.putExtra("user_id", user_id);
+                        intent.putExtra("receiver_user_id", list_user_id);
 
                         Map userMap = new HashMap<>();
                         userMap.put("thumb_image", user.getThumb_image());
                         userMap.put("name", user.getName());
                         userMap.put("message", "Schreib eine Nachricht! :)");
 
-                        ChatUsersDatabase.updateChildren(userMap);
+                        ChatUsersDatabase.child(list_user_id).updateChildren(userMap);
 
                         startActivity(intent);
                     }

@@ -8,6 +8,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.main.ChatActivity;
+import com.example.alexander.groupup.main.HomeActivity;
+import com.example.alexander.groupup.main.NotificationActivity;
+import com.example.alexander.groupup.main.ProfileActivity;
+import com.example.alexander.groupup.main.SearchActivity;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class BottomNavigationViewHelper {

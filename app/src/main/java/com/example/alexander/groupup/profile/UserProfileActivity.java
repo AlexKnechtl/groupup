@@ -1,4 +1,4 @@
-package com.example.alexander.groupup;
+package com.example.alexander.groupup.profile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;

@@ -1,4 +1,4 @@
-package com.example.alexander.groupup;
+package com.example.alexander.groupup.profile;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.UserModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -169,7 +170,7 @@ public class FriendsActivity extends AppCompatActivity {
         }
 
         public void setDate(String date) {
-            TextView friendsDate = mView.findViewById(R.id.user_single_city);
+            TextView friendsDate = mView.findViewById(R.id.user_single_information);
             friendsDate.setText("Friends since " + date);
         }
 
