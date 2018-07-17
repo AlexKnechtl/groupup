@@ -2,10 +2,11 @@ package com.example.alexander.groupup.Adapters;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,7 +36,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
         private TextView messageText;
         private TextView timeText;
-        private CardView messageLayout;
+        private LinearLayout messageLayout;
 
         public MessageViewHolder(View view) {
             super(view);
@@ -55,7 +56,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         String from_user = c.getFrom();
 
         if (from_user.equals(user_id)) {
-            viewHolder.messageLayout.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorPrimaryDark));
+            viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
         viewHolder.messageText.setText(c.getMessage());
