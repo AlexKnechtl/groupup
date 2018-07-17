@@ -2,12 +2,10 @@ package com.example.alexander.groupup.Adapters;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
@@ -37,26 +35,31 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         private TextView messageText;
         private TextView timeText;
         private LinearLayout messageLayout;
+        private CardView background;
 
         public MessageViewHolder(View view) {
             super(view);
 
             messageText = view.findViewById(R.id.message_text);
             messageLayout = view.findViewById(R.id.message_layout);
+            background = view.findViewById(R.id.message_background);
         }
     }
 
     @Override
     public void onBindViewHolder(MessageViewHolder viewHolder, final int position) {
 
-        mAuth = FirebaseAuth.getInstance();
-        String user_id = mAuth.getCurrentUser().getUid();
-
         MessagesModel c = messagesList.get(position);
         String from_user = c.getFrom();
 
-        if (from_user.equals(user_id)) {
+        mAuth = FirebaseAuth.getInstance();
+
+        if (from_user.equals(mAuth.getCurrentUser().getUid())) {
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorPrimaryDark));
+        } else {
+            viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+            viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
         }
 
         viewHolder.messageText.setText(c.getMessage());
