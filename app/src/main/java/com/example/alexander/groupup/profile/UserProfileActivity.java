@@ -198,7 +198,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         if (mCurrentState.equals("friends")) {
             AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(UserProfileActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+            builder = new AlertDialog.Builder(UserProfileActivity.this, R.style.RegisterTheme);
             builder.setTitle(getString(R.string.note))
                     .setMessage(getString(R.string.end_friendship))
                     .setPositiveButton(getString(R.string.yes_continue), new DialogInterface.OnClickListener() {

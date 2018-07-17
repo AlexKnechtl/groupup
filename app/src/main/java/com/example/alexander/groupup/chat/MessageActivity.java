@@ -116,7 +116,6 @@ public class MessageActivity extends AppCompatActivity {
                     Map chatUserMap = new HashMap();
                     chatUserMap.put("Chats/" + user_id + "/" + receiver_user_id, chatMap);
                     chatUserMap.put("Chats/" + receiver_user_id + "/" + user_id, chatMap);
-
                 }
             }
 
@@ -132,6 +131,8 @@ public class MessageActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(message)) {
 
+            messageText.setText("");
+
             String currentUserRef = user_id + "/" + receiver_user_id;
             String receiverUserRef = receiver_user_id + "/" + user_id;
 
@@ -142,6 +143,7 @@ public class MessageActivity extends AppCompatActivity {
             messageMap.put("message", message);
             messageMap.put("seen", false);
             messageMap.put("time", ServerValue.TIMESTAMP);
+            messageMap.put("from", user_id);
 
             Map messageUserMap = new HashMap();
             messageUserMap.put(currentUserRef + "/" + pushId, messageMap);

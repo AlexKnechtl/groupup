@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.UserModel;
+import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,7 +39,7 @@ public class NewMessage extends AppCompatActivity {
 
     //Firebase
     private DatabaseReference FriendsDatabase;
-    private DatabaseReference ChatUsersDatabase;
+    private DatabaseReference UserDatabase;
 
     //Variables
     private String user_id;
@@ -56,7 +57,7 @@ public class NewMessage extends AppCompatActivity {
         FriendsDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("friends");
         FriendsDatabase.keepSynced(true);
 
-        ChatUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("chats");
+        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         searchView = findViewById(R.id.material_search_view_friends);
 
@@ -129,7 +130,8 @@ public class NewMessage extends AppCompatActivity {
                         userMap.put("name", user.getName());
                         userMap.put("message", "Schreib eine Nachricht! :)");
 
-                        ChatUsersDatabase.child(list_user_id).updateChildren(userMap);
+                        UserDatabase.child(user_id).child("chats").child(list_user_id).updateChildren(userMap);
+                        UserDatabase.child(list_user_id).child("chats").child(user_id).updateChildren(userMap);
 
                         startActivity(intent);
                     }
@@ -168,7 +170,8 @@ public class NewMessage extends AppCompatActivity {
                         userMap.put("name", user.getName());
                         userMap.put("message", "Schreib eine Nachricht! :)");
 
-                        ChatUsersDatabase.child(list_user_id).updateChildren(userMap);
+                        UserDatabase.child(user_id).child("chats").child(list_user_id).updateChildren(userMap);
+                        UserDatabase.child(list_user_id).child("chats").child(user_id).updateChildren(userMap);
 
                         startActivity(intent);
                     }

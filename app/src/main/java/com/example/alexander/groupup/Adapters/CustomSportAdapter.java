@@ -87,4 +87,3 @@ public class CustomSportAdapter extends RecyclerView.Adapter<CustomSportAdapter.
         notifyDataSetChanged();
     }
 }
-
