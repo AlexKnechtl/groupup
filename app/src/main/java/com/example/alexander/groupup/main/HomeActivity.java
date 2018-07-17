@@ -22,6 +22,7 @@ import com.example.alexander.groupup.StartActivity;
 import com.example.alexander.groupup.group.AddFriends;
 import com.example.alexander.groupup.interviews.InterviewStart;
 import com.example.alexander.groupup.group.GroupView;
+import com.example.alexander.groupup.settings.GetPremium;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.R;
@@ -193,7 +194,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void testClick(View view) {
-        Intent intent = new Intent(HomeActivity.this, AddFriends.class);
+        Intent intent = new Intent(HomeActivity.this, GetPremium.class);
         startActivity(intent);
     }
 
