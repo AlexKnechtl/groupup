@@ -390,4 +390,71 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    languagesTextView.setText(dataSnapshot.getValue().toString());
+                    if (languagesTextView.getText().equals(""))
+                        languagesTextView.setText("Keine Sprachen");
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    languagesTextView.setText(dataSnapshot.getValue().toString());
+                    if (languagesTextView.getText().equals(""))
+                        languagesTextView.setText("Keine Sprachen");
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    languagesTextView.setText(dataSnapshot.getValue().toString());
+                    if (languagesTextView.getText().equals(""))
+                        languagesTextView.setText("Keine Sprachen");
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

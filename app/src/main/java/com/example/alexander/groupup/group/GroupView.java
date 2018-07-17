@@ -72,6 +72,14 @@ public class GroupView extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        joinGroupFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GroupView.this, AddGroupMembersActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -86,11 +94,11 @@ public class GroupView extends AppCompatActivity {
                 ) {
 
             @Override
-            protected void populateViewHolder(MembersViewHolder viewHolder, UserModel user, int position) {
+            protected void populateViewHolder(final MembersViewHolder viewHolder, UserModel user, int position) {
 
                 final String list_user_id = getRef(position).getKey();
 
-                MembersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(GroupView.this, UserProfileActivity.class);
@@ -99,7 +107,7 @@ public class GroupView extends AppCompatActivity {
                     }
                 });
 
-                UserDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
+                UserDatabase.child(list_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String userName = dataSnapshot.child("name").getValue().toString();
@@ -107,9 +115,9 @@ public class GroupView extends AppCompatActivity {
                         String thumbImage = dataSnapshot.child("thumb_image").getValue().toString();
                         String city = dataSnapshot.child("city").getValue().toString();
 
-                        MembersViewHolder.setNameAge(userName, userAge);
-                        MembersViewHolder.setThumbImage(thumbImage, getApplicationContext());
-                        MembersViewHolder.setCity(city);
+                        viewHolder.setNameAge(userName, userAge);
+                        viewHolder.setThumbImage(thumbImage, getApplicationContext());
+                        viewHolder.setCity(city);
                     }
 
                     @Override
@@ -124,24 +132,24 @@ public class GroupView extends AppCompatActivity {
 
     public static class MembersViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
-        static View mView;
+        View mView;
 
         public MembersViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
 
-        public static void setNameAge(String name, String age) {
+        public void setNameAge(String name, String age) {
             TextView userNameView = mView.findViewById(R.id.username_groupview);
             userNameView.setText(name + ", " + age);
         }
 
-        public static void setCity(String city) {
+        public void setCity(String city) {
             TextView friendsDate = mView.findViewById(R.id.user_location_groupview);
             friendsDate.setText(city);
         }
 
-        public static void setThumbImage(String thumb_image, Context context) {
+        public void setThumbImage(String thumb_image, Context context) {
             CircleImageView userImageView = mView.findViewById(R.id.user_picture);
             Picasso.with(context).load(thumb_image).placeholder(R.drawable.profile_white).into(userImageView);
         }
