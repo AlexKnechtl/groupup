@@ -51,10 +51,13 @@
         android:onClick="newMessageClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_person_add_white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="51dp"
         android:layout_marginEnd="12dp"
+        android:scaleType="center"
         app:fabSize="normal" />
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
