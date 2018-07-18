@@ -127,4 +127,11 @@
     <string name="no_group_chats">Keine Gruppen Chats hier bis jetzt.</string>
     <string name="select_language">Sprache auswählen</string>
     <string name="write_message">Nachricht schreiben</string>
+    <string name="just_now">Jetzt gerade</string>
+    <string name="yesterday">Gestern</string>
+    <string name="a_minute_ago">Vor einer Minute</string>
+    <string name="minutes_ago">" Minuten"</string>
+    <string name="an_hour_ago">Vor einer Stunde</string>
+    <string name="hours_ago">" Stunden"</string>
+    <string name="days_ago">" Tage"</string>
 </resources>

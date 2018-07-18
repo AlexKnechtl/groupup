@@ -48,24 +48,25 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:onClick="newMessageClick"
+        android:id="@+id/new_chat_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_person_add_white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="51dp"
         android:layout_marginEnd="12dp"
-        android:scaleType="center"
+        android:onClick="newMessageClick"
+        android:src="@drawable/baseline_person_add_white_36"
+        android:tint="@color/colorAccent"
+        app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal" />
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
         android:background="@android:color/white"
         app:itemIconTint="@color/colorPrimaryDark"
-        android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation" />
 </RelativeLayout>

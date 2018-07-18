@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.UserModel;
-import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

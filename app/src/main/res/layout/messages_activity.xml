@@ -37,7 +37,8 @@
         android:layout_above="@id/message_bar"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/toolbar_message"
-        android:background="@color/colorAccent">
+        android:background="@color/colorAccent"
+        app:stackFromEnd="true">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -46,46 +47,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:background="@color/colorPrimaryDark"
+        android:layout_alignParentStart="true"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_margin="4dp"
-            android:layout_toStartOf="@id/fab_message"
-            android:background="@drawable/assistant_circle_design"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+            android:layout_margin="5dp"
+            android:elevation="4dp"
+            app:cardCornerRadius="22dp"
+            android:layout_toStartOf="@id/fab_message">
 
             <EditText
                 android:id="@+id/message_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:layout_marginStart="16dp"
+                android:maxLines="6"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="sans-serif"
+                android:background="@drawable/assistant_circle_design"
                 android:backgroundTint="@color/fui_transparent"
                 android:hint="@string/write_message"
                 android:textColor="@android:color/black"
                 android:textCursorDrawable="@drawable/cursor_color" />
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
             android:layout_marginEnd="4dp"
-            android:backgroundTint="@color/colorPrimary"
+            android:layout_alignBottom="@id/message"
+            android:backgroundTint="@color/colorAccent"
             android:onClick="sendMessageClick"
-            android:scaleType="fitCenter"
             android:src="@drawable/action_send"
+            android:tint="@color/darkGray"
             app:borderWidth="0dp"
             app:fabSize="mini" />
     </RelativeLayout>

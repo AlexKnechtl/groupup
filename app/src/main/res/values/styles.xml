@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Colors -->
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
@@ -17,23 +17,41 @@
         <item name="android:fontFamily">@font/dosis_bold</item>
     </style>
 
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Colors -->
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@android:color/background_light</item>
+
+        <item name="colorControlActivated">@color/colorAccent</item>
+
+        <!-- Text -->
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+
+        <item name="android:windowBackground">@drawable/background_dark</item>
+        <item name="android:fontFamily">@font/dosis_bold</item>
+    </style>
+
     <style name="RegisterTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Colors -->
         <item name="colorPrimary">@color/fui_transparent</item>
         <item name="colorPrimaryDark">@color/fui_transparent</item>
         <item name="android:colorAccent">@color/colorAccent</item>
 
+        <item name="colorControlActivated">@color/softGreyBackground</item>
+
         <!-- Text Colors -->
         <item name="android:textColorPrimary">@color/softGreyBackground</item>
         <item name="android:textColor">@color/softGreyBackground</item>
-
-        <item name="colorControlActivated">@color/softGreyBackground</item>
 
         <item name="android:buttonStyle">@style/ButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_register</item>
         <item name="android:fontFamily">@font/dosis_bold</item>
     </style>
 
+    <!-- Important for Button in Registration Process -->
     <style name="ButtonStyle" parent="@android:style/Widget.Button">
         <item name="android:textColor">@android:color/holo_purple</item>
         <item name="android:background">@android:drawable/btn_default</item><!-- only way to change this is to change the src image -->
@@ -41,26 +59,13 @@
         <item name="android:layout_height">40.0px</item>
     </style>
 
+
+    <!-- Tab Layout and Text -->
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">26sp</item>
         <item name="android:fontFamily">@font/dosis_semibold</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorAccent</item>
-    </style>
-
-    <style name="TextHeadlines">
-        <item name="android:fontFamily">@font/dosis_bold</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textColorPrimary">@color/colorBackground</item>
-        <item name="android:textColor">@color/colorBackground</item>
-    </style>
-
-    <style name="TextStandard">
-        <item name="android:fontFamily">@font/dosis_bold</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textColor">@color/colorBackground</item>
     </style>
 
     <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">

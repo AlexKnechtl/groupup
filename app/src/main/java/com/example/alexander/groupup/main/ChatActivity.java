@@ -3,6 +3,7 @@ package com.example.alexander.groupup.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +27,10 @@ public class ChatActivity extends AppCompatActivity {
 
     //XML
     private MaterialSearchView searchView;
+    private FloatingActionButton newChatFab;
 
     //Variables
     private String user_id;
-
-    //Firebase
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class ChatActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         searchView = findViewById(R.id.material_search_view_chat);
+        newChatFab = findViewById(R.id.new_chat_fab);
 
         setupViewPager();
         setupBottomNavigationView();
@@ -67,6 +68,19 @@ public class ChatActivity extends AppCompatActivity {
 
         ViewPager viewPager = findViewById(R.id.container_viewpager);
         viewPager.setAdapter(adapter);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    newChatFab.setImageResource(R.drawable.baseline_person_add_white_36);
+                } else if (position == 1) {
+                    newChatFab.setImageResource(R.drawable.baseline_group_add_white_36);
+                }
+            }
+        });
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);

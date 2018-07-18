@@ -116,7 +116,7 @@ public class InterviewLeisure extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(InterviewLeisure.this, InterviewMembers.class);
+                    Intent intent = new Intent(InterviewLeisure.this, InterviewPublic.class);
                     intent.putExtra("tag", tags.get(tagRecyclerView.getChildLayoutPosition(v)));
                     startActivity(intent);
                 }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.example.alexander.groupup.interviews.InterviewMembers;
+import com.example.alexander.groupup.interviews.InterviewPublic;
 import com.example.alexander.groupup.models.LanguageStringsModel;
 import com.example.alexander.groupup.R;
 
@@ -53,7 +53,7 @@ public class CustomSportAdapter extends RecyclerView.Adapter<CustomSportAdapter.
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, InterviewMembers.class);
+                Intent intent = new Intent(mContext, InterviewPublic.class);
                 intent.putExtra("group", category);
                 intent.putExtra("activity", sportItems.get(position).getId());
                 intent.putExtra("group_image", new Integer(position).toString());

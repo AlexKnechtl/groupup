@@ -30,7 +30,6 @@ public class InterviewPublic extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         group = bundle.getString("group"); // Gruppen Kategorie
         activity = bundle.getString("activity");
-        memberQuantity = bundle.getString("memberQuantity");
 
         //Find IDs
         backLayout = findViewById(R.id.back_layout_public);

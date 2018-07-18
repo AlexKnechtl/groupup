@@ -24,7 +24,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
     private final int REQUEST_CODE_PLACE_PICKER = 1;
 
     //Variables
-    private String group, activity, memberQuantity, publicStatus;
+    private String group, activity, publicStatus;
 
     //XML
     private LinearLayout backLayout;
@@ -50,7 +50,6 @@ public class InterviewChoosePlace extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         group = bundle.getString("group"); // Group Category
         activity = bundle.getString("activity");
-        memberQuantity = bundle.getString("memberQuantity");
         publicStatus = bundle.getString("publicStatus");
 
         backLayout.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +77,6 @@ public class InterviewChoosePlace extends AppCompatActivity {
                 Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
                 intent.putExtra("group", group);
                 intent.putExtra("activity", activity);
-                intent.putExtra("memberQuantity", memberQuantity);
                 intent.putExtra("publicStatus", "justfriends");
                 intent.putExtra("location", city);
                 intent.putExtra("state", "Steiermark");//state); //TODO Something is definitely wrong here, not used anymore
@@ -124,7 +122,6 @@ public class InterviewChoosePlace extends AppCompatActivity {
                 Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
                 intent.putExtra("group", group);
                 intent.putExtra("activity", activity);
-                intent.putExtra("memberQuantity", memberQuantity);
                 intent.putExtra("publicStatus", publicStatus);
                 intent.putExtra("location", placeName);
                 intent.putExtra("state", "Steiermark"); //state); //todo correct this, not used anymore

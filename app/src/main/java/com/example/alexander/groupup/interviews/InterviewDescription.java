@@ -33,7 +33,7 @@ public class InterviewDescription extends AppCompatActivity {
     private EditText description;
 
     //Variables
-    String group, activity, memberQuantity, publicStatus, location,
+    String group, activity, publicStatus, location,
             state, groupDescription, current_uid;
 
     //Firebase
@@ -90,7 +90,6 @@ public class InterviewDescription extends AppCompatActivity {
                 public void OnSuccess(String groupImage) {
                     mGroupDatabase.child("category").setValue(group);
                     mGroupDatabase.child("activity").setValue(activity);
-                    mGroupDatabase.child("member_quantity").setValue(memberQuantity);
                     mGroupDatabase.child("public_status").setValue(publicStatus);
                     mGroupDatabase.child("location").setValue(location);
                     mGroupDatabase.child("description").setValue(groupDescription);
@@ -116,7 +115,6 @@ public class InterviewDescription extends AppCompatActivity {
         { // Todo Freizeit: category = null, activity = null, memberquantity = null? ERROR!!!
             mGroupDatabase.child("category").setValue(group);
             mGroupDatabase.child("activity").setValue(activity);
-            mGroupDatabase.child("member_quantity").setValue(memberQuantity);
             mGroupDatabase.child("public_status").setValue(publicStatus);
             mGroupDatabase.child("location").setValue(location);
             mGroupDatabase.child("description").setValue(groupDescription);
@@ -138,7 +136,6 @@ public class InterviewDescription extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         group = bundle.getString("group"); // Gruppen Kategorie
         activity = bundle.getString("activity");
-        memberQuantity = bundle.getString("memberQuantity");
         publicStatus = bundle.getString("publicStatus");
         location = bundle.getString("location");
         state = bundle.getString("state"); // todo not used anymore

@@ -14,31 +14,57 @@
         android:icon="@mipmap/groupup_ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppThemeDark">
+
         <activity
             android:name=".StartActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppThemeDark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".main.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeLight"/>
+        <activity
+            android:name=".main.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeDark"/>
+        <activity
+            android:name=".main.NotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.ChatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeLight"/>
+        <activity
+            android:name=".main.SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeLight"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".profile.SelectLanguageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".group.AddGroupMembersActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".settings.GetPremium"
             android:screenOrientation="portrait" />
         <activity
             android:name=".chat.MessageActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeLight"/>
         <activity
             android:name=".chat.NewMessage"
             android:screenOrientation="portrait" />
         <activity
             android:name=".group.AddFriends"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".main.ChatActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".registration.RegisterUsername"
@@ -48,19 +74,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".registration.RegisterAgeCity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".main.SearchActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".main.HomeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".main.ProfileActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".main.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".settings.SettingsActivity"
@@ -80,9 +93,6 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".interviews.InterviewNewGroup"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".interviews.InterviewMembers"
             android:screenOrientation="portrait" />
         <activity
             android:name=".interviews.InterviewPublic"
@@ -117,10 +127,5 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC-n1wL3rDOPglQ3Is2RD2z4k2i_mrmX50" />
-
-        <activity android:name=".profile.SelectLanguageActivity" />
-        <activity android:name=".group.AddGroupMembersActivity" />
-        <activity android:name=".group.AddGroupMemberActivity"></activity>
     </application>
-
 </manifest>

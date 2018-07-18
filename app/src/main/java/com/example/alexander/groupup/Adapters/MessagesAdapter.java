@@ -1,5 +1,6 @@
 package com.example.alexander.groupup.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.chat.MessageActivity;
+import com.example.alexander.groupup.helpers.GetTimeAgo;
+import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.models.MessagesModel;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -18,15 +22,18 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     private List<MessagesModel> messagesList;
     private FirebaseAuth mAuth;
+    private Context ctx;
 
-    public MessagesAdapter(List<MessagesModel> messagesList) {
+    public MessagesAdapter(List<MessagesModel> messagesList, Context ctx) {
         this.messagesList = messagesList;
+        this.ctx = ctx;
     }
 
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.single_layout_message, parent, false);
+
         return new MessageViewHolder(v);
     }
 
@@ -42,6 +49,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
             messageText = view.findViewById(R.id.message_text);
             messageLayout = view.findViewById(R.id.message_layout);
+            timeText = view.findViewById(R.id.message_timestamp);
             background = view.findViewById(R.id.message_background);
         }
     }
@@ -56,14 +64,17 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
         if (from_user.equals(mAuth.getCurrentUser().getUid())) {
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorPrimaryDark));
+            viewHolder.background.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+            viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChatUser));
         } else {
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
         }
 
+        long time = c.getTime();
+
+        viewHolder.timeText.setText(GetTimeAgo.getTimeAgo(time, ctx));
         viewHolder.messageText.setText(c.getMessage());
-        //viewHolder.timeText.setText("" + c.getTime());
     }
 
     @Override

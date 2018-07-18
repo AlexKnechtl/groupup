@@ -1,5 +1,6 @@
 package com.example.alexander.groupup.chat;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +45,7 @@ public class MessageActivity extends AppCompatActivity {
     private String user_id, receiver_user_id;
     private final List<MessagesModel> messagesList = new ArrayList<>();
     private MessagesAdapter messagesAdapter;
+    private Context mContext = MessageActivity.this;
 
     //Firebase
     private DatabaseReference ChatDatabase;
@@ -68,7 +70,7 @@ public class MessageActivity extends AppCompatActivity {
         messagesRecyclerView.setHasFixedSize(true);
         messagesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        messagesAdapter = new MessagesAdapter(messagesList);
+        messagesAdapter = new MessagesAdapter(messagesList, mContext);
 
         messagesRecyclerView.setAdapter(messagesAdapter);
 
@@ -141,7 +143,6 @@ public class MessageActivity extends AppCompatActivity {
 
             Map messageMap = new HashMap();
             messageMap.put("message", message);
-            messageMap.put("seen", false);
             messageMap.put("time", ServerValue.TIMESTAMP);
             messageMap.put("from", user_id);
 
@@ -150,6 +151,7 @@ public class MessageActivity extends AppCompatActivity {
             messageUserMap.put(receiverUserRef + "/" + pushId, messageMap);
 
             ChatDatabase.updateChildren(messageUserMap);
+            messagesRecyclerView.smoothScrollToPosition(messagesList.size());
         }
     }
 
@@ -162,6 +164,7 @@ public class MessageActivity extends AppCompatActivity {
 
                 messagesList.add(messages);
                 messagesAdapter.notifyDataSetChanged();
+                messagesRecyclerView.scrollToPosition(messagesList.size() - 1);
             }
 
             @Override

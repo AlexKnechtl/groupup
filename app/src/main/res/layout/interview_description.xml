@@ -55,6 +55,7 @@
             android:inputType="textMultiLine"
             android:padding="16dp"
             android:textColor="@android:color/darker_gray"
+            android:textCursorDrawable="@drawable/cursor_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
