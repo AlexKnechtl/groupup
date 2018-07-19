@@ -49,6 +49,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".profile.SelectLanguageActivity"
+            android:label="@string/languages"
             android:screenOrientation="portrait" />
         <activity
             android:name=".group.AddGroupMembersActivity"

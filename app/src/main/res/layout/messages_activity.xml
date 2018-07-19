@@ -47,8 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
         android:layout_alignParentStart="true"
+        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal">
 
         <android.support.v7.widget.CardView
@@ -56,39 +56,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_margin="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toStartOf="@id/fab_message"
             android:elevation="4dp"
-            app:cardCornerRadius="22dp"
-            android:layout_toStartOf="@id/fab_message">
+            app:cardCornerRadius="22dp">
 
             <EditText
                 android:id="@+id/message_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="40dp"
-                android:layout_marginStart="16dp"
-                android:maxLines="6"
                 android:layout_marginEnd="16dp"
-                android:fontFamily="sans-serif"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/assistant_circle_design"
                 android:backgroundTint="@color/fui_transparent"
+                android:fontFamily="sans-serif"
                 android:hint="@string/write_message"
+                android:maxLines="6"
+                android:minHeight="40dp"
                 android:textColor="@android:color/black"
                 android:textCursorDrawable="@drawable/cursor_color" />
         </android.support.v7.widget.CardView>
 
-        <android.support.design.widget.FloatingActionButton
+        <ImageButton
             android:id="@+id/fab_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="4dp"
-            android:layout_alignBottom="@id/message"
-            android:backgroundTint="@color/colorAccent"
+            android:layout_centerInParent="true"
+            android:layout_margin="8dp"
+            android:background="@color/fui_transparent"
             android:onClick="sendMessageClick"
-            android:src="@drawable/action_send"
-            android:tint="@color/darkGray"
-            app:borderWidth="0dp"
-            app:fabSize="mini" />
+            android:src="@drawable/action_send" />
     </RelativeLayout>
 </RelativeLayout>

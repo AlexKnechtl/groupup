@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minWidth="70dp"
+            android:minWidth="65dp"
             android:orientation="vertical"
             android:weightSum="10">
 
@@ -33,7 +33,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="9"
                 android:fontFamily="sans-serif"
-                android:text=":)"
+                android:text="Hey!"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
 

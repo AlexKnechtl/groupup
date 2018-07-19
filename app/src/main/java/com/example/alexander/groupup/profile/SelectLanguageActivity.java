@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,14 +39,16 @@ public class SelectLanguageActivity extends AppCompatActivity {
 
     private LanguagesAdapter adapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laguage_select);
-        languagesRecyclerView = (RecyclerView) findViewById(R.id.recyclerviewSelectLanguages);
+        languagesRecyclerView = findViewById(R.id.recyclerviewSelectLanguages);
         languagesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         Languages = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Languages");
+
+        Toolbar myToolbar = findViewById(R.id.toolbar_language_select);
+        setSupportActionBar(myToolbar);
 
         languagesData = new HashMap<>();
         languagesData.put("Arabic", false);
@@ -157,7 +162,6 @@ public class SelectLanguageActivity extends AppCompatActivity {
             return languagesDataIdexes.size();
         }
     }
-
 
     class LanguagesViewHolder extends ViewHolder{
 
