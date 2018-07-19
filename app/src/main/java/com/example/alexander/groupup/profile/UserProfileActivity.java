@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.main.HomeActivity;
+import com.example.alexander.groupup.main.ProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

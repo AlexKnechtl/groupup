@@ -86,13 +86,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Initialize Firebase
         Bundle bundle = getIntent().getExtras();
-        user_id = bundle.getString("user_id");
+        user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         setupBottomNavigationView();
 
         languagesTextView = findViewById(R.id.languages_interest_text_view);
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
