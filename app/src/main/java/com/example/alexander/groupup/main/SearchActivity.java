@@ -14,10 +14,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.alexander.groupup.group.GroupView;
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -104,9 +106,15 @@ public class SearchActivity extends AppCompatActivity {
                 usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(SearchActivity.this, UserProfileActivity.class);
-                        intent.putExtra("user_id", user_id);
-                        startActivity(intent);
+                        if(user_id.equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                        {
+                            startActivity(new Intent(SearchActivity.this, ProfileActivity.class));
+                        }
+                        else {
+                            Intent intent = new Intent(SearchActivity.this, UserProfileActivity.class);
+                            intent.putExtra("user_id", user_id);
+                            startActivity(intent);
+                        }
                     }
                 });
             }
