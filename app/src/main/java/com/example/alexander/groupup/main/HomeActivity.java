@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.text.SimpleDateFormat;
@@ -64,6 +65,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_home);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("TestTopic");
+
 
         mContext = getApplicationContext();
 
