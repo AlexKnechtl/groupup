@@ -11,6 +11,9 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.example.alexander.groupup.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -77,5 +80,12 @@ public class MessagingService extends FirebaseMessagingService {
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
+    }
+
+    @Override
+    public void onNewToken(String s) {
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("notificationTokens")
+                .child(s).setValue("True");
+        Log.d("New device token: ", s);
     }
 }
