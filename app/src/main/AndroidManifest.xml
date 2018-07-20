@@ -128,5 +128,18 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC-n1wL3rDOPglQ3Is2RD2z4k2i_mrmX50" />
+
+        <activity android:name=".profile.SelectLanguageActivity" />
+        <activity android:name=".group.AddGroupMembersActivity" />
+
+
+        <service
+            android:name=".services.MessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 </manifest>
