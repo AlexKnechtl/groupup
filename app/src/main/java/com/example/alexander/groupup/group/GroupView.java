@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.main.HomeActivity;
+import com.example.alexander.groupup.main.ProfileActivity;
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.profile.UserProfileActivity;
@@ -101,9 +102,15 @@ public class GroupView extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(GroupView.this, UserProfileActivity.class);
-                        intent.putExtra("user_id", list_user_id);
-                        startActivity(intent);
+                        if(list_user_id.equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                        {
+                            startActivity(new Intent(GroupView.this, ProfileActivity.class));
+                        }
+                        else {
+                            Intent intent = new Intent(GroupView.this, UserProfileActivity.class);
+                            intent.putExtra("user_id", list_user_id);
+                            startActivity(intent);
+                        }
                     }
                 });
 

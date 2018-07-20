@@ -35,7 +35,7 @@ public class SelectLanguageActivity extends AppCompatActivity {
 
     private DatabaseReference Languages;
 
-    private HashMap<String, Boolean> languagesData;
+    private ArrayList<LanguageBooleanMap> languagesData;
 
     private LanguagesAdapter adapter;
 
@@ -50,27 +50,27 @@ public class SelectLanguageActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.toolbar_language_select);
         setSupportActionBar(myToolbar);
 
-        languagesData = new HashMap<>();
-        languagesData.put("Arabic", false);
-        languagesData.put("Bengali", false);
-        languagesData.put("English", false);
-        languagesData.put("French", false);
-        languagesData.put("German", false);
-        languagesData.put("Hindi", false);
-        languagesData.put("Japanese", false);
-        languagesData.put("Javanese", false);
-        languagesData.put("Korean", false);
-        languagesData.put("Mandarin", false);
-        languagesData.put("Marathi", false);
-        languagesData.put("Portuguese", false);
-        languagesData.put("Punjabi", false);
-        languagesData.put("Russian", false);
-        languagesData.put("Spanish", false);
-        languagesData.put("Tamil", false);
-        languagesData.put("Telugu", false);
-        languagesData.put("Turkish", false);
-        languagesData.put("Urdu", false);
-        languagesData.put("Vietnamese", false);
+        languagesData = new ArrayList<>();
+        languagesData.add(new LanguageBooleanMap("Arabic", false));
+        languagesData.add(new LanguageBooleanMap("Bengali", false));
+        languagesData.add(new LanguageBooleanMap("English", false));
+        languagesData.add(new LanguageBooleanMap("French", false));
+        languagesData.add(new LanguageBooleanMap("German", false));
+        languagesData.add(new LanguageBooleanMap("Hindi", false));
+        languagesData.add(new LanguageBooleanMap("Japanese", false));
+        languagesData.add(new LanguageBooleanMap("Javanese", false));
+        languagesData.add(new LanguageBooleanMap("Korean", false));
+        languagesData.add(new LanguageBooleanMap("Mandarin", false));
+        languagesData.add(new LanguageBooleanMap("Marathi", false));
+        languagesData.add(new LanguageBooleanMap("Portuguese", false));
+        languagesData.add(new LanguageBooleanMap("Punjabi", false));
+        languagesData.add(new LanguageBooleanMap("Russian", false));
+        languagesData.add(new LanguageBooleanMap("Spanish", false));
+        languagesData.add(new LanguageBooleanMap("Tamil", false));
+        languagesData.add(new LanguageBooleanMap("Telugu", false));
+        languagesData.add(new LanguageBooleanMap("Turkish", false));
+        languagesData.add(new LanguageBooleanMap("Urdu", false));
+        languagesData.add(new LanguageBooleanMap("Vietnamese", false));
 
         adapter = new LanguagesAdapter(this, languagesData);
 
@@ -81,8 +81,9 @@ public class SelectLanguageActivity extends AppCompatActivity {
                     String[] myLanguages = dataSnapshot.getValue().toString().split(", ");
 
                     for (String lang : myLanguages)
-                        if(languagesData.containsKey(lang))
-                            languagesData.put(lang, true);
+                        for(LanguageBooleanMap map : languagesData)
+                            if(map.getLanguage().equals(lang))
+                                map.setSelected(true);
                     adapter.notifyDataSetChanged();
                 }
                 catch (Exception e){
@@ -103,9 +104,9 @@ public class SelectLanguageActivity extends AppCompatActivity {
     public void onBackPressed() {
         String mylanguages = "";
 
-        for(Map.Entry<String, Boolean> entry : languagesData.entrySet())
-            if(entry.getValue())
-                mylanguages += entry.getKey() + ", ";
+        for(LanguageBooleanMap map : languagesData)
+            if(map.getSelected())
+                mylanguages += map.getLanguage() + ", ";
 
         if(mylanguages.length()>0)
             mylanguages = mylanguages.substring(0, mylanguages.length()-2);
@@ -117,19 +118,16 @@ public class SelectLanguageActivity extends AppCompatActivity {
 
     public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesViewHolder>{
 
-        HashMap<String, Boolean> languagesData = new HashMap<>();
-        ArrayList<String> languagesDataIdexes = new ArrayList<>();
+        ArrayList<LanguageBooleanMap> languagesData = new ArrayList<>();
         Context c;
 
-        public HashMap<String, Boolean> getLanguagesData() {
+        public ArrayList<LanguageBooleanMap> getLanguagesData() {
             return languagesData;
         }
 
-        public LanguagesAdapter(Context c, HashMap<String, Boolean> languagesData)
+        public LanguagesAdapter(Context c, ArrayList<LanguageBooleanMap> languagesData)
         {
             this.languagesData = languagesData;
-            for(Map.Entry<String, Boolean> entry : languagesData.entrySet())
-                languagesDataIdexes.add(entry.getKey());
             this.c = c;
         }
 
@@ -143,8 +141,10 @@ public class SelectLanguageActivity extends AppCompatActivity {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String language = languagesDataIdexes.get(languagesRecyclerView.getChildLayoutPosition(v));
-                    languagesData.put(language, !languagesData.get(language)); //TODO
+                    int currpos = languagesRecyclerView.getChildLayoutPosition(v);
+                    LanguageBooleanMap map = languagesData.get(currpos);
+                    map.setSelected(!map.getSelected());
+                    languagesData.set(currpos, map);
                     notifyDataSetChanged();
                 }
             });
@@ -153,13 +153,13 @@ public class SelectLanguageActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull LanguagesViewHolder holder, final int position) {
-            holder.setLanguage(languagesDataIdexes.get(position));
-            holder.setCheckbox(languagesData.get(languagesDataIdexes.get(position)));
+            holder.setLanguage(languagesData.get(position).getLanguage());
+            holder.setCheckbox(languagesData.get(position).getSelected());
         }
 
         @Override
         public int getItemCount() {
-            return languagesDataIdexes.size();
+            return languagesData.size();
         }
     }
 
@@ -180,5 +180,31 @@ public class SelectLanguageActivity extends AppCompatActivity {
         {
             ((CheckBox)mView.findViewById(R.id.checkboxSelectedLanguage)).setChecked(ischecked);
         }
+    }
+
+    private class LanguageBooleanMap {
+        public String getLanguage() {
+            return language;
+        }
+
+        public void setLanguage(String language) {
+            this.language = language;
+        }
+
+        public Boolean getSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(Boolean selected) {
+            isSelected = selected;
+        }
+
+        public LanguageBooleanMap(String language, Boolean isSelected) {
+            this.language = language;
+            this.isSelected = isSelected;
+        }
+
+        private String language;
+        private Boolean isSelected;
     }
 }
