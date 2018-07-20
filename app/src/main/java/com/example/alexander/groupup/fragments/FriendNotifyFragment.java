@@ -47,7 +47,8 @@ public class FriendNotifyFragment extends Fragment {
 
     //Variables
     private long friendsCountMyAccount, friendsCountUser;
-    private String myProfileName, myProfileThumbImage, userName, userThumbImage;
+    private String myProfileName, myProfileCity, myProfileThumbImage;
+    private String userName, userCity, userThumbImage;
     private String user_id;
 
     public FriendNotifyFragment() {
@@ -161,6 +162,7 @@ public class FriendNotifyFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userName = dataSnapshot.child("name").getValue().toString();
+                userCity = dataSnapshot.child("city").getValue().toString();
                 userThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
 
                 String friendCount = dataSnapshot.child("friends_count").getValue().toString();
@@ -171,6 +173,7 @@ public class FriendNotifyFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         myProfileName = dataSnapshot.child("name").getValue().toString();
                         myProfileThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
+                        myProfileCity = dataSnapshot.child("city").getValue().toString();
 
                         String counter = dataSnapshot.child("friends_count").getValue().toString();
                         friendsCountMyAccount = Long.parseLong(counter);
@@ -188,12 +191,14 @@ public class FriendNotifyFragment extends Fragment {
                         MyAccountDatabase.child("friends_count").setValue(friendsMyAccount);
                         MyAccountDatabase.child("friends").child(receiver_user_id).child("date").setValue(friendDate);
                         MyAccountDatabase.child("friends").child(receiver_user_id).child("name").setValue(userName);
+                        MyAccountDatabase.child("friends").child(receiver_user_id).child("city").setValue(userCity);
                         MyAccountDatabase.child("friends").child(receiver_user_id).child("thumb_image").setValue(userThumbImage).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 UserProfileDatabase.child("friends_count").setValue(friendsUser);
                                 UserProfileDatabase.child("friends").child(user_id).child("date").setValue(friendDate);
                                 UserProfileDatabase.child("friends").child(user_id).child("name").setValue(myProfileName);
+                                UserProfileDatabase.child("friends").child(user_id).child("city").setValue(myProfileCity);
                                 UserProfileDatabase.child("friends").child(user_id).child("thumb_image").setValue(myProfileThumbImage)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

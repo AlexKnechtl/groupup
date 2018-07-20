@@ -48,7 +48,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private String receiver_user_id;
     private String mCurrentState;
 
-    private String userName, userThumbImage;
+    private String userName, userThumbImage, userCity;
     private String myProfileName, myProfileThumbImage, myProfileAge, myProfileCity;
     private long friendsCountMyAccount, friendsCountUser;
 
@@ -85,7 +85,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 userName = dataSnapshot.child("name").getValue().toString();
                 String age_day = dataSnapshot.child("age_day").getValue().toString();
                 String age_year = dataSnapshot.child("age_year").getValue().toString();
-                String userCity = dataSnapshot.child("city").getValue().toString();
+                userCity = dataSnapshot.child("city").getValue().toString();
                 String image = dataSnapshot.child("image").getValue().toString();
                 userThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
 
@@ -185,10 +185,12 @@ public class UserProfileActivity extends AppCompatActivity {
             MyAccountDatabase.child("friends_count").setValue(friendsMyAccount);
             MyAccountDatabase.child("friends").child(receiver_user_id).child("date").setValue(friendDate);
             MyAccountDatabase.child("friends").child(receiver_user_id).child("name").setValue(userName);
+            MyAccountDatabase.child("friends").child(receiver_user_id).child("city").setValue(userCity);
             MyAccountDatabase.child("friends").child(receiver_user_id).child("thumb_image").setValue(userThumbImage).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     UserProfileDatabase.child("friends_count").setValue(friendsUser);
+                    UserProfileDatabase.child("friends").child(mCurrentUser.getUid()).child("city").setValue(myProfileCity);
                     UserProfileDatabase.child("friends").child(mCurrentUser.getUid()).child("date").setValue(friendDate);
                     UserProfileDatabase.child("friends").child(mCurrentUser.getUid()).child("name").setValue(myProfileName);
                     UserProfileDatabase.child("friends").child(mCurrentUser.getUid()).child("thumb_image").setValue(myProfileThumbImage)

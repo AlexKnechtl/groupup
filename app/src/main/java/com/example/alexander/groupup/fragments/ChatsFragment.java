@@ -86,7 +86,7 @@ public class ChatsFragment extends Fragment {
             @Override
             protected void populateViewHolder(ChatsViewholder viewHolder, UserModel user, int position) {
                 viewHolder.setName(user.getName());
-                viewHolder.setMessage(user.getMessage());
+                viewHolder.setCity(user.getCity());
                 viewHolder.setThumbImage(user.getThumb_image(), getActivity().getApplicationContext());
 
                 final String list_user_id = getRef(position).getKey();
@@ -119,9 +119,9 @@ public class ChatsFragment extends Fragment {
             userNameView.setText(name);
         }
 
-        public void setMessage(String message) {
+        public void setCity(String city) {
             TextView friendsDate = mView.findViewById(R.id.user_single_information);
-            friendsDate.setText(message);
+            friendsDate.setText(city);
         }
 
         public void setThumbImage(String thumb_image, Context context) {

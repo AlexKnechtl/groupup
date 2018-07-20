@@ -1,6 +1,7 @@
 package com.example.alexander.groupup.chat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.alexander.groupup.Adapters.MessagesAdapter;
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.fragments.ChatsFragment;
+import com.example.alexander.groupup.main.ChatActivity;
 import com.example.alexander.groupup.models.MessagesModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -187,5 +190,12 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(MessageActivity.this, ChatActivity.class);
+        intent.putExtra("user_id", user_id);
+        startActivity(intent);
     }
 }

@@ -3,6 +3,7 @@ package com.example.alexander.groupup.chat;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.UserModel;
+import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -124,14 +126,33 @@ public class NewMessage extends AppCompatActivity {
                         intent.putExtra("user_id", user_id);
                         intent.putExtra("receiver_user_id", list_user_id);
 
+                        UserDatabase.child(user_id).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                String name = dataSnapshot.child("name").getValue().toString();
+                                String city = dataSnapshot.child("city").getValue().toString();
+                                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
+
+                                Map myUserMap = new HashMap<>();
+                                myUserMap.put("name", name);
+                                myUserMap.put("city", city);
+                                myUserMap.put("thumb_image", thumb_image);
+
+                                UserDatabase.child(list_user_id).child("chats").child(user_id).updateChildren(myUserMap);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
                         Map userMap = new HashMap<>();
                         userMap.put("thumb_image", user.getThumb_image());
                         userMap.put("name", user.getName());
-                        userMap.put("message", "Schreib eine Nachricht! :)");
+                        userMap.put("city", user.getCity());
 
                         UserDatabase.child(user_id).child("chats").child(list_user_id).updateChildren(userMap);
-                        UserDatabase.child(list_user_id).child("chats").child(user_id).updateChildren(userMap);
-
                         startActivity(intent);
                     }
                 });
@@ -153,6 +174,7 @@ public class NewMessage extends AppCompatActivity {
             @Override
             protected void populateViewHolder(FriendsMessageViewholder viewHolder, final UserModel user, int position) {
                 viewHolder.setName(user.getName());
+                viewHolder.setCity(user.getCity());
                 viewHolder.setThumbImage(user.getThumb_image(), getApplicationContext());
 
                 final String list_user_id = getRef(position).getKey();
@@ -164,14 +186,33 @@ public class NewMessage extends AppCompatActivity {
                         intent.putExtra("user_id", user_id);
                         intent.putExtra("receiver_user_id", list_user_id);
 
+                        UserDatabase.child(user_id).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                String name = dataSnapshot.child("name").getValue().toString();
+                                String city = dataSnapshot.child("city").getValue().toString();
+                                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
+
+                                Map myUserMap = new HashMap<>();
+                                myUserMap.put("name", name);
+                                myUserMap.put("city", city);
+                                myUserMap.put("thumb_image", thumb_image);
+
+                                UserDatabase.child(list_user_id).child("chats").child(user_id).updateChildren(myUserMap);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
                         Map userMap = new HashMap<>();
                         userMap.put("thumb_image", user.getThumb_image());
                         userMap.put("name", user.getName());
-                        userMap.put("message", "Schreib eine Nachricht! :)");
+                        userMap.put("city", user.getCity());
 
                         UserDatabase.child(user_id).child("chats").child(list_user_id).updateChildren(userMap);
-                        UserDatabase.child(list_user_id).child("chats").child(user_id).updateChildren(userMap);
-
                         startActivity(intent);
                     }
                 });
@@ -194,10 +235,16 @@ public class NewMessage extends AppCompatActivity {
             nameView.setText(name);
         }
 
+        public void setCity(String city) {
+            TextView friendsDate = mView.findViewById(R.id.user_single_information);
+            friendsDate.setText(city);
+        }
+
         public void setThumbImage(String thumb_image, Context context) {
             CircleImageView userImageView = mView.findViewById(R.id.user_single_image);
             Picasso.with(context).load(thumb_image).placeholder(R.drawable.default_user_black).into(userImageView);
         }
+
     }
 
     //Add Search Menu Icon

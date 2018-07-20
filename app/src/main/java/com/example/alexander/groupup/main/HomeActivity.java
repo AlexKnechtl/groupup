@@ -142,8 +142,8 @@ public class HomeActivity extends AppCompatActivity {
             protected void populateViewHolder(GroupsViewHolder groupsViewHolder, GroupModel groups, int position) {
 
                 groupsViewHolder.setGroupImage(groups.getGroup_image());
-                groupsViewHolder.setCategoryCity(groups.getCategory(), groups.getLocation());
-                groupsViewHolder.setTag(groups.getTag(), groups.category.toLowerCase().equals("sport"));
+                groupsViewHolder.setActivityCity(groups.getActivity(), groups.getLocation());
+                //groupsViewHolder.setTag(groups.getTag(), groups.activity.toLowerCase().equals("sport"));
 
                 final String group_id = getRef(position).getKey();
 
@@ -179,18 +179,19 @@ public class HomeActivity extends AppCompatActivity {
             });
         }
 
-        public void setCategoryCity(String category, String city) {
+        public void setActivityCity(String activity, String location) {
             TextView groupHeadline = mView.findViewById(R.id.group_headline);
-            groupHeadline.setText(category + " @" + city);
+            groupHeadline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
+                    + " @" + location);
         }
 
-        public void setTag(String tag, boolean groupisSport) {
+        /*public void setTag(String tag, boolean groupisSport) {
             TextView groupTag = mView.findViewById(R.id.group_tag);
             if(groupisSport)
                 groupTag.setText(",," + LanguageStringsManager.getInstance().getLanguageStringByStringId(tag).getLocalLanguageString() + ",,");
             else
                 groupTag.setText(",," + tag + ",,");
-        }
+        }*/
     }
 
     public void testClick(View view) {

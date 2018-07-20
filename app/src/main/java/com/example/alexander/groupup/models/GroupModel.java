@@ -2,7 +2,7 @@ package com.example.alexander.groupup.models;
 
 public class GroupModel {
 
-    public String category;
+    public String activity;
     public String location;
     public String tag;
     public String group_image;
@@ -11,18 +11,20 @@ public class GroupModel {
 
     }
 
-    public GroupModel(String category, String location, String kind) {
-        this.category = category;
+    public GroupModel(String activity, String location, String kind) {
+        this.activity = activity;
         this.location = location;
         this.tag = tag;
     }
 
-    public String getCategory() {
-        return category;
+    public String getActivity() {
+        return activity;
     }
 
-    public void setCategoryCity(String category, String location) {
-        this.category = category;
+    public void setActivity(String activity) { this.activity = activity; }
+
+    public void setActivityCity(String activity, String location) {
+        this.activity = activity;
         this.location = location;
     }
 
