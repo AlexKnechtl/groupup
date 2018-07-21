@@ -172,7 +172,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_connectiongroup_icon_business" />
+                        android:src="@drawable/business_connectiongroup" />
 
                     <TextView
                         android:id="@+id/option_four"

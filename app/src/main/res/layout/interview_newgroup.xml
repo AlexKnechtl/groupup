@@ -65,7 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_group_icon_sport" />
+                        android:src="@drawable/sport_image" />
 
                     <TextView
                         android:id="@+id/option_one"
@@ -96,7 +96,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_group_icon_leisure" />
+                        android:src="@drawable/leisure_image" />
 
                     <TextView
                         android:id="@+id/option_two"
@@ -138,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_group_icon_party" />
+                        android:src="@drawable/party_image" />
 
                     <TextView
                         android:id="@+id/optione_three"
@@ -172,7 +172,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_group_icon_business" />
+                        android:src="@drawable/business_image" />
 
                     <TextView
                         android:id="@+id/option_four"

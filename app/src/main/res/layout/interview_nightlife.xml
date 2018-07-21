@@ -65,14 +65,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_group_icon_sport" />
+                        android:src="@drawable/nightlife_dancefloor" />
 
                     <TextView
                         android:id="@+id/option_one"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Sport"
+                        android:text="Nachtclub"
                         android:textColor="@color/colorAccent"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -96,14 +96,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_group_icon_leisure" />
+                        android:src="@drawable/nightlife_bar" />
 
                     <TextView
                         android:id="@+id/option_two"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Freizeit"
+                        android:text="Bar/Pub"
                         android:textColor="@color/colorAccent"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -138,14 +138,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_group_icon_party" />
+                        android:src="@drawable/nightlife_houseparty" />
 
                     <TextView
                         android:id="@+id/optione_three"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Nachtleben"
+                        android:text="Hausparty"
                         android:textColor="@color/colorAccent"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -172,14 +172,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_group_icon_business" />
+                        android:src="@drawable/rechteck_shisha_icon_nightlife" />
 
                     <TextView
                         android:id="@+id/option_four"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Business"
+                        android:text="Shishabar"
                         android:textColor="@color/colorAccent"
                         android:textSize="24sp"
                         android:textStyle="bold" />
