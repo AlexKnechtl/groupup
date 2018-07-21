@@ -110,13 +110,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="88dp"
+            android:layout_marginEnd="80dp"
             android:backgroundTint="@color/colorAccent"
-            android:elevation="3dp"
             android:scaleType="center"
             android:src="@drawable/material_clear_white_36"
             android:tint="@android:color/holo_red_light"
             app:backgroundTint="@color/softGreyBackground"
+            app:elevation="3dp"
+            app:fabSize="mini"
             app:rippleColor="@color/softGreyBackground" />
 
         <android.support.design.widget.FloatingActionButton
@@ -127,12 +128,12 @@
             android:layout_centerVertical="true"
             android:layout_margin="4dp"
             android:backgroundTint="@color/colorAccent"
-            android:elevation="3dp"
             android:scaleType="center"
             android:src="@drawable/material_done_white_36"
             android:tint="@android:color/holo_green_light"
             app:backgroundTint="@color/softGreyBackground"
             app:borderWidth="1dp"
+            app:elevation="3dp"
             app:fabSize="normal"
             app:rippleColor="@color/softGreyBackground" />
     </RelativeLayout>
