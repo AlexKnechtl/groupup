@@ -19,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.StartActivity;
-import com.example.alexander.groupup.group.AddFriends;
 import com.example.alexander.groupup.interviews.InterviewStart;
 import com.example.alexander.groupup.group.GroupView;
 import com.example.alexander.groupup.settings.GetPremium;
@@ -27,7 +26,6 @@ import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.common.internal.Objects;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,7 +37,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.text.SimpleDateFormat;
@@ -64,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     private Context mContext = HomeActivity.this;
     private static final int ACTIVITY_NUM = 0;
     private boolean creator;
-    private  String user_id;
+    private String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +70,11 @@ public class HomeActivity extends AppCompatActivity {
 
         FirebaseMessaging.getInstance().subscribeToTopic("TestTopic");
 
-//        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("notificationTokens")
-//                .child(FirebaseInstanceId.getInstance().getInstanceId().getResult().getToken()).setValue("True");
-
-
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("notificationTokens")
-                .child(instanceIdResult.getToken()).setValue("True");
+                        .child(instanceIdResult.getToken()).setValue("True");
             }
         });
 

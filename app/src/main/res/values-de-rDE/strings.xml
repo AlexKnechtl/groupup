@@ -134,4 +134,7 @@
     <string name="an_hour_ago">Vor einer Stunde</string>
     <string name="hours_ago">" Stunden"</string>
     <string name="days_ago">" Tage"</string>
+    <string name="properties">Eigenschaften</string>
+    <string name="location">Standort</string>
+    <string name="add_your_friends">Lade Freunde ein</string>
 </resources>

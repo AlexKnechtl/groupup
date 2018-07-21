@@ -30,18 +30,18 @@
         <activity
             android:name=".main.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeLight"/>
+            android:theme="@style/AppThemeLight" />
         <activity
             android:name=".main.ProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeDark"/>
+            android:theme="@style/AppThemeDark" />
         <activity
             android:name=".main.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".main.ChatActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeLight"/>
+            android:theme="@style/AppThemeLight" />
         <activity
             android:name=".main.SearchActivity"
             android:screenOrientation="portrait"
@@ -53,19 +53,18 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".group.AddGroupMembersActivity"
-            android:screenOrientation="portrait" />
+            android:label="@string/add_your_friends"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeLight" />
         <activity
             android:name=".settings.GetPremium"
             android:screenOrientation="portrait" />
         <activity
             android:name=".chat.MessageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeLight"/>
+            android:theme="@style/AppThemeLight" />
         <activity
             android:name=".chat.NewMessage"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".group.AddFriends"
             android:screenOrientation="portrait" />
         <activity
             android:name=".registration.RegisterUsername"
@@ -129,16 +128,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC-n1wL3rDOPglQ3Is2RD2z4k2i_mrmX50" />
 
-        <activity android:name=".profile.SelectLanguageActivity" />
-        <activity android:name=".group.AddGroupMembersActivity" />
-
-
         <service
             android:name=".services.MessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
     </application>

@@ -14,7 +14,7 @@
         <item name="android:textColor">@color/colorAccent</item>
 
         <item name="android:windowBackground">@drawable/background</item>
-        <item name="android:fontFamily">@font/dosis_bold</item>
+        <item name="android:fontFamily">@font/dosis_semibold</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -31,7 +31,7 @@
         <item name="android:textColor">@color/colorAccent</item>
 
         <item name="android:windowBackground">@drawable/background_dark</item>
-        <item name="android:fontFamily">@font/dosis_bold</item>
+        <item name="android:fontFamily">@font/dosis_semibold</item>
     </style>
 
     <style name="RegisterTheme" parent="Theme.AppCompat.Light.NoActionBar">

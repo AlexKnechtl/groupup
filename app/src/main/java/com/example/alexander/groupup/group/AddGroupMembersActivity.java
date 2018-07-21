@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +29,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddGroupMembersActivity extends AppCompatActivity {
 
+    //XML
     private RecyclerView MemberPreview, MemberSelect;
+    private TextView invitedFriendsTV;
 
+    //Firebase
     private DatabaseReference FriendsDatabase;
 
+    //Variables
     private ArrayList<FriendModelSelectedMap> friendsToSelectAsMembers;
     private ArrayList<FriendsModel> selectedPreviewMembers;
 
+    //Adpaters
     private SelectMembersAdapter membersAdapter;
     private SelectMembersPreviewAdapter previewAdapter;
 
@@ -42,17 +48,27 @@ public class AddGroupMembersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group_members);
+
+        //Add the Toolbar
+        Toolbar myToolbar = findViewById(R.id.toolbar_add_member);
+        setSupportActionBar(myToolbar);
+
+        //Find Views
         MemberPreview = findViewById(R.id.AddGroupMembersPrieview);
         MemberSelect = findViewById(R.id.AddGroupSelectMembers);
+        invitedFriendsTV = findViewById(R.id.invited_friends_tv);
+
+        //Setting the Adapter
         MemberPreview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        FriendsDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("friends");
-
         friendsToSelectAsMembers = new ArrayList<>();
-        selectedPreviewMembers =new ArrayList<>();
+        selectedPreviewMembers = new ArrayList<>();
 
         membersAdapter = new SelectMembersAdapter(this, friendsToSelectAsMembers);
         previewAdapter = new SelectMembersPreviewAdapter(this, selectedPreviewMembers);
+
+        //Initializing FireBase
+        FriendsDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("friends");
 
         FriendsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -70,9 +86,8 @@ public class AddGroupMembersActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             try {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    for(FriendModelSelectedMap fmap : friendsToSelectAsMembers)
-                                        if(fmap.friendsModel.getUid().equals(snapshot.getKey()))
-                                        {
+                                    for (FriendModelSelectedMap fmap : friendsToSelectAsMembers)
+                                        if (fmap.friendsModel.getUid().equals(snapshot.getKey())) {
                                             fmap.setSelected(true);
                                             selectedPreviewMembers.add(fmap.friendsModel);
                                             break;
@@ -80,8 +95,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
                                 }
                                 previewAdapter.notifyDataSetChanged();
                                 membersAdapter.notifyDataSetChanged();
-                            }
-                            catch (Exception e){
+                            } catch (Exception e) {
                                 String str = e.getMessage();
                             }
                         }
@@ -91,9 +105,8 @@ public class AddGroupMembersActivity extends AppCompatActivity {
 
                         }
                     });
-                }
-                catch (Exception e){
-                        String str = e.getMessage();
+                } catch (Exception e) {
+                    String str = e.getMessage();
                 }
             }
 
@@ -112,12 +125,12 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         // TODO implement sending to firebase
         FirebaseDatabase.getInstance().getReference().child("Groups/Steiermark").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").removeValue();
         FirebaseDatabase.getInstance().getReference().child("Groups/Steiermark").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("rank").setValue("creator");
-        for(FriendsModel m : previewAdapter.getSelectedFriends()) // Hier sind alle ausgewählten Freunde drinnen
+        for (FriendsModel m : previewAdapter.getSelectedFriends()) // Hier sind alle ausgewählten Freunde drinnen
             FirebaseDatabase.getInstance().getReference().child("Groups/Steiermark").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").child(m.getUid()).child("rank").setValue("member");
         super.onBackPressed();
     }
 
-    public class SelectMembersAdapter extends RecyclerView.Adapter<SelectMembersViewHolder>{
+    public class SelectMembersAdapter extends RecyclerView.Adapter<SelectMembersViewHolder> {
 
         ArrayList<FriendModelSelectedMap> SelectableFriends = new ArrayList<>();
         //ArrayList<FriendsModel> SelectableFriendsIndexes = new ArrayList<>();
@@ -127,8 +140,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
             return SelectableFriends;
         }
 
-        public SelectMembersAdapter(Context c, ArrayList<FriendModelSelectedMap> SelectableFriends)
-        {
+        public SelectMembersAdapter(Context c, ArrayList<FriendModelSelectedMap> SelectableFriends) {
             this.SelectableFriends = SelectableFriends;
 //            for(Map.Entry<FriendsModel, Boolean> entry : SelectableFriends.entrySet())
 //                SelectableFriendsIndexes.add(entry.getKey());
@@ -170,7 +182,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         }
     }
 
-    public class SelectMembersPreviewAdapter extends RecyclerView.Adapter<SelectedMembersPreviewViewHolder>{
+    public class SelectMembersPreviewAdapter extends RecyclerView.Adapter<SelectedMembersPreviewViewHolder> {
 
         ArrayList<FriendsModel> SelectableFriends = new ArrayList<>();
         //ArrayList<FriendsModel> SelectableFriendsIndexes = new ArrayList<>();
@@ -180,8 +192,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
             return SelectableFriends;
         }
 
-        public SelectMembersPreviewAdapter(Context c, ArrayList<FriendsModel> SelectableFriends)
-        {
+        public SelectMembersPreviewAdapter(Context c, ArrayList<FriendsModel> SelectableFriends) {
             this.SelectableFriends = SelectableFriends;
 //            for(Map.Entry<FriendsModel, Boolean> entry : SelectableFriends.entrySet())
 //                SelectableFriendsIndexes.add(entry.getKey());
@@ -200,9 +211,8 @@ public class AddGroupMembersActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     FriendsModel model = SelectableFriends.get(MemberSelect.getChildLayoutPosition(v));  //TODO //////////////////////////////////////////////////
 
-                    for(FriendModelSelectedMap fmap : friendsToSelectAsMembers)
-                        if(fmap.friendsModel == model)
-                        {
+                    for (FriendModelSelectedMap fmap : friendsToSelectAsMembers)
+                        if (fmap.friendsModel == model) {
                             fmap.setSelected(false);
                             break;
                         }
@@ -228,21 +238,20 @@ public class AddGroupMembersActivity extends AppCompatActivity {
     class SelectMembersViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
+
         public SelectMembersViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
 
-        public void setValues(FriendsModel model, Context context)
-        {
-            ((TextView)mView.findViewById(R.id.add_member_single_name)).setText(model.getName());
-            CircleImageView v = ((CircleImageView)mView.findViewById(R.id.add_member_single_thumb));
+        public void setValues(FriendsModel model, Context context) {
+            ((TextView) mView.findViewById(R.id.add_member_single_name)).setText(model.getName());
+            CircleImageView v = mView.findViewById(R.id.add_member_single_thumb);
             Picasso.with(context).load(model.getThumb_image()).placeholder(R.drawable.default_user_black).into(v);
         }
 
-        public void setCheckbox(Boolean ischecked)
-        {
-            CircleImageView v = ((CircleImageView)mView.findViewById(R.id.add_member_single_checked));
+        public void setCheckbox(Boolean ischecked) {
+            CircleImageView v = mView.findViewById(R.id.add_member_single_checked);
             if (ischecked)
                 v.setVisibility(View.VISIBLE);
             else
@@ -250,23 +259,22 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         }
     }
 
-    class SelectedMembersPreviewViewHolder extends RecyclerView.ViewHolder{
+    class SelectedMembersPreviewViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
-        public SelectedMembersPreviewViewHolder (View itemView) {
+
+        public SelectedMembersPreviewViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
 
-        public void setValues(FriendsModel model, Context context)
-        {
-            CircleImageView v = ((CircleImageView)mView.findViewById(R.id.add_group_member_preview_thumb));
+        public void setValues(FriendsModel model, Context context) {
+            CircleImageView v = mView.findViewById(R.id.add_group_member_preview_thumb);
             Picasso.with(context).load(model.getThumb_image()).placeholder(R.drawable.default_user_black).into(v);
         }
     }
 
-    class FriendModelSelectedMap
-    {
+    class FriendModelSelectedMap {
         public FriendsModel getFriendsModel() {
             return friendsModel;
         }

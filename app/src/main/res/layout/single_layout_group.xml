@@ -66,13 +66,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/group_headline"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="18dp"
             android:layout_marginTop="32dp"
             android:layout_toStartOf="@id/group_tag_3"
             android:background="@drawable/group_tag_design"
             android:fontFamily="@font/dosis_semibold"
             android:text="ThaliaBar"
-            android:textSize="14sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/group_tag_2"
@@ -85,7 +85,7 @@
             android:background="@drawable/group_tag_design"
             android:fontFamily="@font/dosis_semibold"
             android:text="Bollwerk"
-            android:textSize="14sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/group_tag_3"
@@ -98,6 +98,6 @@
             android:background="@drawable/group_tag_design"
             android:fontFamily="@font/dosis_semibold"
             android:text="Bollwerk"
-            android:textSize="14sp" />
+            android:textSize="15sp" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

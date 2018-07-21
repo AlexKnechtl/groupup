@@ -54,4 +54,9 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(SettingsActivity.this, MyAccountActivity.class);
         startActivity(intent);
     }
+
+    public void getPremiumClick(View view) {
+        Intent intent = new Intent(SettingsActivity.this, GetPremium.class);
+        startActivity(intent);
+    }
 }

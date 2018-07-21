@@ -1,23 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".group.AddGroupMembersActivity">
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/AddGroupMembersPrieview">
-    </android.support.v7.widget.RecyclerView>
 
-    <android.support.v7.widget.RecyclerView
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_add_member"
+            android:layout_width="match_parent"
+            android:layout_height="56dp" />
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/material_search_view_add_members"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/AddGroupSelectMembers"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
-</LinearLayout>
+        android:layout_marginTop="56dp"
+        android:animateLayoutChanges="true"
+        android:background="@color/colorAccent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/invited_friends_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/textAppColor"
+            android:enabled="false"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:text="@string/invited_friends"
+            android:textColor="@color/textAppColor"
+            android:visibility="gone"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/AddGroupMembersPrieview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/textAppColor"
+            android:enabled="false"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:text="@string/your_friends"
+            android:textColor="@color/textAppColor" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/AddGroupSelectMembers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</RelativeLayout>
