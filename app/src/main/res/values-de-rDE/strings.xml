@@ -76,7 +76,7 @@
     <string name="climbing">Klettern</string>
     <string name="ice_hockey">Eis Hockey</string>
     <string name="baseball">Baseball</string>
-    <string name="martial_arts">Martial Arts</string>
+    <string name="martial_arts">Kampfsport</string>
     <string name="tennis">Tennis</string>
     <string name="table_tennis">Tischtennis</string>
     <string name="mountainbiken">Mountain Biken</string>
@@ -94,7 +94,7 @@
     <string name="name">Name:</string>
     <string name="my_account_settings">- Mein Account</string>
     <string name="group_filter_settings">- Gruppen Filter</string>
-    <string name="licenses">" - Lizensen"</string>
+    <string name="licenses">" - Lizenzen"</string>
     <string name="support_requests">- Support Anfragen</string>
     <string name="imprint">- Imprint</string>
     <string name="support">Support</string>
@@ -137,4 +137,5 @@
     <string name="properties">Eigenschaften</string>
     <string name="location">Standort</string>
     <string name="add_your_friends">Lade Freunde ein</string>
+    <string name="visibility">Sichtbarkeit</string>
 </resources>
