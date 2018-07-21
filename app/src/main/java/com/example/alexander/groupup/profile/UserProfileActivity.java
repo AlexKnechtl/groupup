@@ -153,7 +153,40 @@ public class UserProfileActivity extends AppCompatActivity {
     //Friends Button is pressed
     public void addFriendClick(View view) {
         if (mCurrentState.equals("not_friends")) {
-            sendFriendRequest();
+            MyAccountDatabase.child("friend_requests").child("sent").child(receiver_user_id).setValue("sent")
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                HashMap<String, String> userData = new HashMap<>();
+                                userData.put("name", myProfileName + ", " + myProfileAge);
+                                userData.put("thumb_image", myProfileThumbImage);
+                                userData.put("city", myProfileCity);
+
+                                UserProfileDatabase.child("friend_requests").child("received").child(mCurrentUser.getUid()).setValue(userData)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+                                                HashMap<String, String> notificationData = new HashMap<>();
+                                                notificationData.put("from", mCurrentUser.getUid());
+                                                notificationData.put("type", "request");
+
+                                                mNotificationDatabase.child(receiver_user_id).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        mFabFriendText.setText(getString(R.string.cancel_friend_request));
+                                                        mCurrentState = "req_sent";
+                                                        //Toast.makeText(UserProfileActivity.this, getString(R.string.sent_successfully), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+                                        });
+                            } else {
+                                Toast.makeText(UserProfileActivity.this, getString(R.string.failed_sending_request), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
 
         if (mCurrentState.equals("request_sent")) {
@@ -281,44 +314,6 @@ public class UserProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(UserProfileActivity.this, FriendsActivity.class);
         intent.putExtra("user_id", receiver_user_id);
         startActivity(intent);
-    }
-
-    private void sendFriendRequest() {
-
-        MyAccountDatabase.child("friend_requests").child("sent").child(receiver_user_id).setValue("sent")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            HashMap<String, String> userData = new HashMap<>();
-                            userData.put("name", myProfileName + ", " + myProfileAge);
-                            userData.put("thumb_image", myProfileThumbImage);
-                            userData.put("city", myProfileCity);
-
-                            UserProfileDatabase.child("friend_requests").child("received").child(mCurrentUser.getUid()).setValue(userData)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-
-                                            HashMap<String, String> notificationData = new HashMap<>();
-                                            notificationData.put("from", mCurrentUser.getUid());
-                                            notificationData.put("type", "request");
-
-                                            mNotificationDatabase.child(receiver_user_id).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    mFabFriendText.setText(getString(R.string.cancel_friend_request));
-                                                    mCurrentState = "req_sent";
-                                                    Toast.makeText(UserProfileActivity.this, getString(R.string.sent_successfully), Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                        }
-                                    });
-                        } else {
-                            Toast.makeText(UserProfileActivity.this, getString(R.string.failed_sending_request), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
     private void checkFriendState() {

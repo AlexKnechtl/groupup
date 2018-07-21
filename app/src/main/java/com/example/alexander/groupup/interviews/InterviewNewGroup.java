@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.alexander.groupup.main.HomeActivity;
@@ -43,19 +42,19 @@ public class InterviewNewGroup extends AppCompatActivity {
     }
 
     public void leisureClick(View view) {
-        Intent intent = new Intent(InterviewNewGroup.this, InterviewLeisure.class);
+        Intent intent = new Intent(InterviewNewGroup.this, InterviewActivityLeisure.class);
         intent.putExtra("group", "leisure");
         startActivity(intent);
     }
 
     public void nightlifeClick(View view) {
-        Intent intent = new Intent(InterviewNewGroup.this, InterviewNightlife.class);
+        Intent intent = new Intent(InterviewNewGroup.this, InterviewActivityNightlife.class);
         intent.putExtra("group", "nightlife");
         startActivity(intent);
     }
 
     public void businessClick(View view) {
-        Intent intent = new Intent(InterviewNewGroup.this, InterviewBusiness.class);
+        Intent intent = new Intent(InterviewNewGroup.this, InterviewActivityBusiness.class);
         intent.putExtra("group", "business");
         startActivity(intent);
     }

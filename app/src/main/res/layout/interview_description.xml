@@ -130,7 +130,7 @@
             android:backgroundTint="@color/colorAccent"
             android:scaleType="center"
             android:src="@drawable/material_done_white_36"
-            android:tint="@android:color/holo_green_light"
+            android:tint="@color/colorRegistrate"
             app:backgroundTint="@color/softGreyBackground"
             app:borderWidth="1dp"
             app:elevation="3dp"

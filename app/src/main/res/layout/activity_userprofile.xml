@@ -410,9 +410,9 @@
         android:scaleType="centerCrop"
         android:src="@drawable/home_grey"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorAccent"
-        app:borderWidth="1dp"
-        app:fabSize="normal" />
+        android:backgroundTint="@color/colorAccent"
+        app:borderWidth="0dp"
+        app:fabSize="normal"/>
 
     <TextView
         android:id="@+id/back_explorer_textview"
@@ -441,10 +441,9 @@
         android:onClick="addFriendClick"
         android:scaleType="center"
         android:src="@drawable/ic_add_friend"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:backgroundTint="@color/colorAccent"
-        app:borderWidth="1dp"
-        app:fabSize="normal" />
+        app:fabSize="normal"/>
 
     <TextView
         android:id="@+id/friend_fab_bubble"

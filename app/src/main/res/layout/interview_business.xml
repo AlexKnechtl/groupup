@@ -48,14 +48,14 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.CardView
+                android:onClick="connectionGroupClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="16dp"
                 app:cardBackgroundColor="@color/fui_transparent"
-                app:cardElevation="3dp"
-                android:onClick="sportClick">
+                app:cardElevation="3dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -65,14 +65,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_veranstaltung_icon_business" />
+                        android:src="@drawable/business_connectiongroup" />
 
                     <TextView
                         android:id="@+id/option_one"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Veranstaltungen"
+                        android:text="@string/connection_group"
                         android:textColor="@color/colorAccent"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -80,13 +80,13 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:onClick="seminarClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="3dp"
-                android:onClick="leisureClick">
+                app:cardElevation="3dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -96,14 +96,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_seminar_icon_business" />
+                        android:src="@drawable/business_seminar" />
 
                     <TextView
                         android:id="@+id/option_two"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Seminar"
+                        android:text="@string/seminar"
                         android:textColor="@color/colorAccent"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -118,6 +118,7 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.CardView
+                android:onClick="motivationClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -127,8 +128,7 @@
                 android:paddingBottom="4dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="3dp"
-                android:onClick="nightlifeClick">
+                app:cardElevation="3dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -138,14 +138,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/rechteck_motivation_icon_business" />
+                        android:src="@drawable/business_motivation" />
 
                     <TextView
                         android:id="@+id/optione_three"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Motivation"
+                        android:text="@string/motivation"
                         android:textColor="@color/colorAccent"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -153,6 +153,7 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:onClick="eventClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -161,8 +162,7 @@
                 android:layout_marginBottom="6dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="3dp"
-                android:onClick="businessClick">
+                app:cardElevation="3dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -172,14 +172,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/business_connectiongroup" />
+                        android:src="@drawable/business_event" />
 
                     <TextView
                         android:id="@+id/option_four"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Connection Group"
+                        android:text="@string/event"
                         android:textColor="@color/colorAccent"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -189,7 +189,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/back_layout_new_group"
+        android:id="@+id/back_layout_business"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_margin="10dp"

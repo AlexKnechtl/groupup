@@ -148,6 +148,15 @@
     <string name="add_your_friends">Add your Friends</string>
     <string name="visibility">Visibility</string>
     <string name="group_description">Group Description</string>
+    <string name="set_tag_headline_text">These Tags will describe your Group. You can also use Emoticons.</string>
+    <string name="night_club">Nightclub</string>
+    <string name="bar_pub">Bar / Pub</string>
+    <string name="houseparty">Houseparty</string>
+    <string name="hookah_bar">Hookah Bar</string>
+    <string name="event">Event</string>
+    <string name="seminar">Seminar</string>
+    <string name="motivation">Motivation</string>
+    <string name="connection_group">Connection Group</string>
 
     <!-- Registration -->
 

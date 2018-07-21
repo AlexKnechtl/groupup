@@ -95,7 +95,7 @@
             android:theme="@style/InteriewTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".interviews.InterviewLeisure"
+            android:name=".interviews.InterviewActivityLeisure"
             android:theme="@style/InteriewTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -108,11 +108,11 @@
             android:theme="@style/InteriewTheme"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".interviews.InterviewNightlife"
+            android:name=".interviews.InterviewActivityNightlife"
             android:theme="@style/InteriewTheme"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".interviews.InterviewBusiness"
+            android:name=".interviews.InterviewActivityBusiness"
             android:theme="@style/InteriewTheme"
             android:screenOrientation="portrait" />
         <activity

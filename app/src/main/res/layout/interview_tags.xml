@@ -38,7 +38,7 @@
                 android:elevation="6dp"
                 android:fontFamily="@font/dosis_bold"
                 android:gravity="center"
-                android:text="@string/who_can_see_group"
+                android:text="@string/set_tag_headline_text"
                 android:textColor="@color/darkGray"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -52,7 +52,6 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/back_layout_public"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
@@ -67,6 +66,7 @@
             android:gravity="center"
             android:hint="#FirstTag"
             android:maxLength="9"
+            android:singleLine="true"
             android:textColor="@android:color/darker_gray"
             android:textSize="22sp" />
 
@@ -80,6 +80,7 @@
             android:gravity="center"
             android:hint="#SecondTag"
             android:maxLength="9"
+            android:singleLine="true"
             android:textColor="@android:color/darker_gray"
             android:textSize="22sp" />
 
@@ -93,12 +94,13 @@
             android:gravity="center"
             android:hint="#ThirdTag"
             android:maxLength="9"
+            android:singleLine="true"
             android:textColor="@android:color/darker_gray"
             android:textSize="22sp" />
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/back_layout_public"
+        android:id="@+id/back_layout_tags"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_margin="10dp"
@@ -137,16 +139,16 @@
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_margin="4dp"
             android:backgroundTint="@color/colorAccent"
+            android:onClick="addTagsClick"
             android:scaleType="center"
             android:src="@drawable/material_done_white_36"
-            android:tint="@android:color/holo_green_light"
+            android:tint="@color/colorRegistrate"
             app:backgroundTint="@color/softGreyBackground"
             app:borderWidth="1dp"
             app:elevation="3dp"

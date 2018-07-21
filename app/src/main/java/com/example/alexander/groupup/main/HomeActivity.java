@@ -156,7 +156,9 @@ public class HomeActivity extends AppCompatActivity {
 
                 groupsViewHolder.setGroupImage(groups.getGroup_image());
                 groupsViewHolder.setActivityCity(groups.getActivity(), groups.getLocation());
-                //groupsViewHolder.setTag(groups.getTag(), groups.activity.toLowerCase().equals("sport"));
+                groupsViewHolder.setTag1(groups.getTag1());
+                groupsViewHolder.setTag2(groups.getTag2());
+                groupsViewHolder.setTag3(groups.getTag3());
 
                 final String group_id = getRef(position).getKey();
 
@@ -198,13 +200,20 @@ public class HomeActivity extends AppCompatActivity {
                     + " @" + location);
         }
 
-        /*public void setTag(String tag, boolean groupisSport) {
-            TextView groupTag = mView.findViewById(R.id.group_tag);
-            if(groupisSport)
-                groupTag.setText(",," + LanguageStringsManager.getInstance().getLanguageStringByStringId(tag).getLocalLanguageString() + ",,");
-            else
-                groupTag.setText(",," + tag + ",,");
-        }*/
+        public void setTag1(String tag1) {
+            TextView tag1TextView = mView.findViewById(R.id.group_layout_tag_1);
+            tag1TextView.setText(tag1);
+        }
+
+        public void setTag2(String tag2) {
+            TextView tag2TextView = mView.findViewById(R.id.group_layout_tag_2);
+            tag2TextView.setText(tag2);
+        }
+
+        public void setTag3(String tag3) {
+            TextView tag3TextView = mView.findViewById(R.id.group_layout_tag_3);
+            tag3TextView.setText(tag3);
+        }
     }
 
     public void testClick(View view) {

@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.Adapters;
+package com.example.alexander.groupup.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -54,7 +54,7 @@ public class CustomSportAdapter extends RecyclerView.Adapter<CustomSportAdapter.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, InterviewPublic.class);
-                intent.putExtra("group", category);
+                intent.putExtra("group", "sport");
                 intent.putExtra("activity", sportItems.get(position).getId());
                 intent.putExtra("group_image", new Integer(position).toString());
                 mContext.startActivity(intent);
