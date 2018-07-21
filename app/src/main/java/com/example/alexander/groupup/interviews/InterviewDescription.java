@@ -3,6 +3,7 @@ package com.example.alexander.groupup.interviews;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -29,7 +30,7 @@ public class InterviewDescription extends AppCompatActivity {
 
     //XML
     private LinearLayout backLayoutDescription;
-    private RelativeLayout addDescription, noDescription;
+    private FloatingActionButton addDescription, noDescription;
     private EditText description;
 
     //Variables

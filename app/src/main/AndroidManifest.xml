@@ -91,6 +91,9 @@
             android:theme="@style/InteriewTheme"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".interviews.InterviewTags"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".interviews.InterviewLeisure"
             android:theme="@style/InteriewTheme"
             android:screenOrientation="portrait"
@@ -135,7 +138,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC-n1wL3rDOPglQ3Is2RD2z4k2i_mrmX50" />
-
 
         <service
             android:name=".services.MessagingService"

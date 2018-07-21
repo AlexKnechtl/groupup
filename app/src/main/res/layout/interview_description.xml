@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
@@ -48,7 +47,7 @@
             android:layout_width="340dp"
             android:layout_height="220dp"
             android:layout_gravity="center"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/assistant_bubble"
             android:elevation="5dp"
             android:gravity="start"
@@ -64,8 +63,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/textView2"
@@ -79,42 +78,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_description" />
 
-            <RelativeLayout
+            <android.support.design.widget.FloatingActionButton
                 android:id="@+id/no_description"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="8dp"
-                android:background="@drawable/assistant_circle_design"
-                android:elevation="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/back_to_home"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/edit_text_description">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_cancel"
-                    tools:layout_editor_absoluteX="203dp"
-                    tools:layout_editor_absoluteY="407dp" />
-            </RelativeLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:scaleType="center"
+                android:src="@drawable/material_clear_white_36"
+                android:tint="@android:color/holo_red_light"
+                app:borderWidth="0dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_marginStart="239dp"
                 android:layout_marginTop="22dp"
                 android:text="@string/save"
@@ -123,26 +108,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/no_description" />
 
-            <RelativeLayout
+            <android.support.design.widget.FloatingActionButton
                 android:id="@+id/add_description"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="6dp"
-                android:layout_marginEnd="39dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/assistant_circle_design"
-                android:elevation="4dp"
-                android:padding="6dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_check" />
-            </RelativeLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:scaleType="center"
+                android:src="@drawable/material_done_white_36"
+                android:tint="@android:color/holo_green_light"
+                app:borderWidth="0dp" />
         </LinearLayout>
     </LinearLayout>
 
