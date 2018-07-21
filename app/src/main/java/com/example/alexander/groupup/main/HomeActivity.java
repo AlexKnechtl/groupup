@@ -21,6 +21,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.StartActivity;
 import com.example.alexander.groupup.interviews.InterviewStart;
 import com.example.alexander.groupup.group.GroupView;
+import com.example.alexander.groupup.interviews.InterviewTags;
 import com.example.alexander.groupup.settings.GetPremium;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.example.alexander.groupup.models.GroupModel;
@@ -207,7 +208,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void testClick(View view) {
-        Intent intent = new Intent(HomeActivity.this, GetPremium.class);
+        Intent intent = new Intent(HomeActivity.this, InterviewTags.class);
         startActivity(intent);
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.main.HomeActivity;
@@ -12,7 +13,7 @@ import com.example.alexander.groupup.main.HomeActivity;
 public class InterviewTags extends AppCompatActivity {
 
     //XML
-    private LinearLayout backLayout;
+    private RelativeLayout backLayout;
 
     //Variables
     String group, activity, memberQuantity;
@@ -24,8 +25,8 @@ public class InterviewTags extends AppCompatActivity {
 
         //Get Information by Intent
         Bundle bundle = getIntent().getExtras();
-        group = bundle.getString("group"); // Gruppen Kategorie
-        activity = bundle.getString("activity");
+        //group = bundle.getString("group"); // Gruppen Kategorie
+        //activity = bundle.getString("activity");
 
         //Find IDs
         backLayout = findViewById(R.id.back_layout_public);
