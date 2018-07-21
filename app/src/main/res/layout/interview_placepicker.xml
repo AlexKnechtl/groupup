@@ -50,35 +50,30 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:onClick="choosePlaceClick"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="6dp">
 
-            <RelativeLayout
+            <android.support.design.widget.FloatingActionButton
                 android:id="@+id/add_description"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="8dp"
-                android:background="@drawable/assistant_circle_design"
-                android:elevation="4dp"
-                android:padding="6dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_check" />
-            </RelativeLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:scaleType="center"
+                android:src="@drawable/material_done_white_36"
+                android:tint="@android:color/holo_green_light"
+                app:borderWidth="0dp"
+                app:fabSize="normal" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="22dp"
+                android:layout_gravity="center"
+                android:layout_margin="6dp"
                 android:background="@drawable/assistant_bubble"
                 android:elevation="4dp"
-                android:textColor="@color/darkGray"
                 android:text="@string/yes"
+                android:textColor="@color/darkGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/no_description" />
@@ -93,38 +88,27 @@
             android:onClick="noPlaceClick"
             android:orientation="horizontal">
 
-            <RelativeLayout
+            <android.support.design.widget.FloatingActionButton
                 android:id="@+id/no_description"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="8dp"
-                android:background="@drawable/assistant_circle_design"
-                android:elevation="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/back_to_home"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/edit_text_description">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_cancel"
-                    tools:layout_editor_absoluteX="203dp"
-                    tools:layout_editor_absoluteY="407dp" />
-            </RelativeLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:scaleType="center"
+                android:src="@drawable/material_clear_white_36"
+                android:tint="@android:color/holo_red_light"
+                app:borderWidth="0dp"
+                app:fabSize="normal" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="22dp"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
                 android:background="@drawable/assistant_bubble"
-                android:elevation="4dp"
-                android:textColor="@color/darkGray"
+                android:elevation="6dp"
                 android:text="@string/no"
+                android:textColor="@color/darkGray"
                 app:layout_constraintBottom_toTopOf="@+id/back_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_description" />
