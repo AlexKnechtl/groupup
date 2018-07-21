@@ -22,7 +22,6 @@ import com.example.alexander.groupup.StartActivity;
 import com.example.alexander.groupup.interviews.InterviewStart;
 import com.example.alexander.groupup.group.GroupView;
 import com.example.alexander.groupup.interviews.InterviewTags;
-import com.example.alexander.groupup.settings.GetPremium;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.R;

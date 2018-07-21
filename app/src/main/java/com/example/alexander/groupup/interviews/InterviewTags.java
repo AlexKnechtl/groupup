@@ -56,7 +56,7 @@ public class InterviewTags extends AppCompatActivity {
     public void addTagsClick(View view) {
         String tag1 = tag1EditText.getText().toString();
         String tag2 = tag2EditText.getText().toString();
-        String tag3 = tag3EditText.getText().toString().toLowerCase();
+        String tag3 = tag3EditText.getText().toString();
 
         if (TextUtils.isEmpty(tag1)) {
             tag1 = "empty";
