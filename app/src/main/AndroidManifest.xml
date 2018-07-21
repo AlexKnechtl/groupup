@@ -111,10 +111,6 @@
             android:theme="@style/InteriewTheme"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".interviews.InterviewBusinessNightlife"
-            android:theme="@style/InteriewTheme"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".settings.MyAccountActivity"
             android:label="@string/my_account"
             android:screenOrientation="portrait" />
