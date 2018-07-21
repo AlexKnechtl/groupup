@@ -61,8 +61,8 @@
                 android:scaleType="center"
                 android:src="@drawable/material_done_white_36"
                 android:tint="@android:color/holo_green_light"
-                app:borderWidth="0dp"
-                app:elevation="3dp"
+                app:backgroundTint="@color/softGreyBackground"
+                app:elevation="4dp"
                 app:fabSize="normal" />
 
             <TextView
@@ -73,7 +73,7 @@
                 android:background="@drawable/assistant_bubble"
                 android:elevation="4dp"
                 android:gravity="center"
-                android:minWidth="45dp"
+                android:minWidth="50dp"
                 android:text="@string/yes"
                 android:textColor="@color/darkGray"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +99,7 @@
                 android:scaleType="center"
                 android:src="@drawable/material_clear_white_36"
                 android:tint="@android:color/holo_red_light"
-                app:borderWidth="0dp"
+                app:backgroundTint="@color/softGreyBackground"
                 app:elevation="3dp"
                 app:fabSize="normal" />
 
@@ -109,9 +109,9 @@
                 android:layout_gravity="center"
                 android:layout_margin="4dp"
                 android:background="@drawable/assistant_bubble"
-                android:elevation="4dp"
+                android:elevation="3dp"
                 android:gravity="center"
-                android:minWidth="45dp"
+                android:minWidth="50dp"
                 android:text="@string/no"
                 android:textColor="@color/darkGray"
                 app:layout_constraintBottom_toTopOf="@+id/back_description"

@@ -49,13 +49,13 @@ public class InterviewNewGroup extends AppCompatActivity {
     }
 
     public void nightlifeClick(View view) {
-        Intent intent = new Intent(InterviewNewGroup.this, InterviewBusinessNightlife.class);
+        Intent intent = new Intent(InterviewNewGroup.this, InterviewNightlife.class);
         intent.putExtra("group", "nightlife");
         startActivity(intent);
     }
 
     public void businessClick(View view) {
-        Intent intent = new Intent(InterviewNewGroup.this, InterviewBusinessNightlife.class);
+        Intent intent = new Intent(InterviewNewGroup.this, InterviewBusiness.class);
         intent.putExtra("group", "business");
         startActivity(intent);
     }

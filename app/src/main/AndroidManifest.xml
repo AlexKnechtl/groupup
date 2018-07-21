@@ -92,7 +92,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".interviews.InterviewTags"
-            android:screenOrientation="portrait" />
+            android:theme="@style/InteriewTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".interviews.InterviewLeisure"
             android:theme="@style/InteriewTheme"
@@ -106,6 +107,17 @@
             android:name=".interviews.InterviewPublic"
             android:theme="@style/InteriewTheme"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".interviews.InterviewNightlife"
+            android:theme="@style/InteriewTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".interviews.InterviewBusiness"
+            android:theme="@style/InteriewTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name=".interviews.InterviewDescription"
             android:theme="@style/InteriewTheme"
@@ -124,9 +136,6 @@
         <activity
             android:name=".profile.UserProfileActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
 
         <meta-data
             android:name="preloaded_fonts"
