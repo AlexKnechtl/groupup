@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
@@ -27,7 +28,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
     private String group, activity, publicStatus;
 
     //XML
-    private LinearLayout backLayout;
+    private RelativeLayout backLayout;
 
     //Firebase Database
     private DatabaseReference UserDatabase;
@@ -38,7 +39,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_placepicker);
 
-        backLayout = findViewById(R.id.back_place_picker);
+        backLayout = findViewById(R.id.back_layout_choose_place);
 
         //Initialize Firebase
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();

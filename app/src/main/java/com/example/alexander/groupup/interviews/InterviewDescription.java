@@ -29,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class InterviewDescription extends AppCompatActivity {
 
     //XML
-    private LinearLayout backLayoutDescription;
+    private RelativeLayout backLayoutDescription;
     private FloatingActionButton addDescription, noDescription;
     private EditText description;
 
@@ -151,7 +151,7 @@ public class InterviewDescription extends AppCompatActivity {
     }
 
     private void findIDs() {
-        backLayoutDescription = findViewById(R.id.back_description);
+        backLayoutDescription = findViewById(R.id.back_layout_description);
         addDescription = findViewById(R.id.add_description);
         noDescription = findViewById(R.id.no_description);
         description = findViewById(R.id.edit_text_description);

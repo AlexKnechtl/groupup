@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
@@ -16,14 +17,14 @@ import com.example.alexander.groupup.R;
 public class InterviewNewGroup extends AppCompatActivity {
 
     //XML
-    private LinearLayout backLayout;
+    private RelativeLayout backLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_newgroup);
 
-        backLayout = findViewById(R.id.back_to_home);
+        backLayout = findViewById(R.id.back_layout_new_group);
 
         backLayout.setOnClickListener(new View.OnClickListener() {
             @Override

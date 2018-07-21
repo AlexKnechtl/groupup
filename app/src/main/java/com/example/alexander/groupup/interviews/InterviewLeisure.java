@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.main.HomeActivity;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 public class InterviewLeisure extends AppCompatActivity {
 
     //XML
-    private LinearLayout backLayout;
+    private RelativeLayout backLayout;
     private RecyclerView tagRecyclerView;
 
     //Variables

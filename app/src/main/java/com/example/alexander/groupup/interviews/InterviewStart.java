@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.alexander.groupup.profile.FriendsActivity;
 import com.example.alexander.groupup.main.HomeActivity;
@@ -16,14 +17,15 @@ import com.example.alexander.groupup.R;
 
 public class InterviewStart extends AppCompatActivity {
 
-    private LinearLayout backLayout, newGroupLayout, sameGroupLayout, showFriendsLayout;
+    private LinearLayout newGroupLayout, sameGroupLayout, showFriendsLayout;
+    private RelativeLayout backLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_start);
 
-        backLayout = findViewById(R.id.back_to_home);
+        backLayout = findViewById(R.id.back_layout_start);
         newGroupLayout = findViewById(R.id.new_group_layout);
         sameGroupLayout = findViewById(R.id.same_group_layout);
         showFriendsLayout = findViewById(R.id.show_friends_layout);

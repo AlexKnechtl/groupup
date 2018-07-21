@@ -151,43 +151,43 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/back_to_home"
+    <RelativeLayout
+        android:id="@+id/back_layout_start"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_margin="16dp"
-        android:orientation="horizontal"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:padding="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:background="@drawable/interview_back_design"
+            android:elevation="2dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:elevation="2dp"
-                android:layout_margin="4dp"
-                android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:background="@drawable/interview_back_design">
+                android:alpha="0.6"
+                android:background="@android:color/transparent"
+                android:src="@drawable/baseline_keyboard_arrow_left_black_36"
+                android:tint="@color/darkGray" />
 
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:alpha="0.6"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/baseline_keyboard_arrow_left_black_36"
-                    android:tint="@color/darkGray" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="-12dp"
-                    android:text="@string/cancel"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="30sp" />
-            </LinearLayout>
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="-12dp"
+                android:text="@string/cancel"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -138,4 +138,5 @@
     <string name="location">Standort</string>
     <string name="add_your_friends">Lade Freunde ein</string>
     <string name="visibility">Sichtbarkeit</string>
+    <string name="group_description">Gruppen Beschreibung</string>
 </resources>

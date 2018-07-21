@@ -36,10 +36,9 @@
                 android:layout_marginTop="22dp"
                 android:background="@drawable/assistant_bubble"
                 android:elevation="6dp"
-                android:fontFamily="@font/dosis_bold"
                 android:gravity="center"
                 android:text="@string/who_can_see_group"
-                android:textColor="@color/darkGray"
+                android:textColor="@android:color/darker_gray"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
@@ -50,93 +49,94 @@
         android:layout_marginBottom="50dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="88dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/back_to_home"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <Button
+        <TextView
             android:layout_width="270dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="25dp"
-            android:background="@drawable/assistant_button_design"
+            android:layout_gravity="center"
+            android:layout_margin="12dp"
+            android:background="@drawable/interview_back_design"
+            android:elevation="4dp"
+            android:gravity="center"
             android:onClick="justFriendsClick"
+            android:padding="10dp"
             android:text="@string/my_friends"
-            android:textAllCaps="false"
             android:textColor="@android:color/darker_gray"
-            android:textSize="22sp"
-            android:textStyle="italic" />
+            android:textSize="22sp" />
 
-        <Button
+        <TextView
             android:layout_width="270dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="25dp"
-            android:background="@drawable/assistant_button_design"
+            android:layout_gravity="center"
+            android:layout_margin="12dp"
+            android:background="@drawable/interview_back_design"
+            android:elevation="4dp"
+            android:gravity="center"
             android:onClick="friendsOfFriendsClick"
+            android:padding="10dp"
             android:text="@string/friends_of_friends"
-            android:textAllCaps="false"
             android:textColor="@android:color/darker_gray"
-            android:textSize="22sp"
-            android:textStyle="italic" />
+            android:textSize="22sp" />
 
-        <Button
+        <TextView
             android:layout_width="270dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="25dp"
-            android:background="@drawable/assistant_button_design"
+            android:layout_gravity="center"
+            android:layout_margin="12dp"
+            android:background="@drawable/interview_back_design"
+            android:elevation="4dp"
+            android:gravity="center"
             android:onClick="everybodyClick"
+            android:padding="10dp"
             android:text="@string/everybody"
-            android:textAllCaps="false"
             android:textColor="@android:color/darker_gray"
-            android:textSize="22sp"
-            android:textStyle="italic" />
-
-        <Button
-            android:layout_width="270dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="25dp"
-            android:background="@drawable/assistant_button_design"
-            android:onClick="privateGroupClick"
-            android:text="@string/group_is_private"
-            android:textAllCaps="false"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="22sp"
-            android:textStyle="italic" />
-
+            android:textSize="22sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/back_layout_public"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="120dp"
-        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:padding="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="20dp"
-            android:alpha="0.6"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_back_interview" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="-20dp"
-            android:text="@string/cancel"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="30sp" />
-    </LinearLayout>
+            android:layout_height="56dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:background="@drawable/interview_back_design"
+            android:elevation="2dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:alpha="0.6"
+                android:background="@android:color/transparent"
+                android:src="@drawable/baseline_keyboard_arrow_left_black_36"
+                android:tint="@color/darkGray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="-12dp"
+                android:text="@string/cancel"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
