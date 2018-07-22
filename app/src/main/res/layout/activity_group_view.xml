@@ -102,37 +102,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayout3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
-                    app:layout_constraintStart_toEndOf="@+id/linearLayout2"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/rating_profile_counter"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:background="@drawable/profile_circle"
-                        android:fontFamily="@font/dosis_bold"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="30sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:text="Rating"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/linearLayout4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

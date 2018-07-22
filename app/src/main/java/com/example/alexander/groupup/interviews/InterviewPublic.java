@@ -45,7 +45,7 @@ public class InterviewPublic extends AppCompatActivity {
 
     public void justFriendsClick(View view) {
 
-        Intent intent = new Intent(InterviewPublic.this, InterviewChoosePlace.class);
+        Intent intent = new Intent(InterviewPublic.this, InterviewTags.class);
         intent.putExtra("group", group);
         intent.putExtra("activity", activity);
         intent.putExtra("memberQuantity", memberQuantity);
@@ -55,7 +55,7 @@ public class InterviewPublic extends AppCompatActivity {
 
     public void friendsOfFriendsClick(View view) {
 
-        Intent intent = new Intent(InterviewPublic.this, InterviewChoosePlace.class);
+        Intent intent = new Intent(InterviewPublic.this, InterviewTags.class);
         intent.putExtra("group", group);
         intent.putExtra("activity", activity);
         intent.putExtra("memberQuantity", memberQuantity);
@@ -65,7 +65,7 @@ public class InterviewPublic extends AppCompatActivity {
 
     public void everybodyClick(View view) {
 
-        Intent intent = new Intent(InterviewPublic.this, InterviewChoosePlace.class);
+        Intent intent = new Intent(InterviewPublic.this, InterviewTags.class);
         intent.putExtra("group", group);
         intent.putExtra("activity", activity);
         intent.putExtra("memberQuantity", memberQuantity);

@@ -34,8 +34,9 @@ public class InterviewDescription extends AppCompatActivity {
     private EditText description;
 
     //Variables
-    String group, activity, publicStatus, location,
-            state, groupDescription, current_uid, tag1, tag2, tag3;
+    private String group, activity, publicStatus, location, country,
+            groupDescription, current_uid, tag1, tag2, tag3;
+    private double longitude, latitude;
 
     //Firebase
     private DatabaseReference mGroupDatabase;
@@ -89,15 +90,18 @@ public class InterviewDescription extends AppCompatActivity {
             GroupImagesModel.getRandomImageURL(activity, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String groupImage) {
+                    mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(country).child(current_uid);
+
                     mGroupDatabase.child("category").setValue(group);
                     mGroupDatabase.child("activity").setValue(activity);
                     mGroupDatabase.child("public_status").setValue(publicStatus);
                     mGroupDatabase.child("location").setValue(location);
                     mGroupDatabase.child("description").setValue(groupDescription);
-                    mGroupDatabase.child("tag").setValue(activity); //ToDo Delete --> Replace with activity (its the same)
                     mGroupDatabase.child("tag1").setValue(tag1);
                     mGroupDatabase.child("tag2").setValue(tag2);
                     mGroupDatabase.child("tag3").setValue(tag3);
+                    mGroupDatabase.child("longitude").setValue(longitude);
+                    mGroupDatabase.child("latitude").setValue(latitude);
                     mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
                     mGroupDatabase.child("group_image").setValue(groupImage);
 
@@ -121,10 +125,11 @@ public class InterviewDescription extends AppCompatActivity {
             mGroupDatabase.child("public_status").setValue(publicStatus);
             mGroupDatabase.child("location").setValue(location);
             mGroupDatabase.child("description").setValue(groupDescription);
-            mGroupDatabase.child("tag").setValue(activity);
             mGroupDatabase.child("tag1").setValue(tag1);
             mGroupDatabase.child("tag2").setValue(tag2);
             mGroupDatabase.child("tag3").setValue(tag3);
+            mGroupDatabase.child("longitude").setValue(longitude);
+            mGroupDatabase.child("latitude").setValue(latitude);
             mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
             mGroupDatabase.child("group_image").setValue("https://firebasestorage.googleapis.com/v0/b/groupup-4c43f.appspot.com/o/Backgrounds%2FSport%2FLaufen-0.png?alt=media&token=2ebf9b5d-0931-4871-aa39-ef36ae5cac42");
 
@@ -147,14 +152,15 @@ public class InterviewDescription extends AppCompatActivity {
         tag1 = bundle.getString("tag1");
         tag2 = bundle.getString("tag2");
         tag3 = bundle.getString("tag3");
-        state = bundle.getString("state"); // todo not used anymore
+        country = bundle.getString("country");
+        longitude = bundle.getDouble("longitude");
+        latitude = bundle.getDouble("latitude");
     }
 
     private void initialzieFirebase() {
         mCurrent_user = FirebaseAuth.getInstance().getCurrentUser();
         current_uid = mCurrent_user.getUid();
 
-        mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(current_uid);
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
     }
 

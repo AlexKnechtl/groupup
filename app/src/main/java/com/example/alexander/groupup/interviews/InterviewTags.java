@@ -21,7 +21,8 @@ public class InterviewTags extends AppCompatActivity {
     private EditText tag1EditText, tag2EditText, tag3EditText;
 
     //Variables
-    private String group, activity, publicStatus, location;
+    private String group, activity, publicStatus, location, country;
+    private Double longitude, latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class InterviewTags extends AppCompatActivity {
             tag3 = "empty";
         }
 
-        Intent intent = new Intent(InterviewTags.this, InterviewDescription.class);
+        Intent intent = new Intent(InterviewTags.this, InterviewChoosePlace.class);
         intent.putExtra("group", group);
         intent.putExtra("activity", activity);
         intent.putExtra("publicStatus", publicStatus);
@@ -78,7 +79,6 @@ public class InterviewTags extends AppCompatActivity {
         intent.putExtra("tag1", tag1);
         intent.putExtra("tag2", tag2);
         intent.putExtra("tag3", tag3);
-        intent.putExtra("state", "Steiermark");//state); //TODO Something is definitely wrong here, not used anymore
         startActivity(intent);
     }
 

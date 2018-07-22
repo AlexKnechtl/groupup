@@ -40,8 +40,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".main.ChatActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeLight" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".main.SearchActivity"
             android:screenOrientation="portrait"
@@ -61,8 +60,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".chat.MessageActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeLight" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".chat.NewMessage"
             android:screenOrientation="portrait" />

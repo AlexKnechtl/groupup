@@ -4,47 +4,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/toolbar_container_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_chat"
+            android:layout_width="match_parent"
+            android:layout_height="56dp" />
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/material_search_view_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darkGray" />
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/colorAccent">
 
-        <FrameLayout
-            android:id="@+id/toolbar_container_chat"
+        <TextView
+            android:id="@+id/no_chats"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:text="@string/no_chats_yet"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_chat"
-                android:layout_width="match_parent"
-                android:layout_height="56dp" />
-
-            <com.miguelcatalan.materialsearchview.MaterialSearchView
-                android:id="@+id/material_search_view_chat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/darkGray" />
-        </FrameLayout>
-
-        <RelativeLayout
-            android:id="@+id/top_tabs_chat"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chat_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <include layout="@layout/layout_top_tabs" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relative_layout_chat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <include layout="@layout/layout_center_viewpager" />
-        </RelativeLayout>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -57,8 +54,8 @@
         android:layout_marginEnd="12dp"
         android:onClick="newMessageClick"
         android:src="@drawable/baseline_person_add_white_36"
-        android:tint="@color/colorAccent"
-        app:backgroundTint="@color/colorPrimary"
+        android:tint="@color/colorPrimaryDark"
+        app:backgroundTint="@color/colorAccent"
         app:fabSize="normal" />
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
