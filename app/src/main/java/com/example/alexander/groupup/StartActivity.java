@@ -10,6 +10,7 @@ import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.registration.RegisterUsername;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Arrays;
@@ -30,7 +32,6 @@ public class StartActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
 
     //Firebase
-    private DatabaseReference myRef;
     private DatabaseReference mUserDatabase;
     private FirebaseAuth mFireBaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -48,7 +49,10 @@ public class StartActivity extends AppCompatActivity {
             finish();
         }
 
-        initializeFirebase();
+        mFireBaseAuth = FirebaseAuth.getInstance();
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mUsername = ANONYMOUS;
+
         LanguageStringsManager.initialize();
 
         //Registration Process
@@ -57,15 +61,15 @@ public class StartActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    //user is signed in
+                    //User is signed in
                     onSignedInInitialize(user.getDisplayName());
                 } else {
-                    //user is signed out
+                    //User is signed out
                     onSignedOutCleanup();
                     startActivityForResult(
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
-                                    .setIsSmartLockEnabled(false)
+                                    .setIsSmartLockEnabled(false, true)
                                     .setTheme(R.style.RegisterTheme)
                                     .setLogo(R.drawable.logo_groupup)
                                     .setAvailableProviders(Arrays.asList(
@@ -83,7 +87,6 @@ public class StartActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-
                 if (!(mUsername.equals(ANONYMOUS))) {
                     Intent intent = new Intent(StartActivity.this, HomeActivity.class);
                     startActivity(intent);
@@ -118,14 +121,24 @@ public class StartActivity extends AppCompatActivity {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         final String uid = current_user.getUid();
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-
-        mUserDatabase.addValueEventListener(new ValueEventListener() {
+        mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(uid).exists()) {
-                    String deviceToken = FirebaseInstanceId.getInstance().getToken();
-                    mUserDatabase.child(uid).child("device_token").setValue(deviceToken);
+                    FirebaseInstanceId.getInstance().getInstanceId()
+                            .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                                @Override
+                                public void onSuccess(InstanceIdResult instanceIdResult) {
+                                    String deviceToken = instanceIdResult.getToken();
+                                    mUserDatabase.child(uid).child("device_token").setValue(deviceToken);
+                                    Intent intent = new Intent(StartActivity.this, HomeActivity.class);
+                                    intent.putExtra("user_id", uid);
+                                    startActivity(intent);
+                                }
+                            });
+                }else {
+                    Intent intent = new Intent(StartActivity.this, RegisterUsername.class);
+                    startActivity(intent);
                 }
             }
 
@@ -134,34 +147,9 @@ public class StartActivity extends AppCompatActivity {
 
             }
         });
-
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(uid).child("name").exists()) {
-                    Intent intent = new Intent(StartActivity.this, HomeActivity.class);
-                    intent.putExtra("user_id", uid);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(StartActivity.this, RegisterUsername.class);
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError firebaseError) {
-
-            }
-        });
     }
 
     private void onSignedOutCleanup() {
         mUsername = ANONYMOUS;
-    }
-
-    private void initializeFirebase() {
-        myRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        mUsername = ANONYMOUS;
-        mFireBaseAuth = FirebaseAuth.getInstance();
     }
 }
