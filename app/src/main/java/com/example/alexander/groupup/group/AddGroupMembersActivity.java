@@ -10,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
@@ -32,6 +35,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
     //XML
     private RecyclerView MemberPreview, MemberSelect;
     private TextView invitedFriendsTV;
+    private EditText addedMembersText;
 
     //Firebase
     private DatabaseReference FriendsDatabase;
@@ -57,6 +61,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         MemberPreview = findViewById(R.id.AddGroupMembersPrieview);
         MemberSelect = findViewById(R.id.AddGroupSelectMembers);
         invitedFriendsTV = findViewById(R.id.invited_friends_tv);
+        addedMembersText = findViewById(R.id.textAddedFriends);
 
         //Setting the Adapter
         MemberPreview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -90,6 +95,11 @@ public class AddGroupMembersActivity extends AppCompatActivity {
                                         if (fmap.friendsModel.getUid().equals(snapshot.getKey())) {
                                             fmap.setSelected(true);
                                             selectedPreviewMembers.add(fmap.friendsModel);
+                                            if(selectedPreviewMembers.size() == 1)
+                                            {
+                                                addedMembersText.setVisibility(View.VISIBLE);
+                                                MemberPreview.setVisibility(View.VISIBLE);
+                                            }
                                             break;
                                         }
                                 }
@@ -159,10 +169,23 @@ public class AddGroupMembersActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     FriendModelSelectedMap fmMap = SelectableFriends.get(MemberSelect.getChildLayoutPosition(v));
                     fmMap.selected = !fmMap.selected;  //TODO //////////////////////////////////////////////////
-                    if (fmMap.selected)
+                    if (fmMap.selected) {
                         selectedPreviewMembers.add(fmMap.getFriendsModel());
-                    else
-                        selectedPreviewMembers.remove(fmMap.getFriendsModel());
+                        if (selectedPreviewMembers.size() == 1) {
+                            addedMembersText.setVisibility(View.VISIBLE);
+                            MemberPreview.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    else {
+                        int index = selectedPreviewMembers.indexOf(fmMap.getFriendsModel());
+                        selectedPreviewMembers.remove(index);
+                        if(selectedPreviewMembers.size() == 0)
+                        {
+                            addedMembersText.setVisibility(View.GONE);
+                            MemberPreview.setVisibility(View.GONE);
+                        }
+                        previewAdapter.notifyItemRemoved(index);
+                    }
                     previewAdapter.notifyDataSetChanged();
                     notifyDataSetChanged();
                 }
@@ -187,6 +210,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         ArrayList<FriendsModel> SelectableFriends = new ArrayList<>();
         //ArrayList<FriendsModel> SelectableFriendsIndexes = new ArrayList<>();
         Context c;
+        private int lastPosition = -1;
 
         public ArrayList<FriendsModel> getSelectedFriends() {
             return SelectableFriends;
@@ -211,12 +235,19 @@ public class AddGroupMembersActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     FriendsModel model = SelectableFriends.get(MemberSelect.getChildLayoutPosition(v));  //TODO //////////////////////////////////////////////////
 
-                    for (FriendModelSelectedMap fmap : friendsToSelectAsMembers)
+                    for (FriendModelSelectedMap fmap : friendsToSelectAsMembers) {
                         if (fmap.friendsModel == model) {
                             fmap.setSelected(false);
                             break;
                         }
+                    }
+                    int index = selectedPreviewMembers.indexOf(model);
                     selectedPreviewMembers.remove(model);
+                    if (selectedPreviewMembers.size() == 0) {
+                        addedMembersText.setVisibility(View.GONE);
+                        MemberPreview.setVisibility(View.GONE);
+                    }
+                    membersAdapter.notifyItemRemoved(index);
                     membersAdapter.notifyDataSetChanged();
                     notifyDataSetChanged();
                 }
@@ -227,6 +258,25 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull SelectedMembersPreviewViewHolder holder, final int position) {
             holder.setValues(SelectableFriends.get(position), c);
+            setAnimation(holder.itemView, position);
+        }
+
+        private void setAnimation(View itemView, int position) {
+            if (position > lastPosition)
+            {
+                Animation animation = AnimationUtils.loadAnimation(c, android.R.anim.fade_in);
+                itemView.startAnimation(animation);
+                lastPosition = position;
+            }
+        }
+
+        private void setFadeOutAnimationprivate(View itemView, int position) {
+            if (position > lastPosition)
+            {
+                Animation animation = AnimationUtils.loadAnimation(c, android.R.anim.fade_out);
+                itemView.startAnimation(animation);
+                lastPosition = -1;
+            }
         }
 
         @Override

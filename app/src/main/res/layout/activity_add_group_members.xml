@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".group.AddGroupMembersActivity">
 
     <FrameLayout
@@ -44,10 +45,25 @@
             android:textColor="@color/textAppColor"
             android:visibility="gone"/>
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/textAppColor"
+            android:enabled="false"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:text="Added Friends"
+            android:textColor="@color/textAppColor"
+            android:id="@+id/textAddedFriends"
+            android:visibility="gone"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/AddGroupMembersPrieview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
         </android.support.v7.widget.RecyclerView>
 
