@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.main.HomeActivity;
@@ -23,10 +23,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class InterviewLeisure extends AppCompatActivity {
+public class InterviewActivityLeisure extends AppCompatActivity {
 
     //XML
-    private LinearLayout backLayout;
+    private RelativeLayout backLayout;
     private RecyclerView tagRecyclerView;
 
     //Variables
@@ -73,7 +73,7 @@ public class InterviewLeisure extends AppCompatActivity {
         backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InterviewLeisure.this, HomeActivity.class);
+                Intent intent = new Intent(InterviewActivityLeisure.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -98,7 +98,7 @@ public class InterviewLeisure extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     final String tag = tags.get(tagRecyclerView.getChildLayoutPosition(v));
-                    Intent intent = new Intent(InterviewLeisure.this, InterviewMembers.class);
+                    Intent intent = new Intent(InterviewActivityLeisure.this, InterviewMembers.class);
                     intent.putExtra("tag", tag);
                     startActivity(intent);
                 }
@@ -116,7 +116,7 @@ public class InterviewLeisure extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(InterviewLeisure.this, InterviewPublic.class);
+                    Intent intent = new Intent(InterviewActivityLeisure.this, InterviewPublic.class);
                     intent.putExtra("tag", tags.get(tagRecyclerView.getChildLayoutPosition(v)));
                     startActivity(intent);
                 }

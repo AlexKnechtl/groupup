@@ -76,7 +76,7 @@
     <string name="climbing">Klettern</string>
     <string name="ice_hockey">Eis Hockey</string>
     <string name="baseball">Baseball</string>
-    <string name="martial_arts">Martial Arts</string>
+    <string name="martial_arts">Kampfsport</string>
     <string name="tennis">Tennis</string>
     <string name="table_tennis">Tischtennis</string>
     <string name="mountainbiken">Mountain Biken</string>
@@ -94,7 +94,7 @@
     <string name="name">Name:</string>
     <string name="my_account_settings">- Mein Account</string>
     <string name="group_filter_settings">- Gruppen Filter</string>
-    <string name="licenses">" - Lizensen"</string>
+    <string name="licenses">" - Lizenzen"</string>
     <string name="support_requests">- Support Anfragen</string>
     <string name="imprint">- Imprint</string>
     <string name="support">Support</string>
@@ -134,4 +134,18 @@
     <string name="an_hour_ago">Vor einer Stunde</string>
     <string name="hours_ago">" Stunden"</string>
     <string name="days_ago">" Tage"</string>
+    <string name="properties">Eigenschaften</string>
+    <string name="location">Standort</string>
+    <string name="add_your_friends">Lade Freunde ein</string>
+    <string name="visibility">Sichtbarkeit</string>
+    <string name="group_description">Gruppen Beschreibung</string>
+    <string name="set_tag_headline_text">Diese Tags beschreiben deine Gruppe. Du kannst auch Smileys benutzen.</string>
+    <string name="night_club">Nachtclub</string>
+    <string name="bar_pub">Bar / Pub</string>
+    <string name="houseparty">Hausparty</string>
+    <string name="hookah_bar">Shisha-Bar</string>
+    <string name="event">Veranstaltung</string>
+    <string name="seminar">Seminar</string>
+    <string name="motivation">Motivation</string>
+    <string name="connection_group">Connection Group</string>
 </resources>

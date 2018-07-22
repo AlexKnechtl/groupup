@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.Adapters;
+package com.example.alexander.groupup.adapters;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;

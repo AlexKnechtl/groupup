@@ -54,6 +54,7 @@ public class ChatsFragment extends Fragment {
         user_id = getActivity().getIntent().getExtras().getString("user_id");
 
         ChatUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("chats");
+        ChatUsersDatabase.keepSynced(true);
 
         ChatUsersDatabase.addValueEventListener(new ValueEventListener() {
             @Override

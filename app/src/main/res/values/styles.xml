@@ -14,7 +14,7 @@
         <item name="android:textColor">@color/colorAccent</item>
 
         <item name="android:windowBackground">@drawable/background</item>
-        <item name="android:fontFamily">@font/dosis_bold</item>
+        <item name="android:fontFamily">@font/dosis_semibold</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
@@ -31,7 +31,7 @@
         <item name="android:textColor">@color/colorAccent</item>
 
         <item name="android:windowBackground">@drawable/background_dark</item>
-        <item name="android:fontFamily">@font/dosis_bold</item>
+        <item name="android:fontFamily">@font/dosis_semibold</item>
     </style>
 
     <style name="RegisterTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -48,7 +48,24 @@
 
         <item name="android:buttonStyle">@style/ButtonStyle</item>
         <item name="android:windowBackground">@drawable/background_register</item>
-        <item name="android:fontFamily">@font/dosis_bold</item>
+        <item name="android:fontFamily">@font/dosis_semibold</item>
+    </style>
+
+    <style name="InteriewTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Colors -->
+        <item name="colorPrimary">@color/fui_transparent</item>
+        <item name="colorPrimaryDark">@color/fui_transparent</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+
+        <item name="colorControlActivated">@color/softGreyBackground</item>
+
+        <!-- Text Colors -->
+        <item name="android:textColorPrimary">@color/softGreyBackground</item>
+        <item name="android:textColor">@color/softGreyBackground</item>
+
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="android:windowBackground">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/dosis_semibold</item>
     </style>
 
     <!-- Important for Button in Registration Process -->

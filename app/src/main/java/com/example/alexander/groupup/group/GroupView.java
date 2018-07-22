@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.example.alexander.groupup.main.ProfileActivity;
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.profile.UserProfileActivity;
+import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -244,12 +246,6 @@ public class GroupView extends AppCompatActivity {
         membersList.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void sendGroupRequest (View view) {
-        Intent intent = new Intent(GroupView.this, AddFriends.class);
-        intent.putExtra("group_id", groupId);
-        startActivity(intent);
-    }
-
     private void initializeFirebase() {
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = mCurrentUser.getUid();
@@ -266,7 +262,8 @@ public class GroupView extends AppCompatActivity {
                 String activity = dataSnapshot.child("activity").getValue().toString();
                 String location = dataSnapshot.child("location").getValue().toString();
 
-                headline.setText(activity + " @" + location);
+                headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
+                        + " @" + location);
 
                 if (dataSnapshot.child("description").exists()) {
 

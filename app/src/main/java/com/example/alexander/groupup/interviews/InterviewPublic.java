@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
@@ -16,7 +16,7 @@ import com.example.alexander.groupup.R;
 public class InterviewPublic extends AppCompatActivity {
 
     //XML
-    private LinearLayout backLayout;
+    private RelativeLayout backLayout;
 
     //Variables
     String group, activity, memberQuantity;
@@ -73,15 +73,6 @@ public class InterviewPublic extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void privateGroupClick(View view) {
-
-        Intent intent = new Intent(InterviewPublic.this, InterviewChoosePlace.class);
-        intent.putExtra("group", group);
-        intent.putExtra("activity", activity);
-        intent.putExtra("memberQuantity", memberQuantity);
-        intent.putExtra("publicStatus", "private");
-        startActivity(intent);
-    }
     @Override
     public void onBackPressed() {
 

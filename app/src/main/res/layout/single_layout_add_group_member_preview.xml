@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/single_layout_add_group_member_preview"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/single_layout_add_group_member_preview"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_margin="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
         android:id="@+id/add_group_member_preview_thumb"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/profile_white_border"
         app:civ_border_color="@color/colorBackground"
         app:civ_border_width="1dp">
+
     </de.hdodenhof.circleimageview.CircleImageView>
+
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:src="@drawable/unchecked_gray"
         app:civ_border_color="@color/colorBackground"
         app:civ_border_width="1dp"
-        app:layout_constraintBottom_toBottomOf="@+id/single_layout_add_group_member_preview"
-        app:layout_constraintRight_toRightOf="@id/single_layout_add_group_member_preview">
+        app:layout_constraintBottom_toBottomOf="@+id/add_group_member_preview_thumb"
+        app:layout_constraintRight_toRightOf="@id/add_group_member_preview_thumb">
+
     </de.hdodenhof.circleimageview.CircleImageView>
+
+    <TextView
+        android:id="@+id/add_group_member_preview_name"
+        android:layout_width="60dp"
+        android:layout_height="14dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="Alexander Knechtl"
+        android:textColor="@android:color/black"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_group_member_preview_thumb" />
 </android.support.constraint.ConstraintLayout>

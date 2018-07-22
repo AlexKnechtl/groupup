@@ -8,7 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import com.example.alexander.groupup.Adapters.CustomSportAdapter;
+import com.example.alexander.groupup.adapters.CustomSportAdapter;
 import com.example.alexander.groupup.models.*;
 import com.example.alexander.groupup.singletons.*;
 import com.example.alexander.groupup.R;

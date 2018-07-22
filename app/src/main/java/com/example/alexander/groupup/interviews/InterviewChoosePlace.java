@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
@@ -27,7 +28,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
     private String group, activity, publicStatus;
 
     //XML
-    private LinearLayout backLayout;
+    private RelativeLayout backLayout;
 
     //Firebase Database
     private DatabaseReference UserDatabase;
@@ -38,7 +39,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_placepicker);
 
-        backLayout = findViewById(R.id.back_place_picker);
+        backLayout = findViewById(R.id.back_layout_choose_place);
 
         //Initialize Firebase
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -74,12 +75,11 @@ public class InterviewChoosePlace extends AppCompatActivity {
                 String city = dataSnapshot.child("city").getValue().toString();
                 //String state = dataSnapshot.child("state").getValue().toString(); //TODO correct
 
-                Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
+                Intent intent = new Intent(InterviewChoosePlace.this, InterviewTags.class);
                 intent.putExtra("group", group);
                 intent.putExtra("activity", activity);
                 intent.putExtra("publicStatus", "justfriends");
                 intent.putExtra("location", city);
-                intent.putExtra("state", "Steiermark");//state); //TODO Something is definitely wrong here, not used anymore
                 startActivity(intent);
             }
 
@@ -117,14 +117,11 @@ public class InterviewChoosePlace extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                // String state = dataSnapshot.child("state").getValue().toString(); //Todo Something is wrong here
-
-                Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
+                Intent intent = new Intent(InterviewChoosePlace.this, InterviewTags.class);
                 intent.putExtra("group", group);
                 intent.putExtra("activity", activity);
                 intent.putExtra("publicStatus", publicStatus);
                 intent.putExtra("location", placeName);
-                intent.putExtra("state", "Steiermark"); //state); //todo correct this, not used anymore
                 startActivity(intent);
             }
 

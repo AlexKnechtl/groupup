@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
@@ -16,14 +16,14 @@ import com.example.alexander.groupup.R;
 public class InterviewNewGroup extends AppCompatActivity {
 
     //XML
-    private LinearLayout backLayout;
+    private RelativeLayout backLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_newgroup);
 
-        backLayout = findViewById(R.id.back_to_home);
+        backLayout = findViewById(R.id.back_layout_new_group);
 
         backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,19 +42,19 @@ public class InterviewNewGroup extends AppCompatActivity {
     }
 
     public void leisureClick(View view) {
-        Intent intent = new Intent(InterviewNewGroup.this, InterviewLeisure.class);
+        Intent intent = new Intent(InterviewNewGroup.this, InterviewActivityLeisure.class);
         intent.putExtra("group", "leisure");
         startActivity(intent);
     }
 
     public void nightlifeClick(View view) {
-        Intent intent = new Intent(InterviewNewGroup.this, InterviewBusinessNightlife.class);
+        Intent intent = new Intent(InterviewNewGroup.this, InterviewActivityNightlife.class);
         intent.putExtra("group", "nightlife");
         startActivity(intent);
     }
 
     public void businessClick(View view) {
-        Intent intent = new Intent(InterviewNewGroup.this, InterviewBusinessNightlife.class);
+        Intent intent = new Intent(InterviewNewGroup.this, InterviewActivityBusiness.class);
         intent.putExtra("group", "business");
         startActivity(intent);
     }

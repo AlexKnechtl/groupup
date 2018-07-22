@@ -3,6 +3,7 @@ package com.example.alexander.groupup.interviews;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -28,13 +29,13 @@ import com.google.firebase.database.FirebaseDatabase;
 public class InterviewDescription extends AppCompatActivity {
 
     //XML
-    private LinearLayout backLayoutDescription;
-    private RelativeLayout addDescription, noDescription;
+    private RelativeLayout backLayoutDescription;
+    private FloatingActionButton addDescription, noDescription;
     private EditText description;
 
     //Variables
     String group, activity, publicStatus, location,
-            state, groupDescription, current_uid;
+            state, groupDescription, current_uid, tag1, tag2, tag3;
 
     //Firebase
     private DatabaseReference mGroupDatabase;
@@ -93,7 +94,10 @@ public class InterviewDescription extends AppCompatActivity {
                     mGroupDatabase.child("public_status").setValue(publicStatus);
                     mGroupDatabase.child("location").setValue(location);
                     mGroupDatabase.child("description").setValue(groupDescription);
-                    mGroupDatabase.child("tag").setValue(activity);
+                    mGroupDatabase.child("tag").setValue(activity); //ToDo Delete --> Replace with activity (its the same)
+                    mGroupDatabase.child("tag1").setValue(tag1);
+                    mGroupDatabase.child("tag2").setValue(tag2);
+                    mGroupDatabase.child("tag3").setValue(tag3);
                     mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
                     mGroupDatabase.child("group_image").setValue(groupImage);
 
@@ -111,14 +115,16 @@ public class InterviewDescription extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Error saving Group", Toast.LENGTH_SHORT).show();
                 }
             });
-        }else
-        { // Todo Freizeit: category = null, activity = null, memberquantity = null? ERROR!!!
+        }else { // Todo Freizeit: category = null, activity = null ERROR!!!
             mGroupDatabase.child("category").setValue(group);
             mGroupDatabase.child("activity").setValue(activity);
             mGroupDatabase.child("public_status").setValue(publicStatus);
             mGroupDatabase.child("location").setValue(location);
             mGroupDatabase.child("description").setValue(groupDescription);
             mGroupDatabase.child("tag").setValue(activity);
+            mGroupDatabase.child("tag1").setValue(tag1);
+            mGroupDatabase.child("tag2").setValue(tag2);
+            mGroupDatabase.child("tag3").setValue(tag3);
             mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
             mGroupDatabase.child("group_image").setValue("https://firebasestorage.googleapis.com/v0/b/groupup-4c43f.appspot.com/o/Backgrounds%2FSport%2FLaufen-0.png?alt=media&token=2ebf9b5d-0931-4871-aa39-ef36ae5cac42");
 
@@ -138,6 +144,9 @@ public class InterviewDescription extends AppCompatActivity {
         activity = bundle.getString("activity");
         publicStatus = bundle.getString("publicStatus");
         location = bundle.getString("location");
+        tag1 = bundle.getString("tag1");
+        tag2 = bundle.getString("tag2");
+        tag3 = bundle.getString("tag3");
         state = bundle.getString("state"); // todo not used anymore
     }
 
@@ -150,7 +159,7 @@ public class InterviewDescription extends AppCompatActivity {
     }
 
     private void findIDs() {
-        backLayoutDescription = findViewById(R.id.back_description);
+        backLayoutDescription = findViewById(R.id.back_layout_description);
         addDescription = findViewById(R.id.add_description);
         noDescription = findViewById(R.id.no_description);
         description = findViewById(R.id.edit_text_description);

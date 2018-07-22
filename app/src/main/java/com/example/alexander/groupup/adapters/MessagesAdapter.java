@@ -1,4 +1,4 @@
-package com.example.alexander.groupup.Adapters;
+package com.example.alexander.groupup.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -10,9 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.chat.MessageActivity;
 import com.example.alexander.groupup.helpers.GetTimeAgo;
-import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.models.MessagesModel;
 import com.google.firebase.auth.FirebaseAuth;
 
