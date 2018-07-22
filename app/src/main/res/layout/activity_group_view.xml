@@ -81,13 +81,13 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/material_visibility_white_36"/>
+                            android:src="@drawable/material_visibility_white_36" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Hallo"/>
+                            android:text="Hallo" />
 
                     </LinearLayout>
 
@@ -164,7 +164,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayout5"
+                    android:id="@+id/location_group_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -175,7 +175,6 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
-                        android:id="@+id/location_group_view"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:background="@drawable/profile_circle"

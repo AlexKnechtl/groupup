@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
@@ -99,7 +98,7 @@
         android:padding="4dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="6dp"
-        app:layout_constraintBottom_toTopOf="@+id/back_home_leisure"
+        app:layout_constraintBottom_toTopOf="@+id/back_layout_leisure"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
@@ -113,7 +112,7 @@
     </android.support.v7.widget.CardView>
 
     <RelativeLayout
-        android:id="@+id/back_layout_choose_place"
+        android:id="@+id/back_layout_leisure"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_margin="10dp"

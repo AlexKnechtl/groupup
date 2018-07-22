@@ -12,6 +12,7 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.main.HomeActivity;
@@ -38,6 +39,7 @@ public class GroupView extends AppCompatActivity {
     private TextView headline, description, backHomeFabText, joinGroupFabText;
     private RecyclerView membersList;
     private FloatingActionButton backHomeFab, joinGroupFab;
+    private LinearLayout location;
 
     //Firebase
     private DatabaseReference GroupDatabase;

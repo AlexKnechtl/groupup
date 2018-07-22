@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.models.UserModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,9 +30,6 @@ public class InterviewActivityLeisure extends AppCompatActivity {
     private RelativeLayout backLayout;
     private RecyclerView tagRecyclerView;
 
-    //Variables
-    private String group;
-
     //Firebase
     private DatabaseReference TagDatabase;
 
@@ -42,7 +40,7 @@ public class InterviewActivityLeisure extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_leisure);
 
-        backLayout = findViewById(R.id.back_home_leisure);
+        backLayout = findViewById(R.id.back_layout_leisure);
         tagRecyclerView = findViewById(R.id.recyclerViewInterviewLeisureTags);
         tagRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -53,8 +51,7 @@ public class InterviewActivityLeisure extends AppCompatActivity {
         TagDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot s : dataSnapshot.getChildren())
-                {
+                for (DataSnapshot s : dataSnapshot.getChildren()) {
                     tags.add(s.getKey());
                 }
                 adapter.notifyDataSetChanged();
@@ -66,10 +63,6 @@ public class InterviewActivityLeisure extends AppCompatActivity {
             }
         });
 
-        //Get Information by Intent
-        Bundle bundle = getIntent().getExtras();
-        group = bundle.getString("group"); // Gruppen Kategorie
-
         backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,13 +72,12 @@ public class InterviewActivityLeisure extends AppCompatActivity {
         });
     }
 
-    public class TagAdapter extends RecyclerView.Adapter<TagViewHolder>{
+    public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
 
         ArrayList<String> tags;
         Context c;
 
-        public TagAdapter(Context c, ArrayList<String> tags)
-        {
+        public TagAdapter(Context c, ArrayList<String> tags) {
             this.tags = tags;
             this.c = c;
         }
@@ -98,12 +90,12 @@ public class InterviewActivityLeisure extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     final String tag = tags.get(tagRecyclerView.getChildLayoutPosition(v));
-                    Intent intent = new Intent(InterviewActivityLeisure.this, InterviewMembers.class);
+                    Intent intent = new Intent(InterviewActivityLeisure.this, InterviewPublic.class);
                     intent.putExtra("tag", tag);
                     startActivity(intent);
                 }
             });
-        }*/
+        } */
 
         @NonNull
         @Override
@@ -117,7 +109,9 @@ public class InterviewActivityLeisure extends AppCompatActivity {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(InterviewActivityLeisure.this, InterviewPublic.class);
-                    intent.putExtra("tag", tags.get(tagRecyclerView.getChildLayoutPosition(v)));
+                    intent.putExtra("group", "leisure");
+                    intent.putExtra("activity", tags.get(tagRecyclerView.getChildLayoutPosition(v)));
+                    //intent.putExtra("group_image", ... //ToDO Add Leisure Group Images (just random from about 15 Images)
                     startActivity(intent);
                 }
             });
