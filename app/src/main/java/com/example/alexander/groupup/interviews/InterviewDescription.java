@@ -35,8 +35,7 @@ public class InterviewDescription extends AppCompatActivity {
 
     //Variables
     private String group, activity, publicStatus, location, country,
-            groupDescription, current_uid, tag1, tag2, tag3;
-    private double longitude, latitude;
+            groupDescription, current_uid, tag1, tag2, tag3, latLng;
 
     //Firebase
     private DatabaseReference mGroupDatabase;
@@ -100,8 +99,7 @@ public class InterviewDescription extends AppCompatActivity {
                     mGroupDatabase.child("tag1").setValue(tag1);
                     mGroupDatabase.child("tag2").setValue(tag2);
                     mGroupDatabase.child("tag3").setValue(tag3);
-                    mGroupDatabase.child("longitude").setValue(longitude);
-                    mGroupDatabase.child("latitude").setValue(latitude);
+                    mGroupDatabase.child("latlng").setValue(latLng);
                     mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
                     mGroupDatabase.child("group_image").setValue(groupImage);
 
@@ -128,8 +126,7 @@ public class InterviewDescription extends AppCompatActivity {
             mGroupDatabase.child("tag1").setValue(tag1);
             mGroupDatabase.child("tag2").setValue(tag2);
             mGroupDatabase.child("tag3").setValue(tag3);
-            mGroupDatabase.child("longitude").setValue(longitude);
-            mGroupDatabase.child("latitude").setValue(latitude);
+            mGroupDatabase.child("latlng").setValue(latLng);
             mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
             mGroupDatabase.child("group_image").setValue("https://firebasestorage.googleapis.com/v0/b/groupup-4c43f.appspot.com/o/Backgrounds%2FSport%2FLaufen-0.png?alt=media&token=2ebf9b5d-0931-4871-aa39-ef36ae5cac42");
 
@@ -153,8 +150,7 @@ public class InterviewDescription extends AppCompatActivity {
         tag2 = bundle.getString("tag2");
         tag3 = bundle.getString("tag3");
         country = bundle.getString("country");
-        longitude = bundle.getDouble("longitude");
-        latitude = bundle.getDouble("latitude");
+        latLng = bundle.getString("latlng");
     }
 
     private void initialzieFirebase() {

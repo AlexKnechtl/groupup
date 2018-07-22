@@ -2,6 +2,7 @@ package com.example.alexander.groupup.group;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
@@ -48,7 +49,7 @@ public class GroupView extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
 
     //Variables
-    private String state, groupId;
+    private String state, groupId, latLng;
 
     //Animations
     Animation FabOpen, FabClose;
@@ -60,7 +61,6 @@ public class GroupView extends AppCompatActivity {
         setContentView(R.layout.activity_group_view);
 
         //Get Information by Intent
-        state = "Steiermark";
         groupId = getIntent().getStringExtra("group_id");
 
         initializeFirebase();
@@ -252,10 +252,9 @@ public class GroupView extends AppCompatActivity {
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = mCurrentUser.getUid();
 
-        GroupMemberDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(groupId).child("members");
-        GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(groupId);
+        GroupMemberDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child("AT").child(groupId).child("members");
+        GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child("AT").child(groupId);
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-
 
         GroupDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -263,6 +262,7 @@ public class GroupView extends AppCompatActivity {
 
                 String activity = dataSnapshot.child("activity").getValue().toString();
                 String location = dataSnapshot.child("location").getValue().toString();
+                latLng = dataSnapshot.child("latlng").getValue().toString();
 
                 headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
                         + " @" + location);
@@ -279,5 +279,11 @@ public class GroupView extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void locationClick(View view) {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(latLng));
+        startActivity(intent);
     }
 }

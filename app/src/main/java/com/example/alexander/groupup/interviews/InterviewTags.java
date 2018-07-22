@@ -21,8 +21,7 @@ public class InterviewTags extends AppCompatActivity {
     private EditText tag1EditText, tag2EditText, tag3EditText;
 
     //Variables
-    private String group, activity, publicStatus, location, country;
-    private Double longitude, latitude;
+    private String group, activity, publicStatus, location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

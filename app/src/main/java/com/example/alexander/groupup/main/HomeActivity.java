@@ -142,7 +142,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child("Steiermark");
+        GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child("AT");
 
         FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder>(
                 GroupModel.class,

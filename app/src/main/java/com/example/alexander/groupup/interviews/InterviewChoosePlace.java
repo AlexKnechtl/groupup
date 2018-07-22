@@ -30,8 +30,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
     private final int REQUEST_CODE_PLACE_PICKER = 1;
 
     //Variables
-    private String group, activity, publicStatus, country, tag1, tag2, tag3;
-    private Double latitude, longitude;
+    private String group, activity, publicStatus, country, tag1, tag2, tag3, latLng;
 
     //XML
     private RelativeLayout backLayout;
@@ -120,8 +119,11 @@ public class InterviewChoosePlace extends AppCompatActivity {
     private void displaySelectedPlace(Intent data) {
         Place placeSelected = PlacePicker.getPlace(this, data);
 
-        latitude = placeSelected.getLatLng().latitude;
-        longitude = placeSelected.getLatLng().longitude;
+        Double latitude = placeSelected.getLatLng().latitude;
+        Double longitude = placeSelected.getLatLng().longitude;
+
+        latLng = "geo:<" + latitude  + ">,<" + longitude + ">?q=<" + latitude  + ">,<" + longitude + ">("
+                + getResources().getString(R.string.group_is_here) + ")";
 
         Geocoder geocoder = new Geocoder(this);
         try
@@ -148,8 +150,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
                 intent.putExtra("tag2", tag2);
                 intent.putExtra("tag3", tag3);
                 intent.putExtra("country", country);
-                intent.putExtra("longitude", longitude);
-                intent.putExtra("latitude", latitude);
+                intent.putExtra("latlng", latLng);
                 startActivity(intent);
             }
 
