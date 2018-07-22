@@ -73,11 +73,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO implement sending to firebase
-                FirebaseDatabase.getInstance().getReference().child("Groups/Steiermark").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").removeValue();
-                FirebaseDatabase.getInstance().getReference().child("Groups/Steiermark").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("rank").setValue("creator");
-                for (FriendsModel m : previewAdapter.getSelectedFriends()) // Hier sind alle ausgewählten Freunde drinnen
-                    FirebaseDatabase.getInstance().getReference().child("Groups/Steiermark").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").child(m.getUid()).child("rank").setValue("member");
+                saveGroupMembers();
                 AddGroupMembersActivity.super.onBackPressed();
             }
         });
@@ -147,6 +143,16 @@ public class AddGroupMembersActivity extends AppCompatActivity {
 
         MemberSelect.setAdapter(membersAdapter);
         MemberPreview.setAdapter(previewAdapter);
+    }
+
+    private void saveGroupMembers() {
+        // TODO implement sending to firebase
+//        FirebaseDatabase.getInstance().getReference().child("Groups/Steiermark").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").removeValue();
+//        FirebaseDatabase.getInstance().getReference().child("Groups/Steiermark").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("rank").setValue("creator");
+//        for (FriendsModel m : previewAdapter.getSelectedFriends()) // Hier sind alle ausgewählten Freunde drinnen
+//            FirebaseDatabase.getInstance().getReference().child("Groups/Steiermark").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").child(m.getUid()).child("rank").setValue("member");
+        for(FriendsModel m : previewAdapter.getSelectedFriends()) //TODO Do not add if alredy in group or is alredy notified
+            FirebaseDatabase.getInstance().getReference().child("notifications").child(m.getUid()).child("groupInvitations").push().child("from").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     public class SelectMembersAdapter extends RecyclerView.Adapter<SelectMembersViewHolder> {

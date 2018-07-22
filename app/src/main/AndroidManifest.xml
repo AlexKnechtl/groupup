@@ -37,7 +37,12 @@
             android:theme="@style/AppThemeDark" />
         <activity
             android:name=".main.NotificationActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_NOTIFICATIONS"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".main.ChatActivity"
             android:screenOrientation="portrait"

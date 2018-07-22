@@ -141,7 +141,8 @@ exports.sendFriendRequestNotification = functions.database.ref('/notifications/{
 			notification: {
 				title: `${friend.displayName} wants to add you as friend`,
 				body: 'You have received a new Friends Request',
-				icon: friend.photoURL
+				icon: friend.photoURL,
+				click_action: 'OPEN_ACTIVITY_NOTIFICATIONS'
 			}
 		};
 		
