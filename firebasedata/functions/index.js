@@ -27,22 +27,28 @@ exports.sendChatNotification = functions.database.ref('/Chats/{userID}/{friendID
 	
 	const getFriendProfilePromise = admin.auth().getUser(friendID);
 	
+	const getCurrentDeviceTokenPromise = admin.database().ref(`/Users/${userID}/device_token`).once('value');
+	
 	//const getMessagePromise = admin.database().ref(`/Chats/${userID}/${friendID}/${messageID}/message`).once('value');
 	
 	let tokenSnapshot;
 	let tokens;
 	console.log('Before Promise function');
-	return Promise.all([getDeviceTokensPromise, getFriendProfilePromise]).then(results => {
+	return Promise.all([getDeviceTokensPromise, getFriendProfilePromise, getCurrentDeviceTokenPromise]).then(results => {
 		console.log('In Promise function');
 		
 		console.log('Results',results);
 		tokenSnapshot = results[0];
 		const friend = results[1];
+		const currDeviceToken = results[2];
 		console.log('Message: ', messageBody);
 		
 		// check if tokenSnapshot has children
 		if(!tokenSnapshot.hasChildren())
-			return console.log('Es gibt keine Tokens an die gesendet werden kann');
+			if(!currDeviceToken.val())
+				return console.log('Es gibt keine Tokens an die gesendet werden kann');
+			else
+				console.log('No device tokens, using current device Token : ', currDeviceToken.val());
 		
 		console.log(`Es gibt `, tokenSnapshot.numChildren(), ' Token an die gesendet werden kann.');
 		console.log('Fetched friend profile ', friend);
@@ -54,10 +60,99 @@ exports.sendChatNotification = functions.database.ref('/Chats/{userID}/{friendID
 				icon: friend.photoURL
 			}
 		};
+		if(tokenSnapshot.hasChildren())
+		{
+			tokens = Object.keys(tokenSnapshot.val());
+			
+			return admin.messaging().sendToDevice(tokens, payload);
+		}
+		else
+			return admin.messaging().sendToDevice(currDeviceToken.val(), payload);
+	}).then((response) => {
 		
-		tokens = Object.keys(tokenSnapshot.val());
+		// For each message check if there was an error.
+		console.log('Response: ', response);
+        const tokensToRemove = [];
+        response.results.forEach((result, index) => {
+          const error = result.error;
+          if (error) {
+            console.error('Failure sending notification to', tokens[index], error);
+            // Cleanup the tokens who are not registered anymore.
+            if (error.code === 'messaging/invalid-registration-token' ||
+                error.code === 'messaging/registration-token-not-registered') {
+              tokensToRemove.push(tokenSnapshot.ref.child(tokens[index]).remove());
+            }
+          }
+        });
 		
-		return admin.messaging().sendToDevice(tokens, payload);
+		return Promise.all(tokensToRemove);
+	});
+	
+	//doNotification("Created: ", event);
+});
+
+
+
+exports.sendFriendRequestNotification = functions.database.ref('/notifications/{userID}/{notificationID}/from/').onWrite((change, context) => 
+{
+	const userID = context.params.userID;
+	const friendID = change.after.val();
+	//const messageID = context.params.messageID;
+	console.log('Change: ', change.after.val());
+	const messageBody = change.after.val();
+	// User deleted message
+	//if (!change.after.val()) {
+      //  return console.log('User ', followerUid, 'un-followed user', followedUid);
+     // }
+	console.log('New Friend Request from UID: ', friendID, ' for user UID: ', userID);
+
+	const getDeviceTokensPromise = admin.database().ref(`/Users/${userID}/notificationTokens`).once('value');
+	
+	const getFriendProfilePromise = admin.auth().getUser(friendID);
+	
+	const getCurrentDeviceTokenPromise = admin.database().ref(`/Users/${userID}/device_token`).once('value');
+	
+	//const getMessagePromise = admin.database().ref(`/Chats/${userID}/${friendID}/${messageID}/message`).once('value');
+	
+	let tokenSnapshot;
+	let tokens;
+	console.log('Before Promise function');
+	return Promise.all([getDeviceTokensPromise, getFriendProfilePromise, getCurrentDeviceTokenPromise]).then(results => {
+		console.log('In Promise function');
+		
+		console.log('Results',results);
+		tokenSnapshot = results[0];
+		const friend = results[1];
+		const currDeviceToken = results[2];
+		//console.log('Message: ', messageBody);
+		
+		// check if tokenSnapshot has children
+		if(!tokenSnapshot.hasChildren())
+			if(!currDeviceToken.val())
+				return console.log('Es gibt keine Tokens an die gesendet werden kann');
+			else
+				console.log('No device tokens, using current device Token : ', currDeviceToken.val());
+		//console.log('No device tokens, using current device Token : ', currDeviceToken.val());
+		
+		console.log(`Es gibt `, tokenSnapshot.numChildren(), ' Token an die gesendet werden kann.');
+		console.log('Fetched friend profile ', friend);
+		
+		const payload = {
+			notification: {
+				title: `${friend.displayName} wants to add you as friend`,
+				body: 'You have received a new Friends Request',
+				icon: friend.photoURL
+			}
+		};
+		
+		if(tokenSnapshot.hasChildren())
+		{
+			tokens = Object.keys(tokenSnapshot.val());
+			
+			return admin.messaging().sendToDevice(tokens, payload);
+		}
+		else
+			return admin.messaging().sendToDevice(currDeviceToken.val(), payload);
 	}).then((response) => {
 		
 		// For each message check if there was an error.
