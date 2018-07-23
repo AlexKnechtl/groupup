@@ -172,7 +172,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                                 notificationData.put("from", mCurrentUser.getUid());
                                                 notificationData.put("type", "request");
 
-                                                mNotificationDatabase.child(receiver_user_id).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                mNotificationDatabase.child(receiver_user_id).child("friendRequests").push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         mFabFriendText.setText(getString(R.string.cancel_friend_request));
