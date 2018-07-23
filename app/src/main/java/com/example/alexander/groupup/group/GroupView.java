@@ -49,7 +49,7 @@ public class GroupView extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
 
     //Variables
-    private String groupId;
+    private String groupId, latLng;
 
     //Animations
     Animation FabOpen, FabClose;

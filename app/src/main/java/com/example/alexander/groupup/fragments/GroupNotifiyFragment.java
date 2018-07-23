@@ -13,15 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.GroupModel;
+import com.example.alexander.groupup.models.GroupsRequestModel;
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.profile.UserProfileActivity;
-import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,9 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import java.util.Calendar;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -105,7 +100,7 @@ public class GroupNotifiyFragment extends Fragment {
         ) {
 
             @Override
-            protected void populateViewHolder(final GroupRequestViewHolder viewHolder, final GroupsRequestModel group, int position) {
+            protected void populateViewHolder(final GroupRequestViewHolder viewHolder, final GroupsRequestModel group, final int position) {
                 FirebaseDatabase.getInstance().getReference().child("Groups").child(group.getFrom()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -144,7 +139,7 @@ public class GroupNotifiyFragment extends Fragment {
                 viewHolder.acceptBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        acceptRequest(group.getFrom());
+                        acceptRequest(group.getFrom(), getRef(position).getKey());
                     }
                 });
             }
@@ -179,7 +174,7 @@ public class GroupNotifiyFragment extends Fragment {
         }
     }
 
-    private void acceptRequest(final String gid) {
+    private void acceptRequest(final String gid, final String notificationID) {
         UserProfileDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         final DatabaseReference GroupsDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(gid);
 
@@ -194,24 +189,7 @@ public class GroupNotifiyFragment extends Fragment {
 
             }
         });
-    }
-
-    private class GroupsRequestModel {
-        public String getFrom() {
-            return from;
-        }
-
-        public void setFrom(String from) {
-            this.from = from;
-        }
-
-        public GroupsRequestModel(String from) {
-            this.from = from;
-        }
-
-        public GroupsRequestModel() {
-        }
-
-        private String from;
+        GroupRequestDatabase.child(notificationID).removeValue();
     }
 }
+

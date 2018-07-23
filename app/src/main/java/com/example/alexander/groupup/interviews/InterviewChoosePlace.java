@@ -81,7 +81,6 @@ public class InterviewChoosePlace extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String city = dataSnapshot.child("city").getValue().toString();
-                //String state = dataSnapshot.child("state").getValue().toString(); //TODO correct
 
                 Intent intent = new Intent(InterviewChoosePlace.this, InterviewTags.class);
                 intent.putExtra("group", group);

@@ -89,7 +89,7 @@ public class InterviewDescription extends AppCompatActivity {
             GroupImagesModel.getRandomImageURL(activity, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String groupImage) {
-                    mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(country).child(current_uid);
+                    mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(current_uid);
 
                     mGroupDatabase.child("category").setValue(group);
                     mGroupDatabase.child("activity").setValue(activity);
