@@ -157,6 +157,7 @@
     <string name="seminar">Seminar</string>
     <string name="motivation">Motivation</string>
     <string name="connection_group">Connection Group</string>
+    <string name="creator">"Creator: "</string>
 
     <!-- Registration -->
 

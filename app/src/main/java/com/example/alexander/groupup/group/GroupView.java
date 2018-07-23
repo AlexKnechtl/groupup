@@ -46,7 +46,7 @@ public class GroupView extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
 
     //Variables
-    private String state, groupId;
+    private String groupId;
 
     //Animations
     Animation FabOpen, FabClose;
@@ -58,7 +58,6 @@ public class GroupView extends AppCompatActivity {
         setContentView(R.layout.activity_group_view);
 
         //Get Information by Intent
-        state = "Steiermark";
         groupId = getIntent().getStringExtra("group_id");
 
         initializeFirebase();
@@ -250,8 +249,8 @@ public class GroupView extends AppCompatActivity {
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = mCurrentUser.getUid();
 
-        GroupMemberDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(groupId).child("members");
-        GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(state).child(groupId);
+        GroupMemberDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(groupId).child("members");
+        GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(groupId);
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
 

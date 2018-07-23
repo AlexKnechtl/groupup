@@ -6,11 +6,16 @@
     tools:context=".fragments.GroupNotifiyFragment">
 
     <TextView
-        android:id="@+id/no_requests_friends"
+        android:id="@+id/no_requests_groups"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
         android:textSize="20sp"
         android:gravity="center"
         android:text="@string/no_new_group_invites"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/groups_requests_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>
