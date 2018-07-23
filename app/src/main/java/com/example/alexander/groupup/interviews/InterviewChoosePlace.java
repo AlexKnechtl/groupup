@@ -1,10 +1,11 @@
 package com.example.alexander.groupup.interviews;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.alexander.groupup.main.HomeActivity;
@@ -19,13 +20,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class InterviewChoosePlace extends AppCompatActivity {
 
     //Constants
     private final int REQUEST_CODE_PLACE_PICKER = 1;
 
     //Variables
-    private String group, activity, publicStatus;
+    private String group, activity, publicStatus, country, tag1, tag2, tag3, latLng;
 
     //XML
     private RelativeLayout backLayout;
@@ -52,6 +57,9 @@ public class InterviewChoosePlace extends AppCompatActivity {
         group = bundle.getString("group"); // Group Category
         activity = bundle.getString("activity");
         publicStatus = bundle.getString("publicStatus");
+        tag1 = bundle.getString("tag1");
+        tag2 = bundle.getString("tag2");
+        tag3 = bundle.getString("tag3");
 
         backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,17 +119,38 @@ public class InterviewChoosePlace extends AppCompatActivity {
     private void displaySelectedPlace(Intent data) {
         Place placeSelected = PlacePicker.getPlace(this, data);
 
+        Double latitude = placeSelected.getLatLng().latitude;
+        Double longitude = placeSelected.getLatLng().longitude;
+
+        latLng = "geo:<" + latitude  + ">,<" + longitude + ">?q=<" + latitude  + ">,<" + longitude + ">("
+                + getResources().getString(R.string.group_is_here) + ")";
+
+        Geocoder geocoder = new Geocoder(this);
+        try
+        {
+            List<Address> addresses = geocoder.getFromLocation(latitude,
+                    longitude, 1);
+            country = addresses.get(0).getCountryCode();
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
         final String placeName = placeSelected.getName().toString();
 
         UserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Intent intent = new Intent(InterviewChoosePlace.this, InterviewTags.class);
+                Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
                 intent.putExtra("group", group);
                 intent.putExtra("activity", activity);
                 intent.putExtra("publicStatus", publicStatus);
                 intent.putExtra("location", placeName);
+                intent.putExtra("tag1", tag1);
+                intent.putExtra("tag2", tag2);
+                intent.putExtra("tag3", tag3);
+                intent.putExtra("country", country);
+                intent.putExtra("latlng", latLng);
                 startActivity(intent);
             }
 

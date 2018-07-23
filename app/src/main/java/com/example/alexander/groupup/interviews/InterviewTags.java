@@ -70,7 +70,7 @@ public class InterviewTags extends AppCompatActivity {
             tag3 = "empty";
         }
 
-        Intent intent = new Intent(InterviewTags.this, InterviewDescription.class);
+        Intent intent = new Intent(InterviewTags.this, InterviewChoosePlace.class);
         intent.putExtra("group", group);
         intent.putExtra("activity", activity);
         intent.putExtra("publicStatus", publicStatus);
@@ -78,7 +78,6 @@ public class InterviewTags extends AppCompatActivity {
         intent.putExtra("tag1", tag1);
         intent.putExtra("tag2", tag2);
         intent.putExtra("tag3", tag3);
-        intent.putExtra("state", "Steiermark");//state); //TODO Something is definitely wrong here, not used anymore
         startActivity(intent);
     }
 

@@ -209,7 +209,7 @@
                 android:layout_gravity="center"
                 android:alpha="0.6"
                 android:background="@android:color/transparent"
-                android:src="@drawable/baseline_keyboard_arrow_left_black_36"
+                android:src="@drawable/baseline_navigate_before_black_48"
                 android:tint="@color/darkGray" />
 
             <TextView

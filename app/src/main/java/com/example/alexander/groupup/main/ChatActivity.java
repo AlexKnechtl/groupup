@@ -4,21 +4,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.chat.MessageActivity;
 import com.example.alexander.groupup.chat.NewMessage;
-import com.example.alexander.groupup.fragments.ChatsFragment;
-import com.example.alexander.groupup.fragments.GroupChatsFragment;
-import com.example.alexander.groupup.fragments.SectionsPagerAdapter;
+import com.example.alexander.groupup.models.UserModel;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -28,9 +37,14 @@ public class ChatActivity extends AppCompatActivity {
     //XML
     private MaterialSearchView searchView;
     private FloatingActionButton newChatFab;
+    private RecyclerView chatsList;
+    private TextView noChats;
 
     //Variables
     private String user_id;
+
+    //Firebase
+    private DatabaseReference ChatUsersDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +60,95 @@ public class ChatActivity extends AppCompatActivity {
         searchView = findViewById(R.id.material_search_view_chat);
         newChatFab = findViewById(R.id.new_chat_fab);
 
-        setupViewPager();
+        noChats = findViewById(R.id.no_chats);
+        chatsList = findViewById(R.id.chat_list);
+
+        chatsList.setHasFixedSize(true);
+        chatsList.setLayoutManager(new LinearLayoutManager(this));
+
+        ChatUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("chats");
+        ChatUsersDatabase.keepSynced(true);
+
+        ChatUsersDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    noChats.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         setupBottomNavigationView();
+    }
+
+
+    public void newMessageClick(View view) {
+        Intent intent = new Intent(ChatActivity.this, NewMessage.class);
+        intent.putExtra("user_id", user_id);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerAdapter<UserModel, ChatsViewholder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserModel, ChatsViewholder>(
+                UserModel.class,
+                R.layout.single_layout_user,
+                ChatsViewholder.class,
+                ChatUsersDatabase
+        ) {
+
+            @Override
+            protected void populateViewHolder(ChatsViewholder viewHolder, UserModel user, int position) {
+                viewHolder.setName(user.getName());
+                viewHolder.setCity(user.getCity());
+                viewHolder.setThumbImage(user.getThumb_image(), ChatActivity.this);
+
+                final String list_user_id = getRef(position).getKey();
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ChatActivity.this, MessageActivity.class);
+                        intent.putExtra("user_id", user_id);
+                        intent.putExtra("receiver_user_id", list_user_id);
+                        startActivity(intent);
+                    }
+                });
+            }
+        };
+        chatsList.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    public static class ChatsViewholder extends RecyclerView.ViewHolder {
+
+        View mView;
+
+        public ChatsViewholder(View itemView) {
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setName(String name) {
+            TextView userNameView = mView.findViewById(R.id.user_single_name);
+            userNameView.setText(name);
+        }
+
+        public void setCity(String city) {
+            TextView friendsDate = mView.findViewById(R.id.user_single_information);
+            friendsDate.setText(city);
+        }
+
+        public void setThumbImage(String thumb_image, Context context) {
+            CircleImageView userImageView = mView.findViewById(R.id.user_single_image);
+            Picasso.with(context).load(thumb_image).placeholder(R.drawable.profile_white).into(userImageView);
+        }
     }
 
     public void setupBottomNavigationView() {
@@ -59,40 +160,6 @@ public class ChatActivity extends AppCompatActivity {
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
-    }
-
-    private void setupViewPager() {
-        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ChatsFragment());
-        adapter.addFragment(new GroupChatsFragment());
-
-        ViewPager viewPager = findViewById(R.id.container_viewpager);
-        viewPager.setAdapter(adapter);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageScrollStateChanged(int state) {}
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-
-            public void onPageSelected(int position) {
-                if (position == 0) {
-                    newChatFab.setImageResource(R.drawable.baseline_person_add_white_36);
-                } else if (position == 1) {
-                    newChatFab.setImageResource(R.drawable.baseline_group_add_white_36);
-                }
-            }
-        });
-
-        TabLayout tabLayout = findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
-        tabLayout.getTabAt(0).setText("Chats");
-        tabLayout.getTabAt(1).setText("Group Chats");
-    }
-
-    public void newMessageClick(View view) {
-        Intent intent = new Intent(ChatActivity.this, NewMessage.class);
-        intent.putExtra("user_id", user_id);
-        startActivity(intent);
     }
 
     //Add Search Menu Icon

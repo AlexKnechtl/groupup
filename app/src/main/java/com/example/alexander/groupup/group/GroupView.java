@@ -2,6 +2,7 @@ package com.example.alexander.groupup.group;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
@@ -12,6 +13,7 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.main.HomeActivity;
@@ -38,6 +40,7 @@ public class GroupView extends AppCompatActivity {
     private TextView headline, description, backHomeFabText, joinGroupFabText;
     private RecyclerView membersList;
     private FloatingActionButton backHomeFab, joinGroupFab;
+    private LinearLayout location;
 
     //Firebase
     private DatabaseReference GroupDatabase;
@@ -253,13 +256,13 @@ public class GroupView extends AppCompatActivity {
         GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(groupId);
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
-
         GroupDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String activity = dataSnapshot.child("activity").getValue().toString();
                 String location = dataSnapshot.child("location").getValue().toString();
+                latLng = dataSnapshot.child("latlng").getValue().toString();
 
                 headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
                         + " @" + location);
@@ -276,5 +279,11 @@ public class GroupView extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void locationClick(View view) {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(latLng));
+        startActivity(intent);
     }
 }
