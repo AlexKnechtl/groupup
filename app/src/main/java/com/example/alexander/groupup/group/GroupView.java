@@ -37,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class GroupView extends AppCompatActivity {
 
     //XML
-    private TextView headline, description, backHomeFabText, joinGroupFabText;
+    private TextView headline, description, backHomeFabText, joinGroupFabText, memberCount;
     private RecyclerView membersList;
     private FloatingActionButton backHomeFab, joinGroupFab;
     private LinearLayout location;
@@ -239,6 +239,7 @@ public class GroupView extends AppCompatActivity {
         joinGroupFab = findViewById(R.id.join_group_fab);
         backHomeFabText = findViewById(R.id.back_explorer_text_groupview);
         joinGroupFabText = findViewById(R.id.join_group_fab_text);
+        memberCount = findViewById(R.id.rating_profile);
 
         headline = findViewById(R.id.group_view_headline);
         description = findViewById(R.id.group_description);
@@ -272,6 +273,9 @@ public class GroupView extends AppCompatActivity {
                     String descriptionText = dataSnapshot.child("description").getValue().toString();
                     description.setText(descriptionText);
                 }
+
+                if(dataSnapshot.child("member_count").exists())
+                    memberCount.setText(dataSnapshot.child("member_count").getValue().toString());
             }
 
             @Override
