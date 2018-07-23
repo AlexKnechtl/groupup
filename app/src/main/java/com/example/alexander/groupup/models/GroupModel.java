@@ -2,12 +2,32 @@ package com.example.alexander.groupup.models;
 
 public class GroupModel {
 
+    public GroupModel(String activity, String location, String tag1, String tag2, String tag3, String group_image, Long member_count) {
+        this.activity = activity;
+        this.location = location;
+        this.tag1 = tag1;
+        this.tag2 = tag2;
+        this.tag3 = tag3;
+        this.group_image = group_image;
+        this.member_count = member_count;
+    }
+
     public String activity;
     public String location;
     public String tag1;
     public String tag2;
     public String tag3;
     public String group_image;
+
+    public Long getMember_count() {
+        return member_count;
+    }
+
+    public void setMember_count(Long member_count) {
+        this.member_count = member_count;
+    }
+
+    public Long member_count;
 
     public GroupModel() {
 

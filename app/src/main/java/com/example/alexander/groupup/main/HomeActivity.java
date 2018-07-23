@@ -158,6 +158,7 @@ public class HomeActivity extends AppCompatActivity {
                 groupsViewHolder.setTag1(groups.getTag1());
                 groupsViewHolder.setTag2(groups.getTag2());
                 groupsViewHolder.setTag3(groups.getTag3());
+                groupsViewHolder.setMemberQuantity(groups.getMember_count().toString());
 
                 final String group_id = getRef(position).getKey();
 
@@ -212,6 +213,12 @@ public class HomeActivity extends AppCompatActivity {
         public void setTag3(String tag3) {
             TextView tag3TextView = mView.findViewById(R.id.group_layout_tag_3);
             tag3TextView.setText(tag3);
+        }
+
+        public void setMemberQuantity(String quantity)
+        {
+            TextView v = mView.findViewById(R.id.member_quantity_group);
+            v.setText(quantity);
         }
     }
 

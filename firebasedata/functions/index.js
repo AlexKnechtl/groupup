@@ -210,6 +210,10 @@ exports.sendGroupRequestNotification = functions.database.ref('/notifications/{u
 		const friend = results[1];
 		const currDeviceToken = results[2];
 		const group = results[3];
+		console.log(group.val());
+		console.log(group.exportVal());
+		console.log(group.exportVal().activity);
+		console.log(group.child("location").val());
 		//console.log('Message: ', messageBody);
 		
 		// check if tokenSnapshot has children
@@ -225,8 +229,8 @@ exports.sendGroupRequestNotification = functions.database.ref('/notifications/{u
 		
 		const payload = {
 			notification: {
-				title: `${friend.displayName} invited you to ${group.activity.val()}`,
-				body: `Do you want to accept the invitation to ${group.activity.val()}@${group.location.val()}`,
+				title: `${friend.displayName} invited you to ${group.child('activity').val()}`,
+				body: `Do you want to accept the invitation to ${group.child('activity').val()}@${group.child('location').val()}`,
 				icon: friend.photoURL,
 				click_action: 'OPEN_ACTIVITY_NOTIFICATIONS'
 			}

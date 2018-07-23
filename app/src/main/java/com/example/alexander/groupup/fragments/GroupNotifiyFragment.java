@@ -182,6 +182,17 @@ public class GroupNotifiyFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 GroupsDatabase.child("members").child(dataSnapshot.getKey()).child("rank").setValue("member");
+                GroupsDatabase.child("member_count").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        GroupsDatabase.child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString())+1);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
 
             @Override
