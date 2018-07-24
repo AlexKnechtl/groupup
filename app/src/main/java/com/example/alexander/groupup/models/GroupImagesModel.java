@@ -1,6 +1,7 @@
 package com.example.alexander.groupup.models;
 
 import com.example.alexander.groupup.helpers.OnGetResultListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,8 +14,9 @@ import java.util.Random;
 public class GroupImagesModel {
 
     private static DatabaseReference sportImageMapReference = FirebaseDatabase.getInstance().getReference().child("SportImageMap");
+    private static DatabaseReference imageMapReference = FirebaseDatabase.getInstance().getReference().child("ImageMap");
 
-    public static void getRandomImageURL(String activity, final OnGetResultListener<String> listener) {
+    public static void getRandomSportImageURL(String activity, final OnGetResultListener<String> listener) {
         sportImageMapReference.keepSynced(true);
         DatabaseReference reference= sportImageMapReference.child(activity);
 
@@ -37,6 +39,65 @@ public class GroupImagesModel {
                     listener.OnSuccess(imageURLs.get(rnd.nextInt(imageURLs.size())));
                 } catch (Exception e) {
                     sportImageMapReference.child("default").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            ArrayList<String> imageURLs = new ArrayList<>();
+//                          System.out.print("-------ParentKey: " + dataSnapshot.getKey());
+//                          System.out.println("------Value: " + dataSnapshot.getValue());
+                            for (DataSnapshot s : dataSnapshot.getChildren()) {
+                                imageURLs.add(s.getValue().toString());
+                                System.out.println("----" + s.getValue());
+                            }
+
+//                          System.out.println("\n------------------ ArraySize: " + imageURLs.size());
+
+                            Random rnd = new Random();
+                            listener.OnSuccess(imageURLs.get(rnd.nextInt(imageURLs.size())));
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public static void getRandomImageURL(String activity, String group, final OnGetResultListener<String> listener) {
+
+        imageMapReference.keepSynced(true);
+        String childstr = "";
+        switch (group){
+            case "leisure": childstr = "leisure"; break;
+            default: childstr = activity; break;
+        }
+
+        imageMapReference.child(childstr).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> imageURLs = new ArrayList<>();
+//              System.out.print("-------ParentKey: " + dataSnapshot.getKey());
+//              System.out.println("------Value: " + dataSnapshot.getValue());
+
+                try {
+                    for (DataSnapshot s : dataSnapshot.getChildren()) {
+                        imageURLs.add(s.getValue().toString());
+                        System.out.println("----" + s.getValue());
+                    }
+
+//                  System.out.println("\n------------------ ArraySize: " + imageURLs.size());
+
+                    Random rnd = new Random();
+                    listener.OnSuccess(imageURLs.get(rnd.nextInt(imageURLs.size())));
+                } catch (Exception e) {
+                    imageMapReference.child("default").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             ArrayList<String> imageURLs = new ArrayList<>();
