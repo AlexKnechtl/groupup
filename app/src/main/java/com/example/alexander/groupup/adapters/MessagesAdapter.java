@@ -1,6 +1,5 @@
 package com.example.alexander.groupup.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.helpers.GetTimeAgo;
 import com.example.alexander.groupup.models.MessagesModel;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -20,11 +18,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     private List<MessagesModel> messagesList;
     private FirebaseAuth mAuth;
-    private Context ctx;
 
-    public MessagesAdapter(List<MessagesModel> messagesList, Context ctx) {
+    public MessagesAdapter(List<MessagesModel> messagesList) {
         this.messagesList = messagesList;
-        this.ctx = ctx;
     }
 
     @Override
@@ -55,6 +51,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     @Override
     public void onBindViewHolder(MessageViewHolder viewHolder, final int position) {
 
+        //ToDo Add Date Headline (Performance sparend)
         MessagesModel c = messagesList.get(position);
         String from_user = c.getFrom();
 
@@ -62,16 +59,15 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
         if (from_user.equals(mAuth.getCurrentUser().getUid())) {
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            viewHolder.background.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChatUser));
         } else {
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
         }
 
-        long time = c.getTime();
+        String time = c.getTime();
 
-        viewHolder.timeText.setText(GetTimeAgo.getTimeAgo(time, ctx));
+        viewHolder.timeText.setText(time);
         viewHolder.messageText.setText(c.getMessage());
     }
 

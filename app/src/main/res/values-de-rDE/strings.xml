@@ -149,4 +149,6 @@
     <string name="motivation">Motivation</string>
     <string name="connection_group">Connection Group</string>
     <string name="group_is_here">Die Gruppe ist hier.</string>
+    <string name="your_chats">Deine Chats</string>
+    <string name="choose_contact">Kontakt wählen</string>
 </resources>

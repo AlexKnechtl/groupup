@@ -2,11 +2,10 @@ package com.example.alexander.groupup.models;
 
 public class MessagesModel {
 
-    private String message, from;
+    private String message, from, time;
     private boolean seen;
-    private long time;
 
-    public MessagesModel(String message, boolean seen, long time, String from) {
+    public MessagesModel(String message, boolean seen, String time, String from) {
         this.message = message;
         this.seen = seen;
         this.time = time;
@@ -29,11 +28,11 @@ public class MessagesModel {
         this.seen = seen;
     }
 
-    public long getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

@@ -1,6 +1,5 @@
 package com.example.alexander.groupup.chat;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +28,7 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +47,6 @@ public class MessageActivity extends AppCompatActivity {
     private String user_id, receiver_user_id;
     private final List<MessagesModel> messagesList = new ArrayList<>();
     private MessagesAdapter messagesAdapter;
-    private Context mContext = MessageActivity.this;
 
     //Firebase
     private DatabaseReference ChatDatabase;
@@ -72,7 +71,7 @@ public class MessageActivity extends AppCompatActivity {
         messagesRecyclerView.setHasFixedSize(true);
         messagesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        messagesAdapter = new MessagesAdapter(messagesList, mContext);
+        messagesAdapter = new MessagesAdapter(messagesList);
 
         messagesRecyclerView.setAdapter(messagesAdapter);
 
@@ -133,7 +132,11 @@ public class MessageActivity extends AppCompatActivity {
     public void sendMessageClick(View view) {
         String message = messageText.getText().toString();
 
+        //ToDo Add Date Headline
         if (!TextUtils.isEmpty(message)) {
+
+            java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("HH:mm");
+            String currentTime = formatter.format(new Date());
 
             messageText.setText("");
 
@@ -145,7 +148,7 @@ public class MessageActivity extends AppCompatActivity {
 
             Map messageMap = new HashMap();
             messageMap.put("message", message);
-            messageMap.put("time", ServerValue.TIMESTAMP);
+            messageMap.put("time", currentTime);
             messageMap.put("from", user_id);
 
             Map messageUserMap = new HashMap();

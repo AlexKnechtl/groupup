@@ -80,11 +80,11 @@
         </RelativeLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:backgroundTint="@color/colorAccent"
+            android:onClick="sendMessageClick"
             android:src="@drawable/action_send"
             android:tint="@color/darkGray"
             app:backgroundTint="@color/softGreyBackground"

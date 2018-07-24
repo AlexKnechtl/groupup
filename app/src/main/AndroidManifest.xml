@@ -45,6 +45,7 @@
         </activity>
         <activity
             android:name=".main.ChatActivity"
+            android:label="@string/your_chats"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".main.SearchActivity"
@@ -68,6 +69,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".chat.NewMessage"
+            android:label="@string/choose_contact"
             android:screenOrientation="portrait" />
         <activity
             android:name=".registration.RegisterUsername"
