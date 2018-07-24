@@ -151,4 +151,6 @@
     <string name="group_is_here">Die Gruppe ist hier.</string>
     <string name="your_chats">Deine Chats</string>
     <string name="choose_contact">Kontakt wählen</string>
+    <string name="creator">Admin:</string>
+    <string name="write_a_message">Nachricht schreiben</string>
 </resources>

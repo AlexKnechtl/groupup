@@ -441,7 +441,7 @@
         android:onClick="addFriendClick"
         android:scaleType="center"
         android:src="@drawable/ic_add_friend"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:backgroundTint="@color/colorAccent"
         app:fabSize="normal"/>
 
@@ -455,6 +455,37 @@
         android:layout_marginEnd="82dp"
         android:background="@drawable/assistant_bubble"
         android:elevation="6dp"
+        android:fontFamily="@font/dosis_bold"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:visibility="invisible" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/message_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="270dp"
+        android:layout_marginEnd="18dp"
+        android:onClick="sendMessageUserprofile"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_message"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="normal"/>
+
+    <TextView
+        android:id="@+id/message_fab_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="270dp"
+        android:layout_marginEnd="82dp"
+        android:background="@drawable/assistant_bubble"
+        android:elevation="6dp"
+        android:text="@string/write_a_message"
         android:fontFamily="@font/dosis_bold"
         android:textColor="@android:color/darker_gray"
         android:textSize="12sp"
