@@ -54,7 +54,8 @@ public class LanguageStringsManager {
             if(s.getId().equals(id))
                 return s;
         }
-        return new LanguageStringsModel("ERROR"+id,"ERROR"+id,"ERROR"+id); //TODO
+//        return new LanguageStringsModel("ERROR"+id,"ERROR"+id,"ERROR"+id); //TODO
+        return new LanguageStringsModel(id,id,id); //TODO
     }
 
     public ArrayList<LanguageStringsModel> getLanguageStrings()

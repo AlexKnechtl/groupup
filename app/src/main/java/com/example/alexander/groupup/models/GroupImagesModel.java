@@ -95,7 +95,8 @@ public class GroupImagesModel {
 //                  System.out.println("\n------------------ ArraySize: " + imageURLs.size());
 
                     Random rnd = new Random();
-                    listener.OnSuccess(imageURLs.get(rnd.nextInt(imageURLs.size())));
+                    int i = rnd.nextInt(imageURLs.size());
+                    listener.OnSuccess(imageURLs.get(i));
                 } catch (Exception e) {
                     imageMapReference.child("default").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override

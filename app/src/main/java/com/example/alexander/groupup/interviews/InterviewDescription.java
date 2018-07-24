@@ -102,6 +102,7 @@ public class InterviewDescription extends AppCompatActivity {
                     mGroupDatabase.child("latlng").setValue(latLng);
                     mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
                     mGroupDatabase.child("group_image").setValue(groupImage);
+                    mGroupDatabase.child("member_count").setValue(1);
 
                     UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -118,9 +119,12 @@ public class InterviewDescription extends AppCompatActivity {
                 }
             });
         }else { // Todo Freizeit: category = null, activity = null ERROR!!!
+
             GroupImagesModel.getRandomImageURL(activity, group, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String value) {
+                    mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(current_uid);
+
                     mGroupDatabase.child("category").setValue(group);
                     mGroupDatabase.child("activity").setValue(activity);
                     mGroupDatabase.child("public_status").setValue(publicStatus);
@@ -132,6 +136,7 @@ public class InterviewDescription extends AppCompatActivity {
                     mGroupDatabase.child("latlng").setValue(latLng);
                     mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
                     mGroupDatabase.child("group_image").setValue(value);
+                    mGroupDatabase.child("member_count").setValue(1);
 
                     UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

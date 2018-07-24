@@ -154,7 +154,8 @@ public class HomeActivity extends AppCompatActivity {
             protected void populateViewHolder(GroupsViewHolder groupsViewHolder, GroupModel groups, int position) {
 
                 groupsViewHolder.setGroupImage(groups.getGroup_image());
-                groupsViewHolder.setActivityCity(groups.getActivity(), groups.getLocation());
+
+                groupsViewHolder.setActivityCity(LanguageStringsManager.getInstance().getLanguageStringByStringId(groups.getActivity()).getLocalLanguageString(), groups.getLocation());
                 groupsViewHolder.setTag1(groups.getTag1());
                 groupsViewHolder.setTag2(groups.getTag2());
                 groupsViewHolder.setTag3(groups.getTag3());
@@ -196,7 +197,7 @@ public class HomeActivity extends AppCompatActivity {
 
         public void setActivityCity(String activity, String location) {
             TextView groupHeadline = mView.findViewById(R.id.group_headline);
-            groupHeadline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
+            groupHeadline.setText(activity
                     + " @" + location);
         }
 
