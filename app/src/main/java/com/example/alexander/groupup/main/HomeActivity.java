@@ -223,11 +223,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void testClick(View view) {
-        Intent intent = new Intent(HomeActivity.this, InterviewTags.class);
-        startActivity(intent);
-    }
-
     public void setupBottomNavigationView() {
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_nav);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);

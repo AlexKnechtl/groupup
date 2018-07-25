@@ -53,8 +53,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/group_calendar"
-                    android:onClick="testClick"/>
+                    android:src="@drawable/group_calendar" />
 
                 <TextView
                     android:id="@+id/date_main"
@@ -179,9 +178,9 @@
                 android:id="@+id/main_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
                 android:layout_marginTop="12dp"
-                android:background="@color/colorBackground" />
+                android:background="@color/colorBackground"
+                android:nestedScrollingEnabled="false" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
