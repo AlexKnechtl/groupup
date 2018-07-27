@@ -13,8 +13,8 @@ import java.util.Random;
 
 public class GroupImagesModel {
 
-    private static DatabaseReference sportImageMapReference = FirebaseDatabase.getInstance().getReference().child("SportImageMap");
-    private static DatabaseReference imageMapReference = FirebaseDatabase.getInstance().getReference().child("ImageMap");
+    private static DatabaseReference sportImageMapReference = FirebaseDatabase.getInstance().getReference().child("GroupImages");
+    private static DatabaseReference imageMapReference = FirebaseDatabase.getInstance().getReference().child("GroupImages");
 
     public static void getRandomSportImageURL(String activity, final OnGetResultListener<String> listener) {
         sportImageMapReference.keepSynced(true);
