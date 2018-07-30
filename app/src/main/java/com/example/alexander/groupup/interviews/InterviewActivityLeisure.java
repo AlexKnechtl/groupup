@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class InterviewActivityLeisure extends AppCompatActivity {
     //XML
     private RelativeLayout backLayout;
     private RecyclerView tagRecyclerView;
+    private EditText leisureTagEdit;
 
     //Firebase
     private DatabaseReference TagDatabase;
@@ -42,6 +44,7 @@ public class InterviewActivityLeisure extends AppCompatActivity {
 
         backLayout = findViewById(R.id.back_layout_leisure);
         tagRecyclerView = findViewById(R.id.recyclerViewInterviewLeisureTags);
+        leisureTagEdit = findViewById(R.id.leisure_tag_et);
         tagRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         TagDatabase = FirebaseDatabase.getInstance().getReference().child("Tags").child("Graz");
@@ -82,21 +85,6 @@ public class InterviewActivityLeisure extends AppCompatActivity {
             this.c = c;
         }
 
-
-        /*@Override
-        protected void populateViewHolder(TagViewHolder viewHolder, UserModel user, int position) {
-
-            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final String tag = tags.get(tagRecyclerView.getChildLayoutPosition(v));
-                    Intent intent = new Intent(InterviewActivityLeisure.this, InterviewPublic.class);
-                    intent.putExtra("tag", tag);
-                    startActivity(intent);
-                }
-            });
-        } */
-
         @NonNull
         @Override
         public TagViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -107,12 +95,7 @@ public class InterviewActivityLeisure extends AppCompatActivity {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Intent intent = new Intent(InterviewActivityLeisure.this, InterviewPublic.class);
-                    intent.putExtra("group", "leisure");
-                    intent.putExtra("activity", tags.get(tagRecyclerView.getChildLayoutPosition(v)));
-                    //intent.putExtra("group_image", ... //ToDO Add Leisure Group Images (just random from about 15 Images)
-                    startActivity(intent);
+                    leisureTagEdit.setText(tags.get(tagRecyclerView.getChildLayoutPosition(v)));
                 }
             });
             return new TagViewHolder(v);
@@ -142,5 +125,13 @@ public class InterviewActivityLeisure extends AppCompatActivity {
             TextView nameView = mView.findViewById(R.id.tag_text);
             nameView.setText(name);
         }
+    }
+
+    public void addLeisureTagClick(View view) {
+        //ToDo: Finish TagDatabaseSystem with counter (Citys? ... Countrys?)
+        Intent intent = new Intent(InterviewActivityLeisure.this, InterviewPublic.class);
+        intent.putExtra("group", "leisure");
+        intent.putExtra("activity", leisureTagEdit.getText().toString());
+        startActivity(intent);
     }
 }
