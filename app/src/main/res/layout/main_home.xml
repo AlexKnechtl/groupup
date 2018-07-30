@@ -30,7 +30,7 @@
                 <ImageView
                     android:id="@+id/image_location"
                     android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_height="60dp"
                     android:layout_centerVertical="true"
                     android:src="@drawable/location_white" />
 
@@ -81,19 +81,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="Du suchst: "
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="Sportgruppen"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -107,27 +105,24 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="für "
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="Tennis"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text=" welche"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -140,27 +135,24 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="in "
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="Graz"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text=" stattfinden"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
 
             <Button
@@ -177,7 +169,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/main_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="12dp"
                 android:background="@color/colorBackground"
                 android:nestedScrollingEnabled="false" />

@@ -76,11 +76,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/result_list"
             android:layout_width="match_parent"
-            android:layout_height="554dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout6" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="40dp"/>
     </LinearLayout>
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
