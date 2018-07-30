@@ -103,7 +103,6 @@ public class InterviewDescription extends AppCompatActivity {
                     mGroupDatabase.child("member_count").setValue(1);
                     mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
                     mGroupDatabase.child("group_image").setValue(groupImage);
-                    mGroupDatabase.child("member_count").setValue(1);
 
                     UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -120,18 +119,6 @@ public class InterviewDescription extends AppCompatActivity {
                 }
             });
         }else { // Todo Freizeit: category = null, activity = null ERROR!!!
-            mGroupDatabase.child("category").setValue(group);
-            mGroupDatabase.child("activity").setValue(activity);
-            mGroupDatabase.child("public_status").setValue(publicStatus);
-            mGroupDatabase.child("location").setValue(location);
-            mGroupDatabase.child("description").setValue(groupDescription);
-            mGroupDatabase.child("tag1").setValue(tag1);
-            mGroupDatabase.child("tag2").setValue(tag2);
-            mGroupDatabase.child("tag3").setValue(tag3);
-            mGroupDatabase.child("latlng").setValue(latLng);
-            mGroupDatabase.child("member_count").setValue(1);
-            mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
-            mGroupDatabase.child("group_image").setValue("https://firebasestorage.googleapis.com/v0/b/groupup-4c43f.appspot.com/o/Backgrounds%2FSport%2FLaufen-0.png?alt=media&token=2ebf9b5d-0931-4871-aa39-ef36ae5cac42");
 
             GroupImagesModel.getRandomImageURL(activity, group, new OnGetResultListener<String>() {
                 @Override
