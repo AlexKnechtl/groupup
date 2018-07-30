@@ -34,7 +34,7 @@ public class InterviewDescription extends AppCompatActivity {
     private EditText description;
 
     //Variables
-    private String group, activity, publicStatus, location, country,
+    private String group, activity, publicStatus, location,
             groupDescription, current_uid, tag1, tag2, tag3, latLng;
 
     //Firebase
@@ -170,14 +170,13 @@ public class InterviewDescription extends AppCompatActivity {
 
     private void getGroupInformation() {
         Bundle bundle = getIntent().getExtras();
-        group = bundle.getString("group"); // Gruppen Kategorie
+        group = bundle.getString("group");
         activity = bundle.getString("activity");
         publicStatus = bundle.getString("publicStatus");
         location = bundle.getString("location");
         tag1 = bundle.getString("tag1");
         tag2 = bundle.getString("tag2");
         tag3 = bundle.getString("tag3");
-        country = bundle.getString("country");
         latLng = bundle.getString("latlng");
     }
 
