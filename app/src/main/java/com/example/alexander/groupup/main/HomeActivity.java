@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
     //Constants
     public static final String ANONYMOUS = "anonymous";
 
-    //Firebase
+    //FireBase
     private DatabaseReference GroupDatabase;
     private DatabaseReference UserDatabase;
 

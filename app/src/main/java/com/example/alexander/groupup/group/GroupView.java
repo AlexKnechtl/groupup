@@ -40,13 +40,11 @@ public class GroupView extends AppCompatActivity {
     private TextView headline, description, backHomeFabText, joinGroupFabText, memberCount;
     private RecyclerView membersList;
     private FloatingActionButton backHomeFab, joinGroupFab;
-    private LinearLayout location;
 
-    //Firebase
+    //FireBase
     private DatabaseReference GroupDatabase;
     private DatabaseReference GroupMemberDatabase;
     private DatabaseReference UserDatabase;
-    private FirebaseUser mCurrentUser;
 
     //Variables
     private String groupId, latLng;
@@ -195,45 +193,6 @@ public class GroupView extends AppCompatActivity {
         }
     }
 
-    //ToDo: Finish Group Request Feature and show it in GroupRequestView
-    /*public void sendGroupRequest(String receiver_user_id) {
-        UserDatabase.child(mCurrentUser.getUid()).child("group_request").child("sent").child(receiver_user_id).setValue("sent")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-
-                            HashMap<String, String> userData = new HashMap<>();
-                            userData.put("name", myProfileName + ", " + myProfileAge);
-                            userData.put("thumb_image", myProfileThumbImage);
-                            userData.put("city", myProfileCity);
-
-                            UserProfileDatabase.child("friend_requests").child("received").child(mCurrentUser.getUid()).setValue(userData)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-
-                                            HashMap<String, String> notificationData = new HashMap<>();
-                                            notificationData.put("from", mCurrentUser.getUid());
-                                            notificationData.put("type", "request");
-
-                                            mNotificationDatabase.child(receiver_user_id).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    mFabFriendText.setText(getString(R.string.cancel_friend_request));
-                                                    mCurrentState = "req_sent";
-                                                    Toast.makeText(GroupView.this, getString(R.string.sent_successfully), Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                        }
-                                    });
-                        } else {
-                            Toast.makeText(GroupView.this, getString(R.string.failed_sending_request), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    } */
-
     private void findIDs() {
         backHomeFab = findViewById(R.id.back_explorer_groupview);
         joinGroupFab = findViewById(R.id.join_group_fab);
@@ -250,8 +209,6 @@ public class GroupView extends AppCompatActivity {
     }
 
     private void initializeFirebase() {
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String current_uid = mCurrentUser.getUid();
 
         GroupMemberDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(groupId).child("members");
         GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(groupId);
