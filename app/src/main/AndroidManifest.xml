@@ -64,10 +64,10 @@
             android:name=".settings.GetPremium"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".chat.MessageActivity"
+            android:name=".chat.SingleChat"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".chat.NewMessage"
+            android:name=".chat.NewSingleChat"
             android:label="@string/choose_contact"
             android:screenOrientation="portrait" />
         <activity

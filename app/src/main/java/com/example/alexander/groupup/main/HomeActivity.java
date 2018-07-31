@@ -61,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     private Context mContext = HomeActivity.this;
     private static final int ACTIVITY_NUM = 0;
     private boolean creator;
-    private String user_id;
+    private String user_id, group_id, groupCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                 city = dataSnapshot.child("city").getValue().toString();
 
                 if (dataSnapshot.hasChild("my_group")) {
+                    group_id = dataSnapshot.child("my_group").getValue().toString();
                     groupButton.setText(R.string.my_group);
                     creator = false;
                 } else

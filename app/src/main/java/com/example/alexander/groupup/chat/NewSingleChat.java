@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.UserModel;
-import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +30,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class NewMessage extends AppCompatActivity {
+public class NewSingleChat extends AppCompatActivity {
 
     //XML
     private RecyclerView friendsList;
@@ -122,7 +121,7 @@ public class NewMessage extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(NewMessage.this, MessageActivity.class);
+                        Intent intent = new Intent(NewSingleChat.this, SingleChat.class);
                         intent.putExtra("user_id", user_id);
                         intent.putExtra("receiver_user_id", list_user_id);
 
@@ -182,7 +181,7 @@ public class NewMessage extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(NewMessage.this, MessageActivity.class);
+                        Intent intent = new Intent(NewSingleChat.this, SingleChat.class);
                         intent.putExtra("user_id", user_id);
                         intent.putExtra("receiver_user_id", list_user_id);
 

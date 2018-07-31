@@ -14,41 +14,43 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
-public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageViewHolder> {
+public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.GroupChatViewHolder> {
 
     private List<MessagesModel> messagesList;
     private FirebaseAuth mAuth;
 
-    public MessagesAdapter(List<MessagesModel> messagesList) {
+    public GroupChatAdapter(List<MessagesModel> messagesList) {
         this.messagesList = messagesList;
     }
 
     @Override
-    public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GroupChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.single_layout_message, parent, false);
 
-        return new MessageViewHolder(v);
+        return new GroupChatViewHolder(v);
     }
 
-    public class MessageViewHolder extends RecyclerView.ViewHolder {
+    public class GroupChatViewHolder extends RecyclerView.ViewHolder {
+
         private TextView messageText;
-        private TextView timeText;
         private LinearLayout messageLayout;
+        private TextView timeText;
+        private TextView name;
         private CardView background;
 
-        public MessageViewHolder(View view) {
+        public GroupChatViewHolder(View view) {
             super(view);
-
-            messageText = view.findViewById(R.id.message_text);
-            messageLayout = view.findViewById(R.id.message_layout);
-            timeText = view.findViewById(R.id.message_timestamp);
-            background = view.findViewById(R.id.message_background);
+            messageText = view.findViewById(R.id.group_chat_text);
+            messageLayout = view.findViewById(R.id.group_chat_layout);
+            timeText = view.findViewById(R.id.group_chat_timestamp);
+            name = view.findViewById(R.id.group_chat_author);
+            background = view.findViewById(R.id.group_chat_background);
         }
     }
 
     @Override
-    public void onBindViewHolder(MessageViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(GroupChatViewHolder viewHolder, final int position) {
 
         //ToDo Add Date Headline (Performance sparend)
         MessagesModel c = messagesList.get(position);
@@ -64,6 +66,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
         }
 
+        viewHolder.name.setText(c.getName());
         viewHolder.timeText.setText(c.getTime());
         viewHolder.messageText.setText(c.getMessage());
     }

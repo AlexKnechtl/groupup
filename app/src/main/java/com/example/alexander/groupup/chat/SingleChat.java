@@ -35,7 +35,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MessageActivity extends AppCompatActivity {
+public class SingleChat extends AppCompatActivity {
 
     //XML
     private CircleImageView userImage;
@@ -55,7 +55,7 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.messages_activity);
+        setContentView(R.layout.chat_single);
 
         Bundle bundle = getIntent().getExtras();
         receiver_user_id = bundle.getString("receiver_user_id");
@@ -64,8 +64,8 @@ public class MessageActivity extends AppCompatActivity {
         //Find IDs
         userImage = findViewById(R.id.chat_user_image);
         userName = findViewById(R.id.chat_user_name);
-        messageText = findViewById(R.id.message_edit_text);
-        messagesRecyclerView = findViewById(R.id.messages_list);
+        messageText = findViewById(R.id.single_chat_et);
+        messagesRecyclerView = findViewById(R.id.single_chat_list);
 
         //Set Adapter
         messagesRecyclerView.setHasFixedSize(true);
@@ -81,14 +81,14 @@ public class MessageActivity extends AppCompatActivity {
 
         loadMessages();
 
-        UserDatabase.child(receiver_user_id).addValueEventListener(new ValueEventListener() {
+        UserDatabase.child(receiver_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 String name = dataSnapshot.child("name").getValue().toString();
 
                 final String image = dataSnapshot.child("image").getValue().toString();
-                Picasso.with(MessageActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
+                Picasso.with(SingleChat.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
                         .placeholder(R.drawable.profile_white_border).into(userImage, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -96,7 +96,7 @@ public class MessageActivity extends AppCompatActivity {
 
                     @Override
                     public void onError() {
-                        Picasso.with(MessageActivity.this).load(image).placeholder(R.drawable.profile_white_border).into(userImage);
+                        Picasso.with(SingleChat.this).load(image).placeholder(R.drawable.profile_white_border).into(userImage);
                     }
                 });
                 userName.setText(name);
@@ -196,7 +196,7 @@ public class MessageActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(MessageActivity.this, ChatActivity.class);
+        Intent intent = new Intent(SingleChat.this, ChatActivity.class);
         intent.putExtra("user_id", user_id);
         startActivity(intent);
     }
