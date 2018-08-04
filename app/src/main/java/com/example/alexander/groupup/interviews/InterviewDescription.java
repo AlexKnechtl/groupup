@@ -15,10 +15,13 @@ import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.helpers.OnGetResultListener;
 import com.example.alexander.groupup.models.GroupImagesModel;
 import com.example.alexander.groupup.R;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -37,10 +40,14 @@ public class InterviewDescription extends AppCompatActivity {
     private String group, activity, publicStatus, location, country,
             groupDescription, current_uid, tag1, tag2, tag3, latLng;
 
+    private Double geofirelat, geofirelong;
+
     //Firebase
     private DatabaseReference mGroupDatabase;
     private DatabaseReference UserDatabase;
     private FirebaseUser mCurrent_user;
+
+    GeoFire geoFire;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +92,21 @@ public class InterviewDescription extends AppCompatActivity {
     }
 
     private void setDatabaseValues() {
+
         if (group.equals("sport")) { //todo implement for all categories
             GroupImagesModel.getRandomSportImageURL(activity, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String groupImage) {
                     mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(current_uid);
+
+
+                    geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("Groups"));
+                    geoFire.setLocation(current_uid, new GeoLocation(geofirelat, geofirelong), new GeoFire.CompletionListener() {
+                        @Override
+                        public void onComplete(String key, DatabaseError error) {
+
+                        }
+                    });
 
                     mGroupDatabase.child("category").setValue(group);
                     mGroupDatabase.child("activity").setValue(activity);
@@ -125,6 +142,13 @@ public class InterviewDescription extends AppCompatActivity {
                 public void OnSuccess(String value) {
                     mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(current_uid);
 
+                    geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("Groups"));
+                    geoFire.setLocation(current_uid, new GeoLocation(geofirelat, geofirelong), new GeoFire.CompletionListener() {
+                        @Override
+                        public void onComplete(String key, DatabaseError error) {
+
+                        }
+                    });
                     mGroupDatabase.child("category").setValue(group);
                     mGroupDatabase.child("activity").setValue(activity);
                     mGroupDatabase.child("public_status").setValue(publicStatus);
@@ -166,6 +190,9 @@ public class InterviewDescription extends AppCompatActivity {
         tag3 = bundle.getString("tag3");
         country = bundle.getString("country");
         latLng = bundle.getString("latlng");
+
+        geofirelat = bundle.getDouble("geofirelat");
+        geofirelong = bundle.getDouble("geofirelong");
     }
 
     private void initialzieFirebase() {

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +27,9 @@ import com.example.alexander.groupup.interviews.InterviewTags;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.R;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView location;
     private Button groupButton;
+    private TextView searchLocation;
 
     //Constants
     public static final String ANONYMOUS = "anonymous";
@@ -55,6 +61,10 @@ public class HomeActivity extends AppCompatActivity {
     //Firebase
     private DatabaseReference GroupDatabase;
     private DatabaseReference UserDatabase;
+
+    private GeoFire geoFire;
+
+    private GeoQuery geoQuery;
 
     //Variables
     private String city;
@@ -94,6 +104,23 @@ public class HomeActivity extends AppCompatActivity {
         location = findViewById(R.id.location_main);
         groupButton = findViewById(R.id.group_button);
         recyclerView = findViewById(R.id.main_recycler_view);
+        searchLocation = findViewById(R.id.loc_radius);
+        searchLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                geoQuery.setRadius(Double.parseDouble(s.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         //Get Data from User
         UserDatabase.addValueEventListener(new ValueEventListener() {
@@ -114,6 +141,13 @@ public class HomeActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+        GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
+
+
+        geoFire = new GeoFire(GroupDatabase);
+
+        geoQuery = geoFire.queryAtLocation(new GeoLocation(47.16713310000001,15.529306000000002), 10);
+
 
         //Show Date in GroupCalendar
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MMM");
@@ -142,13 +176,12 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
 
         FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder>(
                 GroupModel.class,
                 R.layout.single_layout_group,
                 GroupsViewHolder.class,
-                GroupDatabase
+                geoQuery.
         ) {
             @Override
             protected void populateViewHolder(GroupsViewHolder groupsViewHolder, GroupModel groups, int position) {

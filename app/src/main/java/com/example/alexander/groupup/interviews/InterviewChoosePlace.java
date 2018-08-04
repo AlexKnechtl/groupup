@@ -31,6 +31,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
 
     //Variables
     private String group, activity, publicStatus, country, tag1, tag2, tag3, latLng;
+    private Double geofirelat, geofirelong;
 
     //XML
     private RelativeLayout backLayout;
@@ -118,8 +119,10 @@ public class InterviewChoosePlace extends AppCompatActivity {
     private void displaySelectedPlace(Intent data) {
         Place placeSelected = PlacePicker.getPlace(this, data);
 
-        Double latitude = placeSelected.getLatLng().latitude;
-        Double longitude = placeSelected.getLatLng().longitude;
+        Double latitude = geofirelat = placeSelected.getLatLng().latitude;
+        Double longitude = geofirelong = placeSelected.getLatLng().longitude;
+
+
 
         latLng = "geo:<" + latitude  + ">,<" + longitude + ">?q=<" + latitude  + ">,<" + longitude + ">("
                 + getResources().getString(R.string.group_is_here) + ")";
@@ -139,7 +142,7 @@ public class InterviewChoosePlace extends AppCompatActivity {
 
         UserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) { //TODO WTF soll DAS?
                 Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
                 intent.putExtra("group", group);
                 intent.putExtra("activity", activity);
@@ -150,6 +153,8 @@ public class InterviewChoosePlace extends AppCompatActivity {
                 intent.putExtra("tag3", tag3);
                 intent.putExtra("country", country);
                 intent.putExtra("latlng", latLng);
+                intent.putExtra("geofirelat", geofirelat);
+                intent.putExtra("geofirelong", geofirelong);
                 startActivity(intent);
             }
 

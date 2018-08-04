@@ -142,16 +142,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/dosis_semibold"
-                    android:text="in "
+                    android:text="im Umkreis von"
                     android:textColor="@color/colorAccent"
                     android:textSize="24sp" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/loc_radius"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
                     android:fontFamily="@font/dosis_semibold"
-                    android:text="Graz"
+                    android:text="10"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/colorAccent"
                     android:textSize="24sp" />
 
@@ -159,7 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/dosis_semibold"
-                    android:text=" stattfinden"
+                    android:text="km stattfinden"
                     android:textColor="@color/colorAccent"
                     android:textSize="24sp" />
             </LinearLayout>
