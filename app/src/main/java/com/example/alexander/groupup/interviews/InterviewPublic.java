@@ -43,28 +43,16 @@ public class InterviewPublic extends AppCompatActivity {
         });
     }
 
-    public void justFriendsClick(View view) {
-
+    public void requestsClick(View view) {
         Intent intent = new Intent(InterviewPublic.this, InterviewTags.class);
         intent.putExtra("group", group);
         intent.putExtra("activity", activity);
         intent.putExtra("memberQuantity", memberQuantity);
-        intent.putExtra("publicStatus", "justfriends");
-        startActivity(intent);
-    }
-
-    public void friendsOfFriendsClick(View view) {
-
-        Intent intent = new Intent(InterviewPublic.this, InterviewTags.class);
-        intent.putExtra("group", group);
-        intent.putExtra("activity", activity);
-        intent.putExtra("memberQuantity", memberQuantity);
-        intent.putExtra("publicStatus", "friendsoffriends");
+        intent.putExtra("publicStatus", "requests");
         startActivity(intent);
     }
 
     public void everybodyClick(View view) {
-
         Intent intent = new Intent(InterviewPublic.this, InterviewTags.class);
         intent.putExtra("group", group);
         intent.putExtra("activity", activity);

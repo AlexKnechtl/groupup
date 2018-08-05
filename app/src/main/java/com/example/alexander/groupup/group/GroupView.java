@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +13,9 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.main.ProfileActivity;
@@ -22,9 +23,9 @@ import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
+import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,21 +38,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class GroupView extends AppCompatActivity {
 
     //XML
-    private TextView headline, description, backHomeFabText, joinGroupFabText, memberCount;
-    private RecyclerView membersList;
+    private TextView headline, description, backHomeFabText, joinGroupFabText, statusText, memberCount;
     private FloatingActionButton backHomeFab, joinGroupFab;
+    private RecyclerView membersList;
+    private ImageView statusIcon;
 
     //FireBase
-    private DatabaseReference GroupDatabase;
     private DatabaseReference GroupMemberDatabase;
+    private DatabaseReference GroupDatabase;
     private DatabaseReference UserDatabase;
 
     //Variables
-    private String groupId, latLng;
+    private String groupId, latLng, user_id;
+    boolean fabIsOpen = false;
+    boolean publicStatus = false;
 
     //Animations
-    Animation FabOpen, FabClose;
-    boolean fabIsOpen = false;
+    private Animation FabOpen, FabClose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +63,9 @@ public class GroupView extends AppCompatActivity {
 
         //Get Information by Intent
         groupId = getIntent().getStringExtra("group_id");
+        user_id = getIntent().getStringExtra("user_id");
 
-        initializeFirebase();
+        initializeFireBase();
         findIDs();
 
         //Animations
@@ -75,14 +79,6 @@ public class GroupView extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        joinGroupFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GroupView.this, AddGroupMembersActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -90,11 +86,11 @@ public class GroupView extends AppCompatActivity {
         super.onStart();
 
         final FirebaseRecyclerAdapter<UserModel, MembersViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserModel, MembersViewHolder>(
-                        UserModel.class,
-                        R.layout.single_layout_groupuser,
-                        MembersViewHolder.class,
-                        GroupMemberDatabase
-                ) {
+                UserModel.class,
+                R.layout.single_layout_groupuser,
+                MembersViewHolder.class,
+                GroupMemberDatabase
+        ) {
 
             @Override
             protected void populateViewHolder(final MembersViewHolder viewHolder, UserModel user, int position) {
@@ -104,11 +100,9 @@ public class GroupView extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(list_user_id.equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
-                        {
+                        if (list_user_id.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                             startActivity(new Intent(GroupView.this, ProfileActivity.class));
-                        }
-                        else {
+                        } else {
                             Intent intent = new Intent(GroupView.this, UserProfileActivity.class);
                             intent.putExtra("user_id", list_user_id);
                             startActivity(intent);
@@ -194,11 +188,13 @@ public class GroupView extends AppCompatActivity {
     }
 
     private void findIDs() {
-        backHomeFab = findViewById(R.id.back_explorer_groupview);
+        backHomeFab = findViewById(R.id.back_home_group_view);
         joinGroupFab = findViewById(R.id.join_group_fab);
         backHomeFabText = findViewById(R.id.back_explorer_text_groupview);
         joinGroupFabText = findViewById(R.id.join_group_fab_text);
-        memberCount = findViewById(R.id.rating_profile);
+        memberCount = findViewById(R.id.members_group_view);
+        statusIcon = findViewById(R.id.status_icon_group_view);
+        statusText = findViewById(R.id.status_text_group_view);
 
         headline = findViewById(R.id.group_view_headline);
         description = findViewById(R.id.group_description);
@@ -208,31 +204,37 @@ public class GroupView extends AppCompatActivity {
         membersList.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void initializeFirebase() {
-
+    private void initializeFireBase() {
         GroupMemberDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(groupId).child("members");
         GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(groupId);
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        GroupDatabase.addValueEventListener(new ValueEventListener() {
+        GroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 String activity = dataSnapshot.child("activity").getValue().toString();
                 String location = dataSnapshot.child("location").getValue().toString();
                 latLng = dataSnapshot.child("latlng").getValue().toString();
+                if (dataSnapshot.child("public_status").getValue().toString().equals("everybody")) {
+                    publicStatus = true;
+
+                    statusIcon.setImageResource(R.drawable.material_lock_open_white_36);
+                    statusText.setText(R.string.open);
+                    joinGroupFab.setImageResource(R.drawable.material_group_add_black_36);
+                    joinGroupFabText.setText(R.string.join_group);
+                }
 
                 headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
                         + " @" + location);
 
-                if (dataSnapshot.child("description").exists()) {
-
-                    String descriptionText = dataSnapshot.child("description").getValue().toString();
-                    description.setText(descriptionText);
+                if (dataSnapshot.child("members").child(user_id).child("rank").exists()) {
+                    dataSnapshot.child("members").child(user_id).child("rank").getValue().toString();
                 }
 
-                if(dataSnapshot.child("member_count").exists())
-                    memberCount.setText(dataSnapshot.child("member_count").getValue().toString());
+                String descriptionText = dataSnapshot.child("description").getValue().toString();
+                description.setText(descriptionText);
+
+                memberCount.setText(dataSnapshot.child("member_count").getValue().toString());
             }
 
             @Override
@@ -242,9 +244,48 @@ public class GroupView extends AppCompatActivity {
         });
     }
 
+    //OnClicks
     public void locationClick(View view) {
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
         intent.setData(Uri.parse(latLng));
         startActivity(intent);
+    }
+
+    public void joinGroupClick(View view) {
+
+        UserDatabase.child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("my_group").exists()) {
+                    Toast.makeText(GroupView.this, "Du bist bereits in einer Gruppe.", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    if (!publicStatus) {
+                        //ToDo: Anfragen müssen geschickt werden
+
+                    } else {
+                        UserDatabase.child(user_id).child("my_group").setValue(groupId);
+                        GroupDatabase.child("members").child(user_id).child("rank").setValue("member");
+                        GroupDatabase.child("member_count").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                GroupDatabase.child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

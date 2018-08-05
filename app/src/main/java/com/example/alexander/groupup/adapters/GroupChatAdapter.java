@@ -26,8 +26,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
     @Override
     public GroupChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.single_layout_message, parent, false);
-
+                .inflate(R.layout.single_layout_group_message, parent, false);
         return new GroupChatViewHolder(v);
     }
 
@@ -52,21 +51,22 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
     @Override
     public void onBindViewHolder(GroupChatViewHolder viewHolder, final int position) {
 
-        //ToDo Add Date Headline (Performance sparend)
         MessagesModel c = messagesList.get(position);
-        String from_user = c.getFrom();
 
+        String from_user = c.getFrom();
         mAuth = FirebaseAuth.getInstance();
 
         if (from_user.equals(mAuth.getCurrentUser().getUid())) {
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChatUser));
+            viewHolder.name.setVisibility(View.GONE);
         } else {
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
+            viewHolder.name.setVisibility(View.VISIBLE);
+            viewHolder.name.setText(c.getName());
         }
 
-        viewHolder.name.setText(c.getName());
         viewHolder.timeText.setText(c.getTime());
         viewHolder.messageText.setText(c.getMessage());
     }

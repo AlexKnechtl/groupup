@@ -19,6 +19,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.StartActivity;
+import com.example.alexander.groupup.chat.GroupChat;
+import com.example.alexander.groupup.group.MyGroupView;
 import com.example.alexander.groupup.interviews.InterviewStart;
 import com.example.alexander.groupup.group.GroupView;
 import com.example.alexander.groupup.interviews.InterviewTags;
@@ -47,7 +49,7 @@ public class HomeActivity extends AppCompatActivity {
     //XML
     private RecyclerView recyclerView;
     private TextView location;
-    private Button groupButton;
+    private Button groupButton, groupChatButton;
 
     //Constants
     public static final String ANONYMOUS = "anonymous";
@@ -61,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
     private Context mContext = HomeActivity.this;
     private static final int ACTIVITY_NUM = 0;
     private boolean creator;
-    private String user_id, group_id, groupCategory;
+    private String user_id, group_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class HomeActivity extends AppCompatActivity {
         location = findViewById(R.id.location_main);
         groupButton = findViewById(R.id.group_button);
         recyclerView = findViewById(R.id.main_recycler_view);
+        groupChatButton = findViewById(R.id.group_chat_button);
 
         //Get Data from User
         UserDatabase.addValueEventListener(new ValueEventListener() {
@@ -104,7 +107,8 @@ public class HomeActivity extends AppCompatActivity {
                 if (dataSnapshot.hasChild("my_group")) {
                     group_id = dataSnapshot.child("my_group").getValue().toString();
                     groupButton.setText(R.string.my_group);
-                    creator = false;
+                    groupChatButton.setVisibility(View.VISIBLE);
+                    creator = true;
                 } else
                     creator = false;
 
@@ -132,8 +136,9 @@ public class HomeActivity extends AppCompatActivity {
                     Intent intent = new Intent(HomeActivity.this, InterviewStart.class);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(HomeActivity.this, GroupView.class);
-                    intent.putExtra("group_id", user_id);
+                    Intent intent = new Intent(HomeActivity.this, MyGroupView.class);
+                    intent.putExtra("group_id", group_id);
+                    intent.putExtra("user_id", user_id);
                     startActivity(intent);
                 }
             }
@@ -169,6 +174,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent intent = new Intent(HomeActivity.this, GroupView.class);
                         intent.putExtra("group_id", group_id);
+                        intent.putExtra("user_id", user_id);
                         startActivity(intent);
                     }
                 });
@@ -250,5 +256,13 @@ public class HomeActivity extends AppCompatActivity {
             intent.putExtra("EXIT", true);
             startActivity(intent);
         }
+    }
+
+    //OnClicks
+    public void groupChatClick(View view) {
+        Intent intent = new Intent (HomeActivity.this, GroupChat.class);
+        intent.putExtra("group_id", group_id);
+        intent.putExtra("user_id", user_id);
+        startActivity(intent);
     }
 }

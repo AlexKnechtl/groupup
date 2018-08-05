@@ -54,7 +54,7 @@
     <string name="choose_a_place">Do you wanna choose a place?</string>
     <string name="yes">Yes</string>
     <string name="no">No.</string>
-    <string name="who_can_see_group">Who is allowed to see your group?</string>
+    <string name="who_can_see_group">Who is allowed to join your group?</string>
     <string name="my_friends">My Friends</string>
     <string name="friends_of_friends">Friends of friends</string>
     <string name="everybody">Everybody</string>
@@ -162,6 +162,16 @@
     <string name="your_chats">Your Chats</string>
     <string name="choose_contact">Choose Contact</string>
     <string name="write_a_message">Write a message</string>
+    <string name="create_group">Create Group</string>
+    <string name="group_chat">Group Chat</string>
+    <string name="delete_group">Delete Group</string>
+    <string name="with_requests">With Requests</string>
+    <string name="status">Status</string>
+    <string name="open">Open</string>
+    <string name="join_group">Join Group</string>
+    <string name="invite_your_friends">Invite your Friends</string>
+    <string name="leave_group">Leave Group</string>
+    <string name="send_request">Send Request</string>
 
     <!-- Registration -->
 

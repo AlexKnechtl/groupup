@@ -125,7 +125,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/rating_profile"
+                        android:id="@+id/members_group_view"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:background="@drawable/profile_circle"

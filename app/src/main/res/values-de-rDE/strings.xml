@@ -49,7 +49,7 @@
     <string name="choose_a_place">Willst du einen Ort auswählen?</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
-    <string name="who_can_see_group">Wer kann deine Gruppe sehen?</string>
+    <string name="who_can_see_group">Wer darf deiner Gruppe beitreten?</string>
     <string name="my_friends">Meine Freunde</string>
     <string name="friends_of_friends">Freunde von Freunden</string>
     <string name="everybody">Jeder</string>
@@ -153,4 +153,14 @@
     <string name="choose_contact">Kontakt wählen</string>
     <string name="creator">Admin:</string>
     <string name="write_a_message">Nachricht schreiben</string>
+    <string name="create_group">Gruppe erstellen</string>
+    <string name="group_chat">Gruppen Chat</string>
+    <string name="delete_group">Gruppe löschen</string>
+    <string name="with_requests">Mit Anfragen</string>
+    <string name="status">Status</string>
+    <string name="open">Offen</string>
+    <string name="join_group">Gruppe beitreten</string>
+    <string name="invite_your_friends">Lade Freunde ein</string>
+    <string name="leave_group">Gruppe verlassen</string>
+    <string name="send_request">Anfrage senden</string>
 </resources>

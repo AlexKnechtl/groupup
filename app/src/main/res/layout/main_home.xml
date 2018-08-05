@@ -166,25 +166,26 @@
                     android:id="@+id/group_button"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="15dp"
                     android:background="@drawable/main_layout_design"
-                    android:text="Create new Group"
+                    android:text="@string/create_group"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/group_chat_button"
-                    android:layout_width="180dp"
+                    android:onClick="groupChatClick"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/main_layout_design"
-                    android:text="GroupChat"
+                    android:text="@string/group_chat"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView

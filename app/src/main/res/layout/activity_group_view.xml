@@ -29,7 +29,6 @@
                 android:gravity="center"
                 android:maxLines="2"
                 android:padding="8dp"
-                android:text="Bollwerk @ Graz"
                 android:textColor="@color/colorAccent"
                 android:textSize="22sp"
                 tools:layout_editor_absoluteX="118dp"
@@ -43,7 +42,6 @@
                 android:backgroundTint="@color/colorAccent"
                 android:enabled="false"
                 android:focusable="false"
-                android:fontFamily="@font/dosis_semibold"
                 android:gravity="center_horizontal"
                 android:text="@string/properties"
                 android:textColor="@color/colorAccent"
@@ -78,25 +76,28 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/status_icon_group_view"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/material_visibility_white_36" />
+                            android:layout_marginTop="6dp"
+                            android:src="@drawable/material_lock_white_36" />
 
                         <TextView
+                            android:id="@+id/status_text_group_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Hallo" />
-
+                            android:text="Closed"
+                            android:textSize="10sp" />
                     </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/dosis_semibold"
-                        android:text="@string/visibility"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/status"
                         android:textColor="@color/colorAccent"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -113,32 +114,32 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/rating_profile"
+                        android:id="@+id/members_group_view"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:background="@drawable/profile_circle"
                         android:fontFamily="@font/dosis_bold"
                         android:gravity="center"
-                        android:text="0"
                         android:textColor="@color/colorAccent"
-                        android:textSize="30sp" />
+                        android:textSize="36sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="2dp"
                         android:text="@string/members"
                         android:textColor="@color/colorAccent"
                         android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:onClick="locationClick"
                     android:id="@+id/location_group_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:onClick="locationClick"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/linearLayout3"
@@ -148,11 +149,7 @@
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:background="@drawable/profile_circle"
-                        android:fontFamily="@font/dosis_bold"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="30sp">
+                        android:gravity="center">
 
                         <ImageView
                             android:layout_width="40dp"
@@ -166,11 +163,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="2dp"
                         android:text="@string/location"
                         android:textColor="@color/colorAccent"
                         android:textSize="12sp" />
                 </LinearLayout>
-
             </LinearLayout>
 
             <EditText
@@ -181,7 +178,6 @@
                 android:backgroundTint="@color/colorAccent"
                 android:enabled="false"
                 android:focusable="false"
-                android:fontFamily="@font/dosis_semibold"
                 android:gravity="center_horizontal"
                 android:text="@string/group_description_headline"
                 android:textColor="@color/colorAccent"
@@ -192,11 +188,9 @@
                 android:id="@+id/group_description"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:fontFamily="@font/dosis_semibold"
                 android:gravity="center"
                 android:paddingLeft="22dp"
                 android:paddingRight="22dp"
-                android:text="Hier sollte Gruppenbeschreibung stehen"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp" />
 
@@ -208,7 +202,6 @@
                 android:backgroundTint="@color/colorAccent"
                 android:enabled="false"
                 android:focusable="false"
-                android:fontFamily="@font/dosis_semibold"
                 android:gravity="center_horizontal"
                 android:text="@string/members"
                 android:textColor="@color/colorAccent"
@@ -234,15 +227,17 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/back_explorer_groupview"
+        android:id="@+id/back_home_group_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginEnd="18dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/home_grey"
+        android:backgroundTint="@color/colorAccent"
+        android:scaleType="center"
+        android:src="@drawable/material_home_black_36"
+        android:tint="@color/darkGray"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/darkGray"
         app:borderWidth="1dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -252,10 +247,10 @@
         android:id="@+id/back_explorer_text_groupview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginEnd="82dp"
         android:background="@drawable/assistant_bubble"
-        android:elevation="6dp"
+        android:elevation="3dp"
         android:fontFamily="@font/dosis_bold"
         android:text="@string/back_homescreen"
         android:textColor="@android:color/darker_gray"
@@ -268,12 +263,15 @@
         android:id="@+id/join_group_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="190dp"
+        android:layout_marginBottom="170dp"
         android:layout_marginEnd="18dp"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="joinGroupClick"
         android:scaleType="center"
-        android:src="@drawable/ic_add_friend"
+        android:src="@drawable/material_local_post_office_white_36"
+        android:tint="@color/darkGray"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/darkGray"
         app:borderWidth="1dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -283,12 +281,12 @@
         android:id="@+id/join_group_fab_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="190dp"
+        android:layout_marginBottom="170dp"
         android:layout_marginEnd="82dp"
         android:background="@drawable/assistant_bubble"
-        android:elevation="6dp"
+        android:elevation="3dp"
         android:fontFamily="@font/dosis_bold"
-        android:text="Lade Freunde ein"
+        android:text="@string/send_request"
         android:textColor="@android:color/darker_gray"
         android:textSize="12sp"
         android:visibility="invisible"

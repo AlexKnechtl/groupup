@@ -5,75 +5,228 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView_groupView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:id="@+id/group_view_headline"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/circle_design_interests"
-            android:gravity="center"
-            android:maxLines="2"
-            android:padding="8dp"
-            android:text="Bollwerk @ Graz"
-            android:textColor="@color/colorAccent"
-            android:textSize="24sp"
-            tools:layout_editor_absoluteX="118dp"
-            tools:layout_editor_absoluteY="33dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="22dp"
-            android:layout_marginRight="22dp"
-            android:backgroundTint="@color/colorAccent"
-            android:enabled="false"
-            android:focusable="false"
-            android:gravity="center_horizontal"
-            android:text="@string/group_description_headline"
-            android:textColor="@color/colorAccent"
-            android:textSize="16dp"
-            android:textStyle="italic" />
+            <TextView
+                android:id="@+id/group_view_headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/circle_design_interests"
+                android:gravity="center"
+                android:maxLines="2"
+                android:padding="8dp"
+                android:text=""
+                android:textColor="@color/colorAccent"
+                android:textSize="22sp"
+                tools:layout_editor_absoluteX="118dp"
+                tools:layout_editor_absoluteY="33dp" />
 
-        <TextView
-            android:id="@+id/group_description"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:gravity="center"
-            android:paddingLeft="22dp"
-            android:paddingRight="22dp"
-            android:text="Hier sollte Gruppenbeschreibung stehen"
-            android:textColor="@color/colorAccent" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:backgroundTint="@color/colorAccent"
+                android:enabled="false"
+                android:focusable="false"
+                android:fontFamily="@font/dosis_semibold"
+                android:gravity="center_horizontal"
+                android:text="@string/properties"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="italic" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="22dp"
-            android:layout_marginRight="22dp"
-            android:backgroundTint="@color/colorAccent"
-            android:enabled="false"
-            android:focusable="false"
-            android:gravity="center_horizontal"
-            android:text="@string/members"
-            android:textColor="@color/colorAccent"
-            android:textSize="16dp"
-            android:textStyle="italic" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:weightSum="4">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/member_list_group_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+                    app:layout_constraintStart_toEndOf="@+id/user_image"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:background="@drawable/profile_circle"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/status_icon_my_group_view"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="6dp"
+                            android:src="@drawable/material_lock_white_36" />
+
+                        <TextView
+                            android:id="@+id/status_text_my_group_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Closed"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/dosis_semibold"
+                        android:text="@string/status"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/members_my_group_view"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:background="@drawable/profile_circle"
+                        android:fontFamily="@font/dosis_bold"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/colorAccent"
+                        android:textSize="36sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/members"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/location_group_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="locationClick"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RelativeLayout
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:background="@drawable/profile_circle"
+                        android:gravity="center"
+                        android:textColor="@color/colorAccent">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginEnd="2dp"
+                            android:src="@drawable/location_white" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/location"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:backgroundTint="@color/colorAccent"
+                android:enabled="false"
+                android:focusable="false"
+                android:fontFamily="@font/dosis_semibold"
+                android:gravity="center_horizontal"
+                android:text="@string/group_description_headline"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/group_description"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:fontFamily="@font/dosis_semibold"
+                android:gravity="center"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:text=""
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:backgroundTint="@color/colorAccent"
+                android:enabled="false"
+                android:focusable="false"
+                android:fontFamily="@font/dosis_semibold"
+                android:gravity="center_horizontal"
+                android:text="@string/members"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="italic" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/member_list_group_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/the_assistant_profile"
+        android:id="@+id/the_assistant_my_group"
         android:layout_width="wrap_content"
         android:layout_height="92dp"
         android:onClick="assistantGroupViewClick"
@@ -82,27 +235,28 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/back_explorer_groupview"
+        android:id="@+id/back_home_my_group_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginEnd="18dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/home_grey"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="backGroupViewClick"
+        android:scaleType="center"
+        android:src="@drawable/material_home_black_36"
+        android:tint="@color/darkGray"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/darkGray"
         app:borderWidth="1dp"
-        app:fabSize="normal" />
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/back_explorer_text_groupview"
+        android:id="@+id/back_home_text_my_group_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginEnd="82dp"
         android:background="@drawable/assistant_bubble"
         android:elevation="6dp"
@@ -110,37 +264,75 @@
         android:text="@string/back_homescreen"
         android:textColor="@android:color/darker_gray"
         android:textSize="12sp"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/join_group_fab"
+        android:id="@+id/add_member_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="190dp"
-        android:onClick="sendGroupRequest"
+        android:layout_marginBottom="170dp"
         android:layout_marginEnd="18dp"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="addMemberClick"
         android:scaleType="center"
-        android:src="@drawable/ic_add_friend"
+        android:src="@drawable/material_group_add_black_36"
+        android:tint="@color/darkGray"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/darkGray"
         app:borderWidth="1dp"
-        app:fabSize="normal" />
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/join_group_fab_text"
+        android:id="@+id/add_member_fab_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="Lade Freunde ein"
-        android:layout_marginBottom="190dp"
+        android:layout_marginBottom="170dp"
         android:layout_marginEnd="82dp"
         android:background="@drawable/assistant_bubble"
         android:elevation="6dp"
         android:fontFamily="@font/dosis_bold"
+        android:text="@string/invite_your_friends"
         android:textColor="@android:color/darker_gray"
         android:textSize="12sp"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/leave_group_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="240dp"
+        android:layout_marginEnd="18dp"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="leaveGroupClick"
+        android:scaleType="center"
+        android:src="@drawable/material_door_white_36"
+        android:tint="@color/darkGray"
+        android:visibility="invisible"
+        app:backgroundTint="@color/darkGray"
+        app:borderWidth="1dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/leave_group_fab_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="240dp"
+        android:layout_marginEnd="82dp"
+        android:background="@drawable/assistant_bubble"
+        android:elevation="3dp"
+        android:fontFamily="@font/dosis_bold"
+        android:text="@string/leave_group"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

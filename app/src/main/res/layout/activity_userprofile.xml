@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator_layout_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -110,7 +109,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/rating_profile"
+                    android:id="@+id/members_group_view"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:background="@drawable/profile_circle"
@@ -147,7 +146,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="4dp"
-                    android:text="Nadine, 18"
                     android:textColor="@color/colorAccent"
                     android:textSize="24sp" />
 
@@ -171,7 +169,6 @@
                     android:layout_marginTop="2dp"
                     android:layout_toEndOf="@id/ic_location"
                     android:gravity="center"
-                    android:text="Hausmannstätten"
                     android:textColor="@color/colorAccent"
                     android:textSize="22sp" />
             </RelativeLayout>
@@ -206,7 +203,7 @@
                     android:gravity="center"
                     android:paddingLeft="22dp"
                     android:paddingRight="22dp"
-                    android:text="Hier kannst du den Leuten etwas über dich erzählen."
+                    android:text=""
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp" />
 
@@ -404,15 +401,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginEnd="18dp"
-        android:onClick="backHomeClick"
-        android:scaleType="centerCrop"
-        android:src="@drawable/home_grey"
-        android:visibility="invisible"
         android:backgroundTint="@color/colorAccent"
-        app:borderWidth="0dp"
-        app:fabSize="normal"/>
+        android:onClick="backHomeClick"
+        android:scaleType="center"
+        android:src="@drawable/material_home_black_36"
+        android:tint="@color/darkGray"
+        android:visibility="invisible"
+        app:backgroundTint="@color/darkGray"
+        app:borderWidth="1dp"
+        app:fabSize="normal" />
 
     <TextView
         android:id="@+id/back_explorer_textview"
@@ -420,10 +419,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginEnd="82dp"
         android:background="@drawable/assistant_bubble"
-        android:elevation="6dp"
+        android:elevation="3dp"
         android:fontFamily="@font/dosis_bold"
         android:text="@string/back_homescreen"
         android:textColor="@android:color/darker_gray"
@@ -436,14 +435,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="190dp"
+        android:layout_marginBottom="170dp"
         android:layout_marginEnd="18dp"
+        android:backgroundTint="@color/colorAccent"
         android:onClick="addFriendClick"
         android:scaleType="center"
         android:src="@drawable/ic_add_friend"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorAccent"
-        app:fabSize="normal"/>
+        app:backgroundTint="@color/darkGray"
+        app:borderWidth="1dp"
+        app:fabSize="normal" />
 
     <TextView
         android:id="@+id/friend_fab_bubble"
@@ -451,10 +452,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="190dp"
+        android:layout_marginBottom="170dp"
         android:layout_marginEnd="82dp"
         android:background="@drawable/assistant_bubble"
-        android:elevation="6dp"
+        android:elevation="3dp"
         android:fontFamily="@font/dosis_bold"
         android:textColor="@android:color/darker_gray"
         android:textSize="12sp"
@@ -466,14 +467,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="270dp"
+        android:layout_marginBottom="240dp"
         android:layout_marginEnd="18dp"
+        android:backgroundTint="@color/colorAccent"
         android:onClick="sendMessageUserprofile"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_message"
+        android:scaleType="center"
+        android:src="@drawable/material_chat_white_36"
+        android:tint="@color/darkGray"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorAccent"
-        app:fabSize="normal"/>
+        app:backgroundTint="@color/darkGray"
+        app:borderWidth="1dp"
+        app:fabSize="normal" />
 
     <TextView
         android:id="@+id/message_fab_bubble"
@@ -481,12 +485,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="270dp"
+        android:layout_marginBottom="240dp"
         android:layout_marginEnd="82dp"
         android:background="@drawable/assistant_bubble"
-        android:elevation="6dp"
-        android:text="@string/write_a_message"
+        android:elevation="3dp"
         android:fontFamily="@font/dosis_bold"
+        android:text="@string/write_a_message"
         android:textColor="@android:color/darker_gray"
         android:textSize="12sp"
         android:visibility="invisible" />

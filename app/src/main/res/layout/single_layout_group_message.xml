@@ -30,18 +30,20 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_marginBottom="-3dp"
                     android:id="@+id/group_chat_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Alexander"
-                    android:textSize="18sp" />
+                    android:text="Alexander Knechtl"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/group_chat_text"
                     android:fontFamily="sans-serif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
                     android:layout_marginBottom="3dp"
                     android:layout_marginStart="8dp"
                     android:autoLink="web"

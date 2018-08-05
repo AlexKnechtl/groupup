@@ -64,6 +64,9 @@
             android:name=".settings.GetPremium"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".chat.GroupChat"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".chat.SingleChat"
             android:screenOrientation="portrait" />
         <activity
@@ -139,6 +142,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".profile.UserProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".group.MyGroupView"
             android:screenOrientation="portrait" />
 
         <meta-data

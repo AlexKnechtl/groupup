@@ -14,15 +14,13 @@ import android.widget.TextView;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.adapters.GroupChatAdapter;
 import com.example.alexander.groupup.models.MessagesModel;
+import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,13 +39,12 @@ public class GroupChat extends AppCompatActivity {
     private RecyclerView groupChatRecyclerView;
 
     //Variables
-    private String user_id, group_id, group_activity, name;
+    private String user_id, group_id, activity, location, group_category, name;
     private final List<MessagesModel> messagesList = new ArrayList<>();
     private GroupChatAdapter groupChatAdapter;
 
     //Firebase
     private DatabaseReference GroupChatDatabase;
-    private DatabaseReference UserDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +53,6 @@ public class GroupChat extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         group_id = bundle.getString("group_id");
-        group_activity = bundle.getString("group_activity");
         user_id = bundle.getString("user_id");
 
         //Find IDs
@@ -74,12 +70,14 @@ public class GroupChat extends AppCompatActivity {
         groupChatRecyclerView.setAdapter(groupChatAdapter);
 
         //Initialize FireBase
-        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         GroupChatDatabase = FirebaseDatabase.getInstance().getReference().child("GroupChat").child(group_id);
+
+        DatabaseReference GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(group_id);
+        DatabaseReference UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         loadGroupChats();
 
-        UserDatabase.child(user_id).addValueEventListener(new ValueEventListener() {
+        UserDatabase.child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 name = dataSnapshot.child("name").getValue().toString();
@@ -91,6 +89,32 @@ public class GroupChat extends AppCompatActivity {
             }
         });
 
+        GroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                activity = dataSnapshot.child("activity").getValue().toString();
+                group_category = dataSnapshot.child("category").getValue().toString();
+                location = dataSnapshot.child("location").getValue().toString();
+
+                groupActivity.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
+                        + " @" + location);
+
+                if (group_category.equals("sport")) {
+                    groupImage.setImageResource(R.drawable.group_chat_sport);
+                } else if (group_category.equals("leisure")) {
+                    groupImage.setImageResource(R.drawable.group_chat_icon_leisure);
+                } else if (group_category.equals("business")) {
+                    groupImage.setImageResource(R.drawable.group_chat_icon_business);
+                } else {
+                    groupImage.setImageResource(R.drawable.group_chat_icon_nightlife);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void sendGroupMessage(View view) {
@@ -119,7 +143,7 @@ public class GroupChat extends AppCompatActivity {
     }
 
     private void loadGroupChats() {
-        GroupChatDatabase.child(group_id).addChildEventListener(new ChildEventListener() {
+        GroupChatDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
