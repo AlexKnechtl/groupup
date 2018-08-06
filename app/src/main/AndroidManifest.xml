@@ -22,7 +22,6 @@
             android:theme="@style/AppThemeDark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,16 +36,16 @@
             android:theme="@style/AppThemeDark" />
         <activity
             android:name=".main.NotificationActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_NOTIFICATIONS"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="OPEN_ACTIVITY_NOTIFICATIONS" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".main.ChatActivity"
             android:label="@string/your_chats"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".main.SearchActivity"
             android:screenOrientation="portrait"
@@ -65,10 +64,13 @@
             android:name=".settings.GetPremium"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".chat.MessageActivity"
-            android:screenOrientation="portrait"/>
+            android:name=".chat.GroupChat"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".chat.NewMessage"
+            android:name=".chat.SingleChat"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chat.NewSingleChat"
             android:label="@string/choose_contact"
             android:screenOrientation="portrait" />
         <activity
@@ -85,48 +87,48 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".interviews.InterviewStart"
-            android:theme="@style/InteriewTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/InteriewTheme" />
         <activity
             android:name=".interviews.InterviewChoosePlace"
-            android:theme="@style/InteriewTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/InteriewTheme" />
         <activity
             android:name=".interviews.InterviewActivitySport"
-            android:theme="@style/InteriewTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/InteriewTheme" />
         <activity
             android:name=".interviews.InterviewTags"
-            android:theme="@style/InteriewTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/InteriewTheme" />
         <activity
             android:name=".interviews.InterviewActivityLeisure"
-            android:theme="@style/InteriewTheme"
             android:screenOrientation="portrait"
+            android:theme="@style/InteriewTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".interviews.InterviewNewGroup"
-            android:theme="@style/InteriewTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/InteriewTheme" />
         <activity
             android:name=".interviews.InterviewPublic"
-            android:theme="@style/InteriewTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/InteriewTheme" />
         <activity
             android:name=".interviews.InterviewActivityNightlife"
-            android:theme="@style/InteriewTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/InteriewTheme" />
         <activity
             android:name=".interviews.InterviewActivityBusiness"
-            android:theme="@style/InteriewTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/InteriewTheme" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name=".interviews.InterviewDescription"
-            android:theme="@style/InteriewTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/InteriewTheme" />
         <activity
             android:name=".settings.MyAccountActivity"
             android:label="@string/my_account"
@@ -140,6 +142,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".profile.UserProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".group.MyGroupView"
             android:screenOrientation="portrait" />
 
         <meta-data

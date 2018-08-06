@@ -14,8 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.chat.MessageActivity;
-import com.example.alexander.groupup.chat.NewMessage;
+import com.example.alexander.groupup.chat.SingleChat;
+import com.example.alexander.groupup.chat.NewSingleChat;
 import com.example.alexander.groupup.models.UserModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -88,7 +88,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
     public void newMessageClick(View view) {
-        Intent intent = new Intent(ChatActivity.this, NewMessage.class);
+        Intent intent = new Intent(ChatActivity.this, NewSingleChat.class);
         intent.putExtra("user_id", user_id);
         startActivity(intent);
     }
@@ -115,7 +115,7 @@ public class ChatActivity extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(ChatActivity.this, MessageActivity.class);
+                        Intent intent = new Intent(ChatActivity.this, SingleChat.class);
                         intent.putExtra("user_id", user_id);
                         intent.putExtra("receiver_user_id", list_user_id);
                         startActivity(intent);

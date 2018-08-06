@@ -25,8 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
-        android:orientation="vertical"
-        android:background="@color/colorAccent">
+        android:background="@color/colorAccent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/no_chats"
@@ -53,8 +53,8 @@
         android:layout_marginBottom="51dp"
         android:layout_marginEnd="12dp"
         android:onClick="newMessageClick"
-        android:src="@drawable/baseline_person_add_white_36"
-        android:tint="@color/colorPrimaryDark"
+        android:src="@drawable/material_chat_white_36"
+        android:tint="@color/darkGray"
         app:backgroundTint="@color/colorAccent"
         app:fabSize="normal" />
 

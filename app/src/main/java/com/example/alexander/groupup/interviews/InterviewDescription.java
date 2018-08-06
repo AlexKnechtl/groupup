@@ -37,7 +37,7 @@ public class InterviewDescription extends AppCompatActivity {
     private EditText description;
 
     //Variables
-    private String group, activity, publicStatus, location, country,
+    private String group, activity, publicStatus, location,
             groupDescription, current_uid, tag1, tag2, tag3, latLng;
 
     private Double geofirelat, geofirelong;
@@ -117,9 +117,9 @@ public class InterviewDescription extends AppCompatActivity {
                     mGroupDatabase.child("tag2").setValue(tag2);
                     mGroupDatabase.child("tag3").setValue(tag3);
                     mGroupDatabase.child("latlng").setValue(latLng);
+                    mGroupDatabase.child("member_count").setValue(1);
                     mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
                     mGroupDatabase.child("group_image").setValue(groupImage);
-                    mGroupDatabase.child("member_count").setValue(1);
 
                     UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -181,14 +181,13 @@ public class InterviewDescription extends AppCompatActivity {
 
     private void getGroupInformation() {
         Bundle bundle = getIntent().getExtras();
-        group = bundle.getString("group"); // Gruppen Kategorie
+        group = bundle.getString("group");
         activity = bundle.getString("activity");
         publicStatus = bundle.getString("publicStatus");
         location = bundle.getString("location");
         tag1 = bundle.getString("tag1");
         tag2 = bundle.getString("tag2");
         tag3 = bundle.getString("tag3");
-        country = bundle.getString("country");
         latLng = bundle.getString("latlng");
 
         geofirelat = bundle.getDouble("geofirelat");

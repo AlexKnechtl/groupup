@@ -30,7 +30,7 @@
                 <ImageView
                     android:id="@+id/image_location"
                     android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_height="60dp"
                     android:layout_centerVertical="true"
                     android:src="@drawable/location_white" />
 
@@ -53,8 +53,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/group_calendar"
-                    android:onClick="testClick"/>
+                    android:src="@drawable/group_calendar" />
 
                 <TextView
                     android:id="@+id/date_main"
@@ -82,19 +81,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="Du suchst: "
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="Sportgruppen"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -108,27 +105,24 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="für "
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="Tennis"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text=" welche"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -141,49 +135,68 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="im Umkreis von"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <EditText
                     android:id="@+id/loc_radius"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="10"
                     android:inputType="numberDecimal"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/dosis_semibold"
                     android:text="km stattfinden"
                     android:textColor="@color/colorAccent"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/group_button"
-                android:layout_width="200dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/main_layout_design"
-                android:text="Create new Group"
-                android:textColor="@color/colorAccent"
-                android:textSize="18sp" />
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/group_button"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="15dp"
+                    android:background="@drawable/main_layout_design"
+                    android:text="@string/create_group"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/group_chat_button"
+                    android:onClick="groupChatClick"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/main_layout_design"
+                    android:text="@string/group_chat"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:visibility="gone"/>
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/main_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
+                android:layout_height="match_parent"
                 android:layout_marginTop="12dp"
-                android:background="@color/colorBackground" />
+                android:background="@color/colorBackground"
+                android:nestedScrollingEnabled="false" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

@@ -14,11 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.chat.MessageActivity;
-import com.example.alexander.groupup.chat.NewMessage;
+import com.example.alexander.groupup.chat.SingleChat;
 import com.example.alexander.groupup.main.HomeActivity;
-import com.example.alexander.groupup.main.ProfileActivity;
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -257,7 +254,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         if (mCurrentState.equals("friends")) {
             AlertDialog.Builder builder;
-            builder = new AlertDialog.Builder(UserProfileActivity.this, R.style.RegisterTheme);
+            builder = new AlertDialog.Builder(UserProfileActivity.this, R.style.Theme_AppCompat_Dialog_Alert);
             builder.setTitle(getString(R.string.note))
                     .setMessage(getString(R.string.end_friendship))
                     .setPositiveButton(getString(R.string.yes_continue), new DialogInterface.OnClickListener() {
@@ -328,7 +325,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     public void sendMessageUserprofile(View view) {
-        Intent intent = new Intent(UserProfileActivity.this, MessageActivity.class);
+        Intent intent = new Intent(UserProfileActivity.this, SingleChat.class);
         intent.putExtra("user_id", mCurrentUser.getUid());
         intent.putExtra("receiver_user_id", receiver_user_id);
 

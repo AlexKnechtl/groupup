@@ -39,25 +39,22 @@ public class GroupNotifiyFragment extends Fragment {
     public GroupNotifiyFragment() {
         // Required empty public constructor
     }
+
     //Firebase
     private DatabaseReference GroupRequestDatabase;
     private DatabaseReference UserProfileDatabase;
-    private DatabaseReference MyAccountDatabase;
 
     //XML
     private RecyclerView requestedGroupsList;
     private TextView noRequests;
 
     //Variables
-    private long friendsCountMyAccount, friendsCountUser;
-    private String myProfileName, myProfileCity, myProfileThumbImage;
-    private String userName, userCity, userThumbImage;
     private String user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_group_notifiy, container, false);;
+        View view = inflater.inflate(R.layout.fragment_group_notifiy, container, false);
 
         noRequests = view.findViewById(R.id.no_requests_groups);
         requestedGroupsList = view.findViewById(R.id.groups_requests_list);
@@ -66,8 +63,6 @@ public class GroupNotifiyFragment extends Fragment {
         requestedGroupsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         user_id = getActivity().getIntent().getExtras().getString("user_id");
-
-        MyAccountDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
         GroupRequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id).child("groupInvitations");
 
@@ -93,57 +88,57 @@ public class GroupNotifiyFragment extends Fragment {
 
         FirebaseRecyclerAdapter<GroupsRequestModel, GroupRequestViewHolder> firebaseRecyclerAdapter =
                 new FirebaseRecyclerAdapter<GroupsRequestModel, GroupRequestViewHolder>(
-                GroupsRequestModel.class,
-                R.layout.single_layout_group_notify,
-                GroupRequestViewHolder.class,
-                GroupRequestDatabase
-        ) {
-
-            @Override
-            protected void populateViewHolder(final GroupRequestViewHolder viewHolder, final GroupsRequestModel group, final int position) {
-                FirebaseDatabase.getInstance().getReference().child("Groups").child(group.getFrom()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        GroupModel model = dataSnapshot.getValue(GroupModel.class);
-                        viewHolder.setGroup(model.getActivity()+"@"+model.getLocation());
-                    }
+                        GroupsRequestModel.class,
+                        R.layout.single_layout_group_notify,
+                        GroupRequestViewHolder.class,
+                        GroupRequestDatabase
+                ) {
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    protected void populateViewHolder(final GroupRequestViewHolder viewHolder, final GroupsRequestModel group, final int position) {
+                        FirebaseDatabase.getInstance().getReference().child("Groups").child(group.getFrom()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                GroupModel model = dataSnapshot.getValue(GroupModel.class);
+                                viewHolder.setGroup(model.getActivity() + "@" + model.getLocation());
+                            }
 
-                    }
-                });
-                FirebaseDatabase.getInstance().getReference().child("Users").child(group.getFrom()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        UserModel model = dataSnapshot.getValue(UserModel.class);
-                        viewHolder.setCreator(model.getName());
-                        viewHolder.setThumbImage(model.getThumb_image(), getActivity().getApplicationContext());
-                    }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
+                        FirebaseDatabase.getInstance().getReference().child("Users").child(group.getFrom()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                UserModel model = dataSnapshot.getValue(UserModel.class);
+                                viewHolder.setCreator(model.getName());
+                                viewHolder.setThumbImage(model.getThumb_image(), getActivity().getApplicationContext());
+                            }
 
-                    }
-                });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-                        intent.putExtra("group_id", group.getFrom());
-                        startActivity(intent);
-                    }
-                });
+                            }
+                        });
 
-                viewHolder.acceptBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        acceptRequest(group.getFrom(), getRef(position).getKey());
+                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                                intent.putExtra("group_id", group.getFrom());
+                                startActivity(intent);
+                            }
+                        });
+
+                        viewHolder.acceptBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                acceptRequest(group.getFrom(), getRef(position).getKey());
+                            }
+                        });
                     }
-                });
-            }
-        };
+                };
         requestedGroupsList.setAdapter(firebaseRecyclerAdapter);
     }
 
@@ -175,7 +170,7 @@ public class GroupNotifiyFragment extends Fragment {
     }
 
     private void acceptRequest(final String gid, final String notificationID) {
-        UserProfileDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        UserProfileDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
         final DatabaseReference GroupsDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(gid);
 
         UserProfileDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -185,7 +180,7 @@ public class GroupNotifiyFragment extends Fragment {
                 GroupsDatabase.child("member_count").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        GroupsDatabase.child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString())+1);
+                        GroupsDatabase.child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
                     }
 
                     @Override
@@ -203,4 +198,3 @@ public class GroupNotifiyFragment extends Fragment {
         GroupRequestDatabase.child(notificationID).removeValue();
     }
 }
-

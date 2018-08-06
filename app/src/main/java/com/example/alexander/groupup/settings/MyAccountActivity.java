@@ -165,7 +165,7 @@ public class MyAccountActivity extends AppCompatActivity {
                     Toast.makeText(MyAccountActivity.this, "Du hast dein Geburtsdatum schon einmal geändert", Toast.LENGTH_SHORT).show();
                 } else {
                     AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(MyAccountActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+                    builder = new AlertDialog.Builder(MyAccountActivity.this, R.style.Theme_AppCompat_Dialog_Alert);
                     builder.setTitle(getString(R.string.note))
                             .setMessage(getString(R.string.note_change_birthday))
                             .setPositiveButton(getString(R.string.yes_continue), new DialogInterface.OnClickListener() {

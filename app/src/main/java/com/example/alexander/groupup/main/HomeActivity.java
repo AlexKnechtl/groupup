@@ -21,6 +21,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.StartActivity;
+import com.example.alexander.groupup.chat.GroupChat;
+import com.example.alexander.groupup.group.MyGroupView;
 import com.example.alexander.groupup.interviews.InterviewStart;
 import com.example.alexander.groupup.group.GroupView;
 import com.example.alexander.groupup.interviews.InterviewTags;
@@ -52,13 +54,13 @@ public class HomeActivity extends AppCompatActivity {
     //XML
     private RecyclerView recyclerView;
     private TextView location;
-    private Button groupButton;
     private TextView searchLocation;
+    private Button groupButton, groupChatButton;
 
     //Constants
     public static final String ANONYMOUS = "anonymous";
 
-    //Firebase
+    //FireBase
     private DatabaseReference GroupDatabase;
     private DatabaseReference UserDatabase;
 
@@ -71,7 +73,7 @@ public class HomeActivity extends AppCompatActivity {
     private Context mContext = HomeActivity.this;
     private static final int ACTIVITY_NUM = 0;
     private boolean creator;
-    private String user_id;
+    private String user_id, group_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,7 @@ public class HomeActivity extends AppCompatActivity {
         location = findViewById(R.id.location_main);
         groupButton = findViewById(R.id.group_button);
         recyclerView = findViewById(R.id.main_recycler_view);
+        groupChatButton = findViewById(R.id.group_chat_button);
         searchLocation = findViewById(R.id.loc_radius);
         searchLocation.addTextChangedListener(new TextWatcher() {
             @Override
@@ -129,8 +132,10 @@ public class HomeActivity extends AppCompatActivity {
                 city = dataSnapshot.child("city").getValue().toString();
 
                 if (dataSnapshot.hasChild("my_group")) {
+                    group_id = dataSnapshot.child("my_group").getValue().toString();
                     groupButton.setText(R.string.my_group);
-                    creator = false;
+                    groupChatButton.setVisibility(View.VISIBLE);
+                    creator = true;
                 } else
                     creator = false;
 
@@ -165,8 +170,9 @@ public class HomeActivity extends AppCompatActivity {
                     Intent intent = new Intent(HomeActivity.this, InterviewStart.class);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(HomeActivity.this, GroupView.class);
-                    intent.putExtra("group_id", user_id);
+                    Intent intent = new Intent(HomeActivity.this, MyGroupView.class);
+                    intent.putExtra("group_id", group_id);
+                    intent.putExtra("user_id", user_id);
                     startActivity(intent);
                 }
             }
@@ -201,6 +207,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent intent = new Intent(HomeActivity.this, GroupView.class);
                         intent.putExtra("group_id", group_id);
+                        intent.putExtra("user_id", user_id);
                         startActivity(intent);
                     }
                 });
@@ -256,11 +263,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void testClick(View view) {
-        Intent intent = new Intent(HomeActivity.this, InterviewTags.class);
-        startActivity(intent);
-    }
-
     public void setupBottomNavigationView() {
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_nav);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
@@ -287,5 +289,13 @@ public class HomeActivity extends AppCompatActivity {
             intent.putExtra("EXIT", true);
             startActivity(intent);
         }
+    }
+
+    //OnClicks
+    public void groupChatClick(View view) {
+        Intent intent = new Intent (HomeActivity.this, GroupChat.class);
+        intent.putExtra("group_id", group_id);
+        intent.putExtra("user_id", user_id);
+        startActivity(intent);
     }
 }

@@ -32,7 +32,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     }
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {
-
         private TextView messageText;
         private TextView timeText;
         private LinearLayout messageLayout;
@@ -65,9 +64,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
         }
 
-        String time = c.getTime();
-
-        viewHolder.timeText.setText(time);
+        viewHolder.timeText.setText(c.getTime());
         viewHolder.messageText.setText(c.getMessage());
     }
 
