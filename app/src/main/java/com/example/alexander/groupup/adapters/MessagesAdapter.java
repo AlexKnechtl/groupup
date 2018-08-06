@@ -17,7 +17,6 @@ import java.util.List;
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageViewHolder> {
 
     private List<MessagesModel> messagesList;
-    private FirebaseAuth mAuth;
 
     public MessagesAdapter(List<MessagesModel> messagesList) {
         this.messagesList = messagesList;
@@ -49,12 +48,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     @Override
     public void onBindViewHolder(MessageViewHolder viewHolder, final int position) {
-
-        //ToDo Add Date Headline (Performance sparend)
         MessagesModel c = messagesList.get(position);
         String from_user = c.getFrom();
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         if (from_user.equals(mAuth.getCurrentUser().getUid())) {
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);

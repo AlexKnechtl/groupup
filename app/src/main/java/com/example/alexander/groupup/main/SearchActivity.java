@@ -41,7 +41,6 @@ public class SearchActivity extends AppCompatActivity {
     //Variables
     private Context mContext = SearchActivity.this;
     private static final int ACTIVITY_NUM = 2;
-    private Query firebaseSearchQuery;
     private String user_id;
 
     @Override
@@ -54,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
 
         setupBottomNavigationView();
 
-        //Initialize Firebase
+        //Initialize FireBase
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         //Find IDs
@@ -86,14 +85,13 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void userSearch(String searchText) {
-
-        firebaseSearchQuery = mUserDatabase.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
+        Query fireBaseSearchQuery = mUserDatabase.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
 
         FirebaseRecyclerAdapter<UserModel, UsersViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserModel, UsersViewHolder>(
                 UserModel.class,
                 R.layout.single_layout_searchuser,
                 UsersViewHolder.class,
-                firebaseSearchQuery
+                fireBaseSearchQuery
         ) {
             @Override
             protected void populateViewHolder(UsersViewHolder usersViewHolder, UserModel users, int position) {
