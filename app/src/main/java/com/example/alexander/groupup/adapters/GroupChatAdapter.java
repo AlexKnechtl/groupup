@@ -1,5 +1,8 @@
 package com.example.alexander.groupup.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.MessagesModel;
+import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
@@ -17,10 +21,11 @@ import java.util.List;
 public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.GroupChatViewHolder> {
 
     private List<MessagesModel> messagesList;
-    private FirebaseAuth mAuth;
+    private Context context;
 
-    public GroupChatAdapter(List<MessagesModel> messagesList) {
+    public GroupChatAdapter(List<MessagesModel> messagesList, Context context) {
         this.messagesList = messagesList;
+        this.context = context;
     }
 
     @Override
@@ -37,6 +42,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
         private TextView timeText;
         private TextView name;
         private CardView background;
+        private FloatingActionButton acceptRequest;
 
         public GroupChatViewHolder(View view) {
             super(view);
@@ -51,20 +57,32 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
     @Override
     public void onBindViewHolder(GroupChatViewHolder viewHolder, final int position) {
 
-        MessagesModel c = messagesList.get(position);
-
+        final MessagesModel c = messagesList.get(position);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String from_user = c.getFrom();
-        mAuth = FirebaseAuth.getInstance();
+        String type = c.getType();
 
-        if (from_user.equals(mAuth.getCurrentUser().getUid())) {
-            viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChatUser));
-            viewHolder.name.setVisibility(View.GONE);
-        } else {
-            viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-            viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
-            viewHolder.name.setVisibility(View.VISIBLE);
-            viewHolder.name.setText(c.getName());
+        viewHolder.name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, UserProfileActivity.class);
+                intent.putExtra("user_id", c.getFrom());
+            }
+        });
+
+        if (type.equals("message")) {
+            if (from_user.equals(mAuth.getCurrentUser().getUid())) {
+                viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+                viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChatUser));
+                viewHolder.name.setVisibility(View.GONE);
+            } else {
+                viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
+                viewHolder.name.setVisibility(View.VISIBLE);
+                viewHolder.name.setText(c.getName());
+            }
+        } else if (type.equals("request")) {
+
         }
 
         viewHolder.timeText.setText(c.getTime());

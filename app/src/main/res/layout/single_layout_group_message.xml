@@ -48,9 +48,19 @@
                     android:layout_marginStart="8dp"
                     android:autoLink="web"
                     android:maxWidth="290dp"
-                    android:text="Test Nachricht :)"
+                    android:text="Kann ich eurer Gruppe bitte beitreten? Ihr seid meine Idole ihr Crazy Moterfuuuuckers!"
                     android:textSize="16sp" />
             </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/chat_company_reply_text"
+                android:layout_marginBottom="3dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="visible"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/chat_company_reply_text"/>
 
             <TextView
                 android:id="@+id/group_chat_timestamp"

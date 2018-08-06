@@ -1,5 +1,6 @@
 package com.example.alexander.groupup.chat;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -42,8 +43,9 @@ public class GroupChat extends AppCompatActivity {
     private String user_id, group_id, activity, location, group_category, name;
     private final List<MessagesModel> messagesList = new ArrayList<>();
     private GroupChatAdapter groupChatAdapter;
+    private Context context = GroupChat.this;
 
-    //Firebase
+    //FireBase
     private DatabaseReference GroupChatDatabase;
 
     @Override
@@ -65,7 +67,7 @@ public class GroupChat extends AppCompatActivity {
         groupChatRecyclerView.setHasFixedSize(true);
         groupChatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        groupChatAdapter = new GroupChatAdapter(messagesList);
+        groupChatAdapter = new GroupChatAdapter(messagesList, context);
 
         groupChatRecyclerView.setAdapter(groupChatAdapter);
 
@@ -136,6 +138,7 @@ public class GroupChat extends AppCompatActivity {
             messageMap.put("time", currentTime);
             messageMap.put("from", user_id);
             messageMap.put("name", name);
+            messageMap.put("type", "message");
 
             GroupChatDatabase.child(pushId).updateChildren(messageMap);
             groupChatRecyclerView.smoothScrollToPosition(messagesList.size());

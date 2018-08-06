@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.chat.GroupChat;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.main.ProfileActivity;
 import com.example.alexander.groupup.models.UserModel;
@@ -36,8 +37,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MyGroupView extends AppCompatActivity {
 
     //XML
-    private TextView headline, description, backHomeFabText, addMemberFabText, leaveGroupText, memberCount;
-    private FloatingActionButton backHomeFab, addMemberFab, leaveGroupFab;
+    private TextView headline, description, backHomeFabText, addMemberFabText, groupChatFabText, leaveGroupText, memberCount;
+    private FloatingActionButton backHomeFab, addMemberFab, leaveGroupFab, groupChatFab;
     private RecyclerView membersList;
 
     //FireBase
@@ -155,6 +156,9 @@ public class MyGroupView extends AppCompatActivity {
             addMemberFabText.startAnimation(FabClose);
             leaveGroupFab.startAnimation(FabClose);
             leaveGroupText.startAnimation(FabClose);
+            groupChatFab.startAnimation(FabClose);
+            groupChatFabText.startAnimation(FabClose);
+            groupChatFab.setClickable(false);
             leaveGroupFab.setClickable(false);
             backHomeFab.setClickable(false);
             addMemberFab.setClickable(false);
@@ -167,6 +171,9 @@ public class MyGroupView extends AppCompatActivity {
             addMemberFabText.startAnimation(FabOpen);
             leaveGroupFab.startAnimation(FabOpen);
             leaveGroupText.startAnimation(FabOpen);
+            groupChatFab.startAnimation(FabOpen);
+            groupChatFabText.startAnimation(FabOpen);
+            groupChatFab.setClickable(true);
             leaveGroupFab.setClickable(true);
             backHomeFab.setClickable(true);
             addMemberFab.setClickable(true);
@@ -182,6 +189,8 @@ public class MyGroupView extends AppCompatActivity {
         memberCount = findViewById(R.id.members_my_group_view);
         leaveGroupFab = findViewById(R.id.leave_group_fab);
         leaveGroupText = findViewById(R.id.leave_group_fab_text);
+        groupChatFab = findViewById(R.id.group_chat_fab);
+        groupChatFabText = findViewById(R.id.group_chat_fab_text);
         headline = findViewById(R.id.group_view_headline);
         description = findViewById(R.id.group_description);
         membersList = findViewById(R.id.member_list_group_view);
@@ -230,6 +239,13 @@ public class MyGroupView extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void groupChatFabClick(View view) {
+        Intent intent = new Intent(MyGroupView.this, GroupChat.class);
+        intent.putExtra("group_id", groupId);
+        intent.putExtra("user_id", user_id);
+        startActivity(intent);
+    }
+
     public void addMemberClick(View view) {
         Intent intent = new Intent(MyGroupView.this, AddGroupMembersActivity.class);
         startActivity(intent);
@@ -262,7 +278,13 @@ public class MyGroupView extends AppCompatActivity {
                 } else if (groupMembers > 0) {
                     UserDatabase.child(user_id).child("my_group").removeValue();
                     GroupMemberDatabase.child(user_id).removeValue();
-                    GroupDatabase.child("member_count").setValue(groupMembers);
+                    GroupDatabase.child("member_count").setValue(groupMembers).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Intent intent = new Intent(MyGroupView.this, HomeActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
 
