@@ -312,6 +312,12 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setAdapter(groupsAdapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        geoQuery.setRadius(geoQuery.getRadius());
+    }
+
     public static class GroupsViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
@@ -376,9 +382,8 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         public void Add(GeoGroup g){
-            int pos = list.indexOf(g);
             list.add(g);
-            notifyItemInserted(pos);
+            notifyItemInserted(list.indexOf(g));
         }
 
         public void Remove(GeoGroup g){
@@ -450,6 +455,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void setCurrentLocation(GeoLocation location){
         currentLocation = location;
         geoQuery.setCenter(location);
+        geoQuery.setRadius(geoQuery.getRadius());
         groupsAdapter.notifyDataSetChanged();
     }
 
