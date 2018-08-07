@@ -43,9 +43,8 @@ public class LanguageStringsManager {
     public static LanguageStringsManager getInstance() {
         if(!initialized || ourInstance == null)
             ourInstance = new LanguageStringsManager();
-        int count = 0;
         while(!initialized || ourInstance == null){
-            Log.w("LanguageStringsManager:", "In WHile LOOP");count++; if(count>20) {count = 0; ourInstance = new LanguageStringsManager();}};
+            Log.w("LanguageStringsManager:", "In WHile LOOP");};
         return ourInstance;
     }
 
