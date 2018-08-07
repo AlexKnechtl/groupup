@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.alexander.groupup.main.HomeActivity;
@@ -28,6 +29,8 @@ import static com.example.alexander.groupup.main.HomeActivity.ANONYMOUS;
 
 public class StartActivity extends AppCompatActivity {
 
+    public static boolean IS_APP_RUNNING =false;
+
     //Constants
     private static final int RC_SIGN_IN = 1;
 
@@ -43,7 +46,8 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_view);
-
+        IS_APP_RUNNING = true;
+        Log.w("IS_APP_RUNNING: ", "TRUE-------------");
         //Close when Back is pressed in MainActivity
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
@@ -151,5 +155,12 @@ public class StartActivity extends AppCompatActivity {
 
     private void onSignedOutCleanup() {
         mUsername = ANONYMOUS;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        IS_APP_RUNNING = false;
+        Log.w("APP_RUNNING: ", "FALSE-------------------------");
     }
 }

@@ -1,5 +1,7 @@
 package com.example.alexander.groupup.singletons;
 
+import android.util.Log;
+
 import com.example.alexander.groupup.models.LanguageStringsModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +41,11 @@ public class LanguageStringsManager {
     }
 
     public static LanguageStringsManager getInstance() {
-        while(!initialized || ourInstance == null){System.out.println("In While Loop");};
+        if(!initialized || ourInstance == null)
+            ourInstance = new LanguageStringsManager();
+        int count = 0;
+        while(!initialized || ourInstance == null){
+            Log.w("LanguageStringsManager:", "In WHile LOOP");count++; if(count>20) {count = 0; ourInstance = new LanguageStringsManager();}};
         return ourInstance;
     }
 
