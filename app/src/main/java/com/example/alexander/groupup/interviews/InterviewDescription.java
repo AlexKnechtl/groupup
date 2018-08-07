@@ -100,7 +100,7 @@ public class InterviewDescription extends AppCompatActivity {
                     mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(current_uid);
 
 
-                    geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("Groups"));
+                    geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("GeoFire"));
                     geoFire.setLocation(current_uid, new GeoLocation(geofirelat, geofirelong), new GeoFire.CompletionListener() {
                         @Override
                         public void onComplete(String key, DatabaseError error) {
@@ -142,7 +142,7 @@ public class InterviewDescription extends AppCompatActivity {
                 public void OnSuccess(String value) {
                     mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(current_uid);
 
-                    geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("Groups"));
+                    geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("GeoFire"));
                     geoFire.setLocation(current_uid, new GeoLocation(geofirelat, geofirelong), new GeoFire.CompletionListener() {
                         @Override
                         public void onComplete(String key, DatabaseError error) {

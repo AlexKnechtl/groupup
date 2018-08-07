@@ -128,20 +128,54 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ort: "
+                    android:text="Ort:"
+                    android:layout_marginRight="10dp"
                     android:onClick="searchGroupLocationClick"
                     android:textColor="@color/colorAccent"
+                    android:textSize="22sp" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/loc_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/main_layout_design_textview"
+                    android:onClick="searchGroupLocationClick"
+                    android:text="Graz"
+                    android:focusable="false"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/colorAccent"
                     android:textSize="22sp" />
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Radius: "
+                    android:onClick="searchGroupLocationClick"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="22sp" >
+                </TextView>
 
                 <EditText
                     android:id="@+id/loc_radius"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:text="Dein Standort"
+                    android:text="10"
                     android:inputType="numberDecimal"
                     android:textColor="@color/colorAccent"
                     android:textSize="22sp" />
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="km"
+                    android:onClick="searchGroupLocationClick"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="22sp" >
+                </TextView>
             </LinearLayout>
 
             <LinearLayout

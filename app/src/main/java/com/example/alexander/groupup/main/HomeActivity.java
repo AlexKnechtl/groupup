@@ -4,16 +4,24 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,8 +43,11 @@ import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryDataEventListener;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.firebase.geofire.LocationCallback;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,14 +62,22 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import java.io.IOException;
+import java.security.acl.Group;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private static final long LOCATION_REFRESH_TIME = 10000;
+
+    private static final float LOCATION_REFRESH_DISTANCE = 10.0f;
+    private static final int REQUEST_CODE_PLACE_PICKER = 2;
     //XML
     private RecyclerView recyclerView;
-    private TextView location;
+    private TextView location, locationName;
     private TextView searchLocation;
     private Button groupButton, groupChatButton;
     private Dialog dialog;
@@ -74,13 +93,17 @@ public class HomeActivity extends AppCompatActivity {
 
     private GeoQuery geoQuery;
 
+    private GroupsAdapter groupsAdapter;
+
+    private ArrayList groups;
+
     //Variables
     private String city;
     private Context mContext = HomeActivity.this;
     private static final int ACTIVITY_NUM = 0;
     private boolean creator;
     private String user_id, group_id;
-    private GeoLocation currentLocation = new GeoLocation(0,0); //Todo change this location. with setCurrentLocation()
+    private GeoLocation currentLocation = new GeoLocation(47.0727247,15.4335573); //Todo change this location. with setCurrentLocation()
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +135,7 @@ public class HomeActivity extends AppCompatActivity {
         TextView dateTextView;
         dateTextView = findViewById(R.id.date_main);
         location = findViewById(R.id.location_main);
+        locationName = findViewById(R.id.loc_city);
         groupButton = findViewById(R.id.group_button);
         recyclerView = findViewById(R.id.main_recycler_view);
         groupChatButton = findViewById(R.id.group_chat_button);
@@ -125,6 +149,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().isEmpty()) return;
                 geoQuery.setRadius(Double.parseDouble(s.toString()));
             }
 
@@ -158,11 +183,47 @@ public class HomeActivity extends AppCompatActivity {
         GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
 
 
-        geoFire = new GeoFire(GroupDatabase);
+        geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("GeoFire"));
 
-        geoQuery = geoFire.queryAtLocation(currentLocation, 10);
+        geoQuery = geoFire.queryAtLocation(currentLocation, 100);
 
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, final GeoLocation location) {
+                GroupDatabase.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        GroupModel m = dataSnapshot.getValue(GroupModel.class);
+                        groupsAdapter.Add(new GeoGroup(m, location, dataSnapshot.getKey()));
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+                groupsAdapter.Remove(key);
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+
+            }
+        });
         //Show Date in GroupCalendar
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MMM");
         String currentDate = formatter.format(new Date());
@@ -193,7 +254,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onStart();
         Query f = GroupDatabase.orderByChild("d").equalTo(3);
 
-        FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder>(
+
+        /*FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder>(
                 GroupModel.class,
                 R.layout.single_layout_group,
                 GroupsViewHolder.class,
@@ -205,43 +267,14 @@ public class HomeActivity extends AppCompatActivity {
                 geoFire.getLocation(getRef(position).getKey(), new LocationCallback() {
                     @Override
                     public void onLocationResult(String key, GeoLocation location) {
-                        Log.d("Location: ", location.toString());
-                        groupsViewHolder.setGroupDistance(GeoFireHelper.GetDistance(location, currentLocation));
+                        if(location != null) {
+                            Log.d("Location: ", location.toString());
+                            groupsViewHolder.setGroupDistance(GeoFireHelper.GetDistance(location, currentLocation));
+                        }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-                geoQuery.addGeoQueryDataEventListener(new GeoQueryDataEventListener() {
-                    @Override
-                    public void onDataEntered(DataSnapshot dataSnapshot, GeoLocation location) {
-
-                    }
-
-                    @Override
-                    public void onDataExited(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onDataMoved(DataSnapshot dataSnapshot, GeoLocation location) {
-
-                    }
-
-                    @Override
-                    public void onDataChanged(DataSnapshot dataSnapshot, GeoLocation location) {
-
-                    }
-
-                    @Override
-                    public void onGeoQueryReady() {
-
-                    }
-
-                    @Override
-                    public void onGeoQueryError(DatabaseError error) {
 
                     }
                 });
@@ -273,8 +306,10 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 });
             }
-        };
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
+        };*/
+        //recyclerView.setAdapter(firebaseRecyclerAdapter);
+        groupsAdapter = new GroupsAdapter(this);
+        recyclerView.setAdapter(groupsAdapter);
     }
 
     public static class GroupsViewHolder extends RecyclerView.ViewHolder {
@@ -328,9 +363,94 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    public class GroupsAdapter extends RecyclerView.Adapter<GroupsViewHolder>{
+
+        ArrayList<GeoGroup> list;
+        Context c;
+
+
+        public GroupsAdapter(Context c){
+
+            this.list = new ArrayList<>();
+            this.c = c;
+        }
+
+        public void Add(GeoGroup g){
+            int pos = list.indexOf(g);
+            list.add(g);
+            notifyItemInserted(pos);
+        }
+
+        public void Remove(GeoGroup g){
+            int pos = list.indexOf(g);
+            list.remove(g);
+            notifyItemRemoved(pos);
+        }
+
+        public void Remove(String groupId){
+            for(int i = 0; i<list.size(); i++)
+            {
+                if(list.get(i).groupId.equals(groupId))
+                {
+                    list.remove(i);
+                    notifyItemRemoved(i);
+                }
+            }
+        }
+
+        public void Clear()
+        {
+            list.clear();
+            notifyDataSetChanged();
+        }
+
+        @NonNull
+        @Override
+        public GroupsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(c).inflate(R.layout.single_layout_group, parent, false);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    GeoGroup g = list.get(recyclerView.getChildLayoutPosition(view));
+
+                    if (g.groupId.equals(group_id)) {
+                        Intent intent = new Intent(HomeActivity.this, MyGroupView.class);
+                        intent.putExtra("group_id", group_id);
+                        intent.putExtra("user_id", user_id);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(HomeActivity.this, GroupView.class);
+                        intent.putExtra("group_id", g.groupId);
+                        intent.putExtra("user_id", user_id);
+                        startActivity(intent);
+                    }
+                }
+            });
+            return new GroupsViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull GroupsViewHolder holder, int position) {
+            GeoGroup g = list.get(position);
+            holder.setGroupDistance(GeoFireHelper.GetDistance(g.location, currentLocation));
+            holder.setGroupImage(g.group.getGroup_image());
+            holder.setActivityCity(LanguageStringsManager.getInstance().getLanguageStringByStringId(g.group.getActivity()).getLocalLanguageString(), g.group.getLocation());
+            holder.setTag1(g.group.getTag1());
+            holder.setTag2(g.group.getTag2());
+            holder.setTag3(g.group.getTag3());
+            holder.setMemberQuantity(g.group.getMember_count().toString());
+        }
+
+        @Override
+        public int getItemCount() {
+            return list.size();
+        }
+    }
+
     protected void setCurrentLocation(GeoLocation location){
         currentLocation = location;
         geoQuery.setCenter(location);
+        groupsAdapter.notifyDataSetChanged();
     }
 
     public void setupBottomNavigationView() {
@@ -382,17 +502,77 @@ public class HomeActivity extends AppCompatActivity {
         locationNear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                
             }
         });
 
         chooseLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startPlacePickerActivity();
             }
         });
 
         dialog.show();
+    }
+
+    private void startPlacePickerActivity() {
+        PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
+
+        try {
+            Intent intent = intentBuilder.build(this);
+            startActivityForResult(intent, REQUEST_CODE_PLACE_PICKER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_PLACE_PICKER && resultCode == RESULT_OK) {
+            displaySelectedPlace(data);
+        }
+    }
+
+    private void displaySelectedPlace(Intent data) {
+        Place placeSelected = PlacePicker.getPlace(this, data);
+
+        Double latitude = placeSelected.getLatLng().latitude;
+        Double longitude = placeSelected.getLatLng().longitude;
+
+        setCurrentLocation(new GeoLocation(latitude, longitude));
+
+        String latLng = "geo:<" + latitude  + ">,<" + longitude + ">?q=<" + latitude  + ">,<" + longitude + ">("
+                + getResources().getString(R.string.group_is_here) + ")";
+
+        Geocoder geocoder = new Geocoder(this);
+        try
+        {
+            List<Address> addresses = geocoder.getFromLocation(latitude,
+                    longitude, 1);
+            String cn = addresses.get(0).getLocality();
+            if(cn.isEmpty())
+                cn = addresses.get(0).getCountryName();
+            locationName.setText(cn);
+
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        //final String placeName = placeSelected.getName().toString();
+    }
+
+    public class GeoGroup {
+        public GeoGroup(GroupModel group, GeoLocation location, String groupId) {
+            this.group = group;
+            this.location = location;
+            this.groupId = groupId;
+        }
+
+        private GroupModel group;
+        private GeoLocation location;
+        private String groupId;
     }
 }
