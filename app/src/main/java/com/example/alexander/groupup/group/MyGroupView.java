@@ -383,6 +383,7 @@ public class MyGroupView extends AppCompatActivity {
                 if (groupMembers == 0) {
                     DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference().child("GroupChat").child(groupId);
                     GroupDatabase.removeValue();
+                    FirebaseDatabase.getInstance().getReference().child("GeoFire").child(user_id).removeValue();
                     GroupChatDatabase.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

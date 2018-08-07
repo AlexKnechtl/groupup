@@ -183,6 +183,33 @@ public class HomeActivity extends AppCompatActivity {
         GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
 
 
+        //setupGeoFire();
+        //Show Date in GroupCalendar
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MMM");
+        String currentDate = formatter.format(new Date());
+        dateTextView.setText(currentDate);
+
+        //Recycler View
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+
+        groupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!creator) {
+                    Intent intent = new Intent(HomeActivity.this, InterviewStart.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(HomeActivity.this, MyGroupView.class);
+                    intent.putExtra("group_id", group_id);
+                    intent.putExtra("user_id", user_id);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
+    private void setupGeoFire() {
         geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("GeoFire"));
 
         geoQuery = geoFire.queryAtLocation(currentLocation, 100);
@@ -190,7 +217,8 @@ public class HomeActivity extends AppCompatActivity {
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, final GeoLocation location) {
-                GroupDatabase.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                if(groupsAdapter.CheckGroupIdExists(key) == -1)
+                    GroupDatabase.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         GroupModel m = dataSnapshot.getValue(GroupModel.class);
@@ -222,29 +250,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onGeoQueryError(DatabaseError error) {
 
-            }
-        });
-        //Show Date in GroupCalendar
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MMM");
-        String currentDate = formatter.format(new Date());
-        dateTextView.setText(currentDate);
-
-        //Recycler View
-        recyclerView.setHasFixedSize(false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-
-        groupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!creator) {
-                    Intent intent = new Intent(HomeActivity.this, InterviewStart.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(HomeActivity.this, MyGroupView.class);
-                    intent.putExtra("group_id", group_id);
-                    intent.putExtra("user_id", user_id);
-                    startActivity(intent);
-                }
             }
         });
     }
@@ -315,7 +320,13 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        geoQuery.setRadius(geoQuery.getRadius());
+        setupGeoFire();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        geoQuery.removeAllListeners();
     }
 
     public static class GroupsViewHolder extends RecyclerView.ViewHolder {
@@ -392,6 +403,17 @@ public class HomeActivity extends AppCompatActivity {
             notifyItemRemoved(pos);
         }
 
+        public int CheckGroupIdExists(String groupId){
+            for(int i = 0; i<list.size(); i++)
+            {
+                if(list.get(i).groupId.equals(groupId))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         public void Remove(String groupId){
             for(int i = 0; i<list.size(); i++)
             {
@@ -455,7 +477,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void setCurrentLocation(GeoLocation location){
         currentLocation = location;
         geoQuery.setCenter(location);
-        geoQuery.setRadius(geoQuery.getRadius());
+        //geoQuery.setRadius(geoQuery.getRadius());
         groupsAdapter.notifyDataSetChanged();
     }
 
