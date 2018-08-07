@@ -14,6 +14,7 @@ import com.example.alexander.groupup.fragments.FriendNotifyFragment;
 import com.example.alexander.groupup.fragments.GroupNotifiyFragment;
 import com.example.alexander.groupup.fragments.SectionsPagerAdapter;
 import com.example.alexander.groupup.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.text.SimpleDateFormat;
@@ -35,9 +36,11 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_notification);
 
+        //if(FirebaseAuth.getInstance().getCurrentUser() == null);
+
         Bundle bundle = getIntent().getExtras();
         user_id = bundle.getString("user_id");
-
+        if(user_id == null) user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         dateTextView = findViewById(R.id.date_notification);
 
         //Show Date in GroupCalendar

@@ -18,6 +18,7 @@ import com.example.alexander.groupup.chat.SingleChat;
 import com.example.alexander.groupup.chat.NewSingleChat;
 import com.example.alexander.groupup.models.UserModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,7 +54,7 @@ public class ChatActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         user_id = bundle.getString("user_id");
-
+        if(user_id == null) user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Toolbar myToolbar = findViewById(R.id.toolbar_chat);
         setSupportActionBar(myToolbar);
 

@@ -57,7 +57,8 @@ exports.sendChatNotification = functions.database.ref('/Chats/{userID}/{friendID
 			notification: {
 				title: `You have a new message from ${friend.displayName}`,
 				body: messageBody,
-				icon: friend.photoURL
+				icon: friend.photoURL,
+				click_action: 'OPEN_ACTIVITY_CHAT'
 			}
 		};
 		if(tokenSnapshot.hasChildren())

@@ -63,6 +63,7 @@ public class GroupNotifiyFragment extends Fragment {
         requestedGroupsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         user_id = getActivity().getIntent().getExtras().getString("user_id");
+        if(user_id == null) user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         GroupRequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id).child("groupInvitations");
 

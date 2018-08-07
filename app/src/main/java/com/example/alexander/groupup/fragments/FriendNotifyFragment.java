@@ -19,6 +19,7 @@ import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -67,7 +68,7 @@ public class FriendNotifyFragment extends Fragment {
         requestedFriendsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         user_id = getActivity().getIntent().getExtras().getString("user_id");
-
+        if(user_id == null) user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         MyAccountDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
         FriendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id)

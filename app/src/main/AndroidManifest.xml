@@ -45,7 +45,12 @@
         <activity
             android:name=".main.ChatActivity"
             android:label="@string/your_chats"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_CHAT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".main.SearchActivity"
             android:screenOrientation="portrait"
