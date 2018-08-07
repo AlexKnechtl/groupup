@@ -14,11 +14,13 @@
         android:text="Woh soll die Gruppe sein?"/>
 
     <Button
+        android:id="@+id/location_near_popup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="In der Nähe"/>
 
     <Button
+        android:id="@+id/choose_location_popup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ort auswählen"/>

@@ -116,13 +116,6 @@
                     android:text="Tennis"
                     android:textColor="@color/colorAccent"
                     android:textSize="22sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" welche"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="22sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -135,7 +128,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="im Umkreis von"
+                    android:text="Ort: "
+                    android:onClick="searchGroupLocationClick"
                     android:textColor="@color/colorAccent"
                     android:textSize="22sp" />
 
@@ -144,15 +138,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:text="10"
+                    android:text="Dein Standort"
                     android:inputType="numberDecimal"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="km stattfinden"
                     android:textColor="@color/colorAccent"
                     android:textSize="22sp" />
             </LinearLayout>

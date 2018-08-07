@@ -1,5 +1,6 @@
 package com.example.alexander.groupup.main;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -60,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView location;
     private TextView searchLocation;
     private Button groupButton, groupChatButton;
+    private Dialog dialog;
 
     //Constants
     public static final String ANONYMOUS = "anonymous";
@@ -104,6 +106,8 @@ public class HomeActivity extends AppCompatActivity {
 
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
+        dialog = new Dialog(this);
+
         //Find Ids
         TextView dateTextView;
         dateTextView = findViewById(R.id.date_main);
@@ -112,6 +116,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.main_recycler_view);
         groupChatButton = findViewById(R.id.group_chat_button);
         searchLocation = findViewById(R.id.loc_radius);
+
         searchLocation.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -362,5 +367,32 @@ public class HomeActivity extends AppCompatActivity {
         intent.putExtra("group_id", group_id);
         intent.putExtra("user_id", user_id);
         startActivity(intent);
+    }
+
+    public void searchGroupLocationClick(View view) {
+
+        Button locationNear, chooseLocation;
+
+        dialog.setContentView(R.layout.popup_two_options);
+
+        locationNear = dialog.findViewById(R.id.location_near_popup);
+        chooseLocation = dialog.findViewById(R.id.choose_location_popup);
+
+
+        locationNear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        chooseLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        dialog.show();
     }
 }
