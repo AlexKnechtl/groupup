@@ -65,6 +65,20 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/group_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kein Standort, x"
+            android:layout_alignLeft="@id/linearLayoutGroup"
+            android:layout_marginTop="120dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/group_distance"
+            android:layout_alignBottom="@+id/group_distance"
+            android:text=" km entfernt"/>
+
+        <TextView
             android:id="@+id/group_layout_tag_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
