@@ -99,18 +99,18 @@ public class SearchActivity extends AppCompatActivity {
                 usersViewHolder.setCity(users.getCity());
                 usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
 
-                final String user_id = getRef(position).getKey();
+                final String list_user_id = getRef(position).getKey();
 
                 usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(user_id.equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                        if(list_user_id.equals(user_id))
                         {
                             startActivity(new Intent(SearchActivity.this, ProfileActivity.class));
                         }
                         else {
                             Intent intent = new Intent(SearchActivity.this, UserProfileActivity.class);
-                            intent.putExtra("user_id", user_id);
+                            intent.putExtra("user_id", list_user_id);
                             startActivity(intent);
                         }
                     }
