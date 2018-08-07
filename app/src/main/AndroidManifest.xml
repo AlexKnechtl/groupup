@@ -14,7 +14,8 @@
         android:icon="@mipmap/groupup_ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeDark">
+        android:theme="@style/AppThemeDark"
+        android:name=".groupup">
 
         <activity
             android:name=".StartActivity"

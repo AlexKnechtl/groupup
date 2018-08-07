@@ -27,7 +27,6 @@ import com.example.alexander.groupup.group.MyGroupView;
 import com.example.alexander.groupup.helpers.GeoFireHelper;
 import com.example.alexander.groupup.interviews.InterviewStart;
 import com.example.alexander.groupup.group.GroupView;
-import com.example.alexander.groupup.interviews.InterviewTags;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.R;
@@ -250,15 +249,22 @@ public class HomeActivity extends AppCompatActivity {
                 groupsViewHolder.setTag3(groups.getTag3());
                 groupsViewHolder.setMemberQuantity(groups.getMember_count().toString());
 
-                final String group_id = getRef(position).getKey();
+                final String groupId = getRef(position).getKey();
 
                 groupsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(HomeActivity.this, GroupView.class);
-                        intent.putExtra("group_id", group_id);
-                        intent.putExtra("user_id", user_id);
-                        startActivity(intent);
+                        if (groupId.equals(group_id)) {
+                            Intent intent = new Intent(HomeActivity.this, MyGroupView.class);
+                            intent.putExtra("group_id", group_id);
+                            intent.putExtra("user_id", user_id);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(HomeActivity.this, GroupView.class);
+                            intent.putExtra("group_id", groupId);
+                            intent.putExtra("user_id", user_id);
+                            startActivity(intent);
+                        }
                     }
                 });
             }
@@ -352,7 +358,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //OnClicks
     public void groupChatClick(View view) {
-        Intent intent = new Intent (HomeActivity.this, GroupChat.class);
+        Intent intent = new Intent(HomeActivity.this, GroupChat.class);
         intent.putExtra("group_id", group_id);
         intent.putExtra("user_id", user_id);
         startActivity(intent);
