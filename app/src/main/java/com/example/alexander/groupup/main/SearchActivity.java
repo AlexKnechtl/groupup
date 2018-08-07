@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -141,7 +142,7 @@ public class SearchActivity extends AppCompatActivity {
 
         public void setUserImage(String thumb_image, Context context) {
             CircleImageView userImageView = mView.findViewById(R.id.user_single_image);
-            Picasso.with(context).load(thumb_image).placeholder(R.drawable.default_user_black).into(userImageView);
+            Picasso.with(context).load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.default_user_black).into(userImageView);
         }
     }
 
