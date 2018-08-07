@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/message_option"
+        android:title="@string/write_a_message"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <item
+        android:id="@+id/make_admin_option"
+        android:title="@string/make_admin"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <item
+        android:id="@+id/remove_user_option"
+        android:title="@string/remove_user"
+        android:textColor="@color/colorPrimaryDark"/>
+</menu>

@@ -173,8 +173,8 @@
     <string name="leave_group">Leave Group</string>
     <string name="send_request">Send Request</string>
     <string name="business_kit_headline">The GroupUp! Business Kit is a new authentic way to represent a brand, product or event and reach your target audience.</string>
+    <string name="make_admin">Make Group Admin</string>
+    <string name="remove_user">Remove user</string>
 
     <!-- Registration -->
-
-
 </resources>

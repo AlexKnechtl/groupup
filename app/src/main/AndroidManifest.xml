@@ -145,7 +145,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".group.MyGroupView"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/GroupViewTheme"/>
 
         <meta-data
             android:name="preloaded_fonts"

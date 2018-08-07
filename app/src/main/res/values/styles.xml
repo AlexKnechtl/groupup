@@ -12,8 +12,26 @@
         <!-- Text -->
         <item name="android:textColorPrimary">@color/colorAccent</item>
         <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/colorPrimaryDark</item>
 
         <item name="android:windowBackground">@drawable/background</item>
+        <item name="android:fontFamily">@font/dosis_semibold</item>
+    </style>
+
+    <style name="GroupViewTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Colors -->
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@android:color/background_light</item>
+
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+
+        <!-- Text Colors -->
+        <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/darkGray</item>
+
+        <item name="android:windowBackground">@drawable/background_dark</item>
         <item name="android:fontFamily">@font/dosis_semibold</item>
     </style>
 
@@ -25,6 +43,7 @@
         <item name="android:colorBackground">@android:color/background_light</item>
 
         <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/colorPrimaryDark</item>
 
         <!-- Text -->
         <item name="android:textColorPrimary">@color/colorAccent</item>
@@ -71,7 +90,8 @@
     <!-- Important for Button in Registration Process -->
     <style name="ButtonStyle" parent="@android:style/Widget.Button">
         <item name="android:textColor">@android:color/holo_purple</item>
-        <item name="android:background">@android:drawable/btn_default</item><!-- only way to change this is to change the src image -->
+        <item name="android:background">@android:drawable/btn_default
+        </item><!-- only way to change this is to change the src image -->
         <item name="android:layout_width">80.0px</item>
         <item name="android:layout_height">40.0px</item>
     </style>

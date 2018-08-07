@@ -133,7 +133,7 @@ public class GroupView extends AppCompatActivity {
         membersList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class MembersViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+    public static class MembersViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
 
@@ -155,14 +155,6 @@ public class GroupView extends AppCompatActivity {
         public void setThumbImage(String thumb_image, Context context) {
             CircleImageView userImageView = mView.findViewById(R.id.user_picture);
             Picasso.with(context).load(thumb_image).placeholder(R.drawable.profile_white).into(userImageView);
-        }
-
-        //ToDo Add Menu Option when User is pressed: Chat, Show Profile, Rating, Report
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.setHeaderTitle("Select The Action");
-            menu.add(0, v.getId(), 0, "Send a message");//groupId, itemId, order, title
-            menu.add(0, v.getId(), 0, "SMS");
         }
     }
 

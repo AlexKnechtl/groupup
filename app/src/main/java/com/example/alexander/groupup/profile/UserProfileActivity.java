@@ -42,8 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserProfileActivity extends AppCompatActivity {
 
     //XML
-    private TextView mDisplayNameAge, mDisplayLocation, mFabFriendText
-            ,fabMessageBubble, mStatus, backExplorerText, friendsCounter, languages;
+    private TextView mDisplayNameAge, mDisplayLocation, mFabFriendText, fabMessageBubble, mStatus, backExplorerText, friendsCounter, languages;
     private CircleImageView mUserProfile;
     private FloatingActionButton mFriendFab, backExplorerFab, messageFab;
 
@@ -329,23 +328,12 @@ public class UserProfileActivity extends AppCompatActivity {
         intent.putExtra("user_id", mCurrentUser.getUid());
         intent.putExtra("receiver_user_id", receiver_user_id);
 
-        UserDatabase.child(mCurrentUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        Map myUserMap = new HashMap<>();
+        myUserMap.put("name", myProfileName);
+        myUserMap.put("city", myProfileCity);
+        myUserMap.put("thumb_image", myProfileThumbImage);
 
-                Map myUserMap = new HashMap<>();
-                myUserMap.put("name", myProfileName);
-                myUserMap.put("city", myProfileCity);
-                myUserMap.put("thumb_image", myProfileThumbImage);
-
-                UserDatabase.child(receiver_user_id).child("chats").child(mCurrentUser.getUid()).updateChildren(myUserMap);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        UserDatabase.child(receiver_user_id).child("chats").child(mCurrentUser.getUid()).updateChildren(myUserMap);
 
         Map userMap = new HashMap<>();
         userMap.put("thumb_image", userThumbImage);
@@ -357,7 +345,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void checkFriendState() {
-        MyAccountDatabase.addValueEventListener(new ValueEventListener() {
+        MyAccountDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 myProfileName = dataSnapshot.child("name").getValue().toString();

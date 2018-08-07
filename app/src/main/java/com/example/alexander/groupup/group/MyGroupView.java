@@ -9,13 +9,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.chat.GroupChat;
+import com.example.alexander.groupup.chat.SingleChat;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.main.ProfileActivity;
 import com.example.alexander.groupup.models.UserModel;
@@ -31,6 +36,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -48,6 +56,7 @@ public class MyGroupView extends AppCompatActivity {
 
     //Variables
     private String groupId, latLng, user_id;
+    private String userName, userCity, userThumbImage, rank;
     boolean fabIsOpen = false;
     long groupMembers;
 
@@ -83,22 +92,9 @@ public class MyGroupView extends AppCompatActivity {
         ) {
 
             @Override
-            protected void populateViewHolder(final membersViewHolder viewHolder, UserModel user, int position) {
+            protected void populateViewHolder(final membersViewHolder viewHolder, final UserModel user, int position) {
 
                 final String list_user_id = getRef(position).getKey();
-
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (list_user_id.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                            startActivity(new Intent(MyGroupView.this, ProfileActivity.class));
-                        } else {
-                            Intent intent = new Intent(MyGroupView.this, UserProfileActivity.class);
-                            intent.putExtra("user_id", list_user_id);
-                            startActivity(intent);
-                        }
-                    }
-                });
 
                 UserDatabase.child(list_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -116,6 +112,113 @@ public class MyGroupView extends AppCompatActivity {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
+                    }
+                });
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (list_user_id.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                            startActivity(new Intent(MyGroupView.this, ProfileActivity.class));
+                        } else {
+                            Intent intent = new Intent(MyGroupView.this, UserProfileActivity.class);
+                            intent.putExtra("user_id", list_user_id);
+                            startActivity(intent);
+                        }
+                    }
+                });
+
+                viewHolder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        PopupMenu popupMenu = new PopupMenu(MyGroupView.this, viewHolder.mView);
+
+                        if (rank.equals("admin") || rank.equals("creator")) {
+                            popupMenu.inflate(R.menu.menu_user_options_admin);
+                            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    switch (item.getItemId()) {
+                                        case R.id.message_option:
+                                            UserDatabase.child(list_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    Map myUserMap = new HashMap<>();
+                                                    myUserMap.put("name", userName);
+                                                    myUserMap.put("city", userCity);
+                                                    myUserMap.put("thumb_image", userThumbImage);
+
+                                                    Map userMap = new HashMap<>();
+                                                    userMap.put("thumb_image", dataSnapshot.child("thumb_image").getValue().toString());
+                                                    userMap.put("name", dataSnapshot.child("name").getValue().toString());
+                                                    userMap.put("city", dataSnapshot.child("city").getValue().toString());
+
+                                                    UserDatabase.child(user_id).child("chats").child(list_user_id).updateChildren(userMap);
+                                                    UserDatabase.child(list_user_id).child("chats").child(user_id).updateChildren(myUserMap);
+
+                                                    Intent intent = new Intent(MyGroupView.this, SingleChat.class);
+                                                    intent.putExtra("user_id", user_id);
+                                                    intent.putExtra("receiver_user_id", list_user_id);
+                                                    startActivity(intent);
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
+                                            break;
+                                        case R.id.make_admin_option:
+                                            GroupDatabase.child("members").child(list_user_id).child("rank").setValue("admin");
+                                            break;
+                                        case R.id.remove_user_option:
+                                            UserDatabase.child(list_user_id).child("my_group").removeValue();
+
+                                            GroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    String members = dataSnapshot.child("member_count").getValue().toString();
+                                                    groupMembers = Long.parseLong(members);
+                                                    groupMembers--;
+
+                                                    if (groupMembers == 0) {
+                                                        DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference().child("GroupChat").child(groupId);
+                                                        GroupDatabase.removeValue();
+                                                        GroupChatDatabase.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                Intent intent = new Intent(MyGroupView.this, HomeActivity.class);
+                                                                startActivity(intent);
+                                                            }
+                                                        });
+
+                                                    } else if (groupMembers > 0) {
+                                                        GroupMemberDatabase.child(list_user_id).removeValue();
+                                                        GroupDatabase.child("member_count").setValue(groupMembers);
+                                                        memberCount.setText(Long.toString(groupMembers));
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
+                                            break;
+                                    }
+                                    return false;
+                                }
+                            });
+
+                        } else if (rank.equals("member"))
+
+                        {
+
+                        }
+
+
+                        popupMenu.show();
+                        return true;
                     }
                 });
             }
@@ -209,6 +312,7 @@ public class MyGroupView extends AppCompatActivity {
                 String activity = dataSnapshot.child("activity").getValue().toString();
                 String location = dataSnapshot.child("location").getValue().toString();
                 latLng = dataSnapshot.child("latlng").getValue().toString();
+                rank = dataSnapshot.child("members").child(user_id).child("rank").getValue().toString();
 
                 headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
                         + " @" + location);
@@ -221,6 +325,20 @@ public class MyGroupView extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        UserDatabase.child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userName = dataSnapshot.child("name").getValue().toString();
+                userCity = dataSnapshot.child("city").getValue().toString();
+                userThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
@@ -253,8 +371,6 @@ public class MyGroupView extends AppCompatActivity {
 
     public void leaveGroupClick(View view) {
         UserDatabase.child(user_id).child("my_group").removeValue();
-        groupMembers--;
-        GroupMemberDatabase.child(user_id).removeValue();
 
         GroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -266,7 +382,6 @@ public class MyGroupView extends AppCompatActivity {
                 if (groupMembers == 0) {
                     DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference().child("GroupChat").child(groupId);
                     GroupDatabase.removeValue();
-                    UserDatabase.child(user_id).child("my_group").removeValue();
                     GroupChatDatabase.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -276,7 +391,6 @@ public class MyGroupView extends AppCompatActivity {
                     });
 
                 } else if (groupMembers > 0) {
-                    UserDatabase.child(user_id).child("my_group").removeValue();
                     GroupMemberDatabase.child(user_id).removeValue();
                     GroupDatabase.child("member_count").setValue(groupMembers).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
