@@ -78,6 +78,7 @@ public class SingleChat extends AppCompatActivity {
         //Initialize FireBase
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         ChatDatabase = FirebaseDatabase.getInstance().getReference().child("Chats");
+        ChatDatabase.keepSynced(true);
 
         loadMessages();
 

@@ -526,7 +526,6 @@ public class HomeActivity extends AppCompatActivity {
         locationNear = dialog.findViewById(R.id.location_near_popup);
         chooseLocation = dialog.findViewById(R.id.choose_location_popup);
 
-
         locationNear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

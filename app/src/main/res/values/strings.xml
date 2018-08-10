@@ -175,6 +175,10 @@
     <string name="business_kit_headline">The GroupUp! Business Kit is a new authentic way to represent a brand, product or event and reach your target audience.</string>
     <string name="make_admin">Make Group Admin</string>
     <string name="remove_user">Remove user</string>
+    <string name="group_request">Group Request</string>
+    <string name="accept_request">Accept Request</string>
+    <string name="decline_request">Decline Request</string>
+    <string name="show_user">Show User</string>
 
     <!-- Registration -->
 </resources>

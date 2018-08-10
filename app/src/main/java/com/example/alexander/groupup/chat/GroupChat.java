@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.adapters.GroupChatAdapter;
@@ -67,7 +68,7 @@ public class GroupChat extends AppCompatActivity {
         groupChatRecyclerView.setHasFixedSize(true);
         groupChatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        groupChatAdapter = new GroupChatAdapter(messagesList, context);
+        groupChatAdapter = new GroupChatAdapter(messagesList, context, group_id);
 
         groupChatRecyclerView.setAdapter(groupChatAdapter);
 
@@ -122,9 +123,7 @@ public class GroupChat extends AppCompatActivity {
     public void sendGroupMessage(View view) {
         String message = messageText.getText().toString();
 
-        //ToDo Add Date Headline
         if (!TextUtils.isEmpty(message)) {
-
             java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("HH:mm");
             String currentTime = formatter.format(new Date());
 
@@ -138,6 +137,7 @@ public class GroupChat extends AppCompatActivity {
             messageMap.put("time", currentTime);
             messageMap.put("from", user_id);
             messageMap.put("name", name);
+            messageMap.put("id", pushId);
             messageMap.put("type", "message");
 
             GroupChatDatabase.child(pushId).updateChildren(messageMap);
@@ -149,10 +149,9 @@ public class GroupChat extends AppCompatActivity {
         GroupChatDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                MessagesModel message = dataSnapshot.getValue(MessagesModel.class);
 
-                MessagesModel messages = dataSnapshot.getValue(MessagesModel.class);
-
-                messagesList.add(messages);
+                messagesList.add(message);
                 groupChatAdapter.notifyDataSetChanged();
                 groupChatRecyclerView.scrollToPosition(messagesList.size() - 1);
             }
@@ -164,7 +163,15 @@ public class GroupChat extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                String key = dataSnapshot.getKey();
 
+                for (MessagesModel testModel : messagesList) {
+                    if (key.equals(testModel.getId())) {
+                        messagesList.remove(testModel);
+                        groupChatAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
             }
 
             @Override

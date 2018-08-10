@@ -166,4 +166,8 @@
     <string name="business_kit_headline">Das GroupUp! Business Kit ist eine neue authentische Möglichkeit, um Firmen, Produkte oder Events vorzustellen und somit die richtige Zielgruppe zu erreichen.</string>
     <string name="make_admin">Zum Admin machen</string>
     <string name="remove_user">User entfernen</string>
+    <string name="group_request">Gruppen Anfrage</string>
+    <string name="accept_request">Anfrage annehmen</string>
+    <string name="decline_request">Anfrage löschen</string>
+    <string name="show_user">Zeige User</string>
 </resources>
