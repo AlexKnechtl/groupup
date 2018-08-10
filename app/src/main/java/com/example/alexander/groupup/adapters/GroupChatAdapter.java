@@ -2,6 +2,7 @@ package com.example.alexander.groupup.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +19,11 @@ import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.MessagesModel;
 import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -110,19 +114,48 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
                     PopupMenu popupMenu = new PopupMenu(context, viewHolder.acceptRequest);
                     popupMenu.inflate(R.menu.menu_group_request);
 
-                    Toast.makeText(context, messagesList.toString(), Toast.LENGTH_SHORT).show();
-
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
                             switch (item.getItemId()) {
                                 case R.id.accept_request:
-                                    reference.child("Users").child(c.getFrom()).child("my_group").setValue(groupId);
-                                    reference.child("Groups").child(groupId).child("members").child(c.getFrom())
-                                            .child("rank").setValue("member");
-                                    reference.child("GroupChat").child(groupId).child(c.getId()).removeValue();
+
+                                    Toast.makeText(context, c.getFrom(), Toast.LENGTH_SHORT).show();
+
+                                    reference.child("Users").child(c.getFrom()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.child("my_group").exists()) {
+                                                reference.child("Users").child(c.getFrom()).child("my_group").setValue(groupId);
+                                                reference.child("Groups").child(groupId).child("members").child(c.getFrom())
+                                                        .child("rank").setValue("member");
+                                                reference.child("GroupChat").child(groupId).child(c.getId()).removeValue();
+
+                                                reference.child("Groups").child(groupId).child("member_count").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        reference.child("Groups").child(groupId).child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
+
+                                            } else if (!dataSnapshot.child("my_group").exists()){
+                                                Toast.makeText(context, "User ist bereits einer andere Gruppe beigetreten.", Toast.LENGTH_SHORT).show();
+                                                reference.child("GroupChat").child(groupId).child(c.getId()).removeValue();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
                                     break;
                                 case R.id.decline_request:
                                     reference.child("GroupChat").child(groupId).child(c.getId()).removeValue();
