@@ -95,6 +95,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private GroupsAdapter groupsAdapter;
 
+    double radius = 10;
     private ArrayList groups;
 
     //Variables
@@ -150,7 +151,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.toString().isEmpty()) return;
-                geoQuery.setRadius(Double.parseDouble(s.toString()));
+                radius = Double.parseDouble(s.toString());
+                geoQuery.setRadius(radius);
             }
 
             @Override
@@ -212,7 +214,7 @@ public class HomeActivity extends AppCompatActivity {
     private void setupGeoFire() {
         geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("GeoFire"));
 
-        geoQuery = geoFire.queryAtLocation(currentLocation, 100);
+        geoQuery = geoFire.queryAtLocation(currentLocation, radius);
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
