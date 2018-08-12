@@ -12,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -637,6 +638,19 @@ public class HomeActivity extends AppCompatActivity {
 
         }
         else{
+            try {
+                int off = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);
+                if (off == 0) {
+                    Toast.makeText(this, "We need your location to show nearby groups...", Toast.LENGTH_LONG).show();
+                    Intent onGPS = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(onGPS);
+                    return;
+                }
+            }catch (Settings.SettingNotFoundException e){
+                Log.e("Access Locationsettings", e.getMessage());
+                e.printStackTrace();
+                return;
+            }
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
