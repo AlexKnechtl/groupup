@@ -520,14 +520,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void searchGroupLocationClick(View view) {
-
         Button locationNear, chooseLocation;
 
         dialog.setContentView(R.layout.popup_two_options);
 
         locationNear = dialog.findViewById(R.id.location_near_popup);
         chooseLocation = dialog.findViewById(R.id.choose_location_popup);
-
 
         locationNear.setOnClickListener(new View.OnClickListener() {
             @Override

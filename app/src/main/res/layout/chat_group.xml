@@ -27,6 +27,7 @@
             android:layout_marginStart="4dp"
             android:singleLine="true"
             android:text="GroupActivity"
+            android:textColor="@color/colorAccent"
             android:textSize="22sp" />
     </LinearLayout>
 

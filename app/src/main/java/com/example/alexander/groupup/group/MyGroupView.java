@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -394,10 +393,24 @@ public class MyGroupView extends AppCompatActivity {
 
                 } else if (groupMembers > 0) {
                     GroupMemberDatabase.child(user_id).removeValue();
+                    DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference()
+                            .child("GroupChat").child(groupId);
+
+                    DatabaseReference user_message_push = GroupChatDatabase.push();
+                    String pushId = user_message_push.getKey();
+
+                    Map messageMap = new HashMap();
+                    messageMap.put("message", userName + " left the Group.");
+                    messageMap.put("from", user_id);
+                    messageMap.put("type", "information");
+
+                    GroupChatDatabase.child(pushId).updateChildren(messageMap);
+
                     GroupDatabase.child("member_count").setValue(groupMembers).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Intent intent = new Intent(MyGroupView.this, HomeActivity.class);
+                            Toast.makeText(MyGroupView.this, "You left the Group.", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                         }
                     });

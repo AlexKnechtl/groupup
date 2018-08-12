@@ -72,6 +72,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".chat.GroupChat"
+            android:theme="@style/GroupViewTheme"
             android:screenOrientation="portrait" />
         <activity
             android:name=".chat.SingleChat"

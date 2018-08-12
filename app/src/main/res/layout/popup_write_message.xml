@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="280dp"
+    android:layout_height="320dp"
+    android:layout_gravity="center"
+    android:background="@drawable/assistant_bubble"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/popup_message_headline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dosis_bold"
+        android:gravity="center"
+        android:text="Write a Message!"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/popup_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/popup_message_headline"
+        android:backgroundTint="@color/fui_transparent"
+        android:gravity="start"
+        android:hint="Write a message here"
+        android:maxLength="300"
+        android:maxLines="6"
+        android:textColor="@android:color/black"
+        android:textCursorDrawable="@drawable/cursor_color" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/popup_message_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="4dp"
+        android:backgroundTint="@color/colorAccent"
+        android:scaleType="center"
+        android:src="@drawable/material_done_white_36"
+        android:tint="@color/colorRegistrate"
+        app:backgroundTint="@color/darkGray"
+        app:fabSize="mini" />
+</RelativeLayout>
