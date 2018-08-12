@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="125dp"
         android:layout_weight="0"
         android:clipChildren="false"
-        android:orientation="horizontal"
         android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
+
         <requestFocus />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -48,12 +49,11 @@
         android:hint="Search"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
-        android:textColor="@android:color/darker_gray"
-        />
+        android:textColor="@android:color/darker_gray" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_sport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 </LinearLayout>

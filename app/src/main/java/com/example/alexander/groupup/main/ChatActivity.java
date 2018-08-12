@@ -23,11 +23,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,7 +41,6 @@ public class ChatActivity extends AppCompatActivity {
 
     //XML
     private MaterialSearchView searchView;
-    private FloatingActionButton newChatFab;
     private RecyclerView chatsList;
     private TextView noChats;
 
@@ -47,6 +49,7 @@ public class ChatActivity extends AppCompatActivity {
 
     //Firebase
     private DatabaseReference ChatUsersDatabase;
+    private Query chatTimeQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +63,15 @@ public class ChatActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         searchView = findViewById(R.id.material_search_view_chat);
-        newChatFab = findViewById(R.id.new_chat_fab);
-
         noChats = findViewById(R.id.no_chats);
         chatsList = findViewById(R.id.chat_list);
 
         chatsList.setHasFixedSize(true);
-        chatsList.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+
+        chatsList.setLayoutManager(linearLayoutManager);
 
         ChatUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("chats");
         ChatUsersDatabase.keepSynced(true);
@@ -99,17 +104,20 @@ public class ChatActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
+        chatTimeQuery = ChatUsersDatabase.orderByChild("time").limitToLast(20);
+
         FirebaseRecyclerAdapter<UserModel, ChatsViewholder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserModel, ChatsViewholder>(
                 UserModel.class,
-                R.layout.single_layout_user,
+                R.layout.single_layout_chat,
                 ChatsViewholder.class,
-                ChatUsersDatabase
+                chatTimeQuery
         ) {
 
             @Override
             protected void populateViewHolder(ChatsViewholder viewHolder, UserModel user, int position) {
+                viewHolder.setDate(user.getDate());
                 viewHolder.setName(user.getName());
-                viewHolder.setCity(user.getCity());
+                viewHolder.setMessage(user.getMessage());
                 viewHolder.setThumbImage(user.getThumb_image(), ChatActivity.this);
 
                 final String list_user_id = getRef(position).getKey();
@@ -142,14 +150,19 @@ public class ChatActivity extends AppCompatActivity {
             userNameView.setText(name);
         }
 
-        public void setCity(String city) {
+        public void setMessage(String message) {
             TextView friendsDate = mView.findViewById(R.id.user_single_information);
-            friendsDate.setText(city);
+            friendsDate.setText(message);
         }
 
         public void setThumbImage(String thumb_image, Context context) {
             CircleImageView userImageView = mView.findViewById(R.id.user_single_image);
             Picasso.with(context).load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.profile_white).into(userImageView);
+        }
+
+        public void setDate(String date) {
+            TextView messageDate = mView.findViewById(R.id.message_date);
+            messageDate.setText(date);
         }
     }
 

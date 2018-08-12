@@ -33,7 +33,6 @@ public class InterviewActivitySport extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //mLanguageStringsReference.keepSynced(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_sports_activity);
 

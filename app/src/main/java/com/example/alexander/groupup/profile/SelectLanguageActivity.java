@@ -111,8 +111,6 @@ public class SelectLanguageActivity extends AppCompatActivity {
         @NonNull
         @Override
         public LanguagesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View mView;
-
             View v = LayoutInflater.from(c).inflate(R.layout.singlelayout_select_language, parent, false);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -195,9 +193,10 @@ public class SelectLanguageActivity extends AppCompatActivity {
             if(map.getSelected())
                 mylanguages += map.getLanguage() + ", ";
 
-        if(mylanguages.length()>0)
+        if(mylanguages.length() > 0)
             mylanguages = mylanguages.substring(0, mylanguages.length()-2);
 
         Languages.setValue(mylanguages);
+        super.onBackPressed();
     }
 }
