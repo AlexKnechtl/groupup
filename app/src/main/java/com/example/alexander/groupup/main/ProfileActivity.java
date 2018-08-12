@@ -61,7 +61,6 @@ public class ProfileActivity extends AppCompatActivity {
     private CircleImageView mProfileImageView;
     private TextView mProfileName, mProfileLocation, mProfileStatus, friendsCounter, languagesTextView;
     private RelativeLayout relativeLayout, languages;
-    private FloatingActionButton fabSettings;
 
     //Constants
     private static final int GALLERY_PICK = 1;
@@ -72,7 +71,7 @@ public class ProfileActivity extends AppCompatActivity {
     private PopupWindow mPopupWindow;
 
     //Firebase
-    private DatabaseReference UserDatabase;
+    private DatabaseReference UserDatabase, HobbyDatabase;
     private StorageReference ProfileImageStorage;
 
     //Variables
@@ -94,6 +93,8 @@ public class ProfileActivity extends AppCompatActivity {
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
         UserDatabase.keepSynced(true);
 
+        HobbyDatabase = FirebaseDatabase.getInstance().getReference("Users").child(user_id).child("hobbys");
+
         UserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -103,10 +104,6 @@ public class ProfileActivity extends AppCompatActivity {
                 String age_day = dataSnapshot.child("age_day").getValue().toString();
                 String age_year = dataSnapshot.child("age_year").getValue().toString();
                 String friends_count = dataSnapshot.child("friends_count").getValue().toString();
-
-                languagesTextView.setText(dataSnapshot.child("Languages").getValue().toString());
-                if (languagesTextView.getText().equals(""))
-                    languagesTextView.setText("Keine Sprachen");
 
                 final String image = dataSnapshot.child("image").getValue().toString();
                 Picasso.with(ProfileActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
@@ -154,6 +151,21 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
+        HobbyDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                languagesTextView.setText(dataSnapshot.child("languages").getValue().toString());
+                if (languagesTextView.getText().equals(""))
+                    languagesTextView.setText("Keine Sprachen");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         friendsCounter.setOnClickListener(new View.OnClickListener()
 
@@ -368,72 +380,5 @@ public class ProfileActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    languagesTextView.setText(dataSnapshot.getValue().toString());
-                    if (languagesTextView.getText().equals(""))
-                        languagesTextView.setText("Keine Sprachen");
-                } catch (Exception e) {
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    languagesTextView.setText(dataSnapshot.getValue().toString());
-                    if (languagesTextView.getText().equals(""))
-                        languagesTextView.setText("Keine Sprachen");
-                } catch (Exception e) {
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    languagesTextView.setText(dataSnapshot.getValue().toString());
-                    if (languagesTextView.getText().equals(""))
-                        languagesTextView.setText("Keine Sprachen");
-                } catch (Exception e) {
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 }
