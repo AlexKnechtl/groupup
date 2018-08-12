@@ -76,7 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
     private StorageReference ProfileImageStorage;
 
     //Variables
-    private Context mContext = ProfileActivity.this;
+    private Context mContext = getApplicationContext();
     private String user_id;
 
     @Override
@@ -84,41 +84,15 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_profile);
 
-        //Initialize Firebase
         Bundle bundle = getIntent().getExtras();
         user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        initializeXML();
         setupBottomNavigationView();
 
-        languagesTextView = findViewById(R.id.languages_interest_text_view);
-
-        FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("Languages").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    languagesTextView.setText(dataSnapshot.getValue().toString());
-                    if (languagesTextView.getText().equals(""))
-                        languagesTextView.setText("Keine Sprachen");
-                } catch (Exception e) {
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
         ProfileImageStorage = FirebaseStorage.getInstance().getReference();
-
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
         UserDatabase.keepSynced(true);
-
-        // Get the application context
-        mContext = getApplicationContext();
-
-        initializeXML();
 
         UserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -129,6 +103,10 @@ public class ProfileActivity extends AppCompatActivity {
                 String age_day = dataSnapshot.child("age_day").getValue().toString();
                 String age_year = dataSnapshot.child("age_year").getValue().toString();
                 String friends_count = dataSnapshot.child("friends_count").getValue().toString();
+
+                languagesTextView.setText(dataSnapshot.child("Languages").getValue().toString());
+                if (languagesTextView.getText().equals(""))
+                    languagesTextView.setText("Keine Sprachen");
 
                 final String image = dataSnapshot.child("image").getValue().toString();
                 Picasso.with(ProfileActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
@@ -364,6 +342,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initializeXML() {
+        languagesTextView = findViewById(R.id.languages_interest_text_view);
         mProfileStatus = findViewById(R.id.profile_status);
         mProfileImageView = findViewById(R.id.user_image);
         mProfileName = findViewById(R.id.profile_name_textview);
