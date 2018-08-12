@@ -3,13 +3,14 @@ package com.example.alexander.groupup.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -25,7 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.GroupChatViewHolder> {
 
@@ -52,13 +55,13 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
         private TextView timeText;
         private TextView name;
         private CardView background;
-        private FloatingActionButton acceptRequest;
+        private ImageButton acceptRequest;
 
         public GroupChatViewHolder(View view) {
             super(view);
             messageText = view.findViewById(R.id.group_chat_text);
             messageLayout = view.findViewById(R.id.group_chat_layout);
-            acceptRequest = view.findViewById(R.id.request_fab);
+            acceptRequest = view.findViewById(R.id.request_accept_btn);
             timeText = view.findViewById(R.id.group_chat_timestamp);
             name = view.findViewById(R.id.group_chat_author);
             background = view.findViewById(R.id.group_chat_background);
@@ -67,6 +70,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
 
     @Override
     public void onBindViewHolder(final GroupChatViewHolder viewHolder, final int position) {
+
 
         final MessagesModel c = messagesList.get(position);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -82,9 +86,14 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
         });
 
         if (type.equals("message")) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
+                    (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(28, 14, 28, 14);
+            viewHolder.background.setLayoutParams(params);
+            viewHolder.messageLayout.setGravity(Gravity.NO_GRAVITY);
             if (from_user.equals(mAuth.getCurrentUser().getUid())) {
                 viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-                viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChatUser));
+                viewHolder.background.setCardBackgroundColor(viewHolder.background.getResources().getColor(R.color.colorChatUser));
                 viewHolder.acceptRequest.setVisibility(View.GONE);
                 viewHolder.name.setVisibility(View.GONE);
                 viewHolder.timeText.setText(c.getTime());
@@ -101,6 +110,11 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
             }
 
         } else if (type.equals("request")) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
+                    (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(28, 14, 28, 14);
+            viewHolder.background.setLayoutParams(params);
+            viewHolder.messageLayout.setGravity(Gravity.NO_GRAVITY);
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
             viewHolder.timeText.setVisibility(View.GONE);
@@ -132,11 +146,23 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
                                                 reference.child("Groups").child(groupId).child("members").child(c.getFrom())
                                                         .child("rank").setValue("member");
                                                 reference.child("GroupChat").child(groupId).child(c.getId()).removeValue();
-
                                                 reference.child("Groups").child(groupId).child("member_count").addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                         reference.child("Groups").child(groupId).child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
+
+                                                        DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference()
+                                                                .child("GroupChat").child(groupId);
+
+                                                        DatabaseReference user_message_push = GroupChatDatabase.push();
+                                                        String pushId = user_message_push.getKey();
+
+                                                        Map messageMap = new HashMap();
+                                                        messageMap.put("message", c.getName() + " joined the Group.");
+                                                        messageMap.put("from", c.getFrom());
+                                                        messageMap.put("type", "information");
+
+                                                        GroupChatDatabase.child(pushId).updateChildren(messageMap);
                                                     }
 
                                                     @Override
@@ -145,8 +171,8 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
                                                     }
                                                 });
 
-                                            } else if (!dataSnapshot.child("my_group").exists()){
-                                                Toast.makeText(context, "User ist bereits einer andere Gruppe beigetreten.", Toast.LENGTH_SHORT).show();
+                                            } else if (!dataSnapshot.child("my_group").exists()) {
+                                                Toast.makeText(context, "User ist bereits einer anderen Gruppe beigetreten.", Toast.LENGTH_SHORT).show();
                                                 reference.child("GroupChat").child(groupId).child(c.getId()).removeValue();
                                             }
                                         }
@@ -171,6 +197,16 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
                     popupMenu.show();
                 }
             });
+        } else if (type.equals("information")) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
+                    (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 24, 0, 24);
+            viewHolder.background.setLayoutParams(params);
+            viewHolder.messageLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+            viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.softGreyBackground));
+            viewHolder.acceptRequest.setVisibility(View.GONE);
+            viewHolder.name.setVisibility(View.GONE);
+            viewHolder.timeText.setVisibility(View.GONE);
         }
         viewHolder.messageText.setText(c.getMessage());
     }

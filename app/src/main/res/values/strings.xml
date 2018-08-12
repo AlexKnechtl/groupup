@@ -179,6 +179,33 @@
     <string name="accept_request">Accept Request</string>
     <string name="decline_request">Decline Request</string>
     <string name="show_user">Show User</string>
+    <string name="which_languages">Which languages do you speak?</string>
 
     <!-- Registration -->
+
+    <!-- Languages -->
+    <string name="german">German</string>
+    <string name="english">English</string>
+    <string name="chinese">Chinese</string>
+    <string name="croatian">Croatian</string>
+    <string name="portuguese">Portuguese</string>
+    <string name="finnish">Finnsih</string>
+    <string name="french">French</string>
+    <string name="greek">Greek</string>
+    <string name="hungarian">Hungarian</string>
+    <string name="serbian">Serbian</string>
+    <string name="swedish">Swedish</string>
+    <string name="turkish">Turkish</string>
+    <string name="ukrainian">Ukrainian</string>
+    <string name="russian">Russian</string>
+    <string name="romanian">Romanian</string>
+    <string name="polish">Polish</string>
+    <string name="korean">Korean</string>
+    <string name="japanese">Japanese</string>
+    <string name="arabic">Arabic</string>
+    <string name="dutch">Dutch</string>
+    <string name="slovak">Slovak</string>
+    <string name="spanish">Spanish</string>
+    <string name="italian">Italian</string>
+    <string name="vietnamese">Vietnamese</string>
 </resources>

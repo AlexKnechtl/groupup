@@ -328,6 +328,19 @@ public class GroupView extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 GroupDatabase.child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
+
+                                DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference()
+                                        .child("GroupChat").child(groupId);
+
+                                DatabaseReference user_message_push = GroupChatDatabase.push();
+                                String pushId = user_message_push.getKey();
+
+                                Map messageMap = new HashMap();
+                                messageMap.put("message", name + " joined the Group.");
+                                messageMap.put("from", user_id);
+                                messageMap.put("type", "information");
+
+                                GroupChatDatabase.child(pushId).updateChildren(messageMap);
                             }
 
                             @Override

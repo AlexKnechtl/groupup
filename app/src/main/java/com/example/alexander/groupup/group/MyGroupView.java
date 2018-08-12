@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.chat.GroupChat;
@@ -392,10 +393,24 @@ public class MyGroupView extends AppCompatActivity {
 
                 } else if (groupMembers > 0) {
                     GroupMemberDatabase.child(user_id).removeValue();
+                    DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference()
+                            .child("GroupChat").child(groupId);
+
+                    DatabaseReference user_message_push = GroupChatDatabase.push();
+                    String pushId = user_message_push.getKey();
+
+                    Map messageMap = new HashMap();
+                    messageMap.put("message", userName + " left the Group.");
+                    messageMap.put("from", user_id);
+                    messageMap.put("type", "information");
+
+                    GroupChatDatabase.child(pushId).updateChildren(messageMap);
+
                     GroupDatabase.child("member_count").setValue(groupMembers).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Intent intent = new Intent(MyGroupView.this, HomeActivity.class);
+                            Toast.makeText(MyGroupView.this, "You left the Group.", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                         }
                     });
