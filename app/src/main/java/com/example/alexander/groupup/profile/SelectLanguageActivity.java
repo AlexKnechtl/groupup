@@ -195,9 +195,10 @@ public class SelectLanguageActivity extends AppCompatActivity {
             if(map.getSelected())
                 mylanguages += map.getLanguage() + ", ";
 
-        if(mylanguages.length()>0)
+        if(mylanguages.length() > 0)
             mylanguages = mylanguages.substring(0, mylanguages.length()-2);
 
         Languages.setValue(mylanguages);
+        super.onBackPressed();
     }
 }

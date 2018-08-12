@@ -6,15 +6,9 @@ package com.example.alexander.groupup.models;
 
 public class UserModel {
 
-    public String name;
-    public String age;
-    public String thumb_image;
-    public String city;
-    public String date;
-    public String message;
+    public String name, age, thumb_image, city, date, message;
 
-    public UserModel() {
-    }
+    public UserModel() { }
 
     public UserModel(String name, String age, String thumbmail, String city, String date, String message) {
         this.name = name;

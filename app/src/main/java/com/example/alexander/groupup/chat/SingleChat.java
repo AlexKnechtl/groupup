@@ -16,6 +16,8 @@ import com.example.alexander.groupup.adapters.MessagesAdapter;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.main.ChatActivity;
 import com.example.alexander.groupup.models.MessagesModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +30,7 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +47,7 @@ public class SingleChat extends AppCompatActivity {
     private RecyclerView messagesRecyclerView;
 
     //Variables
-    private String user_id, receiver_user_id;
+    private String user_id, receiver_user_id, date;
     private final List<MessagesModel> messagesList = new ArrayList<>();
     private MessagesAdapter messagesAdapter;
 
@@ -60,6 +63,13 @@ public class SingleChat extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         receiver_user_id = bundle.getString("receiver_user_id");
         user_id = bundle.getString("user_id");
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        date = day + "." + month + "." + year;
 
         //Find IDs
         userImage = findViewById(R.id.chat_user_image);
@@ -131,7 +141,7 @@ public class SingleChat extends AppCompatActivity {
     }
 
     public void sendMessageClick(View view) {
-        String message = messageText.getText().toString();
+        final String message = messageText.getText().toString();
 
         //ToDo Add Date Headline
         if (!TextUtils.isEmpty(message)) {
@@ -156,8 +166,19 @@ public class SingleChat extends AppCompatActivity {
             messageUserMap.put(currentUserRef + "/" + pushId, messageMap);
             messageUserMap.put(receiverUserRef + "/" + pushId, messageMap);
 
-            ChatDatabase.updateChildren(messageUserMap);
-            messagesRecyclerView.smoothScrollToPosition(messagesList.size());
+            ChatDatabase.updateChildren(messageUserMap).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    messagesRecyclerView.smoothScrollToPosition(messagesList.size());
+
+                    Map userMessageMap = new HashMap();
+                    userMessageMap.put("message", message);
+                    userMessageMap.put("time", ServerValue.TIMESTAMP);
+                    userMessageMap.put("date", date);
+                    UserDatabase.child(user_id).child("chats").child(receiver_user_id).updateChildren(userMessageMap);
+                    UserDatabase.child(receiver_user_id).child("chats").child(user_id).updateChildren(userMessageMap);
+                }
+            });
         }
     }
 
