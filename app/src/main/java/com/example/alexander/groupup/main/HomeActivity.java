@@ -1,16 +1,20 @@
 package com.example.alexander.groupup.main;
 
-import android.app.Dialog;
+import  android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,9 +50,15 @@ import com.firebase.geofire.GeoQueryDataEventListener;
 import com.firebase.geofire.GeoQueryEventListener;
 import com.firebase.geofire.LocationCallback;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -68,6 +78,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -75,6 +86,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final float LOCATION_REFRESH_DISTANCE = 10.0f;
     private static final int REQUEST_CODE_PLACE_PICKER = 2;
+    private static final int REQUEST_LOCATION_PERMISSION = 3;
     //XML
     private RecyclerView recyclerView;
     private TextView location, locationName;
@@ -106,11 +118,17 @@ public class HomeActivity extends AppCompatActivity {
     private String user_id, group_id;
     private GeoLocation currentLocation = new GeoLocation(47.0727247,15.4335573); //Todo change this location. with setCurrentLocation()
 
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_home);
         FirebaseMessaging.getInstance().subscribeToTopic("TestTopic");
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        setCurrentLocation();
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
             @Override
@@ -530,7 +548,7 @@ public class HomeActivity extends AppCompatActivity {
         locationNear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                setCurrentLocation();
             }
         });
 
@@ -559,15 +577,17 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE_PLACE_PICKER && resultCode == RESULT_OK) {
-            displaySelectedPlace(data);
+            LatLng ll = PlacePicker.getPlace(this, data).getLatLng();
+            setLocationData(ll.latitude, ll.longitude);
+        }
+        else if(requestCode == REQUEST_LOCATION_PERMISSION){
+            if(resultCode == RESULT_OK){
+                setCurrentLocation();
+            }
         }
     }
 
-    private void displaySelectedPlace(Intent data) {
-        Place placeSelected = PlacePicker.getPlace(this, data);
-
-        Double latitude = placeSelected.getLatLng().latitude;
-        Double longitude = placeSelected.getLatLng().longitude;
+    private void setLocationData(double latitude, double longitude) {
 
         setCurrentLocation(new GeoLocation(latitude, longitude));
 
@@ -602,5 +622,29 @@ public class HomeActivity extends AppCompatActivity {
         private GroupModel group;
         private GeoLocation location;
         private String groupId;
+    }
+
+    public void setCurrentLocation(){
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_COARSE_LOCATION))
+            {
+                Toast.makeText(this, "We need your location to show nearby groups...", Toast.LENGTH_LONG).show();
+            }
+            else{}
+
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
+
+        }
+        else{
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if(location != null){
+                        setLocationData(location.getLatitude(), location.getLongitude());
+                    }
+                }
+            });
+        }
     }
 }
