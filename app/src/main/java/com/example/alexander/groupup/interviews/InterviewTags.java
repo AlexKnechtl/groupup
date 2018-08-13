@@ -80,9 +80,4 @@ public class InterviewTags extends AppCompatActivity {
         intent.putExtra("tag3", tag3);
         startActivity(intent);
     }
-
-    @Override
-    public void onBackPressed() {
-
-    }
 }

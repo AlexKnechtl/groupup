@@ -207,7 +207,4 @@ public class InterviewDescription extends AppCompatActivity {
         noDescription = findViewById(R.id.no_description);
         description = findViewById(R.id.edit_text_description);
     }
-
-    @Override
-    public void onBackPressed() { }
 }

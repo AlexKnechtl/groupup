@@ -60,9 +60,4 @@ public class InterviewPublic extends AppCompatActivity {
         intent.putExtra("publicStatus", "everybody");
         startActivity(intent);
     }
-
-    @Override
-    public void onBackPressed() {
-
-    }
 }

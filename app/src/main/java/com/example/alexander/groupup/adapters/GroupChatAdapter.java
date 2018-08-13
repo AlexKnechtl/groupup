@@ -71,7 +71,6 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.Grou
     @Override
     public void onBindViewHolder(final GroupChatViewHolder viewHolder, final int position) {
 
-
         final MessagesModel c = messagesList.get(position);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String from_user = c.getFrom();

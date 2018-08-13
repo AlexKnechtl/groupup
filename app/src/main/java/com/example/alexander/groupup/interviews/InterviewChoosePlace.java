@@ -164,8 +164,4 @@ public class InterviewChoosePlace extends AppCompatActivity {
             }
         });
     }
-    @Override
-    public void onBackPressed() {
-
-    }
 }

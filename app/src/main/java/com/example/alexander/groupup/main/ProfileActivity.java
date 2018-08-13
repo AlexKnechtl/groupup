@@ -75,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
     private StorageReference ProfileImageStorage;
 
     //Variables
-    private Context mContext = getApplicationContext();
+    private Context mContext;
     private String user_id;
 
     @Override
@@ -85,6 +85,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        mContext = getApplicationContext();
 
         initializeXML();
         setupBottomNavigationView();
@@ -155,9 +157,11 @@ public class ProfileActivity extends AppCompatActivity {
         HobbyDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                languagesTextView.setText(dataSnapshot.child("languages").getValue().toString());
-                if (languagesTextView.getText().equals(""))
-                    languagesTextView.setText("Keine Sprachen");
+                if (dataSnapshot.child("languages").exists()) {
+                    languagesTextView.setText(dataSnapshot.child("languages").getValue().toString());
+                    if (languagesTextView.getText().equals(""))
+                        languagesTextView.setText("Keine Sprachen");
+                }
             }
 
             @Override

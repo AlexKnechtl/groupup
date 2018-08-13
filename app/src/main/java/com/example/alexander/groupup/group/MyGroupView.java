@@ -366,6 +366,8 @@ public class MyGroupView extends AppCompatActivity {
 
     public void addMemberClick(View view) {
         Intent intent = new Intent(MyGroupView.this, AddGroupMembersActivity.class);
+        intent.putExtra("name", userName);
+        intent.putExtra("thumb_image", userThumbImage);
         startActivity(intent);
     }
 

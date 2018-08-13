@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,16 +37,17 @@ public class AddGroupMembersActivity extends AppCompatActivity {
 
     //XML
     private RecyclerView MemberPreview, MemberSelect;
-    //private TextView invitedFriendsTV;
     private EditText addedMembersText;
     private Button Save, Cancel;
 
     //Firebase
     private DatabaseReference FriendsDatabase;
+    private DatabaseReference RequestDatabase;
 
     //Variables
     private ArrayList<FriendModelSelectedMap> friendsToSelectAsMembers;
     private ArrayList<FriendsModel> selectedPreviewMembers;
+    private String name, thumb_image, groupId;
 
     //Adpaters
     private SelectMembersAdapter membersAdapter;
@@ -58,6 +61,12 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         //Add the Toolbar
         Toolbar myToolbar = findViewById(R.id.toolbar_add_member);
         setSupportActionBar(myToolbar);
+
+        //Get Information by Intent
+        thumb_image = getIntent().getStringExtra("thumb_image");
+        name = getIntent().getStringExtra("name");
+
+        RequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
 
         //Find Views
         MemberPreview = findViewById(R.id.AddGroupMembersPrieview);
@@ -146,13 +155,13 @@ public class AddGroupMembersActivity extends AppCompatActivity {
     }
 
     private void saveGroupMembers() {
-        // TODO implement sending to firebase
-//        FirebaseDatabase.getInstance().getReference().child("Groups").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").removeValue();
-//        FirebaseDatabase.getInstance().getReference().child("Groups").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("rank").setValue("creator");
-//        for (FriendsModel m : previewAdapter.getSelectedFriends()) // Hier sind alle ausgewählten Freunde drinnen
-//            FirebaseDatabase.getInstance().getReference().child("Groups").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("members").child(m.getUid()).child("rank").setValue("member");
-        for(FriendsModel m : previewAdapter.getSelectedFriends()) //TODO Do not add if alredy in group or is alredy notified
-            FirebaseDatabase.getInstance().getReference().child("notifications").child(m.getUid()).child("groupInvitations").push().child("from").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Map groupRequestMap = new HashMap();
+        groupRequestMap.put("type", "group_invite");
+        groupRequestMap.put("from", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        groupRequestMap.put("group_id", groupId);
+
+        for(FriendsModel m : previewAdapter.getSelectedFriends())
+            RequestDatabase.child(m.getUid()).child(FirebaseAuth.getInstance().getUid()).updateChildren(groupRequestMap);
     }
 
     public class SelectMembersAdapter extends RecyclerView.Adapter<SelectMembersViewHolder> {
@@ -167,8 +176,8 @@ public class AddGroupMembersActivity extends AppCompatActivity {
 
         public SelectMembersAdapter(Context c, ArrayList<FriendModelSelectedMap> SelectableFriends) {
             this.SelectableFriends = SelectableFriends;
-//            for(Map.Entry<FriendsModel, Boolean> entry : SelectableFriends.entrySet())
-//                SelectableFriendsIndexes.add(entry.getKey());
+            //for(Map.Entry<FriendsModel, Boolean> entry : SelectableFriends.entrySet())
+            //SelectableFriendsIndexes.add(entry.getKey());
             this.c = c;
         }
 
