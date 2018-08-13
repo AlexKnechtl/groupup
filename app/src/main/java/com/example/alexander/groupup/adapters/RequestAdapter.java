@@ -1,6 +1,7 @@
 package com.example.alexander.groupup.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.group.MyGroupView;
 import com.example.alexander.groupup.models.RequestModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -72,7 +76,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
         final String receiver_user_id = c.getFrom();
         String type = c.getType();
 
-        DatabaseReference DataBase = FirebaseDatabase.getInstance().getReference().child("Users").child(c.getFrom());
+        final DatabaseReference DataBase = FirebaseDatabase.getInstance().getReference().child("Users").child(c.getFrom());
 
         if (type.equals("friend_request")) {
             DataBase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -180,9 +184,57 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
                     String name = dataSnapshot.child("name").getValue().toString();
+
                     Picasso.with(context).load(thumb_image)
                             .placeholder(R.drawable.default_user_black).into(viewHolder.thumbImage);
                     viewHolder.name.setText(name + " hat dich in seine Gruppe eingeladen.");
+
+                    viewHolder.requestButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final DatabaseReference UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+                            final DatabaseReference GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(c.getFrom());
+
+                            UserDatabase.child(user_id).child("my_group").setValue(c.getFrom());
+                            GroupDatabase.child("members").child(user_id).child("rank").setValue("member");
+                            GroupDatabase.child("member_count").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    GroupDatabase.child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
+
+                                    DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference()
+                                            .child("GroupChat").child(c.getFrom());
+
+                                    DatabaseReference user_message_push = GroupChatDatabase.push();
+                                    String pushId = user_message_push.getKey();
+
+                                    Map messageMap = new HashMap();
+                                    messageMap.put("message", c.getName() + " joined the Group.");
+                                    messageMap.put("from", user_id);
+                                    messageMap.put("type", "information");
+
+                                    GroupChatDatabase.child(pushId).updateChildren(messageMap)
+                                            .addOnCompleteListener(new OnCompleteListener() {
+                                        @Override
+                                        public void onComplete(@NonNull Task task) {
+                                            DatabaseReference notificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
+                                            notificationDatabase.child(c.getFrom()).removeValue();
+
+                                            Intent intent = new Intent(context, MyGroupView.class);
+                                            intent.putExtra("group_id", c.getFrom());
+                                            intent.putExtra("user_id", user_id);
+                                            context.startActivity(intent);
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    });
                 }
 
                 @Override
@@ -190,42 +242,6 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
                 }
             });
-
-            viewHolder.requestButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final DatabaseReference UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-                    final DatabaseReference GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(c.getGroup_id());
-
-                    UserDatabase.child(user_id).child("my_group").setValue(c.getGroup_id());
-                    GroupDatabase.child("members").child(user_id).child("rank").setValue("member");
-                    GroupDatabase.child("member_count").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            GroupDatabase.child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
-
-                            DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference()
-                                    .child("GroupChat").child(c.getGroup_id());
-
-                            DatabaseReference user_message_push = GroupChatDatabase.push();
-                            String pushId = user_message_push.getKey();
-
-                            Map messageMap = new HashMap();
-                            messageMap.put("message", c.getName() + " joined the Group.");
-                            messageMap.put("from", user_id);
-                            messageMap.put("type", "information");
-
-                            GroupChatDatabase.child(pushId).updateChildren(messageMap);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            });
-
         }
     }
 

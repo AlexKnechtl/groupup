@@ -47,7 +47,6 @@ public class AddGroupMembersActivity extends AppCompatActivity {
     //Variables
     private ArrayList<FriendModelSelectedMap> friendsToSelectAsMembers;
     private ArrayList<FriendsModel> selectedPreviewMembers;
-    private String name, thumb_image, groupId;
 
     //Adpaters
     private SelectMembersAdapter membersAdapter;
@@ -61,10 +60,6 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         //Add the Toolbar
         Toolbar myToolbar = findViewById(R.id.toolbar_add_member);
         setSupportActionBar(myToolbar);
-
-        //Get Information by Intent
-        thumb_image = getIntent().getStringExtra("thumb_image");
-        name = getIntent().getStringExtra("name");
 
         RequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
 
@@ -158,7 +153,6 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         Map groupRequestMap = new HashMap();
         groupRequestMap.put("type", "group_invite");
         groupRequestMap.put("from", FirebaseAuth.getInstance().getCurrentUser().getUid());
-        groupRequestMap.put("group_id", groupId);
 
         for(FriendsModel m : previewAdapter.getSelectedFriends())
             RequestDatabase.child(m.getUid()).child(FirebaseAuth.getInstance().getUid()).updateChildren(groupRequestMap);
