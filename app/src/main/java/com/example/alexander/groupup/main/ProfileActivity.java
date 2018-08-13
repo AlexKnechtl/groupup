@@ -3,6 +3,7 @@ package com.example.alexander.groupup.main;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.RippleDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -59,8 +60,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     //XML
     private CircleImageView mProfileImageView;
-    private TextView mProfileName, mProfileLocation, mProfileStatus, friendsCounter, languagesTextView;
-    private RelativeLayout relativeLayout, languages;
+    private TextView mProfileName, mProfileLocation, mProfileStatus, friendsCounter, languagesTextView, musicInterestTextView, sportTV;
+    private RelativeLayout relativeLayout, languages, music, sport;
 
     //Constants
     private static final int GALLERY_PICK = 1;
@@ -75,13 +76,15 @@ public class ProfileActivity extends AppCompatActivity {
     private StorageReference ProfileImageStorage;
 
     //Variables
-    private Context mContext = getApplicationContext();
+    private Context mContext;
     private String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_profile);
+
+        mContext = getApplicationContext();
 
         Bundle bundle = getIntent().getExtras();
         user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -93,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
         UserDatabase.keepSynced(true);
 
-        HobbyDatabase = FirebaseDatabase.getInstance().getReference("Users").child(user_id).child("hobbys");
+        initializeAndSetHobbyDB();
 
         UserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -148,20 +151,6 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        HobbyDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                languagesTextView.setText(dataSnapshot.child("languages").getValue().toString());
-                if (languagesTextView.getText().equals(""))
-                    languagesTextView.setText("Keine Sprachen");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
@@ -258,13 +247,63 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        languages.setOnClickListener(new View.OnClickListener()
-
-        {
+        languages.setOnClickListener(new View.OnClickListener(){ //Todo implement for music
             @Override
             public void onClick(View v) {
                 Intent selectLanguages = new Intent(ProfileActivity.this, SelectLanguageActivity.class);
                 startActivity(selectLanguages);
+            }
+        });
+
+        music.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent selectLanguages = new Intent(ProfileActivity.this, SelectLanguageActivity.class);
+                selectLanguages.putExtra("action", "music_select");
+                startActivity(selectLanguages);
+            }
+        });
+
+        sport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent selectLanguages = new Intent(ProfileActivity.this, SelectLanguageActivity.class);
+                selectLanguages.putExtra("action", "sport_select");
+                startActivity(selectLanguages);
+            }
+        });
+    }
+
+    private void initializeAndSetHobbyDB() {
+        HobbyDatabase = FirebaseDatabase.getInstance().getReference("Users").child(user_id).child("hobbys");
+        HobbyDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot == null){
+                    languagesTextView.setText("Keine Sprachen");
+                    musicInterestTextView.setText("Keine Musik");
+                    sportTV.setText("Keine Sportarten");
+
+                    return;
+                }
+
+                if(dataSnapshot.hasChild("languages"))
+                    languagesTextView.setText(dataSnapshot.child("languages").getValue().toString());
+                if (languagesTextView.getText().equals(""))
+                    languagesTextView.setText("Keine Sprachen");
+                if(dataSnapshot.hasChild("music"))
+                    musicInterestTextView.setText(dataSnapshot.child("music").getValue().toString());
+                if (musicInterestTextView.getText().equals(""))
+                    musicInterestTextView.setText("Keine Musik");
+                if(dataSnapshot.hasChild("sport"))
+                    sportTV.setText(dataSnapshot.child("sport").getValue().toString());
+                if (sportTV.getText().equals(""))
+                    sportTV.setText("Keine Sportarten");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
@@ -363,6 +402,10 @@ public class ProfileActivity extends AppCompatActivity {
         relativeLayout = findViewById(R.id.coordinator_layout_profile);
         languages = findViewById(R.id.aboutme_languages);
         friendsCounter = findViewById(R.id.friends_counter_profile);
+        music = findViewById(R.id.main_profile_music);
+        musicInterestTextView = findViewById(R.id.music_interest_text_view);
+        sport = findViewById(R.id.main_profile_sport);
+        sportTV = findViewById(R.id.sport_interest_text_view);
     }
 
     public void setupBottomNavigationView() {
@@ -380,5 +423,17 @@ public class ProfileActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
         startActivity(intent);
+    }
+    // Fuers zurueckgehen nach der Language auswahl
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initializeAndSetHobbyDB();
+    }
+    // Fuers zurueckgehen nach der Language auswahl
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initializeAndSetHobbyDB();
     }
 }

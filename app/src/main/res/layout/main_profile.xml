@@ -288,11 +288,12 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/picture_languages"
                             android:layout_alignStart="@+id/languages"
-                            android:text="Hip Hop, Deutschrap"
+                            android:text=""
                             android:textColor="@color/colorAccent" />
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/main_profile_music"
                         android:layout_width="match_parent"
                         android:layout_height="75dp"
                         android:layout_marginLeft="32dp"
@@ -328,7 +329,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/picture"
                             android:layout_alignStart="@+id/music"
-                            android:text="Hip Hop, Deutschrap"
+                            android:text=""
                             android:textColor="@color/colorAccent" />
                     </RelativeLayout>
 
@@ -339,6 +340,7 @@
                         android:layout_marginRight="32dp"
                         android:layout_marginTop="12dp"
                         android:background="@drawable/circle_design_interests"
+                        android:id="@+id/main_profile_sport"
                         android:padding="8dp">
 
                         <ImageView
@@ -368,7 +370,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/picture_sport_kinds"
                             android:layout_alignStart="@+id/sport_kinds"
-                            android:text="Hip Hop, Deutschrap"
+                            android:text=""
                             android:textColor="@color/colorAccent" />
                     </RelativeLayout>
 
