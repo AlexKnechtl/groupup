@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.group.GroupView;
 import com.example.alexander.groupup.group.MyGroupView;
 import com.example.alexander.groupup.models.RequestModel;
+import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -57,12 +60,14 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
         private TextView name;
         private Button requestButton;
         private CircleImageView thumbImage;
+        private RelativeLayout requestLayout;
 
         public RequestViewholder(View view) {
             super(view);
             requestButton = view.findViewById(R.id.request_button);
             name = view.findViewById(R.id.request_user_name);
             thumbImage = view.findViewById(R.id.request_user_picture);
+            requestLayout = view.findViewById(R.id.request_layout);
         }
     }
 
@@ -92,6 +97,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                }
+            });
+
+            viewHolder.requestLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, UserProfileActivity.class);
+                    intent.putExtra("user_id", c.getFrom());
+                    context.startActivity(intent);
                 }
             });
 
@@ -189,6 +203,16 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                             .placeholder(R.drawable.default_user_black).into(viewHolder.thumbImage);
                     viewHolder.name.setText(name + " hat dich in seine Gruppe eingeladen.");
 
+                    viewHolder.requestLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, GroupView.class);
+                            intent.putExtra("group_id", c.getFrom());
+                            intent.putExtra("user_id", user_id);
+                            context.startActivity(intent);
+                        }
+                    });
+
                     viewHolder.requestButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -215,17 +239,17 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
                                     GroupChatDatabase.child(pushId).updateChildren(messageMap)
                                             .addOnCompleteListener(new OnCompleteListener() {
-                                        @Override
-                                        public void onComplete(@NonNull Task task) {
-                                            DatabaseReference notificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
-                                            notificationDatabase.child(c.getFrom()).removeValue();
+                                                @Override
+                                                public void onComplete(@NonNull Task task) {
+                                                    DatabaseReference notificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
+                                                    notificationDatabase.child(c.getFrom()).removeValue();
 
-                                            Intent intent = new Intent(context, MyGroupView.class);
-                                            intent.putExtra("group_id", c.getFrom());
-                                            intent.putExtra("user_id", user_id);
-                                            context.startActivity(intent);
-                                        }
-                                    });
+                                                    Intent intent = new Intent(context, MyGroupView.class);
+                                                    intent.putExtra("group_id", c.getFrom());
+                                                    intent.putExtra("user_id", user_id);
+                                                    context.startActivity(intent);
+                                                }
+                                            });
                                 }
 
                                 @Override
