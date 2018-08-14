@@ -49,7 +49,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     @Override
     public void onBindViewHolder(MessageViewHolder viewHolder, final int position) {
         MessagesModel c = messagesList.get(position);
-        String from_user = c.getFrom();
+        String from_user = c.from;
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -61,8 +61,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
         }
 
-        viewHolder.timeText.setText(c.getTime());
-        viewHolder.messageText.setText(c.getMessage());
+        viewHolder.timeText.setText(c.time);
+        viewHolder.messageText.setText(c.message);
     }
 
     @Override

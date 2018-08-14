@@ -22,6 +22,7 @@ import com.example.alexander.groupup.chat.GroupChat;
 import com.example.alexander.groupup.chat.SingleChat;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.main.ProfileActivity;
+import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
@@ -177,9 +178,11 @@ public class MyGroupView extends AppCompatActivity {
                                             GroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                    String members = dataSnapshot.child("member_count").getValue().toString();
-                                                    groupMembers = Long.parseLong(members);
-                                                    groupMembers--;
+                                                    GroupModel groupModel = dataSnapshot.getValue(GroupModel.class);
+                                                    groupMembers = 0;
+                                                    if(groupModel.members != null)
+                                                        groupMembers = groupModel.members.size();
+
 
                                                     if (groupMembers == 0) {
                                                         DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference().child("GroupChat").child(groupId);
@@ -194,7 +197,7 @@ public class MyGroupView extends AppCompatActivity {
 
                                                     } else if (groupMembers > 0) {
                                                         GroupMemberDatabase.child(list_user_id).removeValue();
-                                                        GroupDatabase.child("member_count").setValue(groupMembers);
+                                                        //GroupDatabase.child("member_count").setValue(groupMembers);
                                                         memberCount.setText(Long.toString(groupMembers));
                                                     }
                                                 }
@@ -309,18 +312,14 @@ public class MyGroupView extends AppCompatActivity {
         GroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String activity = dataSnapshot.child("activity").getValue().toString();
-                String location = dataSnapshot.child("location").getValue().toString();
-                latLng = dataSnapshot.child("latlng").getValue().toString();
-                rank = dataSnapshot.child("members").child(user_id).child("rank").getValue().toString();
-
-                headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
-                        + " @" + location);
-
-                String descriptionText = dataSnapshot.child("description").getValue().toString();
-                description.setText(descriptionText);
-
-                memberCount.setText(dataSnapshot.child("member_count").getValue().toString());
+                GroupModel g = dataSnapshot.getValue(GroupModel.class);
+                headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(g.activity).getLocalLanguageString()
+                        + " @" + g.location);
+                description.setText(g.description);
+                int size = 0;
+                if(g.members != null)
+                    size = g.members.size();
+                memberCount.setText(String.format("%d",size));
             }
 
             @Override
@@ -375,9 +374,14 @@ public class MyGroupView extends AppCompatActivity {
         GroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String members = dataSnapshot.child("member_count").getValue().toString();
-                groupMembers = Long.parseLong(members);
-                groupMembers--;
+                GroupModel g = dataSnapshot.getValue(GroupModel.class);
+                //String members = dataSnapshot.child("member_count").getValue().toString();
+                //groupMembers = Long.parseLong(members);
+                //groupMembers--;
+
+                groupMembers = 0;
+                if (g.members != null)
+                    groupMembers = g.members.size();
 
                 if (groupMembers == 0) {
                     DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference().child("GroupChat").child(groupId);
@@ -406,14 +410,9 @@ public class MyGroupView extends AppCompatActivity {
 
                     GroupChatDatabase.child(pushId).updateChildren(messageMap);
 
-                    GroupDatabase.child("member_count").setValue(groupMembers).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Intent intent = new Intent(MyGroupView.this, HomeActivity.class);
-                            Toast.makeText(MyGroupView.this, "You left the Group.", Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
-                        }
-                    });
+                    Intent intent = new Intent(MyGroupView.this, HomeActivity.class);
+                    Toast.makeText(MyGroupView.this, "You left the Group.", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
                 }
             }
 

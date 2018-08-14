@@ -166,7 +166,7 @@ public class GroupChat extends AppCompatActivity {
                 String key = dataSnapshot.getKey();
 
                 for (MessagesModel testModel : messagesList) {
-                    if (key.equals(testModel.getId())) {
+                    if (key.equals(testModel.id)) {
                         messagesList.remove(testModel);
                         groupChatAdapter.notifyDataSetChanged();
                         break;

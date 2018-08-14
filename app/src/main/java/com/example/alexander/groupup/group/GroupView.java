@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.ContextMenu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -24,11 +23,12 @@ import android.widget.Toast;
 
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.main.ProfileActivity;
+import com.example.alexander.groupup.models.GroupModel;
+import com.example.alexander.groupup.models.MessagesModel;
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
-import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,7 +41,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -216,10 +215,8 @@ public class GroupView extends AppCompatActivity {
         GroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String activity = dataSnapshot.child("activity").getValue().toString();
-                String location = dataSnapshot.child("location").getValue().toString();
-                latLng = dataSnapshot.child("latlng").getValue().toString();
-                if (dataSnapshot.child("public_status").getValue().toString().equals("everybody")) {
+                GroupModel g = dataSnapshot.getValue(GroupModel.class);
+                if (g.public_status.equals("everybody")) {
                     publicStatus = true;
 
                     statusIcon.setImageResource(R.drawable.material_lock_open_white_36);
@@ -228,17 +225,17 @@ public class GroupView extends AppCompatActivity {
                     joinGroupFabText.setText(R.string.join_group);
                 }
 
-                headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
-                        + " @" + location);
+                headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(g.activity).getLocalLanguageString()
+                        + " @" + g.location);
 
-                if (dataSnapshot.child("members").child(user_id).child("rank").exists()) {
-                    dataSnapshot.child("members").child(user_id).child("rank").getValue().toString();
+                if (g.members.containsKey(user_id)) {
+                   // g.members.get(user_id).rank; TODO bitte was soll des?
                 }
-
-                String descriptionText = dataSnapshot.child("description").getValue().toString();
-                description.setText(descriptionText);
-
-                memberCount.setText(dataSnapshot.child("member_count").getValue().toString());
+                description.setText(g.description);
+                int size = 0;
+                if(g.members != null)
+                    size = g.members.size();
+                memberCount.setText(String.format("%d",size));
             }
 
             @Override
@@ -299,14 +296,17 @@ public class GroupView extends AppCompatActivity {
                                     DatabaseReference user_message_push = GroupChatDatabase.push();
                                     String pushId = user_message_push.getKey();
 
-                                    Map messageMap = new HashMap();
-                                    messageMap.put("message", messageText);
-                                    messageMap.put("from", user_id);
-                                    messageMap.put("name", name);
-                                    messageMap.put("type", "request");
-                                    messageMap.put("id", pushId);
+//                                    Map messageMap = new HashMap();
+//                                    messageMap.put("message", messageText);
+//                                    messageMap.put("from", user_id);
+//                                    messageMap.put("name", name);
+//                                    messageMap.put("type", "request");
+//                                    messageMap.put("id", pushId);
+                                    //Todo TIME FEHLT!!!!!!!!!!!!
 
-                                    GroupChatDatabase.child(pushId).updateChildren(messageMap).addOnCompleteListener(new OnCompleteListener() {
+                                    MessagesModel m = new MessagesModel(messageText,name, null, user_id, "request", pushId);
+
+                                    GroupChatDatabase.child(pushId).setValue(m).addOnCompleteListener(new OnCompleteListener() {
                                         @Override
                                         public void onComplete(@NonNull Task task) {
                                             Toast.makeText(GroupView.this, "Your Request has been sent.", Toast.LENGTH_SHORT).show();
@@ -324,30 +324,18 @@ public class GroupView extends AppCompatActivity {
                     } else {
                         UserDatabase.child(user_id).child("my_group").setValue(groupId);
                         GroupDatabase.child("members").child(user_id).child("rank").setValue("member");
-                        GroupDatabase.child("member_count").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                GroupDatabase.child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
+                        DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference()
+                                .child("GroupChat").child(groupId);
 
-                                DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference()
-                                        .child("GroupChat").child(groupId);
+                        DatabaseReference user_message_push = GroupChatDatabase.push();
+                        String pushId = user_message_push.getKey();
 
-                                DatabaseReference user_message_push = GroupChatDatabase.push();
-                                String pushId = user_message_push.getKey();
+                        Map messageMap = new HashMap();
+                        messageMap.put("message", name + " joined the Group.");
+                        messageMap.put("from", user_id);
+                        messageMap.put("type", "information");
 
-                                Map messageMap = new HashMap();
-                                messageMap.put("message", name + " joined the Group.");
-                                messageMap.put("from", user_id);
-                                messageMap.put("type", "information");
-
-                                GroupChatDatabase.child(pushId).updateChildren(messageMap);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+                        GroupChatDatabase.child(pushId).updateChildren(messageMap);
                     }
                 }
             }

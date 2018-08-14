@@ -390,9 +390,9 @@ public class HomeActivity extends AppCompatActivity {
             tag3TextView.setText(tag3);
         }
 
-        public void setMemberQuantity(String quantity){
+        public void setMemberQuantity(long quantity){
             TextView v = mView.findViewById(R.id.member_quantity_group);
-            v.setText(quantity);
+            v.setText(String.format("%d", quantity));
         }
 
         public void setGroupDistance(Double distance){
@@ -481,12 +481,15 @@ public class HomeActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull GroupsViewHolder holder, int position) {
             GeoGroup g = list.get(position);
             holder.setGroupDistance(GeoFireHelper.GetDistance(g.location, currentLocation));
-            holder.setGroupImage(g.group.getGroup_image());
-            holder.setActivityCity(LanguageStringsManager.getInstance().getLanguageStringByStringId(g.group.getActivity()).getLocalLanguageString(), g.group.getLocation());
-            holder.setTag1(g.group.getTag1());
-            holder.setTag2(g.group.getTag2());
-            holder.setTag3(g.group.getTag3());
-            holder.setMemberQuantity(g.group.getMember_count().toString());
+            holder.setGroupImage(g.group.group_image);
+            holder.setActivityCity(LanguageStringsManager.getInstance().getLanguageStringByStringId(g.group.activity).getLocalLanguageString(), g.group.location);
+            holder.setTag1(g.group.tag1);
+            holder.setTag2(g.group.tag2);
+            holder.setTag3(g.group.tag3);
+            int size = 0;
+            if(g.group.members != null)
+                size = g.group.members.size();
+            holder.setMemberQuantity(size);
         }
 
         @Override

@@ -197,41 +197,28 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
                             UserDatabase.child(user_id).child("my_group").setValue(c.getFrom());
                             GroupDatabase.child("members").child(user_id).child("rank").setValue("member");
-                            GroupDatabase.child("member_count").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    GroupDatabase.child("member_count").setValue(Integer.parseInt(dataSnapshot.getValue().toString()) + 1);
+                            DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference()
+                                    .child("GroupChat").child(c.getFrom());
 
-                                    DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference()
-                                            .child("GroupChat").child(c.getFrom());
+                            DatabaseReference user_message_push = GroupChatDatabase.push();
+                            String pushId = user_message_push.getKey();
 
-                                    DatabaseReference user_message_push = GroupChatDatabase.push();
-                                    String pushId = user_message_push.getKey();
+                            Map messageMap = new HashMap();
+                            messageMap.put("message", c.getName() + " joined the Group.");
+                            messageMap.put("from", user_id);
+                            messageMap.put("type", "information");
 
-                                    Map messageMap = new HashMap();
-                                    messageMap.put("message", c.getName() + " joined the Group.");
-                                    messageMap.put("from", user_id);
-                                    messageMap.put("type", "information");
+                            GroupChatDatabase.child(pushId).updateChildren(messageMap).addOnCompleteListener(new OnCompleteListener() {
+                                    @Override
+                                    public void onComplete(@NonNull Task task) {
+                                        DatabaseReference notificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
+                                        notificationDatabase.child(c.getFrom()).removeValue();
 
-                                    GroupChatDatabase.child(pushId).updateChildren(messageMap)
-                                            .addOnCompleteListener(new OnCompleteListener() {
-                                        @Override
-                                        public void onComplete(@NonNull Task task) {
-                                            DatabaseReference notificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
-                                            notificationDatabase.child(c.getFrom()).removeValue();
-
-                                            Intent intent = new Intent(context, MyGroupView.class);
-                                            intent.putExtra("group_id", c.getFrom());
-                                            intent.putExtra("user_id", user_id);
-                                            context.startActivity(intent);
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
+                                        Intent intent = new Intent(context, MyGroupView.class);
+                                        intent.putExtra("group_id", c.getFrom());
+                                        intent.putExtra("user_id", user_id);
+                                        context.startActivity(intent);
+                                    }
                             });
                         }
                     });

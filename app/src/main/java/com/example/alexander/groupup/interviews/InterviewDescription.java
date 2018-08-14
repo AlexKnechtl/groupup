@@ -15,6 +15,8 @@ import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.helpers.OnGetResultListener;
 import com.example.alexander.groupup.models.GroupImagesModel;
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.models.GroupMember;
+import com.example.alexander.groupup.models.GroupModel;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 /**
  * Created by alexander on 20.03.18.
@@ -37,7 +41,7 @@ public class InterviewDescription extends AppCompatActivity {
     private EditText description;
 
     //Variables
-    private String group, activity, publicStatus, location,
+    private String category, activity, publicStatus, location,
             groupDescription, current_uid, tag1, tag2, tag3, latLng;
 
     private Double geofirelat, geofirelong;
@@ -93,7 +97,7 @@ public class InterviewDescription extends AppCompatActivity {
 
     private void setDatabaseValues() {
 
-        if (group.equals("sport")) { //todo implement for all categories
+        if (category.equals("sport")) { //todo implement for all categories
             GroupImagesModel.getRandomSportImageURL(activity, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String groupImage) {
@@ -108,18 +112,22 @@ public class InterviewDescription extends AppCompatActivity {
                         }
                     });
 
-                    mGroupDatabase.child("category").setValue(group);
-                    mGroupDatabase.child("activity").setValue(activity);
-                    mGroupDatabase.child("public_status").setValue(publicStatus);
-                    mGroupDatabase.child("location").setValue(location);
-                    mGroupDatabase.child("description").setValue(groupDescription);
-                    mGroupDatabase.child("tag1").setValue(tag1);
-                    mGroupDatabase.child("tag2").setValue(tag2);
-                    mGroupDatabase.child("tag3").setValue(tag3);
-                    mGroupDatabase.child("latlng").setValue(latLng);
-                    mGroupDatabase.child("member_count").setValue(1);
-                    mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
-                    mGroupDatabase.child("group_image").setValue(groupImage);
+                    HashMap<String, GroupMember> members =  new HashMap<String, GroupMember>();
+                    members.put(current_uid, new GroupMember("creator"));
+                    GroupModel m = new GroupModel(activity, location, tag1,tag2,tag3, groupImage, category, publicStatus, groupDescription, latLng, members);
+                    mGroupDatabase.setValue(m);
+//                    mGroupDatabase.child("category").setValue(category); //
+//                    mGroupDatabase.child("activity").setValue(activity); //
+//                    mGroupDatabase.child("public_status").setValue(publicStatus); //
+//                    mGroupDatabase.child("location").setValue(location); //
+//                    mGroupDatabase.child("description").setValue(groupDescription); //
+//                    mGroupDatabase.child("tag1").setValue(tag1); //
+//                    mGroupDatabase.child("tag2").setValue(tag2); //
+//                    mGroupDatabase.child("tag3").setValue(tag3); //
+//                    mGroupDatabase.child("latlng").setValue(latLng); //
+//                    mGroupDatabase.child("member_count").setValue(1);
+//                    mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
+//                    mGroupDatabase.child("group_image").setValue(groupImage);
 
                     UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -137,7 +145,7 @@ public class InterviewDescription extends AppCompatActivity {
             });
         }else { // Todo Freizeit: category = null, activity = null ERROR!!!
 
-            GroupImagesModel.getRandomImageURL(activity, group, new OnGetResultListener<String>() {
+            GroupImagesModel.getRandomImageURL(activity, category, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String value) {
                     mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(current_uid);
@@ -149,18 +157,24 @@ public class InterviewDescription extends AppCompatActivity {
 
                         }
                     });
-                    mGroupDatabase.child("category").setValue(group);
-                    mGroupDatabase.child("activity").setValue(activity);
-                    mGroupDatabase.child("public_status").setValue(publicStatus);
-                    mGroupDatabase.child("location").setValue(location);
-                    mGroupDatabase.child("description").setValue(groupDescription);
-                    mGroupDatabase.child("tag1").setValue(tag1);
-                    mGroupDatabase.child("tag2").setValue(tag2);
-                    mGroupDatabase.child("tag3").setValue(tag3);
-                    mGroupDatabase.child("latlng").setValue(latLng);
-                    mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
-                    mGroupDatabase.child("group_image").setValue(value);
-                    mGroupDatabase.child("member_count").setValue(1);
+
+                    HashMap<String, GroupMember> members =  new HashMap<String, GroupMember>();
+                    members.put(current_uid, new GroupMember("creator"));
+                    GroupModel m = new GroupModel(activity, location, tag1,tag2,tag3, value, category, publicStatus, groupDescription, latLng, members);
+                    mGroupDatabase.setValue(m);
+
+//                    mGroupDatabase.child("category").setValue(category);
+//                    mGroupDatabase.child("activity").setValue(activity);
+//                    mGroupDatabase.child("public_status").setValue(publicStatus);
+//                    mGroupDatabase.child("location").setValue(location);
+//                    mGroupDatabase.child("description").setValue(groupDescription);
+//                    mGroupDatabase.child("tag1").setValue(tag1);
+//                    mGroupDatabase.child("tag2").setValue(tag2);
+//                    mGroupDatabase.child("tag3").setValue(tag3);
+//                    mGroupDatabase.child("latlng").setValue(latLng);
+//                    mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
+//                    mGroupDatabase.child("group_image").setValue(value);
+//                    mGroupDatabase.child("member_count").setValue(1);
 
                     UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -181,7 +195,7 @@ public class InterviewDescription extends AppCompatActivity {
 
     private void getGroupInformation() {
         Bundle bundle = getIntent().getExtras();
-        group = bundle.getString("group");
+        category = bundle.getString("group");
         activity = bundle.getString("activity");
         publicStatus = bundle.getString("publicStatus");
         location = bundle.getString("location");
