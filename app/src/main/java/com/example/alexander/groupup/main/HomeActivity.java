@@ -546,8 +546,8 @@ public class HomeActivity extends AppCompatActivity {
 
         dialog.setContentView(R.layout.popup_two_options);
 
-        locationNear = dialog.findViewById(R.id.popup_location_btn);
-        chooseLocation = dialog.findViewById(R.id.popup_choose_place_btn);
+        locationNear = dialog.findViewById(R.id.location_near_popup);
+        chooseLocation = dialog.findViewById(R.id.choose_location_popup);
 
         locationNear.setOnClickListener(new View.OnClickListener() {
             @Override
