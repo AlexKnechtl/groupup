@@ -296,17 +296,16 @@ public class GroupView extends AppCompatActivity {
                                     DatabaseReference user_message_push = GroupChatDatabase.push();
                                     String pushId = user_message_push.getKey();
 
-//                                    Map messageMap = new HashMap();
-//                                    messageMap.put("message", messageText);
-//                                    messageMap.put("from", user_id);
-//                                    messageMap.put("name", name);
-//                                    messageMap.put("type", "request");
-//                                    messageMap.put("id", pushId);
-                                    //Todo TIME FEHLT!!!!!!!!!!!!
+                                    Map messageMap = new HashMap();
+                                    messageMap.put("message", messageText);
+                                    messageMap.put("from", user_id);
+                                    messageMap.put("name", name);
+                                    messageMap.put("type", "request");
+                                    messageMap.put("id", pushId);
 
-                                    MessagesModel m = new MessagesModel(messageText,name, null, user_id, "request", pushId);
+                                   //MessagesModel m = new MessagesModel(messageText,name, null, user_id, "request", pushId);
 
-                                    GroupChatDatabase.child(pushId).setValue(m).addOnCompleteListener(new OnCompleteListener() {
+                                    GroupChatDatabase.child(pushId).updateChildren(messageMap).addOnCompleteListener(new OnCompleteListener() {
                                         @Override
                                         public void onComplete(@NonNull Task task) {
                                             Toast.makeText(GroupView.this, "Your Request has been sent.", Toast.LENGTH_SHORT).show();
