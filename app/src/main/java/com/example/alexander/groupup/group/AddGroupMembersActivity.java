@@ -24,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -153,6 +154,7 @@ public class AddGroupMembersActivity extends AppCompatActivity {
         Map groupRequestMap = new HashMap();
         groupRequestMap.put("type", "group_invite");
         groupRequestMap.put("from", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        groupRequestMap.put("time", ServerValue.TIMESTAMP);
 
         for(FriendsModel m : previewAdapter.getSelectedFriends())
             RequestDatabase.child(m.getUid()).child(FirebaseAuth.getInstance().getUid()).updateChildren(groupRequestMap);

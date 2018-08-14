@@ -38,7 +38,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
         public MessageViewHolder(View view) {
             super(view);
-
             messageText = view.findViewById(R.id.message_text);
             messageLayout = view.findViewById(R.id.message_layout);
             timeText = view.findViewById(R.id.message_timestamp);

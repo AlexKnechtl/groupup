@@ -195,4 +195,8 @@
     <string name="italian">Italienisch</string>
     <string name="vietnamese">Vietnamesisch</string>
     <string name="dutch">Niederländisch</string>
+    <string name="today">Heute</string>
+    <string name="this_week">Diese Woche</string>
+    <string name="this_month">Dieses Monat</string>
+    <string name="earlier">Frühere</string>
 </resources>

@@ -208,4 +208,8 @@
     <string name="spanish">Spanish</string>
     <string name="italian">Italian</string>
     <string name="vietnamese">Vietnamese</string>
+    <string name="today">Today</string>
+    <string name="this_week">This Week</string>
+    <string name="this_month">This Month</string>
+    <string name="earlier">Earlier</string>
 </resources>

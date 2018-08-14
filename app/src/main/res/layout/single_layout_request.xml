@@ -1,45 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
-    android:layout_marginTop="5dp"
+    android:orientation="vertical"
     android:padding="10dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/request_user_picture"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/profile_white"
-        app:civ_border_color="@color/colorAccent"
-        app:civ_border_width="2dp" />
-
-    <TextView
-        android:id="@+id/request_user_name"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/request_time_ago"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="5dp"
-        android:layout_toStartOf="@id/request_button"
-        android:layout_toEndOf="@id/request_user_picture"
-        android:text="Alexander Knechtl hat dir eine Freundschaftsanfrage geschickt!"
+        android:backgroundTint="@color/colorAccent"
+        android:enabled="false"
+        android:focusable="false"
+        android:gravity="center"
+        android:text="Heute"
         android:textColor="@color/colorAccent"
-        android:textSize="14sp" />
+        android:textSize="16sp"
+        android:visibility="gone" />
 
-    <Button
-        android:id="@+id/request_button"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:fontFamily="@font/dosis_bold"
-        android:layout_marginEnd="4dp"
-        android:background="@drawable/request_button"
-        android:text="@string/accept"
-        android:textAllCaps="false"
-        android:textSize="14sp" />
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/request_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/request_user_picture"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/profile_white"
+            app:civ_border_color="@color/colorAccent"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/request_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="6dp"
+            android:layout_toEndOf="@id/request_user_picture"
+            android:layout_toStartOf="@id/request_button"
+            android:text="Alexander Knechtl hat dir eine Freundschaftsanfrage geschickt!"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/request_button"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/request_button"
+            android:fontFamily="@font/dosis_bold"
+            android:text="@string/accept"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</LinearLayout>

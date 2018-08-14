@@ -8,12 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.GetTimeStrings;
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.group.GroupView;
 import com.example.alexander.groupup.group.MyGroupView;
 import com.example.alexander.groupup.models.RequestModel;
+import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +43,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
     private List<RequestModel> requestList;
     private Context context;
     private boolean myGroup;
+    private String timeHeader;
 
     public RequestAdapter(List<RequestModel> requestList, Context context, boolean myGroup) {
         this.requestList = requestList;
@@ -54,15 +59,18 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
     }
 
     public class RequestViewholder extends RecyclerView.ViewHolder {
-        private TextView name;
+        private TextView name, timeHeadline;
         private Button requestButton;
         private CircleImageView thumbImage;
+        private RelativeLayout requestLayout;
 
         public RequestViewholder(View view) {
             super(view);
             requestButton = view.findViewById(R.id.request_button);
             name = view.findViewById(R.id.request_user_name);
             thumbImage = view.findViewById(R.id.request_user_picture);
+            requestLayout = view.findViewById(R.id.request_layout);
+            timeHeadline = view.findViewById(R.id.request_time_ago);
         }
     }
 
@@ -78,6 +86,19 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
         final DatabaseReference DataBase = FirebaseDatabase.getInstance().getReference().child("Users").child(c.getFrom());
 
+        GetTimeStrings getTimeStrings = new GetTimeStrings();
+        long time = c.getTime();
+
+        String timeAgo = getTimeStrings.getTimeStrings(time, context);
+
+        if (timeAgo.equals(timeHeader)) {
+            viewHolder.timeHeadline.setVisibility(View.GONE);
+        } else {
+            timeHeader = timeAgo;
+            viewHolder.timeHeadline.setVisibility(View.VISIBLE);
+            viewHolder.timeHeadline.setText(timeAgo);
+        }
+
         if (type.equals("friend_request")) {
             DataBase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -92,6 +113,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                }
+            });
+
+            viewHolder.requestLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, UserProfileActivity.class);
+                    intent.putExtra("user_id", c.getFrom());
+                    context.startActivity(intent);
                 }
             });
 
@@ -188,6 +218,16 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     Picasso.with(context).load(thumb_image)
                             .placeholder(R.drawable.default_user_black).into(viewHolder.thumbImage);
                     viewHolder.name.setText(name + " hat dich in seine Gruppe eingeladen.");
+
+                    viewHolder.requestLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, GroupView.class);
+                            intent.putExtra("group_id", c.getFrom());
+                            intent.putExtra("user_id", user_id);
+                            context.startActivity(intent);
+                        }
+                    });
 
                     viewHolder.requestButton.setOnClickListener(new View.OnClickListener() {
                         @Override

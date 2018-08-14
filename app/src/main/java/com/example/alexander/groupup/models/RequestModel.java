@@ -2,14 +2,15 @@ package com.example.alexander.groupup.models;
 
 public class RequestModel {
 
-    private String name, thumb_image, type, from, group_id;
+    private String name, thumb_image, type, from;
+    private Long time;
 
-    public RequestModel(String name, String thumb_image, String type, String from, String group_id) {
+    public RequestModel(String name, String thumb_image, String type, String from, Long time) {
         this.name = name;
         this.type = type;
         this.thumb_image = thumb_image;
         this.from = from;
-        this.group_id = group_id;
+        this.time = time;
     }
 
     public String getName() {
@@ -44,12 +45,12 @@ public class RequestModel {
         this.from = from;
     }
 
-    public String getGroup_id() {
-        return group_id;
+    public Long getTime() {
+        return time;
     }
 
-    public void setGroup_id(String group_id) {
-        this.group_id = group_id;
+    public void setTime(Long time) {
+        this.time = time;
     }
 
     public RequestModel() { }

@@ -1,27 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="350dp"
+    android:layout_width="250dp"
+    android:layout_height="290dp"
     android:layout_gravity="center"
-    android:orientation="vertical"
-    android:background="@drawable/assistant_bubble">
+    android:background="@drawable/assistant_bubble"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/popup_message_headline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dosis_bold"
+        android:gravity="center"
+        android:text="Choose a Place!"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="26dp"
         android:gravity="center"
-        android:text="Woh soll die Gruppe sein?"/>
+        android:text="Wir brauchen einen Standort um Gruppen für dich zu finden."
+        android:textColor="@color/darkGray"
+        android:textSize="16sp" />
 
     <Button
-        android:id="@+id/location_near_popup"
+        android:id="@+id/button_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="In der Nähe"/>
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:background="@drawable/popup_button"
+        android:text="In deiner Nähe"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp" />
 
     <Button
-        android:id="@+id/choose_location_popup"
+        android:id="@+id/button_"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ort auswählen"/>
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:background="@drawable/popup_button"
+        android:text="Ort auswählen"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp" />
 </LinearLayout>
