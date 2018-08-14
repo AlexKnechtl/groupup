@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.GetTimeStrings;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.group.GroupView;
 import com.example.alexander.groupup.group.MyGroupView;
@@ -42,6 +43,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
     private List<RequestModel> requestList;
     private Context context;
     private boolean myGroup;
+    private String timeHeader;
 
     public RequestAdapter(List<RequestModel> requestList, Context context, boolean myGroup) {
         this.requestList = requestList;
@@ -57,7 +59,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
     }
 
     public class RequestViewholder extends RecyclerView.ViewHolder {
-        private TextView name;
+        private TextView name, timeHeadline;
         private Button requestButton;
         private CircleImageView thumbImage;
         private RelativeLayout requestLayout;
@@ -68,6 +70,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
             name = view.findViewById(R.id.request_user_name);
             thumbImage = view.findViewById(R.id.request_user_picture);
             requestLayout = view.findViewById(R.id.request_layout);
+            timeHeadline = view.findViewById(R.id.request_time_ago);
         }
     }
 
@@ -82,6 +85,19 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
         String type = c.getType();
 
         final DatabaseReference DataBase = FirebaseDatabase.getInstance().getReference().child("Users").child(c.getFrom());
+
+        GetTimeStrings getTimeStrings = new GetTimeStrings();
+        long time = c.getTime();
+
+        String timeAgo = getTimeStrings.getTimeStrings(time, context);
+
+        if (timeAgo.equals(timeHeader)) {
+            viewHolder.timeHeadline.setVisibility(View.GONE);
+        } else {
+            timeHeader = timeAgo;
+            viewHolder.timeHeadline.setVisibility(View.VISIBLE);
+            viewHolder.timeHeadline.setText(timeAgo);
+        }
 
         if (type.equals("friend_request")) {
             DataBase.addListenerForSingleValueEvent(new ValueEventListener() {

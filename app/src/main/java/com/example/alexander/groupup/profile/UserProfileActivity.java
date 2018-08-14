@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -169,9 +170,10 @@ public class UserProfileActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void aVoid) {
 
-                                                HashMap<String, String> notificationData = new HashMap<>();
+                                                Map notificationData = new HashMap();
                                                 notificationData.put("from", mCurrentUser.getUid());
                                                 notificationData.put("type", "friend_request");
+                                                notificationData.put("time", ServerValue.TIMESTAMP);
 
                                                 mNotificationDatabase.child(receiver_user_id).child(mCurrentUser.getUid()).setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override

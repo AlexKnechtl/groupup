@@ -94,8 +94,12 @@ public class NotificationActivity extends AppCompatActivity {
         RequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
 
         //Set Adapter
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+
         requestRecyclerView.setHasFixedSize(true);
-        requestRecyclerView.setLayoutManager(new LinearLayoutManager(NotificationActivity.this));
+        requestRecyclerView.setLayoutManager(linearLayoutManager);
 
         requestAdapter = new RequestAdapter(requestList, mContext, myGroup);
 
