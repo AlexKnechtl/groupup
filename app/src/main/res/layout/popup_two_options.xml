@@ -27,7 +27,7 @@
         android:textSize="16sp" />
 
     <Button
-        android:id="@+id/button_1"
+        android:id="@+id/popup_location_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -38,7 +38,7 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/button_"
+        android:id="@+id/popup_choose_place_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
