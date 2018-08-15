@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.adapters.GroupChatAdapter;
 import com.example.alexander.groupup.models.MessagesModel;
@@ -32,7 +33,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class GroupChat extends AppCompatActivity {
+public class GroupChat extends BaseActivity {
 
     //XML
     private CircleImageView groupImage;

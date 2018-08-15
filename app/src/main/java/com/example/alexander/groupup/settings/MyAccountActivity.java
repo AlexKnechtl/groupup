@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TableRow;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +34,7 @@ import java.util.Calendar;
  * Created by alexk on 24.02.2018.
  */
 
-public class MyAccountActivity extends AppCompatActivity {
+public class MyAccountActivity extends BaseActivity {
 
     //XML
     private Button mBtnChangeName, mBtnChangeBirthday;

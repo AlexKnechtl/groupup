@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
 
@@ -13,7 +14,7 @@ import com.example.alexander.groupup.R;
  * Created by alexander on 20.03.18.
  */
 
-public class InterviewPublic extends AppCompatActivity {
+public class InterviewPublic extends BaseActivity {
 
     //XML
     private RelativeLayout backLayout;

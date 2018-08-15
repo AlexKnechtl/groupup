@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
 import com.google.android.gms.location.places.Place;
@@ -24,7 +25,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class InterviewChoosePlace extends AppCompatActivity {
+public class InterviewChoosePlace extends BaseActivity {
 
     //Constants
     private final int REQUEST_CODE_PLACE_PICKER = 1;

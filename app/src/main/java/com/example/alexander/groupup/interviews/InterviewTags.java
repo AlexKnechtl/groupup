@@ -9,12 +9,13 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.registration.RegisterAgeCity;
 import com.example.alexander.groupup.registration.RegisterUsername;
 
-public class InterviewTags extends AppCompatActivity {
+public class InterviewTags extends BaseActivity {
 
     //XML
     private RelativeLayout backLayout;

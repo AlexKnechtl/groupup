@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.helpers.OnGetResultListener;
 import com.example.alexander.groupup.models.GroupImagesModel;
@@ -33,7 +34,7 @@ import java.util.HashMap;
  * Created by alexander on 20.03.18.
  */
 
-public class InterviewDescription extends AppCompatActivity {
+public class InterviewDescription extends BaseActivity {
 
     //XML
     private RelativeLayout backLayoutDescription;

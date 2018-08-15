@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.main.ProfileActivity;
 import com.example.alexander.groupup.models.GroupModel;
@@ -46,7 +47,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class GroupView extends AppCompatActivity {
+public class GroupView extends BaseActivity {
 
     //XML
     private TextView headline, description, backHomeFabText, joinGroupFabText, statusText, memberCount;

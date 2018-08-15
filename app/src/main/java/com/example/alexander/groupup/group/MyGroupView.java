@@ -17,6 +17,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.chat.GroupChat;
 import com.example.alexander.groupup.chat.SingleChat;
@@ -43,7 +44,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MyGroupView extends AppCompatActivity {
+public class MyGroupView extends BaseActivity {
 
     //XML
     private TextView headline, description, backHomeFabText, addMemberFabText, groupChatFabText, leaveGroupText, memberCount;

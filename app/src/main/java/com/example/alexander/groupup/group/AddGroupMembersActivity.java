@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.FriendsModel;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,7 +35,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AddGroupMembersActivity extends AppCompatActivity {
+public class AddGroupMembersActivity extends BaseActivity {
 
     //XML
     private RecyclerView MemberPreview, MemberSelect;
