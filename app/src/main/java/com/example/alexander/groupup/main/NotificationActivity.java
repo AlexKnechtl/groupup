@@ -158,7 +158,6 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 String key = dataSnapshot.getKey();
-
                 for (RequestModel testModel : requestList) {
                     if (key.equals(testModel.getFrom())) {
                         requestList.remove(testModel);

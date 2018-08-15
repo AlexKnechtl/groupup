@@ -29,6 +29,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -63,13 +64,6 @@ public class SingleChat extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         receiver_user_id = bundle.getString("receiver_user_id");
         user_id = bundle.getString("user_id");
-
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        date = day + "." + month + "." + year;
 
         //Find IDs
         userImage = findViewById(R.id.chat_user_image);
@@ -146,8 +140,15 @@ public class SingleChat extends AppCompatActivity {
         //ToDo Add Date Headline
         if (!TextUtils.isEmpty(message)) {
 
-            java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("HH:mm");
+            SimpleDateFormat formatter = new java.text.SimpleDateFormat("HH:mm");
             String currentTime = formatter.format(new Date());
+
+            Calendar cal = Calendar.getInstance();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+
+            date = day + "." + month + "." + year;
 
             messageText.setText("");
 
@@ -161,6 +162,7 @@ public class SingleChat extends AppCompatActivity {
             messageMap.put("message", message);
             messageMap.put("time", currentTime);
             messageMap.put("from", user_id);
+            messageMap.put("date", date);
 
             Map messageUserMap = new HashMap();
             messageUserMap.put(currentUserRef + "/" + pushId, messageMap);
@@ -170,7 +172,6 @@ public class SingleChat extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     messagesRecyclerView.smoothScrollToPosition(messagesList.size());
-
                     Map userMessageMap = new HashMap();
                     userMessageMap.put("message", message);
                     userMessageMap.put("time", ServerValue.TIMESTAMP);

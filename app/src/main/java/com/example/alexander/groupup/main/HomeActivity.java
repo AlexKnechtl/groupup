@@ -4,6 +4,8 @@ import  android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -127,6 +129,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.main_home);
         FirebaseMessaging.getInstance().subscribeToTopic("TestTopic");
 
+        groupsAdapter = new GroupsAdapter(this);
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         setCurrentLocation();
@@ -160,6 +164,8 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.main_recycler_view);
         groupChatButton = findViewById(R.id.group_chat_button);
         searchLocation = findViewById(R.id.loc_radius);
+
+        recyclerView.setAdapter(groupsAdapter);
 
         searchLocation.addTextChangedListener(new TextWatcher() {
             @Override
@@ -202,7 +208,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
-
+        Query f = GroupDatabase.orderByChild("d").equalTo(3);
 
         //setupGeoFire();
         //Show Date in GroupCalendar
@@ -273,69 +279,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Query f = GroupDatabase.orderByChild("d").equalTo(3);
-
-
-        /*FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<GroupModel, GroupsViewHolder>(
-                GroupModel.class,
-                R.layout.single_layout_group,
-                GroupsViewHolder.class,
-                GroupDatabase
-        ) {
-            @Override
-            protected void populateViewHolder(final GroupsViewHolder groupsViewHolder, GroupModel groups, int position) {
-
-                geoFire.getLocation(getRef(position).getKey(), new LocationCallback() {
-                    @Override
-                    public void onLocationResult(String key, GeoLocation location) {
-                        if(location != null) {
-                            Log.d("Location: ", location.toString());
-                            groupsViewHolder.setGroupDistance(GeoFireHelper.GetDistance(location, currentLocation));
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                groupsViewHolder.setGroupImage(groups.getGroup_image());
-
-                groupsViewHolder.setActivityCity(LanguageStringsManager.getInstance().getLanguageStringByStringId(groups.getActivity()).getLocalLanguageString(), groups.getLocation());
-                groupsViewHolder.setTag1(groups.getTag1());
-                groupsViewHolder.setTag2(groups.getTag2());
-                groupsViewHolder.setTag3(groups.getTag3());
-                groupsViewHolder.setMemberQuantity(groups.getMember_count().toString());
-
-                final String groupId = getRef(position).getKey();
-
-                groupsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (groupId.equals(group_id)) {
-                            Intent intent = new Intent(HomeActivity.this, MyGroupView.class);
-                            intent.putExtra("group_id", group_id);
-                            intent.putExtra("user_id", user_id);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(HomeActivity.this, GroupView.class);
-                            intent.putExtra("group_id", groupId);
-                            intent.putExtra("user_id", user_id);
-                            startActivity(intent);
-                        }
-                    }
-                });
-            }
-        };*/
-        //recyclerView.setAdapter(firebaseRecyclerAdapter);
-        groupsAdapter = new GroupsAdapter(this);
-        recyclerView.setAdapter(groupsAdapter);
     }
 
     @Override
@@ -545,6 +488,7 @@ public class HomeActivity extends AppCompatActivity {
         Button locationNear, chooseLocation;
 
         dialog.setContentView(R.layout.popup_two_options);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         locationNear = dialog.findViewById(R.id.location_near_popup);
         chooseLocation = dialog.findViewById(R.id.choose_location_popup);

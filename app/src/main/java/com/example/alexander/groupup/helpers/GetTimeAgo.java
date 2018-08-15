@@ -37,6 +37,7 @@ public class GetTimeAgo extends Application{
         } else if (diff < 48 * HOUR_MILLIS) {
             return "yesterday";
         } else {
+
             return diff / DAY_MILLIS + " days ago";
         }
     }

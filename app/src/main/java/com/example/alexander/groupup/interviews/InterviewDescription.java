@@ -116,18 +116,6 @@ public class InterviewDescription extends AppCompatActivity {
                     members.put(current_uid, new GroupMember("creator"));
                     GroupModel m = new GroupModel(activity, location, tag1,tag2,tag3, groupImage, category, publicStatus, groupDescription, latLng, members);
                     mGroupDatabase.setValue(m);
-//                    mGroupDatabase.child("category").setValue(category); //
-//                    mGroupDatabase.child("activity").setValue(activity); //
-//                    mGroupDatabase.child("public_status").setValue(publicStatus); //
-//                    mGroupDatabase.child("location").setValue(location); //
-//                    mGroupDatabase.child("description").setValue(groupDescription); //
-//                    mGroupDatabase.child("tag1").setValue(tag1); //
-//                    mGroupDatabase.child("tag2").setValue(tag2); //
-//                    mGroupDatabase.child("tag3").setValue(tag3); //
-//                    mGroupDatabase.child("latlng").setValue(latLng); //
-//                    mGroupDatabase.child("member_count").setValue(1);
-//                    mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
-//                    mGroupDatabase.child("group_image").setValue(groupImage);
 
                     UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -162,19 +150,6 @@ public class InterviewDescription extends AppCompatActivity {
                     members.put(current_uid, new GroupMember("creator"));
                     GroupModel m = new GroupModel(activity, location, tag1,tag2,tag3, value, category, publicStatus, groupDescription, latLng, members);
                     mGroupDatabase.setValue(m);
-
-//                    mGroupDatabase.child("category").setValue(category);
-//                    mGroupDatabase.child("activity").setValue(activity);
-//                    mGroupDatabase.child("public_status").setValue(publicStatus);
-//                    mGroupDatabase.child("location").setValue(location);
-//                    mGroupDatabase.child("description").setValue(groupDescription);
-//                    mGroupDatabase.child("tag1").setValue(tag1);
-//                    mGroupDatabase.child("tag2").setValue(tag2);
-//                    mGroupDatabase.child("tag3").setValue(tag3);
-//                    mGroupDatabase.child("latlng").setValue(latLng);
-//                    mGroupDatabase.child("members").child(current_uid).child("rank").setValue("creator");
-//                    mGroupDatabase.child("group_image").setValue(value);
-//                    mGroupDatabase.child("member_count").setValue(1);
 
                     UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

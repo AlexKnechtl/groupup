@@ -199,4 +199,6 @@
     <string name="this_week">Diese Woche</string>
     <string name="this_month">Dieses Monat</string>
     <string name="earlier">Frühere</string>
+    <string name="you_have_send">"Du hast "</string>
+    <string name="a_friend_request">" eine Freundschaftsanfrage geschickt."</string>
 </resources>
