@@ -122,60 +122,68 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:onClick="searchGroupLocationClick"
                 android:paddingEnd="24dp"
                 android:paddingStart="24dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ort:"
                     android:layout_marginRight="10dp"
                     android:onClick="searchGroupLocationClick"
+                    android:text="Ort:"
                     android:textColor="@color/colorAccent"
-                    android:textSize="22sp" >
-                </TextView>
+                    android:textSize="22sp"></TextView>
 
                 <EditText
                     android:id="@+id/loc_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:onClick="searchGroupLocationClick"
-                    android:text="Graz"
                     android:focusable="false"
                     android:inputType="numberDecimal"
+                    android:onClick="searchGroupLocationClick"
+                    android:text="Graz"
                     android:textColor="@color/colorAccent"
                     android:textSize="22sp" />
 
-                <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Radius: "
-                    android:onClick="searchGroupLocationClick"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="22sp" >
-                </TextView>
+            </LinearLayout>
 
-                <EditText
-                    android:id="@+id/loc_radius"
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingEnd="24dp"
+                android:paddingStart="24dp">
+                <SeekBar
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/main_layout_design_textview"
-                    android:text="10"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/slider"
+                    android:max="12"
+                    android:min="0"
+                    android:progress="5" />
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="km"
-                    android:onClick="searchGroupLocationClick"
+                    android:orientation="horizontal"
                     android:textColor="@color/colorAccent"
-                    android:textSize="22sp" >
-                </TextView>
+                    android:textSize="22sp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Du findest Gruppen bis "
+                        android:textColor="@color/colorAccent"
+                        android:textSize="22sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/loc_radius"
+                        android:text="10 km"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="22sp"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

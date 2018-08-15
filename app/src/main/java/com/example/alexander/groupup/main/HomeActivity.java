@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +95,7 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView location, locationName;
     private TextView searchLocation;
+    private SeekBar seekBar;
     private Button groupButton, groupChatButton;
     private Dialog dialog;
 
@@ -164,27 +166,66 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.main_recycler_view);
         groupChatButton = findViewById(R.id.group_chat_button);
         searchLocation = findViewById(R.id.loc_radius);
+        seekBar = findViewById(R.id.slider);
 
-        recyclerView.setAdapter(groupsAdapter);
-
-        searchLocation.addTextChangedListener(new TextWatcher() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.toString().isEmpty()) return;
-                radius = Double.parseDouble(s.toString());
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                switch (progress){
+                    case 0: radius = 0.25; break;
+                    case 1: radius = 0.5; break;
+                    case 2: radius = 1; break;
+                    case 3: radius = 2; break;
+                    case 4: radius = 5; break;
+                    case 5: radius = 10; break;
+                    case 6: radius = 20; break;
+                    case 7: radius = 50; break;
+                    case 8: radius = 100; break;
+                    case 9: radius = 200; break;
+                    case 10: radius = 500; break;
+                    case 11: radius = 1000; break;
+                    case 12: radius = 10000; break;
+                    default: throw new IllegalArgumentException();
+                }
                 geoQuery.setRadius(radius);
+                if(radius < 1)
+                    searchLocation.setText(String.format("%d m", Math.round(radius * 1000)));
+                else
+                    searchLocation.setText(String.format("%d km", Math.round(radius)));
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                int progress = seekBar.getProgress();
+                switch (progress){
+                    case 0: radius = 0.25; break;
+                    case 1: radius = 0.5; break;
+                    case 2: radius = 1; break;
+                    case 3: radius = 2; break;
+                    case 4: radius = 5; break;
+                    case 5: radius = 10; break;
+                    case 6: radius = 20; break;
+                    case 7: radius = 50; break;
+                    case 8: radius = 100; break;
+                    case 9: radius = 200; break;
+                    case 10: radius = 500; break;
+                    case 11: radius = 1000; break;
+                    case 12: radius = 10000; break;
+                    default: throw new IllegalArgumentException();
+                }
+//                geoQuery.setRadius(radius);
+                if(radius < 1)
+                    searchLocation.setText(String.format("%d m", Math.round(radius * 1000)));
+                else
+                    searchLocation.setText(String.format("%d km", Math.round(radius)));
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
         });
+
 
         //Get Data from User
         UserDatabase.addValueEventListener(new ValueEventListener() {
@@ -282,14 +323,36 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        Query f = GroupDatabase.orderByChild("d").equalTo(3);
+
+        //recyclerView.setAdapter(firebaseRecyclerAdapter);
+        groupsAdapter = new GroupsAdapter(this);
+        recyclerView.setAdapter(groupsAdapter);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        setupGeoFire();
+        setCurrentLocation();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setCurrentLocation();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        geoQuery.removeAllListeners();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         geoQuery.removeAllListeners();
     }
 
@@ -444,8 +507,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void setCurrentLocation(GeoLocation location){
         currentLocation = location;
         geoQuery.setCenter(location);
-        //geoQuery.setRadius(geoQuery.getRadius());
-        groupsAdapter.notifyDataSetChanged();
+        groupsAdapter.Clear();
     }
 
     public void setupBottomNavigationView() {
@@ -536,7 +598,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setLocationData(double latitude, double longitude) {
-
+        if(geoQuery == null)
+            setupGeoFire();
         setCurrentLocation(new GeoLocation(latitude, longitude));
 
         String latLng = "geo:<" + latitude  + ">,<" + longitude + ">?q=<" + latitude  + ">,<" + longitude + ">("
