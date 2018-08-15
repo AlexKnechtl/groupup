@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -41,7 +42,7 @@ public class NotificationActivity extends AppCompatActivity {
 
     //Firebase
     private String user_id;
-    private DatabaseReference RequestDatabase;
+    private Query RequestDatabase;
     private DatabaseReference UserDatabase;
 
     //XML
@@ -91,7 +92,8 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
-        RequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
+        RequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id).orderByChild("time");
+
 
         //Set Adapter
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

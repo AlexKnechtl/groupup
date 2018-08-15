@@ -180,6 +180,9 @@ public class UserProfileActivity extends AppCompatActivity {
     public void addFriendClick(View view) {
         if (mCurrentState.equals("not_friends")) {
 
+            DatabaseReference user_message_push = NotificationDatabase.child(mCurrentUser.getUid()).push();
+            String pushId = user_message_push.getKey();
+
             Map notificationData = new HashMap();
             notificationData.put("from", mCurrentUser.getUid());
             notificationData.put("type", "friend_request");
