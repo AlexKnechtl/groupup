@@ -47,7 +47,7 @@
                     android:gravity="start"
                     android:maxLines="2"
                     android:maxWidth="230dp"
-                    android:text="Hausmannstätten"
+                    android:text="Graz"
                     android:textColor="@color/colorAccent"
                     android:textSize="28sp" />
 
