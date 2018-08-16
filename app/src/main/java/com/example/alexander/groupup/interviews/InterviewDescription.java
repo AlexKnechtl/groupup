@@ -18,6 +18,7 @@ import com.example.alexander.groupup.models.GroupImagesModel;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.GroupMember;
 import com.example.alexander.groupup.models.GroupModel;
+import com.example.alexander.groupup.models.GroupType;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,8 +43,8 @@ public class InterviewDescription extends BaseActivity {
     private EditText description;
 
     //Variables
-    private String category, activity, publicStatus, location,
-            groupDescription, current_uid, tag1, tag2, tag3, latLng;
+    private GroupModel group;
+    private String current_uid;
 
     private Double geofirelat, geofirelong;
 
@@ -77,7 +78,7 @@ public class InterviewDescription extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                groupDescription = description.getText().toString();
+                group.description = description.getText().toString();
 
                 setDatabaseValues();
             }
@@ -87,7 +88,7 @@ public class InterviewDescription extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                groupDescription = "Hier sollte eine Beschreibung stehen.";
+                group.description = "Hier sollte eine Beschreibung stehen.";
 
                 //Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
                 setDatabaseValues();
@@ -98,8 +99,8 @@ public class InterviewDescription extends BaseActivity {
 
     private void setDatabaseValues() {
 
-        if (category.equals("sport")) { //todo implement for all categories
-            GroupImagesModel.getRandomSportImageURL(activity, new OnGetResultListener<String>() {
+        if (group.category == GroupType.sport) { //todo implement for all categories
+            GroupImagesModel.getRandomSportImageURL(group.activity, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String groupImage) {
                     mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(current_uid);
@@ -115,8 +116,9 @@ public class InterviewDescription extends BaseActivity {
 
                     HashMap<String, GroupMember> members =  new HashMap<String, GroupMember>();
                     members.put(current_uid, new GroupMember("creator"));
-                    GroupModel m = new GroupModel(activity, location, tag1,tag2,tag3, groupImage, category, publicStatus, groupDescription, latLng, members);
-                    mGroupDatabase.setValue(m);
+                    group.group_image = groupImage;
+                    group.members = members;
+                    mGroupDatabase.setValue(group);
 
                     UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -134,7 +136,7 @@ public class InterviewDescription extends BaseActivity {
             });
         }else { // Todo Freizeit: category = null, activity = null ERROR!!!
 
-            GroupImagesModel.getRandomImageURL(activity, category, new OnGetResultListener<String>() {
+            GroupImagesModel.getRandomImageURL(group.activity, group.category, new OnGetResultListener<String>() {
                 @Override
                 public void OnSuccess(String value) {
                     mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(current_uid);
@@ -149,8 +151,9 @@ public class InterviewDescription extends BaseActivity {
 
                     HashMap<String, GroupMember> members =  new HashMap<String, GroupMember>();
                     members.put(current_uid, new GroupMember("creator"));
-                    GroupModel m = new GroupModel(activity, location, tag1,tag2,tag3, value, category, publicStatus, groupDescription, latLng, members);
-                    mGroupDatabase.setValue(m);
+                    group.members = members;
+                    group.group_image = value;
+                    mGroupDatabase.setValue(group);
 
                     UserDatabase.child("my_group").setValue(current_uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -171,14 +174,7 @@ public class InterviewDescription extends BaseActivity {
 
     private void getGroupInformation() {
         Bundle bundle = getIntent().getExtras();
-        category = bundle.getString("group");
-        activity = bundle.getString("activity");
-        publicStatus = bundle.getString("publicStatus");
-        location = bundle.getString("location");
-        tag1 = bundle.getString("tag1");
-        tag2 = bundle.getString("tag2");
-        tag3 = bundle.getString("tag3");
-        latLng = bundle.getString("latlng");
+        group =(GroupModel) bundle.getSerializable("group");
 
         geofirelat = bundle.getDouble("geofirelat");
         geofirelong = bundle.getDouble("geofirelong");

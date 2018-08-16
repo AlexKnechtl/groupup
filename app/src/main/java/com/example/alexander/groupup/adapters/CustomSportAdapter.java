@@ -14,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.interviews.InterviewPublic;
+import com.example.alexander.groupup.models.GroupModel;
+import com.example.alexander.groupup.models.GroupType;
 import com.example.alexander.groupup.models.LanguageStringsModel;
 import com.example.alexander.groupup.R;
 
@@ -24,12 +26,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CustomSportAdapter extends RecyclerView.Adapter<CustomSportAdapter.ViewHolder> {
 
     private ArrayList<LanguageStringsModel> sportItems;
-    private String category;
     private Context mContext;
 
-    public CustomSportAdapter(Context context, ArrayList<LanguageStringsModel> sportItems, String category) {
+    public CustomSportAdapter(Context context, ArrayList<LanguageStringsModel> sportItems) {
         mContext = context;
-        this.category = category;
         this.sportItems = sportItems;
     }
 
@@ -54,9 +54,10 @@ public class CustomSportAdapter extends RecyclerView.Adapter<CustomSportAdapter.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, InterviewPublic.class);
-                intent.putExtra("group", "sport");
-                intent.putExtra("activity", sportItems.get(position).getId());
-                intent.putExtra("group_image", new Integer(position).toString());
+                GroupModel group = new GroupModel();
+                group.activity = sportItems.get(position).getId();
+                group.category = GroupType.sport;
+                intent.putExtra("group", group);
                 mContext.startActivity(intent);
             }
         });

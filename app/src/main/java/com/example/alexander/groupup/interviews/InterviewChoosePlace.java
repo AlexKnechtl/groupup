@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.models.GroupModel;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.security.acl.Group;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,7 +33,7 @@ public class InterviewChoosePlace extends BaseActivity {
     private final int REQUEST_CODE_PLACE_PICKER = 1;
 
     //Variables
-    private String group, activity, publicStatus, country, tag1, tag2, tag3, latLng;
+    private static GroupModel group;
     private Double geofirelat, geofirelong;
 
     //XML
@@ -56,12 +58,7 @@ public class InterviewChoosePlace extends BaseActivity {
 
         //Get Information by Intent
         Bundle bundle = getIntent().getExtras();
-        group = bundle.getString("group"); // Group Category
-        activity = bundle.getString("activity");
-        publicStatus = bundle.getString("publicStatus");
-        tag1 = bundle.getString("tag1");
-        tag2 = bundle.getString("tag2");
-        tag3 = bundle.getString("tag3");
+        group = (GroupModel) bundle.getSerializable("group"); // Group Category
 
         backLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,10 +82,8 @@ public class InterviewChoosePlace extends BaseActivity {
                 String city = dataSnapshot.child("city").getValue().toString();
 
                 Intent intent = new Intent(InterviewChoosePlace.this, InterviewTags.class);
+                group.location = city;
                 intent.putExtra("group", group);
-                intent.putExtra("activity", activity);
-                intent.putExtra("publicStatus", "justfriends");
-                intent.putExtra("location", city);
                 startActivity(intent);
             }
 
@@ -125,35 +120,19 @@ public class InterviewChoosePlace extends BaseActivity {
 
 
 
-        latLng = "geo:<" + latitude  + ">,<" + longitude + ">?q=<" + latitude  + ">,<" + longitude + ">("
+        group.latlng = "geo:<" + latitude  + ">,<" + longitude + ">?q=<" + latitude  + ">,<" + longitude + ">("
                 + getResources().getString(R.string.group_is_here) + ")";
 
         Geocoder geocoder = new Geocoder(this);
-        try
-        {
-            List<Address> addresses = geocoder.getFromLocation(latitude,
-                    longitude, 1);
-            country = addresses.get(0).getCountryCode();
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
 
         final String placeName = placeSelected.getName().toString();
 
         UserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) { //TODO WTF soll DAS?
+            public void onDataChange(DataSnapshot dataSnapshot) { //TODO WTF soll DAS? Datasnapshot never used
                 Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
+                group.location = placeName;
                 intent.putExtra("group", group);
-                intent.putExtra("activity", activity);
-                intent.putExtra("publicStatus", publicStatus);
-                intent.putExtra("location", placeName);
-                intent.putExtra("tag1", tag1);
-                intent.putExtra("tag2", tag2);
-                intent.putExtra("tag3", tag3);
-                intent.putExtra("country", country);
-                intent.putExtra("latlng", latLng);
                 intent.putExtra("geofirelat", geofirelat);
                 intent.putExtra("geofirelong", geofirelong);
                 startActivity(intent);
