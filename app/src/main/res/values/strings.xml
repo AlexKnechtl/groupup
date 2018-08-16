@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">GroupUp</string>
-
     <!-- Basic Strings -->
     <string name="not_possible">Missing information.</string>
     <string name="too_young">We are sorry :( You are too young.</string>
@@ -152,7 +151,7 @@
     <string name="night_club">Nightclub</string>
     <string name="bar_pub">Bar / Pub</string>
     <string name="houseparty">Houseparty</string>
-    <string name="hookah_bar">Hookah Bar</string>
+    <string name="hookah">Hookah Bar</string>
     <string name="event">Event</string>
     <string name="seminar">Seminar</string>
     <string name="motivation">Motivation</string>
@@ -214,4 +213,12 @@
     <string name="earlier">Earlier</string>
     <string name="you_have_send">"You have send "</string>
     <string name="a_friend_request">" a friend request."</string>
+    <!-- GroupTypes -->
+    <string-array name="group_types">
+        <item>all group types</item>
+        <item>sport groups</item>
+        <item>leisure groups</item>
+        <item>nightlife groups</item>
+        <item>business groups</item>
+    </string-array>
 </resources>

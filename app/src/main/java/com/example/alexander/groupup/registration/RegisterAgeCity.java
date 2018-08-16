@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -25,7 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.Calendar;
 import java.util.Date;
 
-public class RegisterAgeCity extends AppCompatActivity {
+public class RegisterAgeCity extends BaseActivity {
 
     //XML
     private TextView cityTextView, birthdayTextView;

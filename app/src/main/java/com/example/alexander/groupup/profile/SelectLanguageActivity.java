@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.LanguageStringsModel;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
@@ -26,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class SelectLanguageActivity extends AppCompatActivity {
+public class SelectLanguageActivity extends BaseActivity {
 
     private RecyclerView languagesRecyclerView = null;
     private DatabaseReference databaseRef;

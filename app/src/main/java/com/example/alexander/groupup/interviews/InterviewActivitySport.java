@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.adapters.CustomSportAdapter;
 import com.example.alexander.groupup.models.*;
 import com.example.alexander.groupup.singletons.*;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  * Created by alexander on 26.03.18.
  */
 
-public class InterviewActivitySport extends AppCompatActivity {
+public class InterviewActivitySport extends BaseActivity {
 
     //XML
     private RecyclerView sportsRecyclerView;

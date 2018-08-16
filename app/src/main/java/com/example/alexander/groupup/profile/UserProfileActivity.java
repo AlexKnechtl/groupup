@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.chat.SingleChat;
 import com.example.alexander.groupup.main.HomeActivity;
@@ -40,7 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by alexk on 01.03.2018.
  */
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends BaseActivity {
 
     //XML
     private TextView mDisplayNameAge, mDisplayLocation, mFabFriendText, fabMessageBubble, mStatus, backExplorerText, friendsCounter, languages;

@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.StartActivity;
 import com.example.alexander.groupup.chat.GroupChat;
 import com.example.alexander.groupup.group.MyGroupView;
@@ -74,6 +75,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.ice.restring.Restring;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.io.IOException;
@@ -84,7 +86,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     private static final long LOCATION_REFRESH_TIME = 10000;
 
@@ -113,6 +115,7 @@ public class HomeActivity extends AppCompatActivity {
 
     double radius = 10;
     private ArrayList groups;
+    private boolean isLocationSelected = false;
 
     //Variables
     private String city;
@@ -129,12 +132,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_home);
         FirebaseMessaging.getInstance().subscribeToTopic("TestTopic");
-
-        groupsAdapter = new GroupsAdapter(this);
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        setCurrentLocation();
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
             @Override
@@ -289,6 +287,10 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         GroupModel m = dataSnapshot.getValue(GroupModel.class);
+
+
+
+                        //Todo Filter and maybe change to geoFire with data
                         groupsAdapter.Add(new GeoGroup(m, location, dataSnapshot.getKey()));
                     }
 
@@ -324,8 +326,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        Query f = GroupDatabase.orderByChild("d").equalTo(3);
-
+       /// Query f = GroupDatabase.orderByChild("time").equalTo(3);
         //recyclerView.setAdapter(firebaseRecyclerAdapter);
         groupsAdapter = new GroupsAdapter(this);
         recyclerView.setAdapter(groupsAdapter);
@@ -334,25 +335,20 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setCurrentLocation();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        setCurrentLocation();
+        if(!isLocationSelected)
+            setCurrentLocation();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         geoQuery.removeAllListeners();
+        geoQuery = null;
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        geoQuery.removeAllListeners();
     }
 
     public static class GroupsViewHolder extends RecyclerView.ViewHolder {
@@ -505,8 +501,10 @@ public class HomeActivity extends AppCompatActivity {
 
     protected void setCurrentLocation(GeoLocation location){
         currentLocation = location;
-        geoQuery.setCenter(location);
-        groupsAdapter.Clear();
+        geoQuery.setLocation(location, radius);
+        groupsAdapter.notifyDataSetChanged();
+        //groupsAdapter.Clear();
+        //setupGeoFire();
     }
 
     public void setupBottomNavigationView() {
@@ -586,6 +584,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE_PLACE_PICKER && resultCode == RESULT_OK) {
+            isLocationSelected = true;
             LatLng ll = PlacePicker.getPlace(this, data).getLatLng();
             setLocationData(ll.latitude, ll.longitude);
         }
@@ -597,6 +596,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setLocationData(double latitude, double longitude) {
+        currentLocation = new GeoLocation(latitude, longitude);
         if(geoQuery == null)
             setupGeoFire();
         setCurrentLocation(new GeoLocation(latitude, longitude));
@@ -635,6 +635,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void setCurrentLocation(){
+        isLocationSelected = false;
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_COARSE_LOCATION))
@@ -663,7 +664,7 @@ public class HomeActivity extends AppCompatActivity {
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
-                    if(location != null){
+                    if(location != null && !isLocationSelected){
                         setLocationData(location.getLatitude(), location.getLongitude());
                     }
                 }

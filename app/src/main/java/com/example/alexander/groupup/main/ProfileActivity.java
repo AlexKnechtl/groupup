@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.profile.FriendsActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.profile.SelectLanguageActivity;
@@ -56,7 +57,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
 
     //XML
     private CircleImageView mProfileImageView;

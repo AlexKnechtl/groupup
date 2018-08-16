@@ -10,28 +10,27 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".groupup"
         android:allowBackup="true"
         android:icon="@mipmap/groupup_ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeDark"
-        android:name=".groupup">
-
+        android:theme="@style/AppThemeDark">
         <activity
             android:name=".StartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeDark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".main.HomeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppThemeLight" />
+            android:theme="@style/AppThemeLight"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".main.ProfileActivity"
             android:screenOrientation="portrait"
@@ -41,15 +40,17 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY_NOTIFICATIONS" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".main.ChatActivity"
             android:label="@string/your_chats"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY_CHAT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -72,8 +73,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".chat.GroupChat"
-            android:theme="@style/GroupViewTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/GroupViewTheme" />
         <activity
             android:name=".chat.SingleChat"
             android:screenOrientation="portrait" />
@@ -154,7 +155,7 @@
         <activity
             android:name=".group.MyGroupView"
             android:screenOrientation="portrait"
-            android:theme="@style/GroupViewTheme"/>
+            android:theme="@style/GroupViewTheme" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -171,5 +172,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".BaseActivity"></activity>
     </application>
+
 </manifest>

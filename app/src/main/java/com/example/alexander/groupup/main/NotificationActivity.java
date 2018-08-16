@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.adapters.RequestAdapter;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.RequestModel;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class NotificationActivity extends AppCompatActivity {
+public class NotificationActivity extends BaseActivity {
 
     private Context mContext = NotificationActivity.this;
     private static final int ACTIVITY_NUM = 1;

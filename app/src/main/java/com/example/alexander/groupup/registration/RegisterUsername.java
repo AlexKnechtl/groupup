@@ -8,10 +8,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 
-public class RegisterUsername extends AppCompatActivity {
+public class RegisterUsername extends BaseActivity {
 
     //XML
     private EditText editFirstName, editSurname, editUsername;

@@ -72,6 +72,9 @@ dependencies {
 
     //Google Play Services for location
     implementation "com.google.android.gms:play-services-location:15.0.1"
+
+    // Restring for dynamic bundled Strings
+    implementation 'com.ice.restring:restring:1.0.0'
 }
 apply plugin: 'com.google.gms.google-services'
 

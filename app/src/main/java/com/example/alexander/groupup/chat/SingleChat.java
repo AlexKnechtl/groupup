@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.adapters.MessagesAdapter;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.main.ChatActivity;
@@ -39,7 +40,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SingleChat extends AppCompatActivity {
+public class SingleChat extends BaseActivity {
 
     //XML
     private CircleImageView userImage;

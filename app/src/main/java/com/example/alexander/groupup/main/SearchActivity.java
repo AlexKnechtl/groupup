@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.group.GroupView;
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
@@ -29,7 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
 
     //XML
     private EditText mSearchField;

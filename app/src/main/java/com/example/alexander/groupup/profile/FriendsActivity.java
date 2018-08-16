@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.UserModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -31,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by alexander on 24.03.18.
  */
 
-public class FriendsActivity extends AppCompatActivity {
+public class FriendsActivity extends BaseActivity {
 
     //XML
     private RecyclerView friendsList;

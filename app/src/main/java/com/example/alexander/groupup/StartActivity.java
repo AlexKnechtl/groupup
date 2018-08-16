@@ -27,7 +27,7 @@ import java.util.Arrays;
 
 import static com.example.alexander.groupup.main.HomeActivity.ANONYMOUS;
 
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends BaseActivity {
 
     public static boolean IS_APP_RUNNING =false;
 

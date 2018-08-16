@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.profile.FriendsActivity;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
@@ -15,7 +16,7 @@ import com.example.alexander.groupup.R;
  * Created by alexander on 18.03.18.
  */
 
-public class InterviewStart extends AppCompatActivity {
+public class InterviewStart extends BaseActivity {
 
     private LinearLayout newGroupLayout, sameGroupLayout, showFriendsLayout;
     private RelativeLayout backLayout;

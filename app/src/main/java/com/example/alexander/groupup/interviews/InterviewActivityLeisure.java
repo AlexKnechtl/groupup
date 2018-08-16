@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.UserModel;
@@ -25,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class InterviewActivityLeisure extends AppCompatActivity {
+public class InterviewActivityLeisure extends BaseActivity {
 
     //XML
     private RelativeLayout backLayout;
