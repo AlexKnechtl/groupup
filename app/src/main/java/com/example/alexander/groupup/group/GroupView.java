@@ -26,6 +26,7 @@ import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.main.ProfileActivity;
 import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.models.MessagesModel;
+import com.example.alexander.groupup.models.PublicStatus;
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.profile.UserProfileActivity;
@@ -217,7 +218,7 @@ public class GroupView extends BaseActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GroupModel g = dataSnapshot.getValue(GroupModel.class);
-                if (g.public_status.equals("everybody")) {
+                if (g.public_status == PublicStatus.open) {
                     publicStatus = true;
 
                     statusIcon.setImageResource(R.drawable.material_lock_open_white_36);
@@ -230,7 +231,7 @@ public class GroupView extends BaseActivity {
                         + " @" + g.location);
 
                 if (g.members.containsKey(user_id)) {
-                   // g.members.get(user_id).rank; TODO bitte was soll des?
+                   // g.members.get(user_id).rank; TODO bitte was soll des? Wird net verwendet
                 }
                 description.setText(g.description);
                 int size = 0;

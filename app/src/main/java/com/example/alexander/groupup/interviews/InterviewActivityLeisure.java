@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.models.UserModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,11 +39,13 @@ public class InterviewActivityLeisure extends BaseActivity {
 
     ArrayList<String> tags = new ArrayList<>();
 
+    private GroupModel group;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_leisure);
-
+        group = (GroupModel) getIntent().getSerializableExtra("group");
         backLayout = findViewById(R.id.back_layout_leisure);
         tagRecyclerView = findViewById(R.id.recyclerViewInterviewLeisureTags);
         leisureTagEdit = findViewById(R.id.leisure_tag_et);
@@ -131,8 +134,8 @@ public class InterviewActivityLeisure extends BaseActivity {
     public void addLeisureTagClick(View view) {
         //ToDo: Finish TagDatabaseSystem with counter (Citys? ... Countrys?)
         Intent intent = new Intent(InterviewActivityLeisure.this, InterviewPublic.class);
-        intent.putExtra("group", "leisure");
-        intent.putExtra("activity", leisureTagEdit.getText().toString());
+        group.activity = leisureTagEdit.getText().toString();
+        intent.putExtra("group", group);
         startActivity(intent);
     }
 }

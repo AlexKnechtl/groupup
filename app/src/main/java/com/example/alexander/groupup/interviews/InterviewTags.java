@@ -12,8 +12,11 @@ import android.widget.Toast;
 import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.main.HomeActivity;
+import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.registration.RegisterAgeCity;
 import com.example.alexander.groupup.registration.RegisterUsername;
+
+import java.security.acl.Group;
 
 public class InterviewTags extends BaseActivity {
 
@@ -22,7 +25,7 @@ public class InterviewTags extends BaseActivity {
     private EditText tag1EditText, tag2EditText, tag3EditText;
 
     //Variables
-    private String group, activity, publicStatus, location;
+    private GroupModel group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +51,7 @@ public class InterviewTags extends BaseActivity {
 
     private void getGroupInformation() {
         Bundle bundle = getIntent().getExtras();
-        group = bundle.getString("group"); // Gruppen Kategorie
-        activity = bundle.getString("activity");
-        publicStatus = bundle.getString("publicStatus");
-        location = bundle.getString("location");
+        group = (GroupModel) bundle.getSerializable("group");
     }
 
     public void addTagsClick(View view) {
@@ -72,13 +72,10 @@ public class InterviewTags extends BaseActivity {
         }
 
         Intent intent = new Intent(InterviewTags.this, InterviewChoosePlace.class);
+        group.tag1 = tag1;
+        group.tag2 = tag2;
+        group.tag3 = tag3;
         intent.putExtra("group", group);
-        intent.putExtra("activity", activity);
-        intent.putExtra("publicStatus", publicStatus);
-        intent.putExtra("location", location);
-        intent.putExtra("tag1", tag1);
-        intent.putExtra("tag2", tag2);
-        intent.putExtra("tag3", tag3);
         startActivity(intent);
     }
 }

@@ -70,12 +70,12 @@ public class GroupImagesModel {
         });
     }
 
-    public static void getRandomImageURL(String activity, String group, final OnGetResultListener<String> listener) {
+    public static void getRandomImageURL(String activity, GroupType groupType, final OnGetResultListener<String> listener) {
 
         imageMapReference.keepSynced(true);
         String childstr = "";
-        switch (group){
-            case "leisure": childstr = "leisure"; break;
+        switch (groupType){
+            case leisure: childstr = "leisure"; break;
             default: childstr = activity; break;
         }
 

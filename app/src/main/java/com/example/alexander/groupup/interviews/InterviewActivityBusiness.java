@@ -9,17 +9,19 @@ import android.widget.RelativeLayout;
 import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.main.HomeActivity;
+import com.example.alexander.groupup.models.GroupModel;
 
 public class InterviewActivityBusiness extends BaseActivity {
 
     //XML
     private RelativeLayout backLayout;
+    private GroupModel group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_business);
-
+        group = (GroupModel) getIntent().getSerializableExtra("group");
         backLayout = findViewById(R.id.back_layout_business);
 
         backLayout.setOnClickListener(new View.OnClickListener() {
@@ -34,32 +36,32 @@ public class InterviewActivityBusiness extends BaseActivity {
     //ToDO Add GroupImagesSystem for Business
     public void connectionGroupClick(View view) {
         Intent intent = new Intent(InterviewActivityBusiness.this, InterviewPublic.class);
-        intent.putExtra("group", "business");
-        intent.putExtra("activity", "connectionGroup");
+        group.activity = "connection_group";
+        intent.putExtra("group", group);
         //intent.putExtra("group_image", new Integer(position).toString());
         startActivity(intent);
     }
 
     public void seminarClick(View view) {
         Intent intent = new Intent(InterviewActivityBusiness.this, InterviewPublic.class);
-        intent.putExtra("group", "business");
-        intent.putExtra("activity", "seminar");
+        group.activity = "seminar";
+        intent.putExtra("group", group);
         //intent.putExtra("group_image", new Integer(position).toString());
         startActivity(intent);
     }
 
     public void motivationClick(View view) {
         Intent intent = new Intent(InterviewActivityBusiness.this, InterviewPublic.class);
-        intent.putExtra("group", "business");
-        intent.putExtra("activity", "motivation");
+        group.activity = "motivation";
+        intent.putExtra("group", group);
         //intent.putExtra("group_image", new Integer(position).toString());
         startActivity(intent);
     }
 
     public void eventClick(View view) {
         Intent intent = new Intent(InterviewActivityBusiness.this, InterviewPublic.class);
-        intent.putExtra("group", "business");
-        intent.putExtra("activity", "event");
+        group.activity = "event";
+        intent.putExtra("group", group);
         //intent.putExtra("group_image", new Integer(position).toString());
         startActivity(intent);
     }

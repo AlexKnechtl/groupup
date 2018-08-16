@@ -9,17 +9,19 @@ import android.widget.RelativeLayout;
 import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.main.HomeActivity;
+import com.example.alexander.groupup.models.GroupModel;
 
 public class InterviewActivityNightlife extends BaseActivity {
 
     //XML
     private RelativeLayout backLayout;
+    private GroupModel group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_nightlife);
-
+        group = (GroupModel) getIntent().getSerializableExtra("group");
         backLayout = findViewById(R.id.back_layout_nightlife);
 
         backLayout.setOnClickListener(new View.OnClickListener() {
@@ -34,32 +36,32 @@ public class InterviewActivityNightlife extends BaseActivity {
     //ToDO Add GroupImagesSystem for Nightlife
     public void nightclubClick(View view) {
         Intent intent = new Intent(InterviewActivityNightlife.this, InterviewPublic.class);
-        intent.putExtra("group", "nightlife");
-        intent.putExtra("activity", "nightclub");
+        group.activity = "night_club";
+        intent.putExtra("group", group);
         //intent.putExtra("group_image", new Integer(position).toString());
         startActivity(intent);
     }
 
     public void barPubClick(View view) {
         Intent intent = new Intent(InterviewActivityNightlife.this, InterviewPublic.class);
-        intent.putExtra("group", "nightlife");
-        intent.putExtra("activity", "barPub");
+        group.activity = "bar_pub";
+        intent.putExtra("group", group);
         //intent.putExtra("group_image", new Integer(position).toString());
         startActivity(intent);
     }
 
     public void hookahClick(View view) {
         Intent intent = new Intent(InterviewActivityNightlife.this, InterviewPublic.class);
-        intent.putExtra("group", "nightlife");
-        intent.putExtra("activity", "hookah");
+        group.activity = "hookah_bar";
+        intent.putExtra("group", group);
         //intent.putExtra("group_image", new Integer(position).toString());
         startActivity(intent);
     }
 
     public void housepartyClick(View view) {
         Intent intent = new Intent(InterviewActivityNightlife.this, InterviewPublic.class);
-        intent.putExtra("group", "nightlife");
-        intent.putExtra("activity", "houseparty");
+        group.activity = "houseparty";
+        intent.putExtra("group", group);
         //intent.putExtra("group_image", new Integer(position).toString());
         startActivity(intent);
     }

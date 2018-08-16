@@ -9,6 +9,8 @@ import android.widget.RelativeLayout;
 import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.models.GroupModel;
+import com.example.alexander.groupup.models.GroupType;
 
 /**
  * Created by alexander on 18.03.18.
@@ -18,10 +20,12 @@ public class InterviewNewGroup extends BaseActivity {
 
     //XML
     private RelativeLayout backLayout;
+    private GroupModel group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        group = new GroupModel();
         setContentView(R.layout.interview_newgroup);
 
         backLayout = findViewById(R.id.back_layout_new_group);
@@ -38,25 +42,29 @@ public class InterviewNewGroup extends BaseActivity {
     //OnClicks
     public void sportClick(View view) {
         Intent intent = new Intent(InterviewNewGroup.this, InterviewActivitySport.class);
-        intent.putExtra("group", "sport");
+        group.category = GroupType.sport;
+        intent.putExtra("group", group);
         startActivity(intent);
     }
 
     public void leisureClick(View view) {
         Intent intent = new Intent(InterviewNewGroup.this, InterviewActivityLeisure.class);
-        intent.putExtra("group", "leisure");
+        group.category = GroupType.leisure;
+        intent.putExtra("group", group);
         startActivity(intent);
     }
 
     public void nightlifeClick(View view) {
         Intent intent = new Intent(InterviewNewGroup.this, InterviewActivityNightlife.class);
-        intent.putExtra("group", "nightlife");
+        group.category = GroupType.nightlife;
+        intent.putExtra("group", group);
         startActivity(intent);
     }
 
     public void businessClick(View view) {
         Intent intent = new Intent(InterviewNewGroup.this, InterviewActivityBusiness.class);
-        intent.putExtra("group", "business");
+        group.category = GroupType.business;
+        intent.putExtra("group", group);
         startActivity(intent);
     }
 }

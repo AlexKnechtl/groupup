@@ -238,7 +238,7 @@ public class HomeActivity extends BaseActivity {
                 } else
                     creator = false;
 
-                location.setText(city);
+                //location.setText(city);
             }
 
             @Override

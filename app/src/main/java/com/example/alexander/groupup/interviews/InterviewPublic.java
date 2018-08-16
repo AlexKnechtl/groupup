@@ -9,6 +9,10 @@ import android.widget.RelativeLayout;
 import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.models.GroupModel;
+import com.example.alexander.groupup.models.PublicStatus;
+
+import java.security.acl.Group;
 
 /**
  * Created by alexander on 20.03.18.
@@ -20,7 +24,7 @@ public class InterviewPublic extends BaseActivity {
     private RelativeLayout backLayout;
 
     //Variables
-    String group, activity, memberQuantity;
+    GroupModel group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +33,8 @@ public class InterviewPublic extends BaseActivity {
 
         //Get Information by Intent
         Bundle bundle = getIntent().getExtras();
-        group = bundle.getString("group"); // Gruppen Kategorie
-        activity = bundle.getString("activity");
+        group = (GroupModel) bundle.getSerializable("group"); // Gruppen Kategorie
+
 
         //Find IDs
         backLayout = findViewById(R.id.back_layout_public);
@@ -46,19 +50,15 @@ public class InterviewPublic extends BaseActivity {
 
     public void requestsClick(View view) {
         Intent intent = new Intent(InterviewPublic.this, InterviewTags.class);
+        group.public_status = PublicStatus.request;
         intent.putExtra("group", group);
-        intent.putExtra("activity", activity);
-        intent.putExtra("memberQuantity", memberQuantity);
-        intent.putExtra("publicStatus", "requests");
         startActivity(intent);
     }
 
     public void everybodyClick(View view) {
         Intent intent = new Intent(InterviewPublic.this, InterviewTags.class);
+        group.public_status = PublicStatus.open;
         intent.putExtra("group", group);
-        intent.putExtra("activity", activity);
-        intent.putExtra("memberQuantity", memberQuantity);
-        intent.putExtra("publicStatus", "everybody");
         startActivity(intent);
     }
 }

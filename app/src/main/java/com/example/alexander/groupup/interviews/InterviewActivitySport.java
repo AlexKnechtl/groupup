@@ -27,7 +27,7 @@ public class InterviewActivitySport extends BaseActivity {
     private EditText searchEditText;
 
     //Variables
-    String group;
+    private GroupModel group;
 
     private ArrayList<LanguageStringsModel> sportItems;
     private CustomSportAdapter adapter;
@@ -39,7 +39,7 @@ public class InterviewActivitySport extends BaseActivity {
 
         //Get Information by Intent
         Bundle bundle = getIntent().getExtras();
-        group = bundle.getString("group"); // Gruppen Kategorie
+        group = (GroupModel) bundle.getSerializable("group"); // Gruppen Kategorie
 
         sportItems = LanguageStringsManager.getInstance().getLanguageStrings();
 
@@ -49,7 +49,7 @@ public class InterviewActivitySport extends BaseActivity {
         sportsRecyclerView.setHasFixedSize(true);
         sportsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new CustomSportAdapter(this, sportItems, group);
+        adapter = new CustomSportAdapter(this, sportItems);
 
         sportsRecyclerView.setAdapter(adapter);
 
