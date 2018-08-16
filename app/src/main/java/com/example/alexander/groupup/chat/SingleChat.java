@@ -175,8 +175,8 @@ public class SingleChat extends BaseActivity {
 
                     Map userMessageMap = new HashMap();
                     userMessageMap.put("message", message);
-                    userMessageMap.put("time", ServerValue.TIMESTAMP);
                     userMessageMap.put("date", currentDateChat);
+                    userMessageMap.put("time", ServerValue.TIMESTAMP);
                     UserDatabase.child(user_id).child("chats").child(receiver_user_id).updateChildren(userMessageMap);
                     UserDatabase.child(receiver_user_id).child("chats").child(user_id).updateChildren(userMessageMap);
                 }

@@ -36,6 +36,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp"
             android:gravity="center"
+            android:visibility="gone"
             android:text="@string/no_chats_yet"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp" />

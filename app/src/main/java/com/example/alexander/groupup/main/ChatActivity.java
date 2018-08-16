@@ -3,6 +3,7 @@ package com.example.alexander.groupup.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,7 +51,7 @@ public class ChatActivity extends BaseActivity {
 
     //Firebase
     private DatabaseReference ChatUsersDatabase;
-    private Query chatTimeQuery;
+    private DatabaseReference UserDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +95,6 @@ public class ChatActivity extends BaseActivity {
         setupBottomNavigationView();
     }
 
-
     public void newMessageClick(View view) {
         Intent intent = new Intent(ChatActivity.this, NewSingleChat.class);
         intent.putExtra("user_id", user_id);
@@ -105,7 +105,7 @@ public class ChatActivity extends BaseActivity {
     public void onStart() {
         super.onStart();
 
-        chatTimeQuery = ChatUsersDatabase.orderByChild("time").limitToLast(20);
+        Query chatTimeQuery = ChatUsersDatabase.orderByChild("time").limitToLast(20);
 
         FirebaseRecyclerAdapter<UserModel, ChatsViewholder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserModel, ChatsViewholder>(
                 UserModel.class,
@@ -115,13 +115,30 @@ public class ChatActivity extends BaseActivity {
         ) {
 
             @Override
-            protected void populateViewHolder(ChatsViewholder viewHolder, UserModel user, int position) {
+            protected void populateViewHolder(final ChatsViewholder viewHolder, UserModel user, int position) {
                 viewHolder.setDate(user.getDate());
-                viewHolder.setName(user.getName());
                 viewHolder.setMessage(user.getMessage());
-                viewHolder.setThumbImage(user.getThumb_image(), ChatActivity.this);
 
                 final String list_user_id = getRef(position).getKey();
+
+                UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(list_user_id);
+                UserDatabase.keepSynced(true);
+
+                UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
+                        String name = dataSnapshot.child("name").getValue().toString();
+
+                        viewHolder.setName(name);
+                        viewHolder.setThumbImage(thumb_image, ChatActivity.this);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override

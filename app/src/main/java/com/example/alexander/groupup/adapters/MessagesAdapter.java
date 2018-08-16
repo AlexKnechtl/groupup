@@ -56,11 +56,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             if (c.date.equalsIgnoreCase(d.date)) {
                 viewHolder.dateText.setVisibility(View.GONE);
             } else {
-                viewHolder.dateText.setVisibility(View.VISIBLE);
                 viewHolder.dateText.setText(c.date);
+                viewHolder.dateText.setVisibility(View.VISIBLE);
             }
-
         } else {
+            viewHolder.dateText.setText(c.date);
             viewHolder.dateText.setVisibility(View.VISIBLE);
         }
 

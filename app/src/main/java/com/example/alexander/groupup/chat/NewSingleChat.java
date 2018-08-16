@@ -125,34 +125,6 @@ public class NewSingleChat extends BaseActivity {
                         Intent intent = new Intent(NewSingleChat.this, SingleChat.class);
                         intent.putExtra("user_id", user_id);
                         intent.putExtra("receiver_user_id", list_user_id);
-
-                        UserDatabase.child(user_id).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String name = dataSnapshot.child("name").getValue().toString();
-                                String city = dataSnapshot.child("city").getValue().toString();
-                                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
-
-                                Map myUserMap = new HashMap<>();
-                                myUserMap.put("name", name);
-                                myUserMap.put("city", city);
-                                myUserMap.put("thumb_image", thumb_image);
-
-                                UserDatabase.child(list_user_id).child("chats").child(user_id).updateChildren(myUserMap);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-                        Map userMap = new HashMap<>();
-                        userMap.put("thumb_image", user.getThumb_image());
-                        userMap.put("name", user.getName());
-                        userMap.put("city", user.getCity());
-
-                        UserDatabase.child(user_id).child("chats").child(list_user_id).updateChildren(userMap);
                         startActivity(intent);
                     }
                 });
@@ -185,34 +157,6 @@ public class NewSingleChat extends BaseActivity {
                         Intent intent = new Intent(NewSingleChat.this, SingleChat.class);
                         intent.putExtra("user_id", user_id);
                         intent.putExtra("receiver_user_id", list_user_id);
-
-                        UserDatabase.child(user_id).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String name = dataSnapshot.child("name").getValue().toString();
-                                String city = dataSnapshot.child("city").getValue().toString();
-                                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
-
-                                Map myUserMap = new HashMap<>();
-                                myUserMap.put("name", name);
-                                myUserMap.put("city", city);
-                                myUserMap.put("thumb_image", thumb_image);
-
-                                UserDatabase.child(list_user_id).child("chats").child(user_id).updateChildren(myUserMap);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-                        Map userMap = new HashMap<>();
-                        userMap.put("thumb_image", user.getThumb_image());
-                        userMap.put("name", user.getName());
-                        userMap.put("city", user.getCity());
-
-                        UserDatabase.child(user_id).child("chats").child(list_user_id).updateChildren(userMap);
                         startActivity(intent);
                     }
                 });
