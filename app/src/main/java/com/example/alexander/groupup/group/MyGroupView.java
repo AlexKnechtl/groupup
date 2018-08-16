@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.example.alexander.groupup.chat.SingleChat;
 import com.example.alexander.groupup.main.HomeActivity;
 import com.example.alexander.groupup.main.ProfileActivity;
 import com.example.alexander.groupup.models.GroupModel;
+import com.example.alexander.groupup.models.PublicStatus;
 import com.example.alexander.groupup.models.UserModel;
 import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
@@ -47,9 +49,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MyGroupView extends BaseActivity {
 
     //XML
-    private TextView headline, description, backHomeFabText, addMemberFabText, groupChatFabText, leaveGroupText, memberCount;
+    private TextView headline, description, backHomeFabText, addMemberFabText, groupChatFabText, statusText, leaveGroupText, memberCount;
     private FloatingActionButton backHomeFab, addMemberFab, leaveGroupFab, groupChatFab;
     private RecyclerView membersList;
+    private ImageView statusIcon;
 
     //FireBase
     private DatabaseReference GroupMemberDatabase;
@@ -289,6 +292,8 @@ public class MyGroupView extends BaseActivity {
     }
 
     private void findIDs() {
+        statusText = findViewById(R.id.status_text_my_group_view);
+        statusIcon = findViewById(R.id.status_icon_group_view);
         backHomeFab = findViewById(R.id.back_home_my_group_view);
         addMemberFab = findViewById(R.id.add_member_fab);
         backHomeFabText = findViewById(R.id.back_home_text_my_group_view);
@@ -383,6 +388,12 @@ public class MyGroupView extends BaseActivity {
                 groupMembers = 0;
                 if (g.members != null)
                     groupMembers = g.members.size();
+
+                if (g.public_status == PublicStatus.open) {
+
+                    statusIcon.setImageResource(R.drawable.material_lock_open_white_36);
+                    statusText.setText(R.string.open);
+                }
 
                 if (groupMembers == 0) {
                     DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference().child("GroupChat").child(groupId);
