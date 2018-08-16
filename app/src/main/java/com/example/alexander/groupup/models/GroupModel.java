@@ -1,5 +1,7 @@
 package com.example.alexander.groupup.models;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -32,4 +34,12 @@ public class GroupModel implements Serializable {
     public HashMap<String, GroupMember> members;
 
     public GroupModel() {}
+
+    @Exclude
+    public Integer getMemberCount(){
+        if(members != null)
+            return members.size();
+        else
+            return 0;
+    }
 }

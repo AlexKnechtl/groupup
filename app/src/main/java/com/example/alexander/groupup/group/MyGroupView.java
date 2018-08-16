@@ -180,9 +180,7 @@ public class MyGroupView extends BaseActivity {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                     GroupModel groupModel = dataSnapshot.getValue(GroupModel.class);
-                                                    groupMembers = 0;
-                                                    if(groupModel.members != null)
-                                                        groupMembers = groupModel.members.size();
+                                                    groupMembers = groupModel.getMemberCount();
 
 
                                                     if (groupMembers == 0) {
@@ -317,10 +315,7 @@ public class MyGroupView extends BaseActivity {
                 headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(g.activity).getLocalLanguageString()
                         + " @" + g.location);
                 description.setText(g.description);
-                int size = 0;
-                if(g.members != null)
-                    size = g.members.size();
-                memberCount.setText(String.format("%d",size));
+                memberCount.setText(g.getMemberCount().toString());
             }
 
             @Override
@@ -380,11 +375,9 @@ public class MyGroupView extends BaseActivity {
                 //groupMembers = Long.parseLong(members);
                 //groupMembers--;
 
-                groupMembers = 0;
-                if (g.members != null)
-                    groupMembers = g.members.size();
+                groupMembers = g.getMemberCount();
 
-                if (groupMembers == 0) {
+                if (groupMembers < 2) {
                     DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference().child("GroupChat").child(groupId);
                     GroupDatabase.removeValue();
                     FirebaseDatabase.getInstance().getReference().child("GeoFire").child(user_id).removeValue();

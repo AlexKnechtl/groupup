@@ -342,7 +342,8 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        geoQuery.removeAllListeners();
+        if(geoQuery != null) geoQuery.removeAllListeners();
+        else Toast.makeText(this, "ERROR: GeoQuery is null. Something happend with your GPS", Toast.LENGTH_LONG).show();
         geoQuery = null;
     }
 
@@ -487,10 +488,7 @@ public class HomeActivity extends BaseActivity {
             holder.setTag1(g.group.tag1);
             holder.setTag2(g.group.tag2);
             holder.setTag3(g.group.tag3);
-            int size = 0;
-            if(g.group.members != null)
-                size = g.group.members.size();
-            holder.setMemberQuantity(size);
+            holder.setMemberQuantity(g.group.getMemberCount());
         }
 
         @Override

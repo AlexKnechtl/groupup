@@ -234,10 +234,7 @@ public class GroupView extends BaseActivity {
                    // g.members.get(user_id).rank; TODO bitte was soll des? Wird net verwendet
                 }
                 description.setText(g.description);
-                int size = 0;
-                if(g.members != null)
-                    size = g.members.size();
-                memberCount.setText(String.format("%d",size));
+                memberCount.setText(g.getMemberCount().toString());
             }
 
             @Override
