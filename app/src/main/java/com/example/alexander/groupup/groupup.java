@@ -25,7 +25,7 @@ public class groupup extends Application {
         built.setLoggingEnabled(true);
         Picasso.setSingletonInstance(built);
 
-        Restring.init(this, new RestringConfig.Builder().persist(true).stringsLoader(new RestringsLoader()).build());
+//        Restring.init(this, new RestringConfig.Builder().persist(true).stringsLoader(new RestringsLoader()).build());
 
         LanguageStringsManager.initialize();
     }

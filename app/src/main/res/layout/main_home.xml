@@ -91,17 +91,20 @@
                     android:textSize="22sp" />
 
                 <Spinner
+                    android:id="@+id/spinner_group_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:text="Sportgruppen"
+                    android:entries="@array/group_types"
                     android:textColor="@color/colorAccent"
+                    android:popupBackground="@color/colorBackground"
                     android:textSize="22sp">
 
                 </Spinner>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_group_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"

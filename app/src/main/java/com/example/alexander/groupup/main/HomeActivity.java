@@ -23,9 +23,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +43,7 @@ import com.example.alexander.groupup.group.MyGroupView;
 import com.example.alexander.groupup.helpers.GeoFireHelper;
 import com.example.alexander.groupup.interviews.InterviewStart;
 import com.example.alexander.groupup.group.GroupView;
+import com.example.alexander.groupup.models.LanguageStringsModel;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.example.alexander.groupup.models.GroupModel;
 import com.example.alexander.groupup.R;
@@ -57,7 +62,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -69,8 +73,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class HomeActivity extends BaseActivity {
 
@@ -87,6 +89,8 @@ public class HomeActivity extends BaseActivity {
     private SeekBar seekBar;
     private Button groupButton, groupChatButton;
     private Dialog dialog;
+    private Spinner groupType, spinnerActivity;
+    private LinearLayout layoutGroupActivitySearch;
 
     //Constants
     public static final String ANONYMOUS = "anonymous";
@@ -110,7 +114,7 @@ public class HomeActivity extends BaseActivity {
     private boolean creator;
     private String user_id, group_id;
     private GeoLocation currentLocation = new GeoLocation(47.0727247,15.4335573); //Todo change this location. with setCurrentLocation()
-
+    private ArrayList<String> spinnerEntries;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
@@ -118,7 +122,9 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_home);
         FirebaseMessaging.getInstance().subscribeToTopic("TestTopic");
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        spinnerEntries = new ArrayList<>();
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
             @Override
@@ -150,6 +156,9 @@ public class HomeActivity extends BaseActivity {
         groupChatButton = findViewById(R.id.group_chat_button);
         searchLocation = findViewById(R.id.loc_radius);
         seekBar = findViewById(R.id.slider);
+        groupType = findViewById(R.id.spinner_group_type);
+        spinnerActivity = findViewById(R.id.spinner_activity);
+        layoutGroupActivitySearch = findViewById(R.id.ll_group_activity);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -209,6 +218,49 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
+        groupType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0: layoutGroupActivitySearch.setVisibility(View.GONE); //all
+                        break;
+                    case 1: layoutGroupActivitySearch.setVisibility(View.VISIBLE); //sport
+                        FirebaseDatabase.getInstance().getReference().child("LanguageStrings").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for(DataSnapshot s : dataSnapshot.getChildren())
+                                {
+                                    LanguageStringsModel lsm = s.getValue(LanguageStringsModel.class);
+                                    spinnerEntries.add(lsm.getLocalLanguageString());
+                                }
+                                //spinnerActivity.setAdapter(ArrayAdapter.(HomeActivity.this, spinnerEntries, R.layout.support_simple_spinner_dropdown_item));
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                        break;
+                    case 2: layoutGroupActivitySearch.setVisibility(View.VISIBLE);//leisure
+                        spinnerActivity.setAdapter(ArrayAdapter.createFromResource(HomeActivity.this, R.array.group_activities_business, R.layout.support_simple_spinner_dropdown_item));
+                        break;
+                    case 3: layoutGroupActivitySearch.setVisibility(View.VISIBLE);//nightlife
+                        spinnerActivity.setAdapter(ArrayAdapter.createFromResource(HomeActivity.this, R.array.group_activities_nightlife, R.layout.support_simple_spinner_dropdown_item));
+                        break;
+                    case 4: layoutGroupActivitySearch.setVisibility(View.VISIBLE);//business
+                        spinnerActivity.setAdapter(ArrayAdapter.createFromResource(HomeActivity.this, R.array.group_activities_business, R.layout.support_simple_spinner_dropdown_item));
+                        break;
+                        default: break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         //Get Data from User
         UserDatabase.addValueEventListener(new ValueEventListener() {
@@ -232,7 +284,7 @@ public class HomeActivity extends BaseActivity {
             }
         });
         GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
-        Query f = GroupDatabase.orderByChild("d").equalTo(3);
+        //Query f = GroupDatabase.orderByChild("d").equalTo(3);
 
         //setupGeoFire();
         //Show Date in GroupCalendar
