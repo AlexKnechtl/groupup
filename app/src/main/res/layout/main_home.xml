@@ -47,7 +47,7 @@
                     android:gravity="start"
                     android:maxLines="2"
                     android:maxWidth="230dp"
-                    android:text="Hausmannstätten"
+                    android:text="Graz"
                     android:textColor="@color/colorAccent"
                     android:textSize="28sp" />
 
@@ -96,8 +96,8 @@
                     android:background="@drawable/main_layout_design_textview"
                     android:text="Sportgruppen"
                     android:textColor="@color/colorAccent"
-                    android:textSize="22sp"
-                    android:entries="@array/group_types">
+                    android:textSize="22sp">
+
                 </Spinner>
             </LinearLayout>
 
@@ -115,12 +115,12 @@
                     android:text="für "
                     android:textColor="@color/colorAccent"
                     android:textSize="22sp" />
-<!--tennis-->
+                <!--tennis-->
                 <Spinner
+                    android:id="@+id/spinner_activity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/main_layout_design_textview"
-                    android:id="@+id/spinner_activity"
                     android:textColor="@color/colorAccent"
                     android:textSize="22sp" />
             </LinearLayout>

@@ -17,12 +17,10 @@ import java.util.List;
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageViewHolder> {
 
     private List<MessagesModel> messagesList;
-    private String date = "date";
 
     public MessagesAdapter(List<MessagesModel> messagesList) {
         this.messagesList = messagesList;
     }
-
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
@@ -53,12 +51,17 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         MessagesModel c = messagesList.get(position);
         String from_user = c.from;
 
-        if (c.date.equals(date)) {
-            viewHolder.dateText.setVisibility(View.GONE);
+        if (position > 0) {
+            MessagesModel d = messagesList.get(position - 1);
+            if (c.date.equalsIgnoreCase(d.date)) {
+                viewHolder.dateText.setVisibility(View.GONE);
+            } else {
+                viewHolder.dateText.setVisibility(View.VISIBLE);
+                viewHolder.dateText.setText(c.date);
+            }
+
         } else {
-            date = c.date;
             viewHolder.dateText.setVisibility(View.VISIBLE);
-            viewHolder.dateText.setText(date);
         }
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
