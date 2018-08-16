@@ -49,7 +49,7 @@ public class SingleChat extends BaseActivity {
     private RecyclerView messagesRecyclerView;
 
     //Variables
-    private String user_id, receiver_user_id, date;
+    private String user_id, receiver_user_id;
     private final List<MessagesModel> messagesList = new ArrayList<>();
     private MessagesAdapter messagesAdapter;
 
@@ -141,15 +141,11 @@ public class SingleChat extends BaseActivity {
         //ToDo Add Date Headline
         if (!TextUtils.isEmpty(message)) {
 
-            SimpleDateFormat formatter = new java.text.SimpleDateFormat("HH:mm");
-            String currentTime = formatter.format(new Date());
+            SimpleDateFormat messageTime = new java.text.SimpleDateFormat("HH:mm");
+            String currentTime = messageTime.format(new Date());
 
-            Calendar cal = Calendar.getInstance();
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-
-            date = day + "." + month + "." + year;
+            SimpleDateFormat messageDate = new SimpleDateFormat("MMMM dd, yyyy");
+            String currentDate = messageDate.format(new Date());
 
             messageText.setText("");
 
@@ -163,7 +159,7 @@ public class SingleChat extends BaseActivity {
             messageMap.put("message", message);
             messageMap.put("time", currentTime);
             messageMap.put("from", user_id);
-            messageMap.put("date", date);
+            messageMap.put("date", currentDate);
 
             Map messageUserMap = new HashMap();
             messageUserMap.put(currentUserRef + "/" + pushId, messageMap);
@@ -173,10 +169,14 @@ public class SingleChat extends BaseActivity {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     messagesRecyclerView.smoothScrollToPosition(messagesList.size());
+
+                    SimpleDateFormat chatDate = new SimpleDateFormat("M/dd/yy");
+                    String currentDateChat = chatDate.format(new Date());
+
                     Map userMessageMap = new HashMap();
                     userMessageMap.put("message", message);
                     userMessageMap.put("time", ServerValue.TIMESTAMP);
-                    userMessageMap.put("date", date);
+                    userMessageMap.put("date", currentDateChat);
                     UserDatabase.child(user_id).child("chats").child(receiver_user_id).updateChildren(userMessageMap);
                     UserDatabase.child(receiver_user_id).child("chats").child(user_id).updateChildren(userMessageMap);
                 }
