@@ -25,7 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:background="@drawable/main_layout_design">
+                android:background="@drawable/main_layout_design"
+                android:onClick="searchGroupLocationClick">
 
                 <ImageView
                     android:id="@+id/image_location"
@@ -34,17 +35,21 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/location_white" />
 
-                <TextView
-                    android:id="@+id/location_main"
-                    android:layout_width="200dp"
+                <EditText
+                    android:id="@+id/loc_city"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/image_location"
-                    android:fontFamily="@font/dosis_semibold"
+                    android:backgroundTint="@color/colorAccent"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:gravity="start"
                     android:maxLines="2"
-                    android:text="text"
+                    android:maxWidth="230dp"
+                    android:text="Hausmannstätten"
                     android:textColor="@color/colorAccent"
-                    android:textSize="36sp" />
+                    android:textSize="28sp" />
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -123,68 +128,41 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:onClick="searchGroupLocationClick"
-                android:paddingEnd="24dp"
-                android:paddingStart="24dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:onClick="searchGroupLocationClick"
-                    android:text="Ort:"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="22sp"></TextView>
-
-                <EditText
-                    android:id="@+id/loc_city"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/main_layout_design_textview"
-                    android:focusable="false"
-                    android:inputType="numberDecimal"
-                    android:onClick="searchGroupLocationClick"
-                    android:text="Graz"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="22sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 android:paddingEnd="24dp"
                 android:paddingStart="24dp">
+
                 <SeekBar
+                    android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/slider"
+                    android:layout_marginTop="4dp"
                     android:max="12"
                     android:min="0"
                     android:progress="5" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:textColor="@color/colorAccent"
                     android:textSize="22sp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Du findest Gruppen bis "
                         android:textColor="@color/colorAccent"
-                        android:textSize="22sp"/>
+                        android:textSize="22sp" />
+
                     <TextView
+                        android:id="@+id/loc_radius"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/loc_radius"
                         android:text="10 km"
                         android:textColor="@color/colorAccent"
-                        android:textSize="22sp"/>
+                        android:textSize="22sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -208,17 +186,17 @@
 
                 <Button
                     android:id="@+id/group_chat_button"
-                    android:onClick="groupChatClick"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/main_layout_design"
+                    android:onClick="groupChatClick"
                     android:text="@string/group_chat"
                     android:textColor="@color/colorAccent"
                     android:textSize="18sp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView

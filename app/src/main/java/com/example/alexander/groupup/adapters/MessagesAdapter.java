@@ -17,6 +17,7 @@ import java.util.List;
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageViewHolder> {
 
     private List<MessagesModel> messagesList;
+    private String date = "date";
 
     public MessagesAdapter(List<MessagesModel> messagesList) {
         this.messagesList = messagesList;
@@ -32,6 +33,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {
         private TextView messageText;
+        private TextView dateText;
         private TextView timeText;
         private LinearLayout messageLayout;
         private CardView background;
@@ -42,6 +44,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             messageLayout = view.findViewById(R.id.message_layout);
             timeText = view.findViewById(R.id.message_timestamp);
             background = view.findViewById(R.id.message_background);
+            dateText = view.findViewById(R.id.message_date);
         }
     }
 
@@ -49,6 +52,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     public void onBindViewHolder(MessageViewHolder viewHolder, final int position) {
         MessagesModel c = messagesList.get(position);
         String from_user = c.from;
+
+        if (c.date.equals(date)) {
+            viewHolder.dateText.setVisibility(View.GONE);
+        } else {
+            date = c.date;
+            viewHolder.dateText.setVisibility(View.VISIBLE);
+            viewHolder.dateText.setText(date);
+        }
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 

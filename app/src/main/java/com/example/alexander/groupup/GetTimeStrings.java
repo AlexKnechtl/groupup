@@ -16,8 +16,9 @@ public class GetTimeStrings extends Application {
         }
 
         long now = System.currentTimeMillis();
-        if (time > now || time <= 0) {
-            return null;
+
+        if (time > now || time <= 0 || time == now) {
+            return ctx.getString(R.string.today);
         }
 
         final long diff = now - time;

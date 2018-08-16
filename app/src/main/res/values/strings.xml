@@ -211,6 +211,8 @@
     <string name="this_week">This Week</string>
     <string name="this_month">This Month</string>
     <string name="earlier">Earlier</string>
+    <string name="you_have_send">"You have send "</string>
+    <string name="a_friend_request">" a friend request."</string>
     <!-- GroupTypes -->
     <string-array name="group_types">
         <item>all group types</item>

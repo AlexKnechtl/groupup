@@ -24,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -42,7 +43,7 @@ public class NotificationActivity extends BaseActivity {
 
     //Firebase
     private String user_id;
-    private DatabaseReference RequestDatabase;
+    private Query RequestDatabase;
     private DatabaseReference UserDatabase;
 
     //XML
@@ -76,6 +77,7 @@ public class NotificationActivity extends BaseActivity {
         String currentDate = formatter.format(new Date());
         dateTextView.setText(currentDate);
 
+        RequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id).orderByChild("time");
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
         UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -91,8 +93,6 @@ public class NotificationActivity extends BaseActivity {
 
             }
         });
-
-        RequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
 
         //Set Adapter
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -159,7 +159,6 @@ public class NotificationActivity extends BaseActivity {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 String key = dataSnapshot.getKey();
-
                 for (RequestModel testModel : requestList) {
                     if (key.equals(testModel.getFrom())) {
                         requestList.remove(testModel);

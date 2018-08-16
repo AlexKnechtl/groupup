@@ -4,6 +4,8 @@ import  android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -91,6 +93,7 @@ public class HomeActivity extends BaseActivity {
     private static final float LOCATION_REFRESH_DISTANCE = 10.0f;
     private static final int REQUEST_CODE_PLACE_PICKER = 2;
     private static final int REQUEST_LOCATION_PERMISSION = 3;
+
     //XML
     private RecyclerView recyclerView;
     private TextView location, locationName;
@@ -107,9 +110,7 @@ public class HomeActivity extends BaseActivity {
     private DatabaseReference UserDatabase;
 
     private GeoFire geoFire;
-
     private GeoQuery geoQuery;
-
     private GroupsAdapter groupsAdapter;
 
     double radius = 10;
@@ -245,7 +246,7 @@ public class HomeActivity extends BaseActivity {
             }
         });
         GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
-
+        Query f = GroupDatabase.orderByChild("d").equalTo(3);
 
         //setupGeoFire();
         //Show Date in GroupCalendar
@@ -546,6 +547,7 @@ public class HomeActivity extends BaseActivity {
         Button locationNear, chooseLocation;
 
         dialog.setContentView(R.layout.popup_two_options);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         locationNear = dialog.findViewById(R.id.location_near_popup);
         chooseLocation = dialog.findViewById(R.id.choose_location_popup);

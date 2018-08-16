@@ -11,14 +11,14 @@
         android:id="@+id/request_time_ago"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-8dp"
         android:backgroundTint="@color/colorAccent"
         android:enabled="false"
         android:focusable="false"
         android:gravity="center"
-        android:text="Heute"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <RelativeLayout
         android:id="@+id/request_layout"

@@ -27,7 +27,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -43,7 +42,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
     private List<RequestModel> requestList;
     private Context context;
     private boolean myGroup;
-    private String timeHeader;
+    private String timeHeader = "test";
 
     public RequestAdapter(List<RequestModel> requestList, Context context, boolean myGroup) {
         this.requestList = requestList;
@@ -87,9 +86,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
         final DatabaseReference DataBase = FirebaseDatabase.getInstance().getReference().child("Users").child(c.getFrom());
 
         GetTimeStrings getTimeStrings = new GetTimeStrings();
-        long time = c.getTime();
 
-        String timeAgo = getTimeStrings.getTimeStrings(time, context);
+        String timeAgo = getTimeStrings.getTimeStrings(c.getTime(), context);
 
         if (timeAgo.equals(timeHeader)) {
             viewHolder.timeHeadline.setVisibility(View.GONE);
@@ -108,6 +106,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     Picasso.with(context).load(thumb_image)
                             .placeholder(R.drawable.default_user_black).into(viewHolder.thumbImage);
                     viewHolder.name.setText(name + " hat dir eine Freundschaftsanfrage geschickt!");
+                    viewHolder.requestButton.setText(R.string.accept);
                 }
 
                 @Override
@@ -176,17 +175,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-                                                            MyAccountDatabase.child("requests").child("received").child(receiver_user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                @Override
-                                                                public void onSuccess(Void aVoid) {
-                                                                    UserProfileDatabase.child("requests").child("sent").child(user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                        @Override
-                                                                        public void onSuccess(Void aVoid) {
-                                                                            Toast.makeText(context, (R.string.you_are_now_friends), Toast.LENGTH_SHORT).show();
-                                                                        }
-                                                                    });
-                                                                }
-                                                            });
+                                                            FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id).child(c.getFrom()).removeValue();
+                                                            Toast.makeText(context, (R.string.you_are_now_friends), Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
                                         }
@@ -218,6 +208,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     Picasso.with(context).load(thumb_image)
                             .placeholder(R.drawable.default_user_black).into(viewHolder.thumbImage);
                     viewHolder.name.setText(name + " hat dich in seine Gruppe eingeladen.");
+                    viewHolder.requestButton.setText(R.string.accept);
 
                     viewHolder.requestLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -249,17 +240,55 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                             messageMap.put("type", "information");
 
                             GroupChatDatabase.child(pushId).updateChildren(messageMap).addOnCompleteListener(new OnCompleteListener() {
-                                    @Override
-                                    public void onComplete(@NonNull Task task) {
-                                        DatabaseReference notificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
-                                        notificationDatabase.child(c.getFrom()).removeValue();
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    DatabaseReference notificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id);
+                                    notificationDatabase.child(c.getFrom()).removeValue();
 
-                                        Intent intent = new Intent(context, MyGroupView.class);
-                                        intent.putExtra("group_id", c.getFrom());
-                                        intent.putExtra("user_id", user_id);
-                                        context.startActivity(intent);
-                                    }
+                                    Intent intent = new Intent(context, MyGroupView.class);
+                                    intent.putExtra("group_id", c.getFrom());
+                                    intent.putExtra("user_id", user_id);
+                                    context.startActivity(intent);
+                                }
                             });
+                        }
+                    });
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        } else if (type.equals("request_send")) {
+            DataBase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
+                    String name = dataSnapshot.child("name").getValue().toString();
+
+                    Picasso.with(context).load(thumb_image)
+                            .placeholder(R.drawable.default_user_black).into(viewHolder.thumbImage);
+
+                    viewHolder.name.setText(context.getString(R.string.you_have_send) + name + context.getString(R.string.a_friend_request));
+                    viewHolder.requestButton.setText(R.string.cancel);
+
+                    viewHolder.requestLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, UserProfileActivity.class);
+                            intent.putExtra("user_id", receiver_user_id);
+                            context.startActivity(intent);
+                        }
+                    });
+
+                    viewHolder.requestButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final DatabaseReference NotificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
+                            NotificationDatabase.child(user_id).child(receiver_user_id).removeValue();
+                            NotificationDatabase.child(receiver_user_id).child(user_id).removeValue();
                         }
                     });
                 }

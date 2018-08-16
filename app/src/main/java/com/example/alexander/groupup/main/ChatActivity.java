@@ -152,8 +152,8 @@ public class ChatActivity extends BaseActivity {
         }
 
         public void setMessage(String message) {
-            TextView friendsDate = mView.findViewById(R.id.user_single_information);
-            friendsDate.setText(message);
+            TextView messagetv = mView.findViewById(R.id.user_single_information);
+            messagetv.setText(message);
         }
 
         public void setThumbImage(String thumb_image, Context context) {
