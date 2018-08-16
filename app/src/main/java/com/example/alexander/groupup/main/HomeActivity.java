@@ -91,6 +91,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final float LOCATION_REFRESH_DISTANCE = 10.0f;
     private static final int REQUEST_CODE_PLACE_PICKER = 2;
     private static final int REQUEST_LOCATION_PERMISSION = 3;
+
     //XML
     private RecyclerView recyclerView;
     private TextView location, locationName;
@@ -107,9 +108,7 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference UserDatabase;
 
     private GeoFire geoFire;
-
     private GeoQuery geoQuery;
-
     private GroupsAdapter groupsAdapter;
 
     double radius = 10;

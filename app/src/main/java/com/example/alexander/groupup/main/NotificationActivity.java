@@ -76,6 +76,7 @@ public class NotificationActivity extends AppCompatActivity {
         String currentDate = formatter.format(new Date());
         dateTextView.setText(currentDate);
 
+        RequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id).orderByChild("time");
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
         UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -91,9 +92,6 @@ public class NotificationActivity extends AppCompatActivity {
 
             }
         });
-
-        RequestDatabase = FirebaseDatabase.getInstance().getReference().child("notifications").child(user_id).orderByChild("time");
-
 
         //Set Adapter
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
