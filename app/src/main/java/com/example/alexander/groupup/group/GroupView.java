@@ -230,9 +230,6 @@ public class GroupView extends BaseActivity {
                 headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(g.activity).getLocalLanguageString()
                         + " @" + g.location);
 
-                if (g.members.containsKey(user_id)) {
-                   // g.members.get(user_id).rank; TODO bitte was soll des? Wird net verwendet
-                }
                 description.setText(g.description);
                 int size = 0;
                 if(g.members != null)
