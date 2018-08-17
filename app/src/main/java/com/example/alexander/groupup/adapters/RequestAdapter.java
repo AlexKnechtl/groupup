@@ -292,9 +292,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     viewHolder.requestButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            final DatabaseReference NotificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
+                            DatabaseReference NotificationDatabase = FirebaseDatabase.getInstance().getReference().child("notifications");
                             NotificationDatabase.child(user_id).child(receiver_user_id).removeValue();
-                            NotificationDatabase.child(receiver_user_id).child(user_id).removeValue();
+                            NotificationDatabase.child(receiver_user_id).child(user_id).removeValue()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(context, R.string.cancel_friend_request, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     });
                 }

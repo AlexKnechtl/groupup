@@ -149,7 +149,6 @@ public class SingleChat extends BaseActivity {
     public void sendMessageClick(View view) {
         final String message = messageText.getText().toString();
 
-        //ToDo Add Date Headline
         if (!TextUtils.isEmpty(message)) {
 
             SimpleDateFormat messageTime = new java.text.SimpleDateFormat("HH:mm");
@@ -205,16 +204,13 @@ public class SingleChat extends BaseActivity {
         Intent intent = new Intent(SingleChat.this, UserProfileActivity.class);
         intent.putExtra("user_id", receiver_user_id);
         startActivity(intent);
-        ;
     }
 
     private void loadMessages() {
         ChatDatabase.child(user_id).child(receiver_user_id).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                 MessagesModel messages = dataSnapshot.getValue(MessagesModel.class);
-
                 messagesList.add(messages);
                 messagesAdapter.notifyDataSetChanged();
                 messagesRecyclerView.scrollToPosition(messagesList.size() - 1);
@@ -227,7 +223,14 @@ public class SingleChat extends BaseActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                String key = dataSnapshot.getKey();
+                for (MessagesModel testModel : messagesList) {
+                    if (key.equals(testModel.id)) {
+                        messagesList.remove(testModel);
+                        messagesAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
             }
 
             @Override

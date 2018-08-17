@@ -177,7 +177,6 @@ public class GroupChat extends BaseActivity {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 String key = dataSnapshot.getKey();
-
                 for (MessagesModel testModel : messagesList) {
                     if (key.equals(testModel.id)) {
                         messagesList.remove(testModel);
