@@ -75,7 +75,9 @@ public class LanguageStringsManager {
         }
 //        return new LanguageStringsModel("ERROR"+id,"ERROR"+id,"ERROR"+id); //TODO
         String str = getStringResourceByName(id);
-        return new LanguageStringsModel(id,str,str); //TODO
+        LanguageStringsModel lm =  new LanguageStringsModel(str,str,str);
+        lm.setId(id);
+        return lm; //TODO
     }
 
     public ArrayList<LanguageStringsModel> getLanguageStrings()

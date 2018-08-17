@@ -57,8 +57,6 @@ public class StartActivity extends BaseActivity {
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         mUsername = ANONYMOUS;
 
-        LanguageStringsManager.initialize();
-
         //Registration Process
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override

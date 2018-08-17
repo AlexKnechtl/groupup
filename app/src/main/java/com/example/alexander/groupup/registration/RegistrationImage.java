@@ -59,7 +59,6 @@ public class RegistrationImage extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        LanguageStringsManager.initialize();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_image);
 
