@@ -36,7 +36,7 @@ public class groupup extends Application {
         built.setLoggingEnabled(true);
         Picasso.setSingletonInstance(built);
 
-        LanguageStringsManager.initialize();
+        LanguageStringsManager.initialize(getApplicationContext());
 
         /*user_id = FirebaseAuth.getInstance();
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id.getCurrentUser().getUid());

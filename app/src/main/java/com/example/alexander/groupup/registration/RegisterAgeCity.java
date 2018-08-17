@@ -49,7 +49,6 @@ public class RegisterAgeCity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        LanguageStringsManager.initialize();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_age_city);
 
