@@ -100,7 +100,6 @@
                     android:textColor="@color/colorAccent"
                     android:popupBackground="@color/colorPrimary"
                     android:textSize="22sp">
-
                 </Spinner>
             </LinearLayout>
 

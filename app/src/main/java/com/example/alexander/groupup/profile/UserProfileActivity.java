@@ -180,7 +180,6 @@ public class UserProfileActivity extends BaseActivity {
     //Friends Button is pressed
     public void addFriendClick(View view) {
         if (mCurrentState.equals("not_friends")) {
-
             DatabaseReference user_message_push = NotificationDatabase.child(mCurrentUser.getUid()).push();
             String pushId = user_message_push.getKey();
 
@@ -190,7 +189,7 @@ public class UserProfileActivity extends BaseActivity {
             notificationData.put("time", ServerValue.TIMESTAMP);
 
             Map notificationDataUser = new HashMap();
-            notificationDataUser.put("from", mCurrentUser.getUid());
+            notificationDataUser.put("from", receiver_user_id);
             notificationDataUser.put("type", "request_send");
             notificationDataUser.put("time", ServerValue.TIMESTAMP);
 
@@ -361,11 +360,11 @@ public class UserProfileActivity extends BaseActivity {
         NotificationDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(mCurrentUser.getUid()).hasChild(receiver_user_id)) {
+                if (dataSnapshot.child(mCurrentUser.getUid()).child(receiver_user_id).child("type").equals("friend_request")) {
                     mCurrentState = "request_received";
                     mFabFriendText.setText(getString(R.string.accept_friend));
 
-                } else if (dataSnapshot.child(receiver_user_id).hasChild(mCurrentUser.getUid())) {
+                } else if (dataSnapshot.child(mCurrentUser.getUid()).child(receiver_user_id).child("type").equals("request_send")) {
                     mCurrentState = "request_sent";
                     mFabFriendText.setText(getString(R.string.cancel_friend_request));
                 }

@@ -21,6 +21,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     public MessagesAdapter(List<MessagesModel> messagesList) {
         this.messagesList = messagesList;
     }
+
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
@@ -56,11 +57,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             if (c.date.equalsIgnoreCase(d.date)) {
                 viewHolder.dateText.setVisibility(View.GONE);
             } else {
-                viewHolder.dateText.setVisibility(View.VISIBLE);
                 viewHolder.dateText.setText(c.date);
+                viewHolder.dateText.setVisibility(View.VISIBLE);
             }
-
         } else {
+            viewHolder.dateText.setText(c.date);
             viewHolder.dateText.setVisibility(View.VISIBLE);
         }
 
@@ -68,10 +69,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
         if (from_user.equals(mAuth.getCurrentUser().getUid())) {
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            viewHolder.messageText.setTextColor(viewHolder.messageText.getResources().getColor(R.color.colorAccent));
+            viewHolder.timeText.setTextColor(viewHolder.timeText.getResources().getColor(R.color.colorAccent));
             viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChatUser));
         } else {
             viewHolder.messageLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-            viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.colorChat));
+            viewHolder.messageText.setTextColor(viewHolder.messageText.getResources().getColor(R.color.black));
+            viewHolder.timeText.setTextColor(viewHolder.timeText.getResources().getColor(R.color.black));
+            viewHolder.background.setCardBackgroundColor(viewHolder.messageLayout.getResources().getColor(R.color.softGreyBackground));
         }
 
         viewHolder.timeText.setText(c.time);

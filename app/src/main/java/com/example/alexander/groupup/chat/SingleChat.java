@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,10 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.alexander.groupup.BaseActivity;
+import com.example.alexander.groupup.GetOnlineStrings;
 import com.example.alexander.groupup.adapters.MessagesAdapter;
 import com.example.alexander.groupup.R;
-import com.example.alexander.groupup.main.ChatActivity;
 import com.example.alexander.groupup.models.MessagesModel;
+import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
@@ -32,7 +32,6 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,14 +43,15 @@ public class SingleChat extends BaseActivity {
 
     //XML
     private CircleImageView userImage;
-    private TextView userName;
+    private TextView userName, onlineTimeTv;
     private EditText messageText;
     private RecyclerView messagesRecyclerView;
 
     //Variables
-    private String user_id, receiver_user_id, date;
+    private String user_id, receiver_user_id;
     private final List<MessagesModel> messagesList = new ArrayList<>();
     private MessagesAdapter messagesAdapter;
+    private Long onlineTime;
 
     //Firebase
     private DatabaseReference ChatDatabase;
@@ -71,6 +71,8 @@ public class SingleChat extends BaseActivity {
         userName = findViewById(R.id.chat_user_name);
         messageText = findViewById(R.id.single_chat_et);
         messagesRecyclerView = findViewById(R.id.single_chat_list);
+        onlineTimeTv = findViewById(R.id.online_time);
+
 
         //Set Adapter
         messagesRecyclerView.setHasFixedSize(true);
@@ -81,6 +83,7 @@ public class SingleChat extends BaseActivity {
         messagesRecyclerView.setAdapter(messagesAdapter);
 
         //Initialize FireBase
+        FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("online").setValue(ServerValue.TIMESTAMP);
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         ChatDatabase = FirebaseDatabase.getInstance().getReference().child("Chats");
         ChatDatabase.keepSynced(true);
@@ -92,6 +95,14 @@ public class SingleChat extends BaseActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 String name = dataSnapshot.child("name").getValue().toString();
+
+                if (dataSnapshot.child("online").exists()) {
+                    String timeAgo = dataSnapshot.child("online").getValue().toString();
+                    onlineTime = Long.valueOf(timeAgo);
+                    onlineTimeTv.setText(GetOnlineStrings.getTimeAgo(onlineTime, SingleChat.this));
+                } else {
+                    onlineTimeTv.setText("Write the first message!");
+                }
 
                 final String image = dataSnapshot.child("image").getValue().toString();
                 Picasso.with(SingleChat.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
@@ -138,18 +149,13 @@ public class SingleChat extends BaseActivity {
     public void sendMessageClick(View view) {
         final String message = messageText.getText().toString();
 
-        //ToDo Add Date Headline
         if (!TextUtils.isEmpty(message)) {
 
-            SimpleDateFormat formatter = new java.text.SimpleDateFormat("HH:mm");
-            String currentTime = formatter.format(new Date());
+            SimpleDateFormat messageTime = new java.text.SimpleDateFormat("HH:mm");
+            String currentTime = messageTime.format(new Date());
 
-            Calendar cal = Calendar.getInstance();
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH);
-            int day = cal.get(Calendar.DAY_OF_MONTH);
-
-            date = day + "." + month + "." + year;
+            SimpleDateFormat messageDate = new SimpleDateFormat("MMMM dd, yyyy");
+            String currentDate = messageDate.format(new Date());
 
             messageText.setText("");
 
@@ -159,11 +165,13 @@ public class SingleChat extends BaseActivity {
             DatabaseReference user_message_push = ChatDatabase.child(user_id).child(receiver_user_id).push();
             String pushId = user_message_push.getKey();
 
+            FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("online").setValue(ServerValue.TIMESTAMP);
+
             Map messageMap = new HashMap();
             messageMap.put("message", message);
             messageMap.put("time", currentTime);
             messageMap.put("from", user_id);
-            messageMap.put("date", date);
+            messageMap.put("date", currentDate);
 
             Map messageUserMap = new HashMap();
             messageUserMap.put(currentUserRef + "/" + pushId, messageMap);
@@ -173,10 +181,14 @@ public class SingleChat extends BaseActivity {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     messagesRecyclerView.smoothScrollToPosition(messagesList.size());
+
+                    SimpleDateFormat chatDate = new SimpleDateFormat("M/dd/yy");
+                    String currentDateChat = chatDate.format(new Date());
+
                     Map userMessageMap = new HashMap();
                     userMessageMap.put("message", message);
+                    userMessageMap.put("date", currentDateChat);
                     userMessageMap.put("time", ServerValue.TIMESTAMP);
-                    userMessageMap.put("date", date);
                     UserDatabase.child(user_id).child("chats").child(receiver_user_id).updateChildren(userMessageMap);
                     UserDatabase.child(receiver_user_id).child("chats").child(user_id).updateChildren(userMessageMap);
                 }
@@ -184,13 +196,21 @@ public class SingleChat extends BaseActivity {
         }
     }
 
+    public void backSingleChat(View view) {
+        super.onBackPressed();
+    }
+
+    public void showUserChat(View view) {
+        Intent intent = new Intent(SingleChat.this, UserProfileActivity.class);
+        intent.putExtra("user_id", receiver_user_id);
+        startActivity(intent);
+    }
+
     private void loadMessages() {
         ChatDatabase.child(user_id).child(receiver_user_id).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                 MessagesModel messages = dataSnapshot.getValue(MessagesModel.class);
-
                 messagesList.add(messages);
                 messagesAdapter.notifyDataSetChanged();
                 messagesRecyclerView.scrollToPosition(messagesList.size() - 1);
@@ -203,7 +223,14 @@ public class SingleChat extends BaseActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                String key = dataSnapshot.getKey();
+                for (MessagesModel testModel : messagesList) {
+                    if (key.equals(testModel.id)) {
+                        messagesList.remove(testModel);
+                        messagesAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
             }
 
             @Override
@@ -216,12 +243,5 @@ public class SingleChat extends BaseActivity {
 
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(SingleChat.this, ChatActivity.class);
-        intent.putExtra("user_id", user_id);
-        startActivity(intent);
     }
 }

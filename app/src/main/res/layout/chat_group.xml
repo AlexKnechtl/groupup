@@ -48,52 +48,57 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:background="@color/colorAccent"
+        android:elevation="8dp"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/interview_back_design"
-            android:elevation="1dp"
+            android:gravity="center"
             android:minHeight="40dp"
+            android:orientation="horizontal"
             android:padding="2dp">
+
+            <ImageButton
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:src="@drawable/baseline_add_circle_black_36" />
 
             <EditText
                 android:id="@+id/group_chat_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="14dp"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/assistant_circle_design"
                 android:backgroundTint="@color/fui_transparent"
                 android:fontFamily="sans-serif"
                 android:hint="@string/write_message"
                 android:maxLines="5"
-                android:minHeight="42dp"
+                android:minHeight="40dp"
                 android:textColor="@android:color/black"
                 android:textCursorDrawable="@drawable/cursor_color" />
-        </RelativeLayout>
+        </LinearLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="46dp"
-            android:layout_height="46dp"
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="4dp"
             android:backgroundTint="@color/colorAccent"
             android:onClick="sendGroupMessage"
-            android:src="@drawable/baseline_send_black_24"
-            android:tint="@color/colorChatUser"
-            app:backgroundTint="@color/softGreyBackground"
-            app:borderWidth="1dp"
-            app:elevation="1dp"
-            app:fabSize="mini"
-            app:rippleColor="@color/softGreyBackground" />
+            android:src="@drawable/round_send_black_48" />
     </LinearLayout>
 </RelativeLayout>
