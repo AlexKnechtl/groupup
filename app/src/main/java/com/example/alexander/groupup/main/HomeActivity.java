@@ -15,6 +15,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -34,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.BaseActivity;
@@ -43,6 +46,7 @@ import com.example.alexander.groupup.group.MyGroupView;
 import com.example.alexander.groupup.helpers.GeoFireHelper;
 import com.example.alexander.groupup.interviews.InterviewStart;
 import com.example.alexander.groupup.group.GroupView;
+import com.example.alexander.groupup.models.GroupType;
 import com.example.alexander.groupup.models.LanguageStringsModel;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.example.alexander.groupup.models.GroupModel;
@@ -51,6 +55,7 @@ import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.ui.PlacePicker;
@@ -68,6 +73,8 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,7 +91,8 @@ public class HomeActivity extends BaseActivity {
 
     //XML
     private RecyclerView recyclerView;
-    private TextView location, locationName;
+    private TextView location;
+    private EditText locationName;
     private TextView searchLocation;
     private SeekBar seekBar;
     private Button groupButton, groupChatButton;
@@ -223,17 +231,20 @@ public class HomeActivity extends BaseActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0: layoutGroupActivitySearch.setVisibility(View.GONE); //all
+                        groupsAdapter.RemoveFilter();
                         break;
                     case 1: layoutGroupActivitySearch.setVisibility(View.VISIBLE); //sport
                         FirebaseDatabase.getInstance().getReference().child("LanguageStrings").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                spinnerEntries.clear();
+                                spinnerEntries.add(getString(R.string.all_activities));
                                 for(DataSnapshot s : dataSnapshot.getChildren())
                                 {
                                     LanguageStringsModel lsm = s.getValue(LanguageStringsModel.class);
                                     spinnerEntries.add(lsm.getLocalLanguageString());
                                 }
-                                //spinnerActivity.setAdapter(ArrayAdapter.(HomeActivity.this, spinnerEntries, R.layout.support_simple_spinner_dropdown_item));
+                                spinnerActivity.setAdapter(new ArrayAdapter(HomeActivity.this, R.layout.support_simple_spinner_dropdown_item, spinnerEntries));
                             }
 
                             @Override
@@ -241,15 +252,39 @@ public class HomeActivity extends BaseActivity {
 
                             }
                         });
+                        groupsAdapter.Filter(new Filter() {
+                            @Override
+                            public boolean keep(GroupModel g) {
+                                return g.category == GroupType.sport;
+                            }
+                        });
                         break;
-                    case 2: layoutGroupActivitySearch.setVisibility(View.VISIBLE);//leisure
-                        spinnerActivity.setAdapter(ArrayAdapter.createFromResource(HomeActivity.this, R.array.group_activities_business, R.layout.support_simple_spinner_dropdown_item));
+                    case 2: layoutGroupActivitySearch.setVisibility(View.GONE);//leisure TODO implement
+                        //spinnerActivity.setAdapter(ArrayAdapter.createFromResource(HomeActivity.this, R.array.group_activities_business, R.layout.support_simple_spinner_dropdown_item));
+                        groupsAdapter.Filter(new Filter() {
+                            @Override
+                            public boolean keep(GroupModel g) {
+                                return g.category == GroupType.leisure;
+                            }
+                        });
                         break;
                     case 3: layoutGroupActivitySearch.setVisibility(View.VISIBLE);//nightlife
                         spinnerActivity.setAdapter(ArrayAdapter.createFromResource(HomeActivity.this, R.array.group_activities_nightlife, R.layout.support_simple_spinner_dropdown_item));
+                        groupsAdapter.Filter(new Filter() {
+                            @Override
+                            public boolean keep(GroupModel g) {
+                                return g.category == GroupType.nightlife;
+                            }
+                        });
                         break;
                     case 4: layoutGroupActivitySearch.setVisibility(View.VISIBLE);//business
                         spinnerActivity.setAdapter(ArrayAdapter.createFromResource(HomeActivity.this, R.array.group_activities_business, R.layout.support_simple_spinner_dropdown_item));
+                        groupsAdapter.Filter(new Filter() {
+                            @Override
+                            public boolean keep(GroupModel g) {
+                                return g.category == GroupType.business;
+                            }
+                        });
                         break;
                         default: break;
                 }
@@ -261,6 +296,53 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
+        spinnerActivity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                GroupType t = null;
+                String s = (String) (((TextView) view).getText());
+                switch (groupType.getSelectedItemPosition())
+                {
+                    case 1: t = GroupType.sport; s = LanguageStringsManager.getInstance().getLanguageStringByLocalString(s).getId(); break;
+                    case 3: t = GroupType.nightlife; break;
+                    case 4: t = GroupType.business; break;
+                    default: return;
+                }
+                final GroupType ft = t;
+                final CharSequence selectedString = s;
+                if(position == 0)
+                {
+                    groupsAdapter.Filter(new Filter() {
+                        @Override
+                        public boolean keep(GroupModel g) {
+                            return g.category == ft;
+                        }
+                    });
+                }
+                else if(ft == GroupType.sport)
+                {
+                    groupsAdapter.Filter(new Filter() {
+                        @Override
+                        public boolean keep(GroupModel g) {
+                            return g.category == ft && g.activity.contains(selectedString);
+                        }
+                    });
+                }
+                else{
+                    groupsAdapter.Filter(new Filter() {
+                        @Override
+                        public boolean keep(GroupModel g) {
+                            return g.category == ft && LanguageStringsManager.getInstance().getLanguageStringByStringId(g.activity).getLocalLanguageString().contains(selectedString);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         //Get Data from User
         UserDatabase.addValueEventListener(new ValueEventListener() {
@@ -442,24 +524,35 @@ public class HomeActivity extends BaseActivity {
     public class GroupsAdapter extends RecyclerView.Adapter<GroupsViewHolder>{
 
         ArrayList<GeoGroup> list;
+        ArrayList<GeoGroup> filteredItems;
         Context c;
-
+        Filter filter;
 
         public GroupsAdapter(Context c){
 
-            this.list = new ArrayList<>();
+            filteredItems = this.list = new ArrayList<>();
             this.c = c;
         }
 
         public void Add(GeoGroup g){
             list.add(g);
-            notifyItemInserted(list.indexOf(g));
+            if(filter == null  )
+            {
+                notifyItemInserted(filteredItems.indexOf(g));
+            }
+            else if(filter.keep(g.group)) {
+                filteredItems.add(g);
+                notifyItemInserted(filteredItems.indexOf(g));
+            }
         }
 
         public void Remove(GeoGroup g){
-            int pos = list.indexOf(g);
             list.remove(g);
-            notifyItemRemoved(pos);
+            if(filteredItems.contains(g)) {
+                int pos = filteredItems.indexOf(g);
+                filteredItems.remove(g);
+                notifyItemRemoved(pos);
+            }
         }
 
         public int CheckGroupIdExists(String groupId){
@@ -474,20 +567,37 @@ public class HomeActivity extends BaseActivity {
         }
 
         public void Remove(String groupId){
+            GeoGroup g = null;
             for(int i = 0; i<list.size(); i++)
             {
-                if(list.get(i).groupId.equals(groupId))
+                g = list.get(i);
+                if(g.groupId.equals(groupId))
                 {
-                    list.remove(i);
-                    notifyItemRemoved(i);
+                    Remove(g);
                 }
             }
         }
 
-        public void Clear()
-        {
+        public void Clear(){
             list.clear();
+            filteredItems.clear();
             notifyDataSetChanged();
+        }
+
+        public void Filter(Filter filter){
+            this.filter = filter;
+            filteredItems = new ArrayList<>();
+            for(GeoGroup g : list)
+            {
+                if(filter.keep(g.group))
+                    filteredItems.add(g);
+            }
+            notifyDataSetChanged();
+        }
+
+        public void RemoveFilter(){
+            filter = null;
+            filteredItems = list;
         }
 
         @NonNull
@@ -497,7 +607,7 @@ public class HomeActivity extends BaseActivity {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    GeoGroup g = list.get(recyclerView.getChildLayoutPosition(view));
+                    GeoGroup g = filteredItems.get(recyclerView.getChildLayoutPosition(view));
 
                     if (g.groupId.equals(group_id)) {
                         Intent intent = new Intent(HomeActivity.this, MyGroupView.class);
@@ -517,7 +627,7 @@ public class HomeActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(@NonNull GroupsViewHolder holder, int position) {
-            GeoGroup g = list.get(position);
+            GeoGroup g = filteredItems.get(position);
             holder.setGroupDistance(GeoFireHelper.GetDistance(g.location, currentLocation));
             holder.setGroupImage(g.group.group_image);
             holder.setActivityCity(LanguageStringsManager.getInstance().getLanguageStringByStringId(g.group.activity).getLocalLanguageString(), g.group.location);
@@ -529,7 +639,7 @@ public class HomeActivity extends BaseActivity {
 
         @Override
         public int getItemCount() {
-            return list.size();
+            return filteredItems.size();
         }
     }
 
@@ -704,5 +814,9 @@ public class HomeActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    public interface Filter {
+        boolean keep(GroupModel g);
     }
 }

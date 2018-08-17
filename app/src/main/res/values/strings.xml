@@ -213,6 +213,7 @@
     <string name="earlier">Earlier</string>
     <string name="you_have_send">"You have send "</string>
     <string name="a_friend_request">" a friend request."</string>
+    <string name="all_activities">all activities</string>
     <!-- GroupTypes -->
     <string-array name="group_types">
         <item>all group types</item>
@@ -222,12 +223,14 @@
         <item>business groups</item>
     </string-array>
     <string-array name="group_activities_nightlife">
+        <item>@string/all_activities</item>
         <item>@string/hookah_bar</item>
         <item>@string/night_club</item>
         <item>@string/bar_pub</item>
         <item>@string/houseparty</item>
     </string-array>
     <string-array name="group_activities_business">
+        <item>@string/all_activities</item>
         <item>@string/motivation</item>
         <item>@string/connection_group</item>
         <item>@string/seminar</item>

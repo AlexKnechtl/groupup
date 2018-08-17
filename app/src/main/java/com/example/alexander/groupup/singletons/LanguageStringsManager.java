@@ -1,5 +1,6 @@
 package com.example.alexander.groupup.singletons;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.alexander.groupup.models.LanguageStringsModel;
@@ -16,9 +17,10 @@ public class LanguageStringsManager {
     private DatabaseReference languageStringsReference = FirebaseDatabase.getInstance().getReference().child("LanguageStrings");
     private ArrayList<LanguageStringsModel> languageStrings;
     private static boolean initialized = false;
+    private static Context context;
 
     private LanguageStringsManager() {
-        System.out.println("IN CONSTRUCTOR");
+        //System.out.println("IN CONSTRUCTOR");
         languageStringsReference.keepSynced(true);
         languageStrings = new ArrayList<>();
         languageStringsReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -37,7 +39,7 @@ public class LanguageStringsManager {
 
             }
         });
-        System.out.println("OUT CONSTRUCTOR");
+        //System.out.println("OUT CONSTRUCTOR");
     }
 
     public static LanguageStringsManager getInstance() {
@@ -48,10 +50,22 @@ public class LanguageStringsManager {
         return ourInstance;
     }
 
-    public static void initialize()
+    public static void initialize(Context context)
     {
+        LanguageStringsManager.context = context;
         if(ourInstance == null)
             ourInstance = new LanguageStringsManager();
+    }
+
+    private String getStringResourceByName(String aString) {
+        String packageName = context.getPackageName();
+        int resId = context.getResources()
+                .getIdentifier(aString, "string", packageName);
+        if (resId == 0) {
+            return aString;
+        } else {
+            return context.getString(resId);
+        }
     }
 
     public LanguageStringsModel getLanguageStringByStringId(String id) {
@@ -60,7 +74,8 @@ public class LanguageStringsManager {
                 return s;
         }
 //        return new LanguageStringsModel("ERROR"+id,"ERROR"+id,"ERROR"+id); //TODO
-        return new LanguageStringsModel(id,id,id); //TODO
+        String str = getStringResourceByName(id);
+        return new LanguageStringsModel(id,str,str); //TODO
     }
 
     public ArrayList<LanguageStringsModel> getLanguageStrings()
