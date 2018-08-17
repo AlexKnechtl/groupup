@@ -73,14 +73,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".chat.GroupChat"
-            android:screenOrientation="portrait"
-            android:theme="@style/GroupViewTheme" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".chat.SingleChat"
             android:screenOrientation="portrait" />
         <activity
             android:name=".chat.NewSingleChat"
             android:label="@string/choose_contact"
+            android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".registration.RegisterUsername"

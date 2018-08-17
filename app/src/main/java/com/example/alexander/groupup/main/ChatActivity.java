@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,13 +24,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-
-import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,7 +48,7 @@ public class ChatActivity extends BaseActivity {
 
     //Firebase
     private DatabaseReference ChatUsersDatabase;
-    private DatabaseReference UserDatabase;
+    private DatabaseReference ListUserDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +70,8 @@ public class ChatActivity extends BaseActivity {
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
 
+        FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("online").setValue(ServerValue.TIMESTAMP);
+
         chatsList.setLayoutManager(linearLayoutManager);
 
         ChatUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("chats");
@@ -91,7 +90,6 @@ public class ChatActivity extends BaseActivity {
 
             }
         });
-
         setupBottomNavigationView();
     }
 
@@ -104,6 +102,8 @@ public class ChatActivity extends BaseActivity {
     @Override
     public void onStart() {
         super.onStart();
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("online").setValue(ServerValue.TIMESTAMP);
 
         Query chatTimeQuery = ChatUsersDatabase.orderByChild("time").limitToLast(20);
 
@@ -121,10 +121,10 @@ public class ChatActivity extends BaseActivity {
 
                 final String list_user_id = getRef(position).getKey();
 
-                UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(list_user_id);
-                UserDatabase.keepSynced(true);
+                ListUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(list_user_id);
+                ListUserDatabase.keepSynced(true);
 
-                UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                ListUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();

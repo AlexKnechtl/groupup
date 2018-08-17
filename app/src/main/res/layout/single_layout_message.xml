@@ -18,7 +18,7 @@
         android:fontFamily="@font/dosis_bold"
         android:gravity="center"
         android:textColor="@color/darkGray"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:visibility="gone" />
 
     <android.support.v7.widget.CardView
@@ -30,8 +30,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="6dp"
         android:clipToPadding="true"
-        android:elevation="3dp"
-        app:cardBackgroundColor="#B183E9"
+        app:cardElevation="0dp"
         app:cardCornerRadius="12dp">
 
         <RelativeLayout
@@ -43,9 +42,9 @@
                 android:id="@+id/message_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
                 android:autoLink="web"
                 android:fontFamily="sans-serif"
                 android:maxWidth="290dp"
@@ -56,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/message_text"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginStart="8dp"
                 android:layout_toEndOf="@id/message_text"
                 android:textSize="12sp" />

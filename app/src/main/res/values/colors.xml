@@ -7,12 +7,13 @@
     <color name="colorLine">#12ccc6</color>
     <color name="colorRegistrate">#0cf127</color>
 
-    <color name="colorChatUser">#7C3C99</color>
-    <color name="colorChat">#AE56AE</color>
+    <color name="colorChatUser">#ffaa66cc</color>
+    <color name="colorChat">#ffaa66cc</color>
 
-    <color name="softGreyBackground">#d0d2d2</color>
+    <color name="softGreyBackground">#dbdede</color>
 
     <color name="appColor">#E1EBF5</color>
     <color name="textAppColor">#68338F</color>
     <color name="darkGray">#A2A2A2</color>
+    <color name="black">#000000</color>
 </resources>

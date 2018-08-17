@@ -43,7 +43,7 @@ public class GroupChat extends BaseActivity {
     private RecyclerView groupChatRecyclerView;
 
     //Variables
-    private String user_id, group_id, activity, location, group_category, name;
+    private String user_id, group_id, activity, location, group_category = "sport", name;
     private final List<MessagesModel> messagesList = new ArrayList<>();
     private GroupChatAdapter groupChatAdapter;
     private Context context = GroupChat.this;
@@ -53,6 +53,17 @@ public class GroupChat extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if (group_category.equals("sport")) {
+            setTheme(R.style.SportTheme);
+        } else if (group_category.equals("leisure")) {
+            setTheme(R.style.LeisureTheme);
+        } else if (group_category.equals("business")) {
+            setTheme(R.style.BusinessTheme);
+        } else {
+            setTheme(R.style.NightlifeTheme);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_group);
 

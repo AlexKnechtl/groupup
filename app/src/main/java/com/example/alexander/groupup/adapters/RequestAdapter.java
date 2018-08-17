@@ -2,6 +2,7 @@ package com.example.alexander.groupup.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.GetTimeStrings;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.group.GroupView;
@@ -27,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -103,7 +108,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
                     String name = dataSnapshot.child("name").getValue().toString();
-                    Picasso.with(context).load(thumb_image)
+
+                    Picasso.with(context).load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
                             .placeholder(R.drawable.default_user_black).into(viewHolder.thumbImage);
                     viewHolder.name.setText(name + " hat dir eine Freundschaftsanfrage geschickt!");
                     viewHolder.requestButton.setText(R.string.accept);
