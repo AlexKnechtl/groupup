@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.Resource;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.alexander.groupup.BaseActivity;
@@ -91,7 +92,7 @@ public class HomeActivity extends BaseActivity {
 
     //XML
     private RecyclerView recyclerView;
-    private TextView location;
+    //private TextView location;
     private EditText locationName;
     private TextView searchLocation;
     private SeekBar seekBar;
@@ -157,7 +158,7 @@ public class HomeActivity extends BaseActivity {
         //Find Ids
         TextView dateTextView;
         dateTextView = findViewById(R.id.date_main);
-        location = findViewById(R.id.location_main);
+        //location = findViewById(R.id.location_main);
         locationName = findViewById(R.id.loc_city);
         groupButton = findViewById(R.id.group_button);
         recyclerView = findViewById(R.id.main_recycler_view);
@@ -481,12 +482,7 @@ public class HomeActivity extends BaseActivity {
 
         public void setGroupImage(String groupImage) {
             final ImageView groupBackground = mView.findViewById(R.id.background_group);
-            Glide.with(mView).load(groupImage).into(new SimpleTarget<Drawable>() {
-                @Override
-                public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                    groupBackground.setBackground(resource);
-                }
-            });
+            Glide.with(mView).load(groupImage).into(new DrawableImageViewTarget(groupBackground));
         }
 
         public void setActivityCity(String activity, String location) {
@@ -745,9 +741,6 @@ public class HomeActivity extends BaseActivity {
             setupGeoFire();
         setCurrentLocation(new GeoLocation(latitude, longitude));
 
-        String latLng = "geo:<" + latitude  + ">,<" + longitude + ">?q=<" + latitude  + ">,<" + longitude + ">("
-                + getResources().getString(R.string.group_is_here) + ")";
-
         Geocoder geocoder = new Geocoder(this);
         try
         {
@@ -762,8 +755,6 @@ public class HomeActivity extends BaseActivity {
         } catch (IOException e){
             e.printStackTrace();
         }
-
-        //final String placeName = placeSelected.getName().toString();
     }
 
     public class GeoGroup {
