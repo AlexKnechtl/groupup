@@ -3,6 +3,7 @@ package com.example.alexander.groupup;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.alexander.groupup.helpers.RestringsLoader;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.firebase.ui.auth.data.model.User;
@@ -17,6 +18,8 @@ import com.ice.restring.Restring;
 import com.ice.restring.RestringConfig;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
+
+import io.fabric.sdk.android.Fabric;
 
 public class groupup extends Application {
 
@@ -37,6 +40,13 @@ public class groupup extends Application {
         Picasso.setSingletonInstance(built);
 
         LanguageStringsManager.initialize(getApplicationContext());
+
+        //Enable crashlytics in debug mode
+        final Fabric fabric = new Fabric.Builder(this)
+                .kits(new Crashlytics())
+                .debuggable(true)           // Enables Crashlytics debugger
+                .build();
+        Fabric.with(fabric);
 
         /*user_id = FirebaseAuth.getInstance();
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id.getCurrentUser().getUid());
