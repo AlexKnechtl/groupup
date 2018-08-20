@@ -319,6 +319,7 @@ public class MyGroupView extends BaseActivity {
                 description.setText(g.description);
                 memberCount.setText(g.getMemberCount().toString());
                 latLng = g.latlng;
+                rank = dataSnapshot.child("members").child(user_id).child("rank").getValue().toString();
             }
 
             @Override
