@@ -318,6 +318,7 @@ public class MyGroupView extends BaseActivity {
                         + " @" + g.location);
                 description.setText(g.description);
                 memberCount.setText(g.getMemberCount().toString());
+                latLng = g.latlng;
             }
 
             @Override
@@ -380,7 +381,6 @@ public class MyGroupView extends BaseActivity {
                 groupMembers = g.getMemberCount();
 
                 if (g.public_status == PublicStatus.open) {
-
                     statusIcon.setImageResource(R.drawable.material_lock_open_white_36);
                     statusText.setText(R.string.open);
                 }
