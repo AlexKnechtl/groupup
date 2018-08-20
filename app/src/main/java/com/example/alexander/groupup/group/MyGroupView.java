@@ -31,6 +31,7 @@ import com.example.alexander.groupup.profile.UserProfileActivity;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -378,21 +379,14 @@ public class MyGroupView extends BaseActivity {
 
                 groupMembers = g.getMemberCount();
 
-                if (g.public_status == PublicStatus.open) {
-                    statusIcon.setImageResource(R.drawable.material_lock_open_white_36);
-                    statusText.setText(R.string.open);
-                }
                 if (groupMembers < 2) {
                     DatabaseReference GroupChatDatabase = FirebaseDatabase.getInstance().getReference().child("GroupChat").child(groupId);
                     GroupDatabase.removeValue();
                     FirebaseDatabase.getInstance().getReference().child("GeoFire").child(user_id).removeValue();
-                    GroupChatDatabase.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Intent intent = new Intent(MyGroupView.this, HomeActivity.class);
-                            startActivity(intent);
-                        }
-                    });
+                    GroupChatDatabase.removeValue();
+
+                    Intent intent = new Intent(MyGroupView.this, HomeActivity.class);
+                    startActivity(intent);
 
                 } else if (groupMembers > 0) {
                     GroupMemberDatabase.child(user_id).removeValue();

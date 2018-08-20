@@ -137,6 +137,7 @@
         <activity
             android:name=".interviews.InterviewDescription"
             android:screenOrientation="portrait"
+            android:noHistory="true"
             android:theme="@style/InteriewTheme" />
         <activity
             android:name=".settings.MyAccountActivity"
@@ -174,8 +175,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <activity android:name=".BaseActivity"></activity>
     </application>
 
 </manifest>

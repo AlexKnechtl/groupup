@@ -1,7 +1,6 @@
 package com.example.alexander.groupup.models;
 
 import com.example.alexander.groupup.helpers.OnGetResultListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,16 +23,12 @@ public class GroupImagesModel {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<String> imageURLs = new ArrayList<>();
-//              System.out.print("-------ParentKey: " + dataSnapshot.getKey());
-//              System.out.println("------Value: " + dataSnapshot.getValue());
 
                 try {
                     for (DataSnapshot s : dataSnapshot.getChildren()) {
                         imageURLs.add(s.getValue().toString());
                         System.out.println("----" + s.getValue());
                     }
-
-//                  System.out.println("\n------------------ ArraySize: " + imageURLs.size());
 
                     Random rnd = new Random();
                     listener.OnSuccess(imageURLs.get(rnd.nextInt(imageURLs.size())));
@@ -42,14 +37,10 @@ public class GroupImagesModel {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             ArrayList<String> imageURLs = new ArrayList<>();
-//                          System.out.print("-------ParentKey: " + dataSnapshot.getKey());
-//                          System.out.println("------Value: " + dataSnapshot.getValue());
                             for (DataSnapshot s : dataSnapshot.getChildren()) {
                                 imageURLs.add(s.getValue().toString());
                                 System.out.println("----" + s.getValue());
                             }
-
-//                          System.out.println("\n------------------ ArraySize: " + imageURLs.size());
 
                             Random rnd = new Random();
                             listener.OnSuccess(imageURLs.get(rnd.nextInt(imageURLs.size())));
@@ -83,16 +74,11 @@ public class GroupImagesModel {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<String> imageURLs = new ArrayList<>();
-//              System.out.print("-------ParentKey: " + dataSnapshot.getKey());
-//              System.out.println("------Value: " + dataSnapshot.getValue());
-
                 try {
                     for (DataSnapshot s : dataSnapshot.getChildren()) {
                         imageURLs.add(s.getValue().toString());
                         System.out.println("----" + s.getValue());
                     }
-
-//                  System.out.println("\n------------------ ArraySize: " + imageURLs.size());
 
                     Random rnd = new Random();
                     int i = rnd.nextInt(imageURLs.size());
@@ -102,14 +88,10 @@ public class GroupImagesModel {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             ArrayList<String> imageURLs = new ArrayList<>();
-//                          System.out.print("-------ParentKey: " + dataSnapshot.getKey());
-//                          System.out.println("------Value: " + dataSnapshot.getValue());
                             for (DataSnapshot s : dataSnapshot.getChildren()) {
                                 imageURLs.add(s.getValue().toString());
                                 System.out.println("----" + s.getValue());
                             }
-
-//                          System.out.println("\n------------------ ArraySize: " + imageURLs.size());
 
                             Random rnd = new Random();
                             listener.OnSuccess(imageURLs.get(rnd.nextInt(imageURLs.size())));
@@ -130,4 +112,3 @@ public class GroupImagesModel {
         });
     }
 }
-

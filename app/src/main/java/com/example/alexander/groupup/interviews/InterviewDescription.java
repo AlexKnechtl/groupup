@@ -90,9 +90,7 @@ public class InterviewDescription extends BaseActivity {
 
                 group.description = "Hier sollte eine Beschreibung stehen.";
 
-                //Intent intent = new Intent(InterviewDescription.this, HomeActivity.class);
                 setDatabaseValues();
-                //startActivity(intent);
             }
         });
     }

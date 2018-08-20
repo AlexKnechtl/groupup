@@ -43,7 +43,7 @@ public class GroupChat extends BaseActivity {
     private RecyclerView groupChatRecyclerView;
 
     //Variables
-    private String user_id, group_id, activity, location, group_category = "sport", name;
+    private String user_id, group_id, activity, location, group_category, name;
     private final List<MessagesModel> messagesList = new ArrayList<>();
     private GroupChatAdapter groupChatAdapter;
     private Context context = GroupChat.this;
@@ -53,23 +53,29 @@ public class GroupChat extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        if (group_category.equals("sport")) {
-            setTheme(R.style.SportTheme);
-        } else if (group_category.equals("leisure")) {
-            setTheme(R.style.LeisureTheme);
-        } else if (group_category.equals("business")) {
-            setTheme(R.style.BusinessTheme);
-        } else {
-            setTheme(R.style.NightlifeTheme);
-        }
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat_group);
 
         Bundle bundle = getIntent().getExtras();
         group_id = bundle.getString("group_id");
         user_id = bundle.getString("user_id");
+        group_category = bundle.getString("category");
+
+        switch (group_category) {
+            case "sport":
+                setTheme(R.style.SportTheme);
+                break;
+            case "nightlife":
+                setTheme(R.style.NightlifeTheme);
+                break;
+            case "business":
+                setTheme(R.style.BusinessTheme);
+                break;
+            case "leisure":
+                setTheme(R.style.LeisureTheme);
+                break;
+        }
+
+        setContentView(R.layout.chat_group);
 
         //Find IDs
         groupImage = findViewById(R.id.group_chat_image);
@@ -88,23 +94,9 @@ public class GroupChat extends BaseActivity {
         //Initialize FireBase
         GroupChatDatabase = FirebaseDatabase.getInstance().getReference().child("GroupChat").child(group_id);
 
-        DatabaseReference GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(group_id);
         DatabaseReference UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        loadGroupChats();
-
-        UserDatabase.child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                name = dataSnapshot.child("name").getValue().toString();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+        DatabaseReference GroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(group_id);
         GroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -114,16 +106,21 @@ public class GroupChat extends BaseActivity {
 
                 groupActivity.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(activity).getLocalLanguageString()
                         + " @" + location);
+            }
 
-                if (group_category.equals("sport")) {
-                    groupImage.setImageResource(R.drawable.group_chat_sport);
-                } else if (group_category.equals("leisure")) {
-                    groupImage.setImageResource(R.drawable.group_chat_icon_leisure);
-                } else if (group_category.equals("business")) {
-                    groupImage.setImageResource(R.drawable.group_chat_icon_business);
-                } else {
-                    groupImage.setImageResource(R.drawable.group_chat_icon_nightlife);
-                }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        setGroupImage();
+        loadGroupChats();
+
+        UserDatabase.child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                name = dataSnapshot.child("name").getValue().toString();
             }
 
             @Override
@@ -196,5 +193,22 @@ public class GroupChat extends BaseActivity {
 
             }
         });
+    }
+
+    private void setGroupImage() {
+        switch (group_category) {
+            case "sport":
+                groupImage.setImageResource(R.drawable.group_chat_sport);
+                break;
+            case "nightlife":
+                groupImage.setImageResource(R.drawable.group_chat_icon_nightlife);
+                break;
+            case "business":
+                groupImage.setImageResource(R.drawable.group_chat_icon_business);
+                break;
+            case "leisure":
+                groupImage.setImageResource(R.drawable.group_chat_icon_leisure);
+                break;
+        }
     }
 }
