@@ -215,12 +215,9 @@ public class MyGroupView extends BaseActivity {
                                 }
                             });
 
-                        } else if (rank.equals("member"))
-
-                        {
+                        } else if (rank.equals("member")) {
 
                         }
-
 
                         popupMenu.show();
                         return true;
@@ -231,7 +228,7 @@ public class MyGroupView extends BaseActivity {
         membersList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    private static class membersViewHolder extends RecyclerView.ViewHolder {
+    public static class membersViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
 
@@ -252,7 +249,7 @@ public class MyGroupView extends BaseActivity {
 
         public void setThumbImage(String thumb_image, Context context) {
             CircleImageView userImageView = mView.findViewById(R.id.user_picture);
-            Picasso.with(context).load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.profile_white).into(userImageView);
+            Picasso.with(context).load(thumb_image).placeholder(R.drawable.profile_white).into(userImageView);
         }
     }
 
