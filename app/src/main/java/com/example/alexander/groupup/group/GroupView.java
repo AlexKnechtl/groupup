@@ -230,6 +230,8 @@ public class GroupView extends BaseActivity {
                 headline.setText(LanguageStringsManager.getInstance().getLanguageStringByStringId(g.activity).getLocalLanguageString()
                         + " @" + g.location);
 
+                latLng = g.latlng;
+
                 description.setText(g.description);
                 memberCount.setText(g.getMemberCount().toString());
             }

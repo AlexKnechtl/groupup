@@ -60,7 +60,7 @@ public class MyGroupView extends BaseActivity {
     private DatabaseReference UserDatabase;
 
     //Variables
-    private String groupId, latLng, user_id;
+    private String groupId, user_id, latLng;
     private String userName, userCity, userThumbImage, rank;
     boolean fabIsOpen = false;
     long groupMembers;
@@ -375,9 +375,6 @@ public class MyGroupView extends BaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 GroupModel g = dataSnapshot.getValue(GroupModel.class);
-                //String members = dataSnapshot.child("member_count").getValue().toString();
-                //groupMembers = Long.parseLong(members);
-                //groupMembers--;
 
                 groupMembers = g.getMemberCount();
 
