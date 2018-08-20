@@ -2,7 +2,6 @@ package com.example.alexander.groupup.profile;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
 import com.example.alexander.groupup.models.LanguageStringsModel;
-import com.example.alexander.groupup.singletons.LanguageStringsManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,7 +36,7 @@ public class SelectLanguageActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_laguage_select);
+        setContentView(R.layout.activity_about_me_select);
 
         String action = getIntent().getStringExtra("action");
 
@@ -48,7 +46,7 @@ public class SelectLanguageActivity extends BaseActivity {
         languagesRecyclerView = findViewById(R.id.recyclerviewSelectLanguages);
         languagesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         data = new ArrayList<>();
-        if(action == null || action.equals("language_select")) {
+        if (action == null || action.equals("language_select")) {
             databaseRef = hobbydb.child("languages");
 
             data.add(new DataBoleanMap(getString(R.string.arabic), false));
@@ -71,8 +69,7 @@ public class SelectLanguageActivity extends BaseActivity {
             data.add(new DataBoleanMap(getString(R.string.ukrainian), false));
             data.add(new DataBoleanMap(getString(R.string.vietnamese), false));
 
-        }
-        else if(action.equals("music_select")){
+        } else if (action.equals("music_select")) {
             databaseRef = hobbydb.child("music");
 
             data.add(new DataBoleanMap("Country", false));
@@ -86,18 +83,15 @@ public class SelectLanguageActivity extends BaseActivity {
             data.add(new DataBoleanMap("Pop", false));
             data.add(new DataBoleanMap("R&B", false));
             data.add(new DataBoleanMap("Rock", false));
-        }
-        else if(action.equals("sport_select"))
-        {
+        } else if (action.equals("sport_select")) {
             databaseRef = hobbydb.child("sport");
             FirebaseDatabase.getInstance().getReference().child("LanguageStrings").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for(DataSnapshot s : dataSnapshot.getChildren())
-                    {
+                    for (DataSnapshot s : dataSnapshot.getChildren()) {
                         LanguageStringsModel lsm = s.getValue(LanguageStringsModel.class);
                         data.add(new DataBoleanMap(lsm.getLocalLanguageString(), false));
-                        if(adapter != null)
+                        if (adapter != null)
                             adapter.notifyDataSetChanged();
                     }
                 }
@@ -107,8 +101,7 @@ public class SelectLanguageActivity extends BaseActivity {
 
                 }
             });
-        }
-        else{
+        } else {
             Log.e("Select something", "ERROR... Action \"" + action + "\" is not valid!!!");
             throw new IllegalArgumentException();
         }
@@ -122,12 +115,11 @@ public class SelectLanguageActivity extends BaseActivity {
                     String[] myLanguages = dataSnapshot.getValue().toString().split(", ");
 
                     for (String lang : myLanguages)
-                        for(DataBoleanMap map : data)
-                            if(map.getLanguage().equals(lang))
+                        for (DataBoleanMap map : data)
+                            if (map.getLanguage().equals(lang))
                                 map.setSelected(true);
                     adapter.notifyDataSetChanged();
-                }
-                catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -141,7 +133,7 @@ public class SelectLanguageActivity extends BaseActivity {
         languagesRecyclerView.setAdapter(adapter);
     }
 
-    public class DataAdapter extends RecyclerView.Adapter<DataViewHolder>{
+    public class DataAdapter extends RecyclerView.Adapter<DataViewHolder> {
         ArrayList<DataBoleanMap> languagesData = new ArrayList<>();
         Context c;
 
@@ -149,8 +141,7 @@ public class SelectLanguageActivity extends BaseActivity {
             return languagesData;
         }
 
-        public DataAdapter(Context c, ArrayList<DataBoleanMap> languagesData)
-        {
+        public DataAdapter(Context c, ArrayList<DataBoleanMap> languagesData) {
             this.languagesData = languagesData;
             this.c = c;
         }
@@ -158,7 +149,7 @@ public class SelectLanguageActivity extends BaseActivity {
         @NonNull
         @Override
         public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(c).inflate(R.layout.singlelayout_select_language, parent, false);
+            View v = LayoutInflater.from(c).inflate(R.layout.single_layout_select, parent, false);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -184,21 +175,20 @@ public class SelectLanguageActivity extends BaseActivity {
         }
     }
 
-    class DataViewHolder extends ViewHolder{
+    class DataViewHolder extends ViewHolder {
         View mView;
+
         public DataViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
 
-        public void setLanguage(String language)
-        {
-            ((TextView)mView.findViewById(R.id.textviewSelectedLanguage)).setText(language);
+        public void setLanguage(String language) {
+            ((TextView) mView.findViewById(R.id.textviewSelectedLanguage)).setText(language);
         }
 
-        public void setCheckbox(Boolean ischecked)
-        {
-            ((CheckBox)mView.findViewById(R.id.checkboxSelectedLanguage)).setChecked(ischecked);
+        public void setCheckbox(Boolean ischecked) {
+            ((CheckBox) mView.findViewById(R.id.checkboxSelectedLanguage)).setChecked(ischecked);
         }
     }
 
@@ -236,12 +226,12 @@ public class SelectLanguageActivity extends BaseActivity {
     public void addLanguagesClick(View view) {
         String mylanguages = "";
 
-        for(DataBoleanMap map : data)
-            if(map.getSelected())
+        for (DataBoleanMap map : data)
+            if (map.getSelected())
                 mylanguages += map.getLanguage() + ", ";
 
-        if(mylanguages.length() > 0)
-            mylanguages = mylanguages.substring(0, mylanguages.length()-2);
+        if (mylanguages.length() > 0)
+            mylanguages = mylanguages.substring(0, mylanguages.length() - 2);
 
         databaseRef.setValue(mylanguages);
         super.onBackPressed();

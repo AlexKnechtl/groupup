@@ -23,12 +23,12 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CustomSportAdapter extends RecyclerView.Adapter<CustomSportAdapter.ViewHolder> {
+public class SportAdapter extends RecyclerView.Adapter<SportAdapter.ViewHolder> {
 
     private ArrayList<LanguageStringsModel> sportItems;
     private Context mContext;
 
-    public CustomSportAdapter(Context context, ArrayList<LanguageStringsModel> sportItems) {
+    public SportAdapter(Context context, ArrayList<LanguageStringsModel> sportItems) {
         mContext = context;
         this.sportItems = sportItems;
     }

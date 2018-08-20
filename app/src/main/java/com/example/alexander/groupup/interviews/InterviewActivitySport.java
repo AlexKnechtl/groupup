@@ -1,7 +1,6 @@
 package com.example.alexander.groupup.interviews;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -9,7 +8,7 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 
 import com.example.alexander.groupup.BaseActivity;
-import com.example.alexander.groupup.adapters.CustomSportAdapter;
+import com.example.alexander.groupup.adapters.SportAdapter;
 import com.example.alexander.groupup.models.*;
 import com.example.alexander.groupup.singletons.*;
 import com.example.alexander.groupup.R;
@@ -30,7 +29,7 @@ public class InterviewActivitySport extends BaseActivity {
     private GroupModel group;
 
     private ArrayList<LanguageStringsModel> sportItems;
-    private CustomSportAdapter adapter;
+    private SportAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class InterviewActivitySport extends BaseActivity {
         sportsRecyclerView.setHasFixedSize(true);
         sportsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new CustomSportAdapter(this, sportItems);
+        adapter = new SportAdapter(this, sportItems);
 
         sportsRecyclerView.setAdapter(adapter);
 
@@ -84,8 +83,6 @@ public class InterviewActivitySport extends BaseActivity {
                 filteredNames.add(s);
             }
         }
-
-        //Calling a method of the adapter class and passing the filtered list
         adapter.filterList(filteredNames);
     }
 }

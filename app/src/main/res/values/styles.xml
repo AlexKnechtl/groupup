@@ -186,4 +186,18 @@
         <item name="android:windowBackground">@drawable/background_nightlife</item>
         <item name="android:fontFamily">@font/dosis_semibold</item>
     </style>
+
+    <style name="SettingsTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Colors -->
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@android:color/background_light</item>
+
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+
+        <item name="android:windowBackground">@drawable/background_dark</item>
+        <item name="android:fontFamily">@font/dosis_semibold</item>
+    </style>
 </resources>

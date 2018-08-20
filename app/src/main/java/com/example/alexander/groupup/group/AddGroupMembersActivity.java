@@ -116,8 +116,7 @@ public class AddGroupMembersActivity extends BaseActivity {
                                         if (fmap.friendsModel.getUid().equals(snapshot.getKey())) {
                                             fmap.setSelected(true);
                                             selectedPreviewMembers.add(fmap.friendsModel);
-                                            if(selectedPreviewMembers.size() == 1)
-                                            {
+                                            if (selectedPreviewMembers.size() == 1) {
                                                 addedMembersText.setVisibility(View.VISIBLE);
                                                 MemberPreview.setVisibility(View.VISIBLE);
                                             }
@@ -157,14 +156,13 @@ public class AddGroupMembersActivity extends BaseActivity {
         groupRequestMap.put("from", FirebaseAuth.getInstance().getCurrentUser().getUid());
         groupRequestMap.put("time", ServerValue.TIMESTAMP);
 
-        for(FriendsModel m : previewAdapter.getSelectedFriends())
+        for (FriendsModel m : previewAdapter.getSelectedFriends())
             RequestDatabase.child(m.getUid()).child(FirebaseAuth.getInstance().getUid()).updateChildren(groupRequestMap);
     }
 
     public class SelectMembersAdapter extends RecyclerView.Adapter<SelectMembersViewHolder> {
 
         ArrayList<FriendModelSelectedMap> SelectableFriends = new ArrayList<>();
-        //ArrayList<FriendsModel> SelectableFriendsIndexes = new ArrayList<>();
         Context c;
 
         public ArrayList<FriendModelSelectedMap> getSelectableFriends() {
@@ -173,8 +171,6 @@ public class AddGroupMembersActivity extends BaseActivity {
 
         public SelectMembersAdapter(Context c, ArrayList<FriendModelSelectedMap> SelectableFriends) {
             this.SelectableFriends = SelectableFriends;
-            //for(Map.Entry<FriendsModel, Boolean> entry : SelectableFriends.entrySet())
-            //SelectableFriendsIndexes.add(entry.getKey());
             this.c = c;
         }
 
@@ -196,12 +192,10 @@ public class AddGroupMembersActivity extends BaseActivity {
                             addedMembersText.setVisibility(View.VISIBLE);
                             MemberPreview.setVisibility(View.VISIBLE);
                         }
-                    }
-                    else {
+                    } else {
                         int index = selectedPreviewMembers.indexOf(fmMap.getFriendsModel());
                         selectedPreviewMembers.remove(index);
-                        if(selectedPreviewMembers.size() == 0)
-                        {
+                        if (selectedPreviewMembers.size() == 0) {
                             addedMembersText.setVisibility(View.GONE);
                             MemberPreview.setVisibility(View.GONE);
                         }
@@ -229,7 +223,6 @@ public class AddGroupMembersActivity extends BaseActivity {
     public class SelectMembersPreviewAdapter extends RecyclerView.Adapter<SelectedMembersPreviewViewHolder> {
 
         ArrayList<FriendsModel> SelectableFriends = new ArrayList<>();
-        //ArrayList<FriendsModel> SelectableFriendsIndexes = new ArrayList<>();
         Context c;
         private int lastPosition = -1;
 
@@ -239,8 +232,6 @@ public class AddGroupMembersActivity extends BaseActivity {
 
         public SelectMembersPreviewAdapter(Context c, ArrayList<FriendsModel> SelectableFriends) {
             this.SelectableFriends = SelectableFriends;
-//            for(Map.Entry<FriendsModel, Boolean> entry : SelectableFriends.entrySet())
-//                SelectableFriendsIndexes.add(entry.getKey());
             this.c = c;
         }
 
@@ -283,8 +274,7 @@ public class AddGroupMembersActivity extends BaseActivity {
         }
 
         private void setAnimation(View itemView, int position) {
-            if (position > lastPosition)
-            {
+            if (position > lastPosition) {
                 Animation animation = AnimationUtils.loadAnimation(c, android.R.anim.fade_in);
                 itemView.startAnimation(animation);
                 lastPosition = position;
@@ -292,8 +282,7 @@ public class AddGroupMembersActivity extends BaseActivity {
         }
 
         private void setFadeOutAnimationprivate(View itemView, int position) {
-            if (position > lastPosition)
-            {
+            if (position > lastPosition) {
                 Animation animation = AnimationUtils.loadAnimation(c, android.R.anim.fade_out);
                 itemView.startAnimation(animation);
                 lastPosition = -1;

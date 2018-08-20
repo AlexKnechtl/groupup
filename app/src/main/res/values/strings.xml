@@ -1,12 +1,8 @@
 <resources>
-    <string name="app_name">GroupUp</string>
+    <string name="app_name">GroupUp!</string>
     <!-- Basic Strings -->
     <string name="not_possible">Missing information.</string>
     <string name="too_young">We are sorry :( You are too young.</string>
-    <string name="activate_gps_manually">Sorry, that shouldn´t happen. Please activate GPS manually.</string>
-    <string name="activate_gps">Please activate GPS.</string>
-    <string name="not_found_location">We couldnt find out your Location :/</string>
-    <string name="no_permission">We need that permission!</string>
     <string name="register_succes">Registration completed.</string>
     <string name="cannot_sign_in">Cannot sign in!</string>
     <string name="favourite_hangouts">Favourite Hangouts</string>
@@ -44,20 +40,13 @@
     <string name="accept">Accept</string>
 
     <!-- Interview -->
-    <string name="how_many_member">OK, how many members should the group have?</string>
     <string name="new_group_title">Ok, something new.  How about one of these suggestions?</string>
-    <string name="sports_group">A sports group</string>
-    <string name="leisure_group">A leisure group</string>
-    <string name="party_group">Party Group</string>
-    <string name="productivity_group">Business Group</string>
     <string name="choose_a_place">Do you wanna choose a place?</string>
     <string name="yes">Yes</string>
     <string name="no">No.</string>
     <string name="who_can_see_group">Who is allowed to join your group?</string>
     <string name="my_friends">My Friends</string>
-    <string name="friends_of_friends">Friends of friends</string>
     <string name="everybody">Everybody</string>
-    <string name="group_is_private">Group is private</string>
     <string name="what_you_do_group">What do you want to do with your group?</string>
     <string name="which_group">Which group do you want to create?</string>
     <string name="new_group">Something new for today.</string>
@@ -91,7 +80,6 @@
     <string name="my_account">My Account</string>
     <string name="premium_coins_headline">Premium and GroupCoins</string>
     <string name="get_premium_now">- Get Premium now</string>
-    <string name="group_coins">- GroupCoins</string>
     <string name="business_kit">- Business Kit</string>
     <string name="app_settings">App Settings</string>
     <string name="visibility_for_other">- Visibility for others</string>
@@ -151,7 +139,6 @@
     <string name="night_club">Nightclub</string>
     <string name="bar_pub">Bar / Pub</string>
     <string name="houseparty">Houseparty</string>
-    <string name="hookah">Hookah Bar</string>
     <string name="event">Event</string>
     <string name="seminar">Seminar</string>
     <string name="motivation">Motivation</string>
@@ -214,6 +201,7 @@
     <string name="you_have_send">"You have send "</string>
     <string name="a_friend_request">" a friend request."</string>
     <string name="all_activities">all activities</string>
+
     <!-- GroupTypes -->
     <string-array name="group_types">
         <item>all group types</item>
@@ -222,6 +210,7 @@
         <item>nightlife groups</item>
         <item>business groups</item>
     </string-array>
+
     <string-array name="group_activities_nightlife">
         <item>@string/all_activities</item>
         <item>@string/hookah_bar</item>
@@ -229,6 +218,7 @@
         <item>@string/bar_pub</item>
         <item>@string/houseparty</item>
     </string-array>
+
     <string-array name="group_activities_business">
         <item>@string/all_activities</item>
         <item>@string/motivation</item>
@@ -236,4 +226,5 @@
         <item>@string/seminar</item>
         <item>@string/event</item>
     </string-array>
+    <string name="hookah_bar">Hookah Bar</string>
 </resources>

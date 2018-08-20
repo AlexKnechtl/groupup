@@ -46,7 +46,7 @@ public class FriendsModel {
         this.thumb_image = thumb_image;
     }
 
-    public FriendsModel(){
+    public FriendsModel() {
 
     }
 }

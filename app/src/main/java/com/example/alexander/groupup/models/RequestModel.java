@@ -53,5 +53,6 @@ public class RequestModel {
         this.time = time;
     }
 
-    public RequestModel() { }
+    public RequestModel() {
+    }
 }

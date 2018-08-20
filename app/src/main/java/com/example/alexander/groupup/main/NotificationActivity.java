@@ -63,7 +63,7 @@ public class NotificationActivity extends BaseActivity {
         //Get Information by Intent
         Bundle bundle = getIntent().getExtras();
         user_id = bundle.getString("user_id");
-        if(user_id == null) user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (user_id == null) user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         setupBottomNavigationView();
 

@@ -57,7 +57,7 @@ public class ChatActivity extends BaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         user_id = bundle.getString("user_id");
-        if(user_id == null) user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (user_id == null) user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Toolbar myToolbar = findViewById(R.id.toolbar_chat);
         setSupportActionBar(myToolbar);
 

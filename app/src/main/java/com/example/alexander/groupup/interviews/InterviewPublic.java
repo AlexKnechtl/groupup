@@ -20,9 +20,6 @@ import java.security.acl.Group;
 
 public class InterviewPublic extends BaseActivity {
 
-    //XML
-    private RelativeLayout backLayout;
-
     //Variables
     GroupModel group;
 
@@ -35,8 +32,7 @@ public class InterviewPublic extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         group = (GroupModel) bundle.getSerializable("group"); // Gruppen Kategorie
 
-
-        //Find IDs
+        RelativeLayout backLayout;
         backLayout = findViewById(R.id.back_layout_public);
 
         backLayout.setOnClickListener(new View.OnClickListener() {

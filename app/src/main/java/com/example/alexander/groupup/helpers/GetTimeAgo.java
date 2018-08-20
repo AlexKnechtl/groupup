@@ -2,9 +2,10 @@ package com.example.alexander.groupup.helpers;
 
 import android.app.Application;
 import android.content.Context;
+
 import com.example.alexander.groupup.R;
 
-public class GetTimeAgo extends Application{
+public class GetTimeAgo extends Application {
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;

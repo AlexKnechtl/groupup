@@ -1,9 +1,7 @@
 package com.example.alexander.groupup.settings;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,13 +15,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsActivity extends BaseActivity {
 
-    private Context mContext = SettingsActivity.this;
-    private static final int ACTIVITY_NUM = 4;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_settings);
+        setContentView(R.layout.settings_main);
 
         //Add the Toolbar
         Toolbar myToolbar = findViewById(R.id.my_toolbar);

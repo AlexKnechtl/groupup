@@ -17,7 +17,7 @@ public class GroupImagesModel {
 
     public static void getRandomSportImageURL(String activity, final OnGetResultListener<String> listener) {
         sportImageMapReference.keepSynced(true);
-        DatabaseReference reference= sportImageMapReference.child(activity);
+        DatabaseReference reference = sportImageMapReference.child(activity);
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -65,9 +65,13 @@ public class GroupImagesModel {
 
         imageMapReference.keepSynced(true);
         String childstr = "";
-        switch (groupType){
-            case leisure: childstr = "leisure"; break;
-            default: childstr = activity; break;
+        switch (groupType) {
+            case leisure:
+                childstr = "leisure";
+                break;
+            default:
+                childstr = activity;
+                break;
         }
 
         imageMapReference.child(childstr).addListenerForSingleValueEvent(new ValueEventListener() {

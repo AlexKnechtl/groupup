@@ -69,7 +69,7 @@ public class ProfileActivity extends BaseActivity {
     private static final int ACTIVITY_NUM = 3;
 
     //Popup
-    private String status;
+    private String status, download_url, thumb_download_url;
     private PopupWindow mPopupWindow;
 
     //Firebase
@@ -87,7 +87,6 @@ public class ProfileActivity extends BaseActivity {
 
         mContext = getApplicationContext();
 
-        Bundle bundle = getIntent().getExtras();
         user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         mContext = getApplicationContext();
@@ -250,7 +249,7 @@ public class ProfileActivity extends BaseActivity {
             }
         });
 
-        languages.setOnClickListener(new View.OnClickListener(){ //Todo implement for music
+        languages.setOnClickListener(new View.OnClickListener() { //Todo implement for music
             @Override
             public void onClick(View v) {
                 Intent selectLanguages = new Intent(ProfileActivity.this, SelectLanguageActivity.class);
@@ -282,23 +281,21 @@ public class ProfileActivity extends BaseActivity {
         HobbyDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot == null){
+                if (dataSnapshot == null) {
                     languagesTextView.setText("Keine Sprachen");
                     musicInterestTextView.setText("Keine Musik");
                     sportTV.setText("Keine Sportarten");
-
                     return;
                 }
-
-                if(dataSnapshot.hasChild("languages"))
+                if (dataSnapshot.hasChild("languages"))
                     languagesTextView.setText(dataSnapshot.child("languages").getValue().toString());
                 if (languagesTextView.getText().equals(""))
                     languagesTextView.setText("Keine Sprachen");
-                if(dataSnapshot.hasChild("music"))
+                if (dataSnapshot.hasChild("music"))
                     musicInterestTextView.setText(dataSnapshot.child("music").getValue().toString());
                 if (musicInterestTextView.getText().equals(""))
                     musicInterestTextView.setText("Keine Musik");
-                if(dataSnapshot.hasChild("sport"))
+                if (dataSnapshot.hasChild("sport"))
                     sportTV.setText(dataSnapshot.child("sport").getValue().toString());
                 if (sportTV.getText().equals(""))
                     sportTV.setText("Keine Sportarten");
@@ -340,7 +337,7 @@ public class ProfileActivity extends BaseActivity {
                 thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
                 final byte[] thumb_byte = baos.toByteArray();
 
-                StorageReference filepath = ProfileImageStorage.child("profile_images").child(user_id + ".jpg");
+                final StorageReference filepath = ProfileImageStorage.child("profile_images").child(user_id + ".jpg");
                 final StorageReference thumb_filepath = ProfileImageStorage.child("profile_images").child("thumbs").child(user_id + ".jpg");
 
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -348,20 +345,29 @@ public class ProfileActivity extends BaseActivity {
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if (task.isSuccessful()) {
 
-                            final String download_url = task.getResult().getDownloadUrl().toString();
+                            filepath.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    download_url = task.getResult().toString();
+                                }
+                            });
 
                             UploadTask uploadTask = thumb_filepath.putBytes(thumb_byte);
                             uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
 
-                                    String thumb_downloadUrl = thumb_task.getResult().getDownloadUrl().toString();
+                                    thumb_filepath.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Uri> task) {
+                                            thumb_download_url = task.getResult().toString();
+                                        }
+                                    });
 
                                     if (thumb_task.isSuccessful()) {
-
                                         Map update_hashMap = new HashMap<>();
                                         update_hashMap.put("image", download_url);
-                                        update_hashMap.put("thumb_image", thumb_downloadUrl);
+                                        update_hashMap.put("thumb_image", thumb_download_url);
 
                                         UserDatabase.updateChildren(update_hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -427,13 +433,13 @@ public class ProfileActivity extends BaseActivity {
         Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
         startActivity(intent);
     }
-    // Fuers zurueckgehen nach der Language auswahl
+
     @Override
     protected void onResume() {
         super.onResume();
         initializeAndSetHobbyDB();
     }
-    // Fuers zurueckgehen nach der Language auswahl
+
     @Override
     protected void onRestart() {
         super.onRestart();

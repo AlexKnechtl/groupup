@@ -20,13 +20,12 @@ public class LanguageStringsManager {
     private static Context context;
 
     private LanguageStringsManager() {
-        //System.out.println("IN CONSTRUCTOR");
         languageStringsReference.keepSynced(true);
         languageStrings = new ArrayList<>();
         languageStringsReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot s: dataSnapshot.getChildren()) {
+                for (DataSnapshot s : dataSnapshot.getChildren()) {
                     LanguageStringsModel languageString = s.getValue(LanguageStringsModel.class);
                     languageString.setId(s.getKey());
                     languageStrings.add(languageString);
@@ -39,21 +38,20 @@ public class LanguageStringsManager {
 
             }
         });
-        //System.out.println("OUT CONSTRUCTOR");
     }
 
     public static LanguageStringsManager getInstance() {
-        if(!initialized || ourInstance == null)
+        if (!initialized || ourInstance == null)
             ourInstance = new LanguageStringsManager();
-        while(!initialized || ourInstance == null){
-            Log.w("LanguageStringsManager:", "In WHile LOOP");};
+        while (!initialized || ourInstance == null) {
+            Log.w("LanguageStringsManager:", "In WHile LOOP");
+        }
         return ourInstance;
     }
 
-    public static void initialize(Context context)
-    {
+    public static void initialize(Context context) {
         LanguageStringsManager.context = context;
-        if(ourInstance == null)
+        if (ourInstance == null)
             ourInstance = new LanguageStringsManager();
     }
 
@@ -69,29 +67,29 @@ public class LanguageStringsManager {
     }
 
     public LanguageStringsModel getLanguageStringByStringId(String id) {
-        for (LanguageStringsModel s: languageStrings) {
-            if(s.getId().equals(id))
+        for (LanguageStringsModel s : languageStrings) {
+            if (s.getId().equals(id))
                 return s;
         }
-//        return new LanguageStringsModel("ERROR"+id,"ERROR"+id,"ERROR"+id); //TODO
         String str = getStringResourceByName(id);
-        LanguageStringsModel lm =  new LanguageStringsModel(str,str,str);
+        LanguageStringsModel lm = new LanguageStringsModel(str, str, str);
         lm.setId(id);
         return lm; //TODO
     }
 
-    public ArrayList<LanguageStringsModel> getLanguageStrings()
-    {
+    public ArrayList<LanguageStringsModel> getLanguageStrings() {
         return languageStrings;
     }
 
     public LanguageStringsModel getLanguageStringByLocalString(String localString) {
-        for (LanguageStringsModel s: languageStrings) {
-            if(s.getLocalLanguageString().equals(localString))
+        for (LanguageStringsModel s : languageStrings) {
+            if (s.getLocalLanguageString().equals(localString))
                 return s;
         }
-        return new LanguageStringsModel("ERROR"+localString,"ERROR"+localString,"ERROR"+localString); //TODO
+        return new LanguageStringsModel("ERROR" + localString, "ERROR" + localString, "ERROR" + localString); //TODO
     }
 
-    public boolean isInitialized(){return initialized;}
+    public boolean isInitialized() {
+        return initialized;
+    }
 }

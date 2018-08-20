@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GroupUp</string>
     <string name="not_possible">Fehlende Informationen.</string>
     <string name="too_young">Tut uns leid, du bist zu jung.</string>
-    <string name="activate_gps_manually">Tut uns leid, das sollte nicht passieren.</string>
-    <string name="activate_gps">Bitte aktiviere das GPS.</string>
-    <string name="not_found_location">Wir konnten deinen Standort nicht herausfinden.</string>
-    <string name="no_permission">Wir brauchen die Berechtigung.</string>
     <string name="register_succes">Registrierung fertig.</string>
     <string name="cannot_sign_in">Einloggen gescheitert.</string>
     <string name="favourite_hangouts">Lieblingsorte</string>
@@ -40,20 +35,13 @@
     <string name="discard_continue">Abbrechen und fortfahren</string>
     <string name="no_friends">Keine Freunde vorhanden.</string>
     <string name="accept">Akzeptieren</string>
-    <string name="how_many_member">Wie viele Mitglieder soll die Gruppe haben?</string>
     <string name="new_group_title">Ok, etwas neues. Wie ist es mit einem dieser Vorschläge?</string>
-    <string name="sports_group">Sport Gruppe</string>
-    <string name="leisure_group">Freizeit Gruppe</string>
-    <string name="party_group">Party Gruppe</string>
-    <string name="productivity_group">Business Gruppe</string>
     <string name="choose_a_place">Willst du einen Ort auswählen?</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="who_can_see_group">Wer darf deiner Gruppe beitreten?</string>
     <string name="my_friends">Meine Freunde</string>
-    <string name="friends_of_friends">Freunde von Freunden</string>
     <string name="everybody">Jeder</string>
-    <string name="group_is_private">Gruppe ist privat</string>
     <string name="what_you_do_group">Was willst du mit deiner Gruppe machen?</string>
     <string name="which_group">Welche Gruppe willst du erstellen?</string>
     <string name="new_group">Etwas neues für heute.</string>
@@ -103,7 +91,6 @@
     <string name="business_kit">- Business Kit</string>
     <string name="get_premium_now">- Hol dir jetzt Premium</string>
     <string name="premium_coins_headline">Premium und GroupCoins</string>
-    <string name="group_coins">- GroupCoins</string>
     <string name="whats_your_name">Wie heißt du?</string>
     <string name="age_city_registration">Dein Alter und Stadt</string>
     <string name="choose_username_wisely">Wähle einen Nutzernamen. Beachte dass jeder deinen Nuterzamen sehen kann.</string>
@@ -201,4 +188,6 @@
     <string name="earlier">Frühere</string>
     <string name="you_have_send">"Du hast "</string>
     <string name="a_friend_request">" eine Freundschaftsanfrage geschickt."</string>
+    <string name="all_activities">Alle Aktivitäten</string>
+    <string name="app_name">GroupUp!</string>
 </resources>

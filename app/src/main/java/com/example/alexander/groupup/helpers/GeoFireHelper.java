@@ -3,9 +3,9 @@ package com.example.alexander.groupup.helpers;
 import com.firebase.geofire.GeoLocation;
 
 public class GeoFireHelper {
-    public static Double GetDistance(GeoLocation geoLocationA, GeoLocation geoLocationB){
+    public static Double GetDistance(GeoLocation geoLocationA, GeoLocation geoLocationB) {
         int radius = 6371; // Earth's radius in kilometers
-        double latDelta = degreesToRadians(geoLocationB.latitude -geoLocationA.latitude);
+        double latDelta = degreesToRadians(geoLocationB.latitude - geoLocationA.latitude);
         double lonDelta = degreesToRadians(geoLocationB.longitude - geoLocationA.longitude);
 
         double a = (Math.sin(latDelta / 2) * Math.sin(latDelta / 2)) +
@@ -17,7 +17,7 @@ public class GeoFireHelper {
         return radius * c;
     }
 
-    public static double degreesToRadians(double a){
-        return a/180*Math.PI;
+    public static double degreesToRadians(double a) {
+        return a / 180 * Math.PI;
     }
 }

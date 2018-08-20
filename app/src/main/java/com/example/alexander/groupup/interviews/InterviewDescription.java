@@ -45,26 +45,26 @@ public class InterviewDescription extends BaseActivity {
     //Variables
     private GroupModel group;
     private String current_uid;
-
     private Double geofirelat, geofirelong;
 
     //Firebase
     private DatabaseReference mGroupDatabase;
     private DatabaseReference UserDatabase;
-    private FirebaseUser mCurrent_user;
-
-    GeoFire geoFire;
+    private GeoFire geoFire;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_description);
 
+        //Find IDs
+        backLayoutDescription = findViewById(R.id.back_layout_description);
+        addDescription = findViewById(R.id.add_description);
+        noDescription = findViewById(R.id.no_description);
+        description = findViewById(R.id.edit_text_description);
+
         getGroupInformation();
-
         initialzieFirebase();
-
-        findIDs();
 
         backLayoutDescription.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,9 +77,7 @@ public class InterviewDescription extends BaseActivity {
         addDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 group.description = description.getText().toString();
-
                 setDatabaseValues();
             }
         });
@@ -87,9 +85,7 @@ public class InterviewDescription extends BaseActivity {
         noDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 group.description = "Hier sollte eine Beschreibung stehen.";
-
                 setDatabaseValues();
             }
         });
@@ -103,7 +99,6 @@ public class InterviewDescription extends BaseActivity {
                 public void OnSuccess(String groupImage) {
                     mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(current_uid);
 
-
                     geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("GeoFire"));
                     geoFire.setLocation(current_uid, new GeoLocation(geofirelat, geofirelong), new GeoFire.CompletionListener() {
                         @Override
@@ -112,7 +107,7 @@ public class InterviewDescription extends BaseActivity {
                         }
                     });
 
-                    HashMap<String, GroupMember> members =  new HashMap<String, GroupMember>();
+                    HashMap<String, GroupMember> members = new HashMap<String, GroupMember>();
                     members.put(current_uid, new GroupMember("creator"));
                     group.group_image = groupImage;
                     group.members = members;
@@ -132,7 +127,7 @@ public class InterviewDescription extends BaseActivity {
                     Toast.makeText(getBaseContext(), "Error saving Group", Toast.LENGTH_SHORT).show();
                 }
             });
-        }else { // Todo Freizeit: category = null, activity = null ERROR!!!
+        } else { // Todo Freizeit: category = null, activity = null ERROR!!!
 
             GroupImagesModel.getRandomImageURL(group.activity, group.category, new OnGetResultListener<String>() {
                 @Override
@@ -147,7 +142,7 @@ public class InterviewDescription extends BaseActivity {
                         }
                     });
 
-                    HashMap<String, GroupMember> members =  new HashMap<String, GroupMember>();
+                    HashMap<String, GroupMember> members = new HashMap<String, GroupMember>();
                     members.put(current_uid, new GroupMember("creator"));
                     group.members = members;
                     group.group_image = value;
@@ -172,23 +167,16 @@ public class InterviewDescription extends BaseActivity {
 
     private void getGroupInformation() {
         Bundle bundle = getIntent().getExtras();
-        group =(GroupModel) bundle.getSerializable("group");
+        group = (GroupModel) bundle.getSerializable("group");
 
         geofirelat = bundle.getDouble("geofirelat");
         geofirelong = bundle.getDouble("geofirelong");
     }
 
     private void initialzieFirebase() {
-        mCurrent_user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser mCurrent_user = FirebaseAuth.getInstance().getCurrentUser();
         current_uid = mCurrent_user.getUid();
 
         UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
-    }
-
-    private void findIDs() {
-        backLayoutDescription = findViewById(R.id.back_layout_description);
-        addDescription = findViewById(R.id.add_description);
-        noDescription = findViewById(R.id.no_description);
-        description = findViewById(R.id.edit_text_description);
     }
 }

@@ -47,7 +47,7 @@ public class RegistrationImage extends BaseActivity {
     private ProgressBar progressBar;
 
     //Variables
-    private String city, birthday_day, birthday_year, username, name;
+    private String city, birthday_day, birthday_year, username, name, download_url, thumb_download_url;
 
     //Constants
     private static final int GALLERY_PICK = 1;
@@ -135,26 +135,37 @@ public class RegistrationImage extends BaseActivity {
                 thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);
                 final byte[] thumb_byte = baos.toByteArray();
 
-                StorageReference filepath = ProfileImageStorage.child("profile_images").child(current_user_id + ".jpg");
+                final StorageReference filepath = ProfileImageStorage.child("profile_images").child(current_user_id + ".jpg");
                 final StorageReference thumb_filepath = ProfileImageStorage.child("thumb_images").child(current_user_id + ".jpg");
 
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if (task.isSuccessful()) {
-                            final String download_url = task.getResult().getDownloadUrl().toString();
+
+                            filepath.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    download_url = task.getResult().toString();
+                                }
+                            });
 
                             UploadTask uploadTask = thumb_filepath.putBytes(thumb_byte);
                             uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
 
-                                    String thumb_downloadUrl = thumb_task.getResult().getDownloadUrl().toString();
+                                    thumb_filepath.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Uri> task) {
+                                            thumb_download_url = task.getResult().toString();
+                                        }
+                                    });
 
                                     if (thumb_task.isSuccessful()) {
                                         Map update_hashMap = new HashMap<>();
                                         update_hashMap.put("image", download_url);
-                                        update_hashMap.put("thumb_image", thumb_downloadUrl);
+                                        update_hashMap.put("thumb_image", thumb_download_url);
 
                                         UserDatabase.updateChildren(update_hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override

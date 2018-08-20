@@ -19,7 +19,6 @@ import com.example.alexander.groupup.models.GroupType;
 public class InterviewNewGroup extends BaseActivity {
 
     //XML
-    private RelativeLayout backLayout;
     private GroupModel group;
 
     @Override
@@ -28,6 +27,7 @@ public class InterviewNewGroup extends BaseActivity {
         group = new GroupModel();
         setContentView(R.layout.interview_newgroup);
 
+        RelativeLayout backLayout;
         backLayout = findViewById(R.id.back_layout_new_group);
 
         backLayout.setOnClickListener(new View.OnClickListener() {

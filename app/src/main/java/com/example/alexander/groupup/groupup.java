@@ -1,21 +1,12 @@
 package com.example.alexander.groupup;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
 
 import com.crashlytics.android.Crashlytics;
-import com.example.alexander.groupup.helpers.RestringsLoader;
 import com.example.alexander.groupup.singletons.LanguageStringsManager;
-import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
-import com.google.firebase.database.ValueEventListener;
-import com.ice.restring.Restring;
-import com.ice.restring.RestringConfig;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 

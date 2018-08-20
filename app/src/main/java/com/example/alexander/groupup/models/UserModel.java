@@ -8,7 +8,8 @@ public class UserModel {
 
     public String name, age, thumb_image, city, date, message;
 
-    public UserModel() { }
+    public UserModel() {
+    }
 
     public UserModel(String name, String age, String thumbmail, String city, String date, String message) {
         this.name = name;
@@ -59,9 +60,13 @@ public class UserModel {
         this.city = city;
     }
 
-    public String getMessage() { return message; }
+    public String getMessage() {
+        return message;
+    }
 
-    public void setMessage(String message) { this.message = message; }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public void setNameAge(String name, String age) {
         this.name = name;

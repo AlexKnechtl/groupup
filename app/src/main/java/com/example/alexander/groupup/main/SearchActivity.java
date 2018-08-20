@@ -106,11 +106,9 @@ public class SearchActivity extends BaseActivity {
                 usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(list_user_id.equals(user_id))
-                        {
+                        if (list_user_id.equals(user_id)) {
                             startActivity(new Intent(SearchActivity.this, ProfileActivity.class));
-                        }
-                        else {
+                        } else {
                             Intent intent = new Intent(SearchActivity.this, UserProfileActivity.class);
                             intent.putExtra("user_id", list_user_id);
                             startActivity(intent);

@@ -27,7 +27,7 @@ public class RegisterUsername extends BaseActivity {
         editUsername = findViewById(R.id.username_edit);
     }
 
-    public void continueRegister1 (View view) {
+    public void continueRegister1(View view) {
         String firstName = editFirstName.getText().toString();
         String surname = editSurname.getText().toString();
         String username = editUsername.getText().toString().toLowerCase();

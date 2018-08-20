@@ -69,11 +69,11 @@ public class InterviewChoosePlace extends BaseActivity {
         });
     }
 
-    public void choosePlaceClick (View view) {
+    public void choosePlaceClick(View view) {
         startPlacePickerActivity();
     }
 
-    public void noPlaceClick (View view) {
+    public void noPlaceClick(View view) {
 
         UserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -107,7 +107,7 @@ public class InterviewChoosePlace extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_CODE_PLACE_PICKER && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_PLACE_PICKER && resultCode == RESULT_OK) {
             displaySelectedPlace(data);
         }
     }
@@ -119,8 +119,7 @@ public class InterviewChoosePlace extends BaseActivity {
         Double longitude = geofirelong = placeSelected.getLatLng().longitude;
 
 
-
-        group.latlng = "geo:<" + latitude  + ">,<" + longitude + ">?q=<" + latitude  + ">,<" + longitude + ">("
+        group.latlng = "geo:<" + latitude + ">,<" + longitude + ">?q=<" + latitude + ">,<" + longitude + ">("
                 + getResources().getString(R.string.group_is_here) + ")";
 
         Geocoder geocoder = new Geocoder(this);

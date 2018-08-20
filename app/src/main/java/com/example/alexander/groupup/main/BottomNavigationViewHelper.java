@@ -24,7 +24,7 @@ public class BottomNavigationViewHelper {
         bottomNavigationViewEx.setTextVisibility(false);
     }
 
-    public static void enableNavigation(final Context context, final String user_id , BottomNavigationViewEx viewEx) {
+    public static void enableNavigation(final Context context, final String user_id, BottomNavigationViewEx viewEx) {
         viewEx.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

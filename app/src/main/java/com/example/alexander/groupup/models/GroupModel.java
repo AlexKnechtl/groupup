@@ -33,11 +33,12 @@ public class GroupModel implements Serializable {
     public String latlng;
     public HashMap<String, GroupMember> members;
 
-    public GroupModel() {}
+    public GroupModel() {
+    }
 
     @Exclude
-    public Integer getMemberCount(){
-        if(members != null)
+    public Integer getMemberCount() {
+        if (members != null)
             return members.size();
         else
             return 0;

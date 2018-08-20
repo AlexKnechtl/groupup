@@ -14,5 +14,6 @@ public class MessagesModel {
         this.date = date;
     }
 
-    public MessagesModel() { }
+    public MessagesModel() {
+    }
 }

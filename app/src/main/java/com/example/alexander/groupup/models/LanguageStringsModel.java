@@ -17,12 +17,12 @@ public class LanguageStringsModel {
         this.id = id;
     }
 
-    public String getLocalLanguageString()
-    {
-        switch (Locale.getDefault().getDisplayLanguage())
-        {
-            case "Deutsch": return Deutsch;
-            default:return English;
+    public String getLocalLanguageString() {
+        switch (Locale.getDefault().getDisplayLanguage()) {
+            case "Deutsch":
+                return Deutsch;
+            default:
+                return English;
         }
     }
 
@@ -35,4 +35,3 @@ public class LanguageStringsModel {
         this.Image = Image;
     }
 }
-

@@ -301,7 +301,7 @@ public class GroupView extends BaseActivity {
                                     messageMap.put("type", "request");
                                     messageMap.put("id", pushId);
 
-                                   //MessagesModel m = new MessagesModel(messageText,name, null, user_id, "request", pushId);
+                                    //MessagesModel m = new MessagesModel(messageText,name, null, user_id, "request", pushId);
 
                                     GroupChatDatabase.child(pushId).updateChildren(messageMap).addOnCompleteListener(new OnCompleteListener() {
                                         @Override
