@@ -356,31 +356,24 @@ public class ProfileActivity extends BaseActivity {
                             uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
-
                                     thumb_filepath.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Uri> task) {
                                             thumb_download_url = task.getResult().toString();
+                                                Map update_hashMap = new HashMap<>();
+                                                update_hashMap.put("image", download_url);
+                                                update_hashMap.put("thumb_image", thumb_download_url);
+
+                                                UserDatabase.updateChildren(update_hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(ProfileActivity.this, "Profile picture updated.", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
                                         }
                                     });
-
-                                    if (thumb_task.isSuccessful()) {
-                                        Map update_hashMap = new HashMap<>();
-                                        update_hashMap.put("image", download_url);
-                                        update_hashMap.put("thumb_image", thumb_download_url);
-
-                                        UserDatabase.updateChildren(update_hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(ProfileActivity.this, "Profile picture updated.", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-
-                                    } else {
-                                        Toast.makeText(ProfileActivity.this, "Sorry, that shouldn´t happen", Toast.LENGTH_SHORT).show();
-                                    }
                                 }
                             });
 

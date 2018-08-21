@@ -4,100 +4,251 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:background="@color/colorAccent"
-        android:elevation="6dp"
-        app:cardCornerRadius="30dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <Toolbar
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/logolilavip" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="16dp"
-                android:gravity="center"
-                android:text="Join the VIP-Experience today!"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="29sp" />
+            android:layout_height="wrap_content"
+            android:background="#40FFFFFF">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/settings_header_bubble"
+                android:text="GroupUp!"
+                android:textColor="@color/colorChat"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dosis_bold"
+                android:text="VIP"
+                android:textSize="26sp" />
+        </Toolbar>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/vip_headline"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/vip_headline_2"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:backgroundTint="@color/colorAccent"
+            android:enabled="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:text="@string/vip_features_include"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/settings_header_bubble"
+            android:text="@string/vip_ranking_booster"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/vip_ranking_booster_info"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/settings_header_bubble"
+            android:text="@string/vip_special_events"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/vip_houseparty_info"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/vip_houseparty_info_2"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/settings_header_bubble"
+            android:text="@string/vip_style"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/vip_style_info"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_image"
+                android:layout_width="900dp"
+                android:layout_height="110dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
-                android:text="Get Unique Features like:"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="25sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="28dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/premium_circle_design"
-                android:elevation="7dp"
-                android:gravity="center"
-                android:text="Custom Group Backgrounds"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="28dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/premium_circle_design"
-                android:elevation="7dp"
-                android:gravity="center"
-                android:text="Higher Ranking in Explore"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="28dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/premium_circle_design"
-                android:elevation="7dp"
-                android:gravity="center"
-                android:text="Ability to Create Special Events"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20dp" />
-
-            <TextView
-                android:layout_width="190dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/premiumsolid_circle_design"
-                android:elevation="7dp"
-                android:gravity="center"
-                android:text="Get it now!"
-                android:textColor="@color/colorAccent"
-                android:textSize="30dp" />
+                android:layout_weight="3"
+                android:src="@drawable/profile_white_border"
+                app:civ_border_color="@color/gold"
+                app:civ_border_width="1dp"
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="17dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/main_layout_design"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_image">
+
+            <TextView
+                android:id="@+id/profile_name_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:text="Nadine, 18"
+                android:textColor="@color/colorAccent"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/ic_location"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_alignStart="@+id/profile_name_textview"
+                android:layout_below="@+id/profile_name_textview"
+                android:layout_marginStart="-5dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/location_white" />
+
+            <TextView
+                android:id="@+id/profile_location"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@+id/profile_name_textview"
+                android:layout_marginBottom="6dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@id/ic_location"
+                android:gravity="center"
+                android:text="Hausmannstätten"
+                android:textColor="@color/colorAccent"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="11dp"
+                android:background="@drawable/vip_design"
+                android:text="VIP"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Limited Offer"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/vip_design"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Get it for only 4.99€"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="26sp" />
+    </LinearLayout>
 </ScrollView>

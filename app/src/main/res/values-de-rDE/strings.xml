@@ -190,4 +190,12 @@
     <string name="a_friend_request">" eine Freundschaftsanfrage geschickt."</string>
     <string name="all_activities">Alle Aktivitäten</string>
     <string name="app_name">GroupUp!</string>
+    <string name="vip_headline">GroupUp! VIP macht dich zu einem lokalen Social Influencer!</string>
+    <string name="vip_headline_2">Bekomme exklusive Vorteile, welche dein Profil von anderen abhebt.</string>
+    <string name="vip_features_include">Vorteile wie:</string>
+    <string name="vip_ranking_booster_info">Der Raking Booster bringt dich an die Spitze des Feeds und lässt dich und deine Freunde noch mehr hervorstechen!</string>
+    <string name="vip_special_events">Hauspartys</string>
+    <string name="vip_houseparty_info">Mit GroupUp! VIP bekommst du exklusiv die Möglichkeit, Hauspartys zu hosten!</string>
+    <string name="vip_houseparty_info_2">Entscheide wär zu dir und deinen Freunden passt und lade noch mehr Menschen ein um die Party zu einem unvergesslichen Erlebnis zu machen!</string>
+    <string name="vip_style_info">Du wirst außerdem spziell herausgestochen mit godenen Umrandungen!</string>
 </resources>

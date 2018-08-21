@@ -227,4 +227,14 @@
         <item>@string/event</item>
     </string-array>
     <string name="hookah_bar">Hookah Bar</string>
+    <string name="vip_headline">The GroupUp! VIP Experience makes you a person of influence!</string>
+    <string name="vip_headline_2">Get special advantages which boost your profile into the top charts.</string>
+    <string name="vip_features_include">Features include:</string>
+    <string name="vip_ranking_booster" translatable="false">Ranking Booster</string>
+    <string name="vip_ranking_booster_info">The Ranking Booster pushes your groups to the tip of the feed and makes you and your friends stand out even more!</string>
+    <string name="vip_special_events">Housepartys</string>
+    <string name="vip_houseparty_info">With GroupUp VIP you get the exclusive ability to host housepartys!</string>
+    <string name="vip_houseparty_info_2">Decide who fits to you and your friends and invite more people to make your party an unforgettable experience!</string>
+    <string name="vip_style" translatable="false">VIP Style</string>
+    <string name="vip_style_info">You will also get a special appearance in the app with golden elements!</string>
 </resources>

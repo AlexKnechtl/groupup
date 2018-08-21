@@ -3,19 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#40FFFFFF">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/logo_cutout" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/business_kit_headline"
-                android:textSize="24sp"
-                android:layout_margin="8dp"/>
+            android:text="Business Toolkit"
+            android:textSize="26sp" />
+    </Toolbar>
 
 
 
-        </LinearLayout>
 </ScrollView>

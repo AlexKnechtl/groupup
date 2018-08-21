@@ -16,4 +16,6 @@
     <color name="textAppColor">#68338F</color>
     <color name="darkGray">#A2A2A2</color>
     <color name="black">#000000</color>
+
+    <color name="gold">#FFE436</color>
 </resources>
