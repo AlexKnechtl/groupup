@@ -117,7 +117,7 @@ public class RegistrationImage extends BaseActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 
-                Toast.makeText(this, "Bitte warten.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Bild wird hochgeladen.", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.VISIBLE);
 
                 Uri resultUri = result.getUri();
@@ -154,33 +154,24 @@ public class RegistrationImage extends BaseActivity {
                             uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
-
                                     thumb_filepath.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Uri> task) {
                                             thumb_download_url = task.getResult().toString();
+                                            Map update_hashMap = new HashMap<>();
+                                            update_hashMap.put("image", download_url);
+                                            update_hashMap.put("thumb_image", thumb_download_url);
+
+                                            UserDatabase.updateChildren(update_hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(RegistrationImage.this, "Profile picture updated.", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
                                         }
                                     });
-
-                                    if (thumb_task.isSuccessful()) {
-                                        Map update_hashMap = new HashMap<>();
-                                        update_hashMap.put("image", download_url);
-                                        update_hashMap.put("thumb_image", thumb_download_url);
-
-                                        UserDatabase.updateChildren(update_hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    progressBar.setVisibility(View.INVISIBLE);
-                                                    Toast.makeText(RegistrationImage.this, "Profile picture updated.", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-
-                                    } else {
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        Toast.makeText(RegistrationImage.this, "Sorry, that shouldn´t happen", Toast.LENGTH_SHORT).show();
-                                    }
                                 }
                             });
 

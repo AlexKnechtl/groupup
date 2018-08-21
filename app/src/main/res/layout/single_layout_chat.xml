@@ -11,8 +11,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_single_image"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
         android:layout_margin="6dp"
         android:src="@drawable/default_user_black"
         app:civ_border_color="@color/colorChat"

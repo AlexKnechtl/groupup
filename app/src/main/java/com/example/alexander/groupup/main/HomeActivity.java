@@ -84,7 +84,6 @@ public class HomeActivity extends BaseActivity {
 
     //XML
     private RecyclerView recyclerView;
-    //private TextView location;
     private EditText locationName;
     private TextView searchLocation;
     private SeekBar seekBar;
@@ -103,7 +102,6 @@ public class HomeActivity extends BaseActivity {
     private GroupsAdapter groupsAdapter;
 
     double radius = 10;
-    private ArrayList groups;
     private boolean isLocationSelected = false;
 
     //Variables
@@ -154,7 +152,9 @@ public class HomeActivity extends BaseActivity {
                     GroupDatabase.child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            group_category = dataSnapshot.child("category").getValue().toString();
+                            if (dataSnapshot.child("category").exists()) {
+                                group_category = dataSnapshot.child("category").getValue().toString();
+                            }
                         }
 
                         @Override

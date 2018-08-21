@@ -80,9 +80,11 @@ public class RegisterAgeCity extends BaseActivity {
                     userage--;
                 }
 
-                if (userage > 11) {
+                if (userage > 11 && userage < 99) {
                     birthdayTextView.setText(date);
                     oldEnough = true;
+                } else if (userage > 99) {
+                    Toast.makeText(RegisterAgeCity.this, "We are sorry, you need to be between 12 - 99", Toast.LENGTH_SHORT).show();
                 } else {
                     birthdayTextView.setText(getString(R.string.too_young));
                 }

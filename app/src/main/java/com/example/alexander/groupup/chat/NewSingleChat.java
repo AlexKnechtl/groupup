@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.alexander.groupup.BaseActivity;
 import com.example.alexander.groupup.R;
+import com.example.alexander.groupup.main.ChatActivity;
 import com.example.alexander.groupup.models.UserModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +41,7 @@ public class NewSingleChat extends BaseActivity {
 
     //Firebase
     private DatabaseReference FriendsDatabase;
-    private DatabaseReference UserDatabase;
+    private DatabaseReference ListUserDatabase;
 
     //Variables
     private String user_id;
@@ -58,9 +59,9 @@ public class NewSingleChat extends BaseActivity {
         FriendsDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("friends");
         FriendsDatabase.keepSynced(true);
 
-        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-
         searchView = findViewById(R.id.material_search_view_friends);
+
+        userSearch("");
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
@@ -103,8 +104,7 @@ public class NewSingleChat extends BaseActivity {
     }
 
     private void userSearch(String searchText) {
-
-        Query firebaseSearchQuery = FriendsDatabase.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
+        Query firebaseSearchQuery = FriendsDatabase.orderByChild("name").startAt(searchText.toUpperCase()).endAt(searchText + "\uf8ff");
 
         FirebaseRecyclerAdapter<UserModel, FriendsMessageViewholder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserModel, FriendsMessageViewholder>(
                 UserModel.class,
@@ -113,43 +113,29 @@ public class NewSingleChat extends BaseActivity {
                 firebaseSearchQuery
         ) {
             @Override
-            protected void populateViewHolder(FriendsMessageViewholder viewHolder, final UserModel user, final int position) {
-                viewHolder.setName(user.getName());
-                viewHolder.setThumbImage(user.getThumb_image(), getApplicationContext());
-
+            protected void populateViewHolder(final FriendsMessageViewholder viewHolder, final UserModel user, final int position) {
                 final String list_user_id = getRef(position).getKey();
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                ListUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(list_user_id);
+                ListUserDatabase.keepSynced(true);
+
+                ListUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(NewSingleChat.this, SingleChat.class);
-                        intent.putExtra("user_id", user_id);
-                        intent.putExtra("receiver_user_id", list_user_id);
-                        startActivity(intent);
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
+                        String name = dataSnapshot.child("name").getValue().toString();
+                        String city = dataSnapshot.child("city").getValue().toString();
+
+                        viewHolder.setName(name);
+                        viewHolder.setCity(city);
+                        viewHolder.setThumbImage(thumb_image, NewSingleChat.this);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
-            }
-        };
-        friendsList.setAdapter(firebaseRecyclerAdapter);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseRecyclerAdapter<UserModel, FriendsMessageViewholder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<UserModel, FriendsMessageViewholder>(
-                UserModel.class,
-                R.layout.single_layout_user,
-                FriendsMessageViewholder.class,
-                FriendsDatabase
-        ) {
-            @Override
-            protected void populateViewHolder(FriendsMessageViewholder viewHolder, final UserModel user, int position) {
-                viewHolder.setName(user.getName());
-                viewHolder.setCity(user.getCity());
-                viewHolder.setThumbImage(user.getThumb_image(), getApplicationContext());
-
-                final String list_user_id = getRef(position).getKey();
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override

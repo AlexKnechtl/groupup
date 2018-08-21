@@ -69,9 +69,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeLight" />
         <activity
-            android:name=".settings.GetPremium"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".chat.GroupChat"
             android:screenOrientation="portrait" />
         <activity
@@ -158,6 +155,8 @@
             android:name=".group.MyGroupView"
             android:screenOrientation="portrait"
             android:theme="@style/GroupViewTheme" />
+        <activity android:name=".settings.GetVIP"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"

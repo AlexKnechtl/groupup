@@ -52,7 +52,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     public void getPremiumClick(View view) {
-        Intent intent = new Intent(SettingsActivity.this, GetPremium.class);
+        Intent intent = new Intent(SettingsActivity.this, GetVIP.class);
         startActivity(intent);
     }
 }
