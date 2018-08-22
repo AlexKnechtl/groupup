@@ -80,17 +80,8 @@ public class RegistrationImage extends BaseActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("image").exists()) {
                     final String image = dataSnapshot.child("image").getValue().toString();
-                    Picasso.with(RegistrationImage.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.profile_white_border).into(profilePicture, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                        }
-
-                        @Override
-                        public void onError() {
-                            Picasso.with(RegistrationImage.this).load(image).placeholder(R.drawable.profile_white_border).into(profilePicture);
-                        }
-                    });
+                    Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder(R.drawable.profile_white_border).into(profilePicture);
                 }
             }
 
@@ -126,10 +117,10 @@ public class RegistrationImage extends BaseActivity {
                 final File thumb_filePath = new File(resultUri.getPath());
 
                 final Bitmap thumb_bitmap = new Compressor(this)
-                        .setMaxWidth(130)
-                        .setMaxHeight(130)
-                        .setQuality(30)
-                        .compressToBitmap(thumb_filePath);
+                        .setMaxWidth(100)
+                        .setMaxHeight(100)
+                        .setQuality(25)
+                        .compressToFile(thumb_filePath);
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);

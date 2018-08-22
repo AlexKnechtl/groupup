@@ -328,9 +328,9 @@ public class ProfileActivity extends BaseActivity {
                 final File thumb_filePath = new File(resultUri.getPath());
 
                 final Bitmap thumb_bitmap = new Compressor(this)
-                        .setMaxWidth(130)
-                        .setMaxHeight(130)
-                        .setQuality(30)
+                        .setMaxWidth(100)
+                        .setMaxHeight(100)
+                        .setQuality(25)
                         .compressToBitmap(thumb_filePath);
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
