@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,9 +26,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -38,13 +41,12 @@ import java.util.HashMap;
 public class InterviewDescription extends BaseActivity {
 
     //XML
-    private RelativeLayout backLayoutDescription;
-    private FloatingActionButton addDescription, noDescription;
     private EditText description;
+    private Button addDescription;
 
     //Variables
     private GroupModel group;
-    private String current_uid;
+    private String current_uid, name;
     private Double geofirelat, geofirelong;
 
     //Firebase
@@ -57,14 +59,33 @@ public class InterviewDescription extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interview_description);
 
+        RelativeLayout backLayoutDescription;
+        FloatingActionButton noDescription;
+
         //Find IDs
         backLayoutDescription = findViewById(R.id.back_layout_description);
         addDescription = findViewById(R.id.add_description);
-        noDescription = findViewById(R.id.no_description);
+        //noDescription = findViewById(R.id.no_description);
         description = findViewById(R.id.edit_text_description);
 
         getGroupInformation();
-        initialzieFirebase();
+
+        FirebaseUser mCurrent_user = FirebaseAuth.getInstance().getCurrentUser();
+        current_uid = mCurrent_user.getUid();
+
+        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                name = dataSnapshot.child("name").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         backLayoutDescription.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,18 +98,18 @@ public class InterviewDescription extends BaseActivity {
         addDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                group.description = description.getText().toString();
+                group.description = description.getText().toString() + "\n~" + name;
                 setDatabaseValues();
             }
         });
 
-        noDescription.setOnClickListener(new View.OnClickListener() {
+        /*noDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 group.description = "Hier sollte eine Beschreibung stehen.";
                 setDatabaseValues();
             }
-        });
+        });*/
     }
 
     private void setDatabaseValues() {
@@ -171,12 +192,5 @@ public class InterviewDescription extends BaseActivity {
 
         geofirelat = bundle.getDouble("geofirelat");
         geofirelong = bundle.getDouble("geofirelong");
-    }
-
-    private void initialzieFirebase() {
-        FirebaseUser mCurrent_user = FirebaseAuth.getInstance().getCurrentUser();
-        current_uid = mCurrent_user.getUid();
-
-        UserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
     }
 }
