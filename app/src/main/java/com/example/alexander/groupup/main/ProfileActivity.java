@@ -111,17 +111,8 @@ public class ProfileActivity extends BaseActivity {
                 String friends_count = dataSnapshot.child("friends_count").getValue().toString();
 
                 final String image = dataSnapshot.child("image").getValue().toString();
-                Picasso.with(ProfileActivity.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
-                        .placeholder(R.drawable.profile_white_border).into(mProfileImageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                    }
-
-                    @Override
-                    public void onError() {
-                        Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.profile_white_border).into(mProfileImageView);
-                    }
-                });
+                Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE)
+                        .placeholder(R.drawable.profile_white_border).into(mProfileImageView);
 
                 if (dataSnapshot.child("status").exists()) {
                     status = dataSnapshot.child("status").getValue().toString();

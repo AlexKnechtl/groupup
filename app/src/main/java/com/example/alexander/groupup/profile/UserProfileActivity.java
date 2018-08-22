@@ -119,7 +119,7 @@ public class UserProfileActivity extends BaseActivity {
                 mDisplayLocation.setText(userCity);
                 friendsCounter.setText(friendCount);
 
-                Picasso.with(UserProfileActivity.this).load(image).placeholder(R.drawable.profile_white_border).into(mUserProfile);
+                Picasso.get().load(image).placeholder(R.drawable.profile_white_border).into(mUserProfile);
 
                 MyAccountDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

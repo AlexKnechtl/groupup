@@ -120,7 +120,7 @@ public class RegistrationImage extends BaseActivity {
                         .setMaxWidth(100)
                         .setMaxHeight(100)
                         .setQuality(25)
-                        .compressToFile(thumb_filePath);
+                        .compressToBitmap(thumb_filePath);
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 30, baos);

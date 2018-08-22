@@ -141,7 +141,7 @@ public class SearchActivity extends BaseActivity {
 
         public void setUserImage(String thumb_image, Context context) {
             CircleImageView userImageView = mView.findViewById(R.id.user_single_image);
-            Picasso.with(context).load(thumb_image).placeholder(R.drawable.default_user_black).into(userImageView);
+            Picasso.get().load(thumb_image).placeholder(R.drawable.default_user_black).into(userImageView);
         }
     }
 

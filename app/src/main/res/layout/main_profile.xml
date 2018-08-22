@@ -199,7 +199,7 @@
                         android:layout_marginEnd="11dp"
                         android:backgroundTint="@color/colorAccent"
                         android:src="@drawable/ic_settings_nav"
-                        android:tint="@color/darkGray"
+                        android:tint="@color/colorPrimary"
                         app:borderWidth="0dp"
                         app:fabSize="mini" />
                 </RelativeLayout>

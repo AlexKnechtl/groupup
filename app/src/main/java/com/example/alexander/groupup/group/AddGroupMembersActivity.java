@@ -307,7 +307,7 @@ public class AddGroupMembersActivity extends BaseActivity {
         public void setValues(FriendsModel model, Context context) {
             ((TextView) mView.findViewById(R.id.add_member_single_name)).setText(model.getName());
             CircleImageView v = mView.findViewById(R.id.add_member_single_thumb);
-            Picasso.with(context).load(model.getThumb_image()).placeholder(R.drawable.default_user_black).into(v);
+            Picasso.get().load(model.getThumb_image()).placeholder(R.drawable.default_user_black).into(v);
         }
 
         public void setCheckbox(Boolean ischecked) {
@@ -330,7 +330,7 @@ public class AddGroupMembersActivity extends BaseActivity {
 
         public void setValues(FriendsModel model, Context context) {
             CircleImageView v = mView.findViewById(R.id.add_group_member_preview_thumb);
-            Picasso.with(context).load(model.getThumb_image()).placeholder(R.drawable.default_user_black).into(v);
+            Picasso.get().load(model.getThumb_image()).placeholder(R.drawable.default_user_black).into(v);
         }
     }
 

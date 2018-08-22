@@ -105,17 +105,8 @@ public class SingleChat extends BaseActivity {
                 }
 
                 final String image = dataSnapshot.child("image").getValue().toString();
-                Picasso.with(SingleChat.this).load(image).networkPolicy(NetworkPolicy.OFFLINE)
-                        .placeholder(R.drawable.profile_white_border).into(userImage, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                    }
-
-                    @Override
-                    public void onError() {
-                        Picasso.with(SingleChat.this).load(image).placeholder(R.drawable.profile_white_border).into(userImage);
-                    }
-                });
+                Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE)
+                        .placeholder(R.drawable.profile_white_border).into(userImage);
                 userName.setText(name);
             }
 

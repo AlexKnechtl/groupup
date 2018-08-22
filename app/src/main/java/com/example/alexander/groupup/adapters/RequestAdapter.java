@@ -109,7 +109,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
                     String name = dataSnapshot.child("name").getValue().toString();
 
-                    Picasso.with(context).load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
+                    Picasso.get().load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
                             .placeholder(R.drawable.default_user_black).into(viewHolder.thumbImage);
                     viewHolder.name.setText(name + " hat dir eine Freundschaftsanfrage geschickt!");
                     viewHolder.requestButton.setText(R.string.accept);
@@ -211,7 +211,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
                     String name = dataSnapshot.child("name").getValue().toString();
 
-                    Picasso.with(context).load(thumb_image)
+                    Picasso.get().load(thumb_image)
                             .placeholder(R.drawable.default_user_black).into(viewHolder.thumbImage);
                     viewHolder.name.setText(name + " hat dich in seine Gruppe eingeladen.");
                     viewHolder.requestButton.setText(R.string.accept);
@@ -274,7 +274,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
                     String name = dataSnapshot.child("name").getValue().toString();
 
-                    Picasso.with(context).load(thumb_image)
+                    Picasso.get().load(thumb_image)
                             .placeholder(R.drawable.default_user_black).into(viewHolder.thumbImage);
 
                     viewHolder.name.setText(context.getString(R.string.you_have_send) + name + context.getString(R.string.a_friend_request));
