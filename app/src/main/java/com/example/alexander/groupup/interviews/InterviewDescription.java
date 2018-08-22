@@ -42,7 +42,6 @@ public class InterviewDescription extends BaseActivity {
 
     //XML
     private EditText description;
-    private Button addDescription;
 
     //Variables
     private GroupModel group;
@@ -60,12 +59,12 @@ public class InterviewDescription extends BaseActivity {
         setContentView(R.layout.interview_description);
 
         RelativeLayout backLayoutDescription;
-        FloatingActionButton noDescription;
+        FloatingActionButton noDescription, addDescription;
 
         //Find IDs
         backLayoutDescription = findViewById(R.id.back_layout_description);
         addDescription = findViewById(R.id.add_description);
-        //noDescription = findViewById(R.id.no_description);
+        noDescription = findViewById(R.id.no_description);
         description = findViewById(R.id.edit_text_description);
 
         getGroupInformation();
@@ -103,13 +102,13 @@ public class InterviewDescription extends BaseActivity {
             }
         });
 
-        /*noDescription.setOnClickListener(new View.OnClickListener() {
+        noDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 group.description = "Hier sollte eine Beschreibung stehen.";
                 setDatabaseValues();
             }
-        });*/
+        });
     }
 
     private void setDatabaseValues() {

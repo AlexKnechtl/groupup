@@ -661,6 +661,7 @@ public class HomeActivity extends BaseActivity {
                         Intent intent = new Intent(HomeActivity.this, MyGroupView.class);
                         intent.putExtra("group_id", group_id);
                         intent.putExtra("user_id", user_id);
+                        intent.putExtra("category", group_category);
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(HomeActivity.this, GroupView.class);

@@ -18,6 +18,7 @@ import com.example.alexander.groupup.chat.SingleChat;
 import com.example.alexander.groupup.chat.NewSingleChat;
 import com.example.alexander.groupup.models.UserModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

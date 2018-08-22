@@ -61,7 +61,7 @@ public class MyGroupView extends BaseActivity {
     private DatabaseReference UserDatabase;
 
     //Variables
-    private String groupId, user_id, latLng;
+    private String groupId, user_id, latLng, category;
     private String userName, userCity, userThumbImage, rank;
     boolean fabIsOpen = false;
     long groupMembers;
@@ -77,6 +77,7 @@ public class MyGroupView extends BaseActivity {
         //Get Information by Intent
         groupId = getIntent().getStringExtra("group_id");
         user_id = getIntent().getStringExtra("user_id");
+        category = getIntent().getStringExtra("category");
 
         initializeFireBase();
         findIDs();
@@ -361,6 +362,7 @@ public class MyGroupView extends BaseActivity {
         Intent intent = new Intent(MyGroupView.this, GroupChat.class);
         intent.putExtra("group_id", groupId);
         intent.putExtra("user_id", user_id);
+        intent.putExtra("category", category);
         startActivity(intent);
     }
 

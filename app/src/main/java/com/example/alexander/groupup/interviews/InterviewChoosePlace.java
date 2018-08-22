@@ -75,13 +75,13 @@ public class InterviewChoosePlace extends BaseActivity {
 
     public void noPlaceClick(View view) {
 
-        UserDatabase.addValueEventListener(new ValueEventListener() {
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String city = dataSnapshot.child("city").getValue().toString();
 
-                Intent intent = new Intent(InterviewChoosePlace.this, InterviewTags.class);
+                Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
                 group.location = city;
                 intent.putExtra("group", group);
                 startActivity(intent);
@@ -126,7 +126,7 @@ public class InterviewChoosePlace extends BaseActivity {
 
         final String placeName = placeSelected.getName().toString();
 
-        UserDatabase.addValueEventListener(new ValueEventListener() {
+        UserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) { //TODO WTF soll DAS? Datasnapshot never used
                 Intent intent = new Intent(InterviewChoosePlace.this, InterviewDescription.class);
